@@ -137,7 +137,7 @@ BsnpRestApi.prototype.gen_ssid = function (otk, usr, cbf) {
             //cbf(JSON.parse(data))
         })
         .done(function (ret) {
-            //var ret = JSON.parse(data)
+            var ret = JSON.parse(ret)
             cbf(ret)
         })
         .fail(function (xhr, textStatus, errorThrown) {
