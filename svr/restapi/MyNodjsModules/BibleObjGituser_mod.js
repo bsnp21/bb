@@ -777,7 +777,7 @@ var BibleObjGituser = function (rootDir) {
 
 }
 BibleObjGituser.prototype.genKeyPair = function (cuid) {
-    if (!cuid) return
+    if (!cuid) cuid = "CUID" + ((new Date()).getTime()) + Math.random()
     const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
         modulusLength: 4096, // Note:can encrypt txt len max 501 bytes. 
         publicKeyEncoding: {

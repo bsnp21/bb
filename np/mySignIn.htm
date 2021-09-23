@@ -456,12 +456,12 @@
         var url = Uti.Jsonpster_crossloader_get_ip()
         $.ajax({
             type: "GET",
-            url: `${url}/Jsonpster/`,// + MyStorage.GenCUID(),
+            url: `${url}/GetOTK/`,// + MyStorage.GenCUID(),
 
             data: {},
             crossDomain: true,
             success: function (dat, err) {
-                console.log(Jsonpster)
+                console.log(dat)
                 $(".signinBtn").removeAttr("disabled")
                 var ar = MyStorage.Repositories().repos_app_init()
                 console.log(err)

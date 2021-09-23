@@ -30,10 +30,12 @@ var ApiUti = {
         if (req.method !== "GET") {
             return null
         }
+        if (cbf) cbf(req.query)
+        
         //console.log("\n\n\n\n---->GET: req.query=", req.query);
         //var q = url.parse(req.url, true).query;
         //console.log("q=", q);
-        
+
         if ("undefined" === typeof req.query.inp) {
             console.log("req.query.inp: undefined. Maybe initial loading or page transition");
             return null;
@@ -129,10 +131,18 @@ var inp_struct_all = JSON.parse(JSON.stringify(inp_struct_base))
 inp_struct_all.par.Search = inp_struct_search.par.Search
 
 var ApiJsonp_BibleObj = {
+    GetOTK: function (req, res) {
+        var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
+        var otk = userProject.genKeyPair()
+        console.log(otk);
+        res.send(otk);
+        res.end();
+    },
     Jsonpster: function (req, res) {
         ////////////////////////////////////////////
         //app.get("/Jsonpster", (req, res) => {
         console.log("res.req.headers.host=", res.req.headers.host);
+
 
         var inp = ApiUti.Parse_GET_req_to_inp(req)
         var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
