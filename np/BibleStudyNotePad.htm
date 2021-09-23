@@ -81,15 +81,17 @@
 
     $(document).ready(function () {
 
-        Uti.Jsonpster_crossloader(1, function(){
-            g_aim.init();
-        })
 
-        var api = new BsnpRestApi()
+        /*Uti.Jsonpster_crossloader(1, function(){
+            g_aim.init();
+        })*/
+
+        //var api = new BsnpRestApi()
         //api.run("", null, function (dat) {
-        //    //g_aim.init();
-//
-        //})
+            var api = new BsnpRestApi()
+            Jsonpster.SvrUrl = api.svrurl +"/"
+            g_aim.init();
+       //})
 
         //table_sort();
         //table_col_index();
