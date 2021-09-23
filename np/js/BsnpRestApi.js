@@ -49,7 +49,7 @@ var BsnpRestUti = {
             console.log("Jsonpster is already loaded. Ignore", ip)
         }
 
-        return ip + "/"
+        return ip
     },
 }
 
@@ -70,7 +70,7 @@ BsnpRestApi.prototype.get_otk = function (cbf) {
     var url = this.svrurl
     $.ajax({
         type: "GET",
-        url: `${url}Get_OTK`,// + MyStorage.GenCUID(),
+        url: `${url}/Get_OTK`,// + MyStorage.GenCUID(),
 
         data: {},
         crossDomain: true,
@@ -123,7 +123,7 @@ BsnpRestApi.prototype.gen_ssid = function (otk, usr, cbf) {
         type: "POST",
         dataType: 'text',
         contentType: "application/json; charset=utf-8",
-        url: _this.svrurl + "UsrReposPost_Signin",
+        url: _this.svrurl + "/UsrReposPost_Signin",
         data: JSON.stringify(inp),
         username: 'user',
         password: 'pass',
