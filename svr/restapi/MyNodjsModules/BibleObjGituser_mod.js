@@ -776,32 +776,7 @@ var BibleObjGituser = function (rootDir) {
     this.m_SvrUsrsBCV = new SvrUsrsBCV(pathrootdir)
 
 }
-BibleObjGituser.prototype.genKeyPair = function (cuid) {
-    if (!cuid) cuid = "CUID" + ((new Date()).getTime()) + Math.random()
-    const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-        modulusLength: 4096, // Note:can encrypt txt len max 501 bytes. 
-        publicKeyEncoding: {
-            type: 'spki',
-            format: 'pem'
-        },
-        privateKeyEncoding: {
-            type: 'pkcs8',
-            format: 'pem',
-        }
-    });
-    console.log("publicKey\n", publicKey)
-    console.log("privateKey\n", privateKey)
 
-    var pkb64 = Buffer.from(publicKey).toString("base64")
-    console.log("pkb64\n", pkb64)
-    console.log("pkb64.len", pkb64.length)
-
-    //var tuid = this.m_inp.CUID
-    var val = { publicKey: publicKey, privateKey: privateKey, pkb64: pkb64, CUID: cuid }
-
-    NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
-    return { CUID: cuid, pkb64: pkb64 }
-}
 
 
 

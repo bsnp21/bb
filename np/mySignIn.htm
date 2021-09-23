@@ -12,7 +12,7 @@
     </link>
 
 
- 
+
 
     <!-------------------------------------------->
     <!---- Insert this before scripts import; then restor back later -->
@@ -22,7 +22,7 @@
     <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
     <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
 
- 
+
     <script src="./js/CNST.js"></script>
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
@@ -428,32 +428,33 @@
 </script>
 <script>
     $(function () {
-        
-        init_svr()
-        
 
-//        Uti.Jsonpster_crossloader(0, function (ret) {
-//            $(".signinBtn").attr("disabled", null)
-//
-//            Uti.Msg("Sign-In")
-//            $("#txtarea").hide()
-//            var ar = MyStorage.Repositories().repos_app_init()
-//
-//            console.log(Jsonpster)
-//            //$("#histroy").trigger("click")
-//
-//        })
+        init_svr()
+
+
+        //        Uti.Jsonpster_crossloader(0, function (ret) {
+        //            $(".signinBtn").attr("disabled", null)
+        //
+        //            Uti.Msg("Sign-In")
+        //            $("#txtarea").hide()
+        //            var ar = MyStorage.Repositories().repos_app_init()
+        //
+        //            console.log(Jsonpster)
+        //            //$("#histroy").trigger("click")
+        //
+        //        })
 
         $("#signInAsUsers").on("click", function () {
             $(".signinBtn").attr("disabled", true)
             sign_in()
         })
 
-        
+
     })
 
     function init_svr() {
         var url = Uti.Jsonpster_crossloader_get_ip()
+        Jsonpster.SvrUrl = url
         $.ajax({
             type: "GET",
             url: `${url}/GetOTK/`,// + MyStorage.GenCUID(),
@@ -462,6 +463,9 @@
             crossDomain: true,
             success: function (dat, err) {
                 console.log(dat)
+                Jsonpster.CUID = dat.CUID
+                Jsonpster.pk64 = dat.pk64
+
                 $(".signinBtn").removeAttr("disabled")
                 var ar = MyStorage.Repositories().repos_app_init()
                 console.log(err)
@@ -485,6 +489,74 @@
         });;
     }
     function sign_in() {
+        ///
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            contentType: "application/json; charset=utf-8",
+            url: Jsonpster.SvrUrl + "PostUsr_getSSID",
+            data: JSON.stringify(this.inp),
+            username: 'user',
+            password: 'pass',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: false
+            }
+        })
+            .success(function (data) {
+                //console.log("success",data);
+                //cbf(JSON.parse(data))
+            })
+            .done(function (data) {
+                //var ret = JSON.parse(data)
+                Jsonpster.onAfterRun(ret)
+                cbf(ret)
+                Jsonpster.api = Jsonpster.inp.par = Jsonpster.inp.usr = null;
+            })
+            .fail(function (xhr, textStatus, errorThrown) {
+                console.log("err surlapi=", Jsonpster.SvrUrl + Jsonpster.api)
+                alert("xhr.responseText=" + xhr.responseText + ",textStatus=" + textStatus);
+                //alert("textStatus="+textStatus);
+            });
+
+        return;
+    }
+
+    function sign_in22() {
+
+
+
+
+
+
+
+
+
+        Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update()
+        //Jsonpster.CUID = MyStorage.GenCUID()
+        //Jsonpster.api = RestApi.UsrReposPost_Signin
+        Uti.Msg("Jsonpster", Jsonpster)
+        Jsonpster.RunAjaxPost_Signin(function (ret) {
+            Uti.Msg("ret.out.state", ret.out.state)
+
+            if (ret.out.state) {
+                var ssid = ret.out.state.SSID
+                if (ssid && ssid.length > 1) {
+                    MyStorage.SSID(ssid)
+
+                    $(showid).html("<font color='green'>Success</font>")
+
+                } else {
+                    $(showid).html("<font color='red'>Error: Wrong Repository or Password or Sign-in timeout.</font>")
+                }
+            } else {
+                $(showid).html("<font color='red'>Error: Wrong Repository</font>")
+            }
+            if (cbf) cbf(ret)
+        })
+
+
+        //////
         PageUti.repo_Signin("#otb", function (ret) {
             if (ret.out.state && ret.out.state.SSID && ret.out.state.SSID.length > 1) {
                 var svrip = Uti.Jsonpster_crossloader_get_ip()
@@ -494,5 +566,15 @@
                 $(".signinBtn").removeAttr("disabled")
             }
         })
+
+
+        $(showid).html("<font color='black'>Start to sign in ... </font>")
+
+        var repopath = $("#repopath").val()
+        var reo = Uti.validate_repository_url(repopath)
+        if (!reo) {
+            $(showid).html("<font color='red'>Error format: Repository</font>")
+            return;
+        }
     }
 </script>

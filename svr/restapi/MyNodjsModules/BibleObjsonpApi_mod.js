@@ -31,7 +31,7 @@ var ApiUti = {
             return null
         }
         if (cbf) cbf(req.query)
-        
+
         //console.log("\n\n\n\n---->GET: req.query=", req.query);
         //var q = url.parse(req.url, true).query;
         //console.log("q=", q);
@@ -68,8 +68,8 @@ var ApiUti = {
     },
 
     Parse_POST_req_to_inp: function (req, res, cbf) {
-        console.log("req.method", req.method)
-        console.log("req.url", req.url)
+        console.log("req.method=", req.method)
+        console.log("req.url=", req.url)
 
         //req.pipe(res)
         if (req.method === "POST") {
@@ -108,6 +108,32 @@ var ApiUti = {
             console.log("end of req")
         }
     },
+    GetOTK: function (cuid) {
+        if (!cuid) cuid = "CUID" + ((new Date()).getTime()) + Math.random()
+        const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+            modulusLength: 4096, // Note:can encrypt txt len max 501 bytes. 
+            publicKeyEncoding: {
+                type: 'spki',
+                format: 'pem'
+            },
+            privateKeyEncoding: {
+                type: 'pkcs8',
+                format: 'pem',
+            }
+        });
+        console.log("publicKey\n", publicKey)
+        console.log("privateKey\n", privateKey)
+
+        var pkb64 = Buffer.from(publicKey).toString("base64")
+        console.log("pkb64\n", pkb64)
+        console.log("pkb64.len", pkb64.length)
+
+        //var tuid = this.m_inp.CUID
+        var val = { publicKey: publicKey, privateKey: privateKey, pkb64: pkb64, CUID: cuid }
+
+        NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
+        return { CUID: cuid, pkb64: pkb64 }
+    }
 }
 
 
@@ -131,12 +157,35 @@ var inp_struct_all = JSON.parse(JSON.stringify(inp_struct_base))
 inp_struct_all.par.Search = inp_struct_search.par.Search
 
 var ApiJsonp_BibleObj = {
-    GetOTK: function (req, res) {
-        var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
-        var otk = userProject.genKeyPair()
+    Get_OTK: function (req, res) {
+        var otk = ApiUti.GetOTK()
         console.log(otk);
         res.send(otk);
         res.end();
+    },
+    PostUsr_getSSID: function (req, res) {
+        console.log("PostSSID_OtkSignin", req.query)
+        BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
+            //: unlimited write size. 
+            if (("CUID" in inp) && ("usr" in inp){
+
+            } else {
+                return
+            }
+            var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
+            var proj = userProject.proj_parse_usr_signin(inp)
+            if (!proj) return console.log("proj_parse_usr_signin failed.")
+
+            userProject.run_proj_setup()
+            if (inp.out.state.bEditable === 1) {
+                if (null === userProject.git_push_test()) {
+                    //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
+                    userProject.run_proj_destroy()
+                } else {
+                    inp.out.state.SSID = userProject.session_create()
+                }
+            }
+        })
     },
     Jsonpster: function (req, res) {
         ////////////////////////////////////////////
