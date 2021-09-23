@@ -14,7 +14,99 @@ const crypto = require('crypto')
 const { BibleObjGituser, BibleUti } = require("./BibleObjGituser_mod")
 
 
+var ApiUti = {
+    Parse_GET_req_to_inp: function (req, cbf) {
+        console.log("\n\n\n\n\n\n\n\n-----req.method (GET?)", req.method)
+        console.log("-GET: req.url=", req.url);
+        console.log("-req.query", req.query)
+        var remoteAddr = req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            (req.connection.socket ? req.connection.socket.remoteAddress : null);
+        console.log("-remoteAddr", remoteAddr)
+        console.log("-req.headers", req.headers)
+        console.log(req.connection.remoteAddress);
 
+        if (req.method !== "GET") {
+            return null
+        }
+        //console.log("\n\n\n\n---->GET: req.query=", req.query);
+        //var q = url.parse(req.url, true).query;
+        //console.log("q=", q);
+        
+        if ("undefined" === typeof req.query.inp) {
+            console.log("req.query.inp: undefined. Maybe initial loading or page transition");
+            return null;
+        }
+
+        var inpObj = {}
+        console.log("req.query.inp=", req.query.inp)
+        if (req.query.inp.match(/^CUID\d+\.\d+$/)) { //SignPageLoaded
+            inpObj.CUID = req.query.inp
+            return inpObj
+        } else {
+            var d64 = Buffer.from(req.query.inp, 'base64').toString()
+            //d64 = Buffer.from(d64, 'base64').toString()
+            var sin = decodeURIComponent(d64);//must for client's encodeURIComponent
+
+            var out = BibleUti.default_inp_out_obj()
+            try {
+                var inpObj = JSON.parse(sin);
+                inpObj.out = out
+                console.log("GET: inp =", JSON.stringify(inpObj, null, 4));
+                //cbf(inpObj, res)
+                return inpObj
+            } catch (err) {
+                out.err = err
+                console.log(err)
+                return out
+            }
+        }
+
+    },
+
+    Parse_POST_req_to_inp: function (req, res, cbf) {
+        console.log("req.method", req.method)
+        console.log("req.url", req.url)
+
+        //req.pipe(res)
+        if (req.method === "POST") {
+            //req.pipe(res)
+            console.log("POST: ----------------", "req.url=", req.url)
+            var body = "";
+            req.on("data", function (chunk) {
+                body += chunk;
+                console.log("on post data:", chunk)
+            });
+
+            req.on("end", async function () {
+                console.log("on post eend:", body)
+
+                var inpObj = null
+                try {
+                    inpObj = JSON.parse(body)
+                    inpObj.out = BibleUti.default_inp_out_obj()
+                } catch (err) {
+                    inpObj.err = err
+                }
+                console.log("POST:3 inp=", JSON.stringify(inpObj, null, 4));
+
+
+                console.log("cbf start ------------------------------")
+                await cbf(inpObj)
+
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.write(JSON.stringify(inpObj))
+                res.end();
+                console.log("finished post req------------------------------")
+            });
+        } else {
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end();
+            console.log("end of req")
+        }
+    },
+}
 
 
 
@@ -42,7 +134,7 @@ var ApiJsonp_BibleObj = {
         //app.get("/Jsonpster", (req, res) => {
         console.log("res.req.headers.host=", res.req.headers.host);
 
-        var inp = BibleUti.Parse_GET_req_to_inp(req)
+        var inp = ApiUti.Parse_GET_req_to_inp(req)
         var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
         var pkb64 = ""
         if (inp && inp.CUID) {
@@ -61,7 +153,7 @@ var ApiJsonp_BibleObj = {
         var jstr_RestApi = `var RestApi = ${JSON.stringify(RestApi, null, 4)}`
         var structall = JSON.stringify(inp_struct_all)
         var SvrUrl = `http://${res.req.headers.host}/`
-        if(res.req.headers.host.indexOf("7778")<0){
+        if (res.req.headers.host.indexOf("7778") < 0) {
             SvrUrl = `https://${res.req.headers.host}/`
         }
         console.log("SvrUrl=", SvrUrl)
@@ -160,7 +252,7 @@ ${jstr_RestApi}
         //});
     },
     ApiBibleObj_search_txt: function (req, res) {
-        
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             //if (!inp.usr.f_path) inp.usr.f_path = ""
@@ -306,7 +398,7 @@ ${jstr_RestApi}
 
     /////
     ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
-       
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -430,7 +522,7 @@ ${jstr_RestApi}
         })
     },
     ApiUsrDat_load: async function (req, res) {
-        
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -477,7 +569,7 @@ ${jstr_RestApi}
         if (!req || !res) {
             return inp_struct_account_setup
         }
-        var inp = BibleUti.Parse_GET_req_to_inp(req)
+        var inp = ApiUti.Parse_GET_req_to_inp(req)
         var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
         var ret = userProject.proj_parse_usr_signin(inp)
         if (ret) {
@@ -513,7 +605,7 @@ ${jstr_RestApi}
                 if (null === userProject.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
                     userProject.run_proj_destroy()
-                }else{
+                } else {
                     inp.out.state.SSID = userProject.session_create()
                 }
             }
@@ -521,7 +613,7 @@ ${jstr_RestApi}
     },
 
     ApiUsrReposData_destroy: async function (req, res) {
-        
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -553,7 +645,7 @@ ${jstr_RestApi}
     },
 
     ApiUsrReposData_status: function (req, res) {
-        
+
         BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -580,7 +672,7 @@ ${jstr_RestApi}
 
 
     ApiUsrReposData_git_push: async function (req, res) {
-       
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -606,7 +698,7 @@ ${jstr_RestApi}
     },
 
     ApiUsrReposData_git_pull: async function (req, res) {
-       
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -628,7 +720,7 @@ ${jstr_RestApi}
     },
 
     ApiUsr_Cmdline_Exec: async function (req, res) {
-       
+
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
