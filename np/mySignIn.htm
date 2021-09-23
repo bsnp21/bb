@@ -374,6 +374,7 @@
 
 </html>
 <script>
+    console.log(Jsonpster)
     $(function () {
 
 
@@ -430,6 +431,7 @@
 <script>
     $(function () {
 
+        $(".signinBtn").removeAttr("disabled")
         init_svr()
 
 
@@ -447,13 +449,16 @@
 
         $("#signInAsUsers").on("click", function () {
             $(".signinBtn").attr("disabled", true)
-            sign_in()
+            
+            init_svr(function(dat){
+
+            })
         })
 
 
     })
 
-    function init_svr() {
+    function init_svr(cbf) {
         var url = Uti.Jsonpster_crossloader_get_ip()
         Jsonpster.SvrUrl = url
         $.ajax({
@@ -466,6 +471,8 @@
                 console.log(dat)
                 Jsonpster.CUID = dat.CUID
                 Jsonpster.pk64 = dat.pk64
+
+                if(cbf) cbf(dat)
 
                 $(".signinBtn").removeAttr("disabled")
                 var ar = MyStorage.Repositories().repos_app_init()

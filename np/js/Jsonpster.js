@@ -76,5 +76,6 @@ RunAjax_PostTxt : function(cbf){
             //alert("textStatus="+textStatus);
         });
 },
+}
 
 const RestApi = JSON.parse('{"ApiBibleObj_update_notes":"ApiBibleObj_update_notes","ApiBibleObj_load_Bkns_Vols_Chp_Vrs":"ApiBibleObj_load_Bkns_Vols_Chp_Vrs","ApiBibleObj_access_regex_search_history":"ApiBibleObj_access_regex_search_history","HistFile":{"__history_verses_loaded":"__history_verses_loaded","__history_regex_search":"__history_regex_search"}}');

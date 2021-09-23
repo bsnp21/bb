@@ -167,7 +167,7 @@ var ApiJsonp_BibleObj = {
         console.log("PostSSID_OtkSignin", req.query)
         BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
-            if (("CUID" in inp) && ("usr" in inp){
+            if (("CUID" in inp) && ("usr" in inp)){
 
             } else {
                 return
