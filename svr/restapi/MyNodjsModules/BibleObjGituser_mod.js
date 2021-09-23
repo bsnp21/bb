@@ -1572,6 +1572,7 @@ BibleObjGituser.prototype.execSync_cmd_git = function (gitcmd) {
 
 module.exports = {
     BibleUti: BibleUti,
+    NCache: NCache,
     BibleObjGituser: BibleObjGituser
 }
 
