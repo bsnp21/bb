@@ -574,22 +574,11 @@
         //Jsonpster.api = RestApi.UsrReposPost_Signin
         Uti.Msg("Jsonpster", Jsonpster)
         Jsonpster.RunAjaxPost_Signin(function (ret) {
-            Uti.Msg("ret.out.state", ret.out.state)
+            //Uti.Msg("ret.out.state", ret.out.state)
+            console.log(ret)
+            var ojb = JSON.parse(ret)
+            console.log(ojb)
 
-            if (ret.out.state) {
-                var ssid = ret.out.state.SSID
-                if (ssid && ssid.length > 1) {
-                    MyStorage.SSID(ssid)
-
-                    $(showid).html("<font color='green'>Success</font>")
-
-                } else {
-                    $(showid).html("<font color='red'>Error: Wrong Repository or Password or Sign-in timeout.</font>")
-                }
-            } else {
-                $(showid).html("<font color='red'>Error: Wrong Repository</font>")
-            }
-            if (cbf) cbf(ret)
         })
 
 

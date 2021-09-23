@@ -64,7 +64,7 @@ RunAjax_PostTxt : function(cbf){
             //console.log("success",data);
             //cbf(JSON.parse(data))
         })
-        .done(function( data ) {
+        .done(function( ret ) {
             //var ret = JSON.parse(data)
             Jsonpster.onAfterRun(ret)
             cbf (ret)
