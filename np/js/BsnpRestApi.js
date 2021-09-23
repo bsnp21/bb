@@ -56,10 +56,10 @@ var BsnpRestUti = {
 function BsnpRestApi() {
     var url = BsnpRestUti.Jsonpster_crossloader_get_ip()
     this.svrurl = url
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     var ssid = urlParams.get('SSID');
-    if(ssid) this.SSID = ssid
+    if (ssid) this.SSID = ssid
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
@@ -150,3 +150,35 @@ BsnpRestApi.prototype.gen_ssid = function (otk, usr, cbf) {
         });
 }
 
+BsnpRestApi.prototype.run = function (sapi, obj, cbf) {
+    var inp = { SSID: this.SSID }
+    if (!inp.SSID) return alert("missing SSID.")
+    inp.inp = obj
+
+    var _this = this;
+    $.ajax({
+        type: "POST",
+        dataType: 'text',
+        contentType: "application/json; charset=utf-8",
+        url: _this.svrurl + "/" + sapi,
+        data: JSON.stringify(inp),
+        username: 'user',
+        password: 'pass',
+        crossDomain: true,
+        xhrFields: {
+            withCredentials: false
+        }
+    })
+        .success(function (data) {
+            //console.log("success",data);
+            //cbf(JSON.parse(data))
+        })
+        .done(function (ret) {
+            var ret = JSON.parse(ret)
+            cbf(ret)
+        })
+        .fail(function (xhr, textStatus, errorThrown) {
+            alert("xhr.responseText=" + xhr.responseText + "\n,textStatus=" + textStatus);
+            //alert("textStatus="+textStatus);
+        });
+}

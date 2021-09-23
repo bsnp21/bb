@@ -14,16 +14,16 @@
     <script>
         console.log("startime:", (new Date()).toISOString())
     </script>
- <!--------->
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/BBE.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/CUVS.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/CUVsen.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/H_G.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/KJV.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/NIV.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/CUVpy.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/STUS.json.js"></script>
- <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/WLVS.json.js"></script>
+    <!--------->
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/BBE.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/CUVS.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/CUVsen.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/H_G.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/KJV.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/NIV.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/CUVpy.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/STUS.json.js"></script>
+    <script language="javascript" xxxxsrc="../../../jsdb/jsBibleStruct/WLVS.json.js"></script>
     <script xxxxxxxxsrc="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
     <script xxxxxxxxsrc="https://wdingbox.github.io/ham12/jq/jsencrypt.min.js"></script>
     <!------ api ---->
@@ -32,31 +32,35 @@
     <script xxxxsrc="http://localhost:7778/Jsonpster/" xsrc="http://localhost:7778/Jsonpster/"></script>
 
     <script language="javascript"
-    xxxxxsrc="../../../../bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
-<!----------------------------------------------------------------------------->
-<!----------------------------------------------------------------------------->
+        xxxxxsrc="../../../../bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
 
 
 
 
 
 
-    <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
-    
+    <script language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+
     <script language="javascript" src="../jq/jquery.js"></script>
     <script language="javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!---------->
     <script language="javascript" src="../jq/table_Indexer.js"></script>
     <script language="javascript" src="../jq/jquery.tablesorter.js"></script>
-   
+
     <!----------------------------------------------------------------------------->
-    <script language="javascript" src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
+    <script language="javascript"
+        src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
 
     <!----------------------------------------------------------------------------->
     <script src="./js/CNST.js"></script>
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
     <script src="./js/MyStorage.js"></script>
+    <script src="./js/Jsonpster.js"></script>
+    <script src="./js/BsnpRestApi.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=2021.01.20j"></script>
     <style>
     </style>
@@ -74,12 +78,18 @@
 
 <script language="javascript">
     console.log(window.location);
-    
+
     $(document).ready(function () {
-        
+
         Uti.Jsonpster_crossloader(1, function(){
             g_aim.init();
         })
+
+        var api = new BsnpRestApi()
+        //api.run("", null, function (dat) {
+        //    //g_aim.init();
+//
+        //})
 
         //table_sort();
         //table_col_index();

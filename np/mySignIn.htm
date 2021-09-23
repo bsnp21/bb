@@ -295,6 +295,7 @@
 
 
         <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button>
+        <a id="lnk">...</a>
         <div style="float:right;">
 
 
@@ -445,6 +446,9 @@
                 var ur = `./BibleStudyNotePad.htm?ip=${api.svrurl}&SSID=${obj.out.state.SSID}`
                 //alert("ok")
                 //window.open(ur, '_self');
+                MyStorage.SSID(obj.out.state.SSID)
+                var a=`<a href='${ur}'>go</a>`
+                $("#lnk").html(a)
             })
             //init_svr(function(dat){
 

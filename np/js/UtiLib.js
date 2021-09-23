@@ -530,11 +530,13 @@ var Uti = {
         var svrip = this.Jsonpster_crossloader_get_ip()
         var svrurl = Uti.Jsonpster_crossloader_get_ip()
 
-        if (0 === idx) {//initial-sign-in-page-loading only
+        var api = new BsnpRestApi()
+
+        //if (0 === idx) {//initial-sign-in-page-loading only
             var tuid = MyStorage.GenCUID()
-            svrurl += `?inp=${tuid}`;
+            svrurl += `/Jsonpster?inp=`;
             //SSID will be ready after sign-in success.
-        }
+        //}
 
         var e = document.createElement("script");
         e.src = svrurl
@@ -546,9 +548,7 @@ var Uti = {
             if ("undefined" !== typeof Jsonpster) {
                 clearInterval(tiid)
                 if (0 === idx) {//signin page loaded.
-                    if (Jsonpster && Jsonpster.pkb64) {
-                        //localStorage("pkb64", Jsonpster.pkb64) //keep it for reset?.
-                    }
+                    
                 }
                 else if (idx > 0) {//1:main-page loaded  after transit from signin-page.
                     console.log("crossload-2:SSID=", MyStorage.SSID())
