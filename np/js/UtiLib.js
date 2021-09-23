@@ -497,7 +497,17 @@ var Uti = {
                 return alert("not localhost or missed in url with ?ip=undefined")
             }
 
-            if (ip.indexOf(":") < 0) ip += ":7778"
+            if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
+
+            if (ip.indexOf("http") < 0) {
+                if (ip.indexOf("7778") > 0) {//ssl
+                    ip = `http://${ip}`;
+                } else {
+                    ip = `https://${ip}`;
+                }
+            }
+
+
 
             //other param form url param ?inp=0.0.0.0:778&#Gen2:7
             var idx = window.location.href.indexOf("#") //case: ?ip=1.1.1.1#Gen1:1
@@ -518,12 +528,7 @@ var Uti = {
     },
     Jsonpster_crossloader: function (idx, cbf) {
         var svrip = this.Jsonpster_crossloader_get_ip()
-        if (svrip.indexOf(":") < 0) return aler(svrip += ":7778 ---missed port")
-
-        var svrurl = `http://${svrip}/Jsonpster/`;
-        if (svrip.indexOf("7775") > 0){//ssl
-            svrurl = `https://${svrip}/Jsonpster/`;
-        }
+        var svrurl = Uti.Jsonpster_crossloader_get_ip()
 
         if (0 === idx) {//initial-sign-in-page-loading only
             var tuid = MyStorage.GenCUID()
