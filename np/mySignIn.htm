@@ -12,8 +12,7 @@
     </link>
 
 
-    <link rel="stylesheet" xxhref="./BibleStudyNotePad.css?v=2020dec21b">
-    </link>
+ 
 
     <!-------------------------------------------->
     <!---- Insert this before scripts import; then restor back later -->
@@ -23,8 +22,7 @@
     <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
     <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
 
-    <script src="https://bsnp21.github.io/home/js/API_BSNP_SVR_ADDRESS.js"></script>
-
+ 
     <script src="./js/CNST.js"></script>
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
@@ -434,17 +432,17 @@
         init_svr()
         
 
-        Uti.Jsonpster_crossloader(0, function (ret) {
-            $(".signinBtn").attr("disabled", null)
-
-            Uti.Msg("Sign-In")
-            $("#txtarea").hide()
-            var ar = MyStorage.Repositories().repos_app_init()
-
-            console.log(Jsonpster)
-            //$("#histroy").trigger("click")
-
-        })
+//        Uti.Jsonpster_crossloader(0, function (ret) {
+//            $(".signinBtn").attr("disabled", null)
+//
+//            Uti.Msg("Sign-In")
+//            $("#txtarea").hide()
+//            var ar = MyStorage.Repositories().repos_app_init()
+//
+//            console.log(Jsonpster)
+//            //$("#histroy").trigger("click")
+//
+//        })
 
         $("#signInAsUsers").on("click", function () {
             $(".signinBtn").attr("disabled", true)
@@ -465,9 +463,10 @@
             success: function (dat, err) {
                 console.log(Jsonpster)
                 $(".signinBtn").removeAttr("disabled")
+                var ar = MyStorage.Repositories().repos_app_init()
                 console.log(err)
             },
-            dataType: "script", //exe script.
+            dataType: "json", //exe script.
 
             //no effect
             xhrFields: {

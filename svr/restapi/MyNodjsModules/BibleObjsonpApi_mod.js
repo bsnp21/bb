@@ -160,10 +160,7 @@ ${jstr_RestApi}
         //});
     },
     ApiBibleObj_search_txt: function (req, res) {
-        //if (!req || !res) {
-        //    return inp_struct_search
-        //}
-        //var inp = BibleUti.Parse_GET_req_to_inp(req)
+        
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             //if (!inp.usr.f_path) inp.usr.f_path = ""
@@ -309,10 +306,7 @@ ${jstr_RestApi}
 
     /////
     ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
-        // if (!req || !res) {
-        //     return inp_struct_base
-        // }
-        // var inp = BibleUti.Parse_GET_req_to_inp(req)
+       
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -436,7 +430,7 @@ ${jstr_RestApi}
         })
     },
     ApiUsrDat_load: async function (req, res) {
-        //var inp = BibleUti.Parse_GET_req_to_inp(req)
+        
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -527,10 +521,7 @@ ${jstr_RestApi}
     },
 
     ApiUsrReposData_destroy: async function (req, res) {
-        // if (!req || !res) {
-        //     return inp_struct_account_setup
-        // }
-        // var inp = BibleUti.Parse_GET_req_to_inp(req)
+        
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -562,10 +553,7 @@ ${jstr_RestApi}
     },
 
     ApiUsrReposData_status: function (req, res) {
-        //if (!req || !res) {
-        //    return inp_struct_account_setup
-        //}
-        //var inp = BibleUti.Parse_GET_req_to_inp(req)
+        
         BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -592,10 +580,7 @@ ${jstr_RestApi}
 
 
     ApiUsrReposData_git_push: async function (req, res) {
-        // if (!req || !res) {
-        //     return inp_struct_account_setup
-        // }
-        // var inp = BibleUti.Parse_GET_req_to_inp(req)
+       
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -621,10 +606,7 @@ ${jstr_RestApi}
     },
 
     ApiUsrReposData_git_pull: async function (req, res) {
-        // if (!req || !res) {
-        //     return inp_struct_account_setup
-        // }
-        // var inp = BibleUti.Parse_GET_req_to_inp(req)
+       
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -646,10 +628,7 @@ ${jstr_RestApi}
     },
 
     ApiUsr_Cmdline_Exec: async function (req, res) {
-        // if (!req || !res) {
-        //     return inp_struct_account_setup
-        // }
-        // var inp = BibleUti.Parse_GET_req_to_inp(req)
+       
         BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
