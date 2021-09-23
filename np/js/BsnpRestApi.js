@@ -56,6 +56,10 @@ var BsnpRestUti = {
 function BsnpRestApi() {
     var url = BsnpRestUti.Jsonpster_crossloader_get_ip()
     this.svrurl = url
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    var ssid = urlParams.get('SSID');
+    if(ssid) this.SSID = ssid
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
@@ -107,7 +111,7 @@ BsnpRestApi.prototype.gen_ssid = function (otk, usr, cbf) {
     var inp = { CUID: otk.CUID }
     if (!inp.CUID) return alert("missing CUID.")
     if (otk.pkb64.length === 0) return alert("no pubkey. Please load page again.")
-    
+
     if ('object' != typeof usr) return alert("missing usr.")
     var usrs = JSON.stringify(usr)
     if (usrs.length > 500) { return alert("max 4096-bit rsa: 501B. len=" + usrs.length) }
