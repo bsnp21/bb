@@ -118,9 +118,7 @@
 
     <h3 style="text-align: center;margin-top: 50px;">Sign-in Page</h3>
 
-    <p class='centeredtxt'><br>
-        <button class="signinBtn" id="SignInAsGuest" title="Guest without sign-in" disabled>Guest Sign-in <br>(No any account required.)</button> 
-    </p>
+
     
 
 
@@ -430,35 +428,16 @@
                 }
             })
         })
-        $("#SignInAsGuest").on("click", function () {
-            if(!confirm(`Notes:
-1. Your data will be shared by others.
-2. It's recommended to use your account.\n
-- Continue to login as a guest?`)){
-                return;
-            }
-            $(".signinBtn").attr("disabled", true)
-            $("#repopath").val("https://github.com/bsnp21/Guest.git")
-            $("#passcode").val("Guest")
-            PageUti.repo_Signin("#otb", function (ret) {
-                if (ret.out.state && ret.out.state.SSID && ret.out.state.SSID.length > 1) {
-                    var svrip = Uti.Jsonpster_crossloader_get_ip()
-                    window.open("BibleStudyNotePad.htm?ip=" + svrip, '_self');
-                } else {
-                    //$("#txtarea").show()
-                    $(".signinBtn").attr("disabled", null)
-                }
-            })
-        })
+     
     })
 </script>
 <script>
     $(function(){
 
+        $("title").text("signin")
         Uti.Jsonpster_crossloader(0, function (ret) {
             $(".signinBtn").attr("disabled", null)
     
-            $("title").text("signin")
             Uti.Msg("Sign-In")
             $("#txtarea").hide()
             var ar = MyStorage.Repositories().repos_app_init()
