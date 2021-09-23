@@ -11,7 +11,7 @@ const crypto = require('crypto')
 //var SvcUti = require("./SvcUti.module").SvcUti;
 //const exec = require('child_process').exec;
 
-const { BibleObjGituser, BibleUti } = require("./BibleObjGituser_mod")
+const { BibleObjGituser, BibleUti, NCache } = require("./BibleObjGituser_mod")
 
 
 var ApiUti = {
