@@ -165,7 +165,7 @@ var ApiJsonp_BibleObj = {
     },
     PostUsr_getSSID: function (req, res) {
         console.log("PostSSID_OtkSignin", req.query)
-        BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             if (("CUID" in inp) && ("usr" in inp)){
 
@@ -312,7 +312,7 @@ ${jstr_RestApi}
     },
     ApiBibleObj_search_txt: function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -348,7 +348,7 @@ ${jstr_RestApi}
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
             if (!proj) return console.log("proj_parse_usr_signed failed.")
@@ -397,7 +397,7 @@ ${jstr_RestApi}
         if (!req || !res) {
             return inp_struct_base
         }
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
             var save_res = { desc: "to save" }
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
@@ -458,7 +458,7 @@ ${jstr_RestApi}
     /////
     ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -541,7 +541,7 @@ ${jstr_RestApi}
         if (!req || !res) {
             return inp_struct_base
         }
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -582,7 +582,7 @@ ${jstr_RestApi}
     },
     ApiUsrDat_load: async function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
             if (!proj) return console.log("proj_parse_usr_signed failed.")
@@ -653,7 +653,7 @@ ${jstr_RestApi}
         if (!req || !res) {
             return inp_struct_account_setup
         }
-        BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signin(inp)
@@ -673,7 +673,7 @@ ${jstr_RestApi}
 
     ApiUsrReposData_destroy: async function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
             if (!proj) return console.log("proj_parse_usr_signed failed.")
@@ -705,7 +705,7 @@ ${jstr_RestApi}
 
     ApiUsrReposData_status: function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -732,7 +732,7 @@ ${jstr_RestApi}
 
     ApiUsrReposData_git_push: async function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -758,7 +758,7 @@ ${jstr_RestApi}
 
     ApiUsrReposData_git_pull: async function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
@@ -780,7 +780,7 @@ ${jstr_RestApi}
 
     ApiUsr_Cmdline_Exec: async function (req, res) {
 
-        BibleUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.proj_parse_usr_signed(inp)
             if (!proj) return console.log("proj_parse_usr_signed failed.")

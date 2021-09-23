@@ -432,7 +432,7 @@
     $(function () {
 
         $(".signinBtn").removeAttr("disabled")
-        init_svr()
+        //init_svr()
 
 
         //        Uti.Jsonpster_crossloader(0, function (ret) {
@@ -460,19 +460,19 @@
 
     function init_svr(cbf) {
         var url = Uti.Jsonpster_crossloader_get_ip()
-        Jsonpster.SvrUrl = url
+        Jsonpster.SvrUrl = url +"/"
         $.ajax({
             type: "GET",
-            url: `${url}/GetOTK/`,// + MyStorage.GenCUID(),
+            url: `${url}/Get_OTK`,// + MyStorage.GenCUID(),
 
             data: {},
             crossDomain: true,
             success: function (dat, err) {
                 console.log(dat)
                 Jsonpster.CUID = dat.CUID
-                Jsonpster.pk64 = dat.pk64
+                Jsonpster.pkb64 = dat.pkb64
 
-                if(cbf) cbf(dat)
+                sign_in22(dat)
 
                 $(".signinBtn").removeAttr("disabled")
                 var ar = MyStorage.Repositories().repos_app_init()
@@ -496,11 +496,46 @@
             alert(textStatus);
         });;
     }
-    function sign_in() {
+    function sign_in(dat) {
+        dat.api=
         ///
         $.ajax({
             type: "POST",
-            dataType: 'text',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            url: Jsonpster.SvrUrl + "/PostUsr_getSSID",
+            data: (this.inp),
+            username: 'user',
+            password: 'pass',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: false
+            }
+        })
+            .success(function (data) {
+                //console.log("success",data);
+                //cbf(JSON.parse(data))
+            })
+            .done(function (data) {
+                //var ret = JSON.parse(data)
+                Jsonpster.onAfterRun(ret)
+                cbf(ret)
+                Jsonpster.api = Jsonpster.inp.par = Jsonpster.inp.usr = null;
+            })
+            .fail(function (xhr, textStatus, errorThrown) {
+                console.log("err surlapi=", Jsonpster.SvrUrl + Jsonpster.api)
+                alert("xhr.responseText=" + xhr.responseText + ",textStatus=" + textStatus);
+                //alert("textStatus="+textStatus);
+            });
+
+        return;
+    }
+
+    function sign_in11(dat) {
+        ///
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
             contentType: "application/json; charset=utf-8",
             url: Jsonpster.SvrUrl + "PostUsr_getSSID",
             data: JSON.stringify(this.inp),
@@ -530,18 +565,12 @@
         return;
     }
 
-    function sign_in22() {
-
-
-
-
-
-
-
+    function sign_in22(dat) {
 
 
         Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update()
-        //Jsonpster.CUID = MyStorage.GenCUID()
+        Jsonpster.inp.CUID = dat.CUID;//MyStorage.GenCUID()
+        Jsonpster.pkb64 = dat.pkb64;//MyStorage.GenCUID()
         //Jsonpster.api = RestApi.UsrReposPost_Signin
         Uti.Msg("Jsonpster", Jsonpster)
         Jsonpster.RunAjaxPost_Signin(function (ret) {
@@ -564,25 +593,5 @@
         })
 
 
-        //////
-        PageUti.repo_Signin("#otb", function (ret) {
-            if (ret.out.state && ret.out.state.SSID && ret.out.state.SSID.length > 1) {
-                var svrip = Uti.Jsonpster_crossloader_get_ip()
-                window.open("BibleStudyNotePad.htm?ip=" + svrip, '_self');
-            } else {
-                //$("#txtarea").show()
-                $(".signinBtn").removeAttr("disabled")
-            }
-        })
-
-
-        $(showid).html("<font color='black'>Start to sign in ... </font>")
-
-        var repopath = $("#repopath").val()
-        var reo = Uti.validate_repository_url(repopath)
-        if (!reo) {
-            $(showid).html("<font color='red'>Error format: Repository</font>")
-            return;
-        }
     }
 </script>
