@@ -137,9 +137,9 @@ var ApiUti = {
     find_workDir: function () {
         var pwd = __dirname
         console.log("__dirname=", pwd)
-        var ar = pwd.split("/")
+        
         var wd = "/", rootdir = ""
-        forEach(ar, function (nodname) {
+        pwd.split("/").forEach(function (nodname) {
             wd += nodname
             console.log(wd)
             if (fs.existsSync(`${wd}/.git`)) {
