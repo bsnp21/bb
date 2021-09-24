@@ -65,13 +65,15 @@ var MyStorage = {
     },
  
     SSID: function (ssid) {
-        const sessId = "SSID"
+        //const sessId = "SSID"
         if (undefined === ssid) {
-            var ret = localStorage.getItem(sessId)
-            if (!ret) return alert("Invalid SessionID. \n- Please sign out/in again.")
-            return ret
+            //var ret = localStorage.getItem(sessId)
+            //if (!ret) return alert("Invalid SessionID. \n- Please sign out/in again.")
+            //return ret
+            var api = new BsnpRestApi()
+            return api.SSID
         } else {
-            localStorage.setItem(sessId, ssid)
+            //localStorage.setItem(sessId, ssid)
         }
     },
 
