@@ -1,10 +1,10 @@
 #/bin/ 
 
 
-npm istall express
-npm istall cors
-npm istall cheerio
-npm istall express-fileupload
-npm istall express
-npm istall express
-npm istall express
+npm install express
+npm install cors
+npm install cheerio
+npm install express-fileupload
+npm install express
+npm install express
+npm install express
