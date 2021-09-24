@@ -1,10 +1,10 @@
 #/bin/ 
 
 
-sudo npm istall express
-sudo npm istall cors
-sudo npm istall cheerio
-sudo npm istall express-fileupload
-sudo npm istall express
-sudo npm istall express
-sudo npm istall express
+npm istall express
+npm istall cors
+npm istall cheerio
+npm istall express-fileupload
+npm istall express
+npm istall express
+npm istall express
