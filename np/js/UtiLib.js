@@ -533,7 +533,7 @@ var Uti = {
         var api = new BsnpRestApi()
 
         //if (0 === idx) {//initial-sign-in-page-loading only
-            var tuid = MyStorage.GenCUID()
+            //var tuid = MyStorage.GenCUID()
             svrurl += `/Jsonpster?inp=`;
             //SSID will be ready after sign-in success.
         //}

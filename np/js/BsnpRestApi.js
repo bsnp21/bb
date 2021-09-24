@@ -86,7 +86,7 @@ BsnpRestApi.prototype._get_otk = function (cbf) {
     var url = this.svrurl
     $.ajax({
         type: "GET",
-        url: `${url}/Get_OTK`,// + MyStorage.GenCUID(),
+        url: `${url}/Get_OTK`,//
 
         data: {},
         crossDomain: true,
