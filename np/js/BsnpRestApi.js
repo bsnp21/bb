@@ -2,14 +2,14 @@
 
 
 var BsnpRestUti = {
-    
+
 }
 
 function BsnpRestApi() {
     this.init_param_fr_url()
 }
 BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     var ip = urlParams.get('ip');
     if (!ip) {
@@ -57,9 +57,7 @@ BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
     this._get_otk(function (otk) {
         _this._gen_ssid(otk, usr, function (ret) {
-            if (ret.out.state.SSID) {
-                _this.SSID = ret.out.state.SSID
-            }
+
             cbf(ret)
         })
     })
@@ -140,6 +138,9 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
         })
         .done(function (ret) {
             var ret = JSON.parse(ret)
+            if (ret.out.state.SSID) {
+                _this.SSID = ret.out.state.SSID
+            }
             cbf(ret)
         })
         .fail(function (xhr, textStatus, errorThrown) {
