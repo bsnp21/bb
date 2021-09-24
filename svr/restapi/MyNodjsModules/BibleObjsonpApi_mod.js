@@ -146,7 +146,7 @@ var ApiUti = {
                 rootdir = wd
             }
         })
-        console.log("rootdir=", rootdir)
+        console.log(rootdir, " <== rootdir")
         return rootdir
     }
 }
