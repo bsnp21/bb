@@ -63,16 +63,7 @@ var MyStorage = {
             if (cbf) cbf(ret)
         })
     },
-    //GenCUID: function () {
-    //    const sTUID = "CUID" //timebased user id.
-    //    var uid = localStorage.getItem(sTUID)
-    //    if (!uid || uid.length < 10) {
-    //        uid = sTUID + (new Date()).getTime()
-    //        uid += Math.random()
-    //        localStorage.setItem(sTUID, uid)
-    //    }
-    //    return uid
-    //},
+ 
     SSID: function (ssid) {
         const sessId = "SSID"
         if (undefined === ssid) {

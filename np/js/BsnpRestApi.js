@@ -92,15 +92,10 @@ BsnpRestApi.prototype._get_otk = function (cbf) {
         crossDomain: true,
         success: function (dat, err) {
             console.log(dat)
-            //Jsonpster.CUID = dat.CUID
-            //Jsonpster.pkb64 = dat.pkb64
+            console.log(err)
 
             _this.SSID = dat.CUID
             cbf(dat)
-
-            //$(".signinBtn").removeAttr("disabled")
-            //var ar = MyStorage.Repositories().repos_app_init()
-            console.log(err)
         },
         dataType: "json", //exe script.
 
