@@ -134,10 +134,20 @@ var ApiUti = {
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
     },
-    find_workDir:function(){
+    find_workDir: function () {
         var pwd = __dirname
-        console.log("__dirname=",pwd)
-
+        console.log("__dirname=", pwd)
+        var ar = pwd.split("/")
+        var wd = "/", rootdir = ""
+        forEach(ar, function (nodname) {
+            wd += nodname
+            console.log(wd)
+            if (fs.existsSync(`${wd}/.git`)) {
+                rootdir = wd
+            }
+        })
+        console.log("rootdir=", rootdir)
+        return rootdir
     }
 }
 
