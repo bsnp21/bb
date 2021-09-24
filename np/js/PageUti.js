@@ -105,21 +105,12 @@ var PageUti = {
 
     },
     repo_destroy: function (bForce) {
-        if (!confirm("The Bible study notes you wrote in server-site will be erased.")) return
-        if (bForce) {
-            //Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update() //force to destroy. test only.
-        } else {
-            Jsonpster.inp.SSID = MyStorage.SSID()
-        }
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrReposData_destroy, {
 
-
-        Jsonpster.inp.par = {}
-        Jsonpster.api = RestApi.ApiUsrReposData_destroy
-        Uti.Msg("start", Jsonpster)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
+        }, function (ret) {
             $("#otb").html("<font color='green'>Repos is undocked.</font>")
             Uti.Msg("ret", ret)
-
         })
     },
     repo_status: function (showid) {
@@ -128,7 +119,7 @@ var PageUti = {
         var uiv = $("#repodesc").val();//MyStorage.Repositories().repos_store_get().repodesc
         var ttl = MyStorage.cacheTTL() //from localStorage
         var par = {}
-        par.aux = { Update_repodesc: uiv, cacheTTL: ttl }
+        par.aux = { Update_repodesc: uiv, cacheTTL: ttl }//aux need to be fixed in svr.
 
 
         var api = new BsnpRestApi()
@@ -142,17 +133,6 @@ var PageUti = {
         })
 
         return
-        ////////
-        Jsonpster.api = RestApi.ApiUsrReposData_status
-        Uti.Msg("start", Jsonpster)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            Uti.Msg("ret.out.state", ret.out.state)
-
-            $(showid).html("<font color='green'>ok.</font>")
-            //PageUti.repos_status_display(ret, showid)
-            var stb = PageUti.Repo_fstat_table(ret)
-            $(showid).html(stb)
-        })
     },
     repos_status_display: function (ret, eid) {
         var sta = ret.out.state
@@ -181,56 +161,10 @@ var PageUti = {
         $(eid).html(msg).show()
     },
     repo_pushback: function (bForce) {
-        var passcode = $("#passcode").val()
-        if (passcode.trim().length === 0) return alert("passcode is required to push data into your repository.")
-        if (!confirm("push data into repository")) return
-
-        if (bForce) {
-            Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update() //force to destroy. test only.
-        } else {
-            Jsonpster.inp.SSID = MyStorage.SSID()
-        }
-
-        Jsonpster.api = RestApi.ApiUsrReposData_git_push
-        Uti.Msg("start", Jsonpster)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-
-            //Uti.Msg("ret", ret)
-            $("#otb").html("<font color='green'>Push is done.</font>")
-            Uti.Msg("output status:", ret.out)
-
-            Uti.Msg("ret.out.git_add_commit_push_res.success.stderr=", ret.out.git_add_commit_push_res.success.stderr)
-            var errmsg = "Invalid username or password."
-            if (ret.out.git_add_commit_push_res.success.stderr.indexOf(errmsg) >= 0) {
-                alert(errmsg)
-            }
-        })
+       
     },
     repo_pulldown: function (bForce) {
-        var passcode = $("#passcode").val()
-        if (passcode.trim().length === 0) return alert("passcode is required to push data into your repository.")
-        if (!confirm("pull down data")) return
-
-        if (bForce) {
-            Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update() //force to destroy. test only.
-        } else {
-            Jsonpster.inp.SSID = MyStorage.SSID()
-        }
-
-        Jsonpster.api = RestApi.ApiUsrReposData_git_pull
-        Uti.Msg("Jsonpster", Jsonpster)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-
-            $("#otb").html("<font color='green'>Pull is done.</font>")
-            //dbg_pster(ret)
-            Uti.Msg("output status:", ret.out)
-
-            //Uti.Msg("ret.out.git_push_res.success.stderr=", ret.out.git_push_res.success.stderr)
-            var errmsg = "Invalid username or password."
-            if (ret.out.git_pull_res.success.stderr.indexOf(errmsg) >= 0) {
-                alert(errmsg)
-            }
-        })
+    
     },
     gen_cmdline_table: function (eid, ar) {
         var cmdary =
@@ -264,23 +198,24 @@ var PageUti = {
             console.log(cmd)
 
 
-
-            Jsonpster.inp.par = { cmdline: cmd }
-            Jsonpster.api = RestApi.ApiUsr_Cmdline_Exec
-            //dbg_pster()
-            Jsonpster.RunAjaxPost_Signed(function (ret) {
-                Uti.Msg(ret)
-                var res = ret.out.cmd_exec_res.success
-                var str2 = ""
-                Object.keys(res).forEach(function (key) {
-                    var str = res[key];
-                    if (!!str) {
-                        str2 += "\n" + str.replace("\\n", "\n")
-                    }
-                    //dbg_pster(key)
+            var api = new BsnpRestApi()
+            api.run(RestApi.ApiUsr_Cmdline_Exec,
+                {
+                    cmdline: cmd
+                },
+                function(ret){
+                    Uti.Msg(ret)
+                    var res = ret.out.cmd_exec_res.success
+                    var str2 = ""
+                    Object.keys(res).forEach(function (key) {
+                        var str = res[key];
+                        if (!!str) {
+                            str2 += "\n" + str.replace("\\n", "\n")
+                        }
+                        //dbg_pster(key)
+                    })
+                    Uti.Msg(str2)
                 })
-                Uti.Msg(str2)
-            })
         })
     },
     LoadStorageInRepos: function (eid) {

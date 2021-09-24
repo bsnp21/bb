@@ -330,18 +330,14 @@ PopupMenu_EdiTag.prototype.init = function () {
             Uti.Msg("No save")
             return
         }
-
-
-        Jsonpster.api = RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt
-        Jsonpster.inp.par = par
-        console.log("inp:", Jsonpster)
-        Uti.Msg(Jsonpster)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            console.log("ret", ret)
-            Uti.Msg(ret.out)
-            _THIS.m_ediBtn.enable_edit(false, true)
-
-        })
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
+            par,
+            function(ret){
+                console.log("ret", ret)
+                Uti.Msg(ret.out)
+                _THIS.m_ediBtn.enable_edit(false, true)            }
+        )
     })
 
 

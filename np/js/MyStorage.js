@@ -57,10 +57,7 @@ var MyStorage = {
         }
         if (!Jsonpster.inp.SSID) return alert("inp.ssid is not set yet:" + Jsonpster.inp.SSID)
 
-
-  
         Jsonpster.inp.par = { fnames: ["./dat/localStorage"] }
-
         Jsonpster.api = RestApi.ApiUsrDat_load
         Jsonpster.RunAjaxPost_Signed(function (ret) {
             //if (cbf) cbf(ret)
