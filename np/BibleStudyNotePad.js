@@ -2146,11 +2146,9 @@ AppInstancesManager.prototype.init_load_storage = function () {
 
     function _init_load_repo() {
         Uti.Msg("start ...", "" + window.location.href);
-        if ("undefined" === typeof Jsonpster) {
-            alert("Jsonpster server down.");
-        }
+       
         Uti.Msg("RestApi=", RestApi);
-        //Uti.Msg(Jsonpster.getUrl());
+       
         MyStorage.Repositories().repos_app_init()
         MyStorage.Repo_load(function (ret) {
             //if (cbf) cbf(ret)
