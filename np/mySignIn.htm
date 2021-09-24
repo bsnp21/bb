@@ -27,7 +27,7 @@
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
     <script src="./js/MyStorage.js"></script>
-    <script src="./js/Jsonpster.js"></script>
+    
     <script src="./js/BsnpRestApi.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
     <!-------------------------------------------->
@@ -362,13 +362,6 @@
 
         function Okey_use_this() {
 
-            if (!Jsonpster.inp) return alert("empty inp")
-            if (!Jsonpster.inp.usr) return alert("empty usr")
-            Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update()
-
-            Uti.Msg("powindow.opener.postMessage:", Jsonpster.inp.usr)
-            window.opener.postMessage(Jsonpster.inp.usr, '*');
-
         }
 
     </script>
@@ -376,7 +369,7 @@
 
 </html>
 <script>
-    console.log(Jsonpster)
+   
     $(function () {
 
 
