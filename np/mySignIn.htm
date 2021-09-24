@@ -443,7 +443,7 @@
             api.signin(usr, function (rob) {
                 $(".signinBtn").removeAttr("disabled")
                 console.log(rob)
-                var ur = `./BibleStudyNotePad.htm${api.getRedirectParam()}`
+                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
                 //alert("ok")
                 //window.open(ur, '_self');
                 var tb = PageUti.Repo_fstat_table(rob)

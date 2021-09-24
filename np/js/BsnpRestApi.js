@@ -2,64 +2,56 @@
 
 
 var BsnpRestUti = {
-    Jsonpster_crossloader_get_ip: function (ip) {
-        if (!ip) {
-            //get ip from url param. ?ip=0.0.0.0:7778
-            const urlParams = new URLSearchParams(window.location.search);
-            var ip = urlParams.get('ip');
-            if (!ip) {
-                //use self ip.
-                ip = window.location.host
-            }
-            if (!ip) {
-                //use self ip.
-                ip = window.location.hostname
-            }
-            if (!ip) {
-                return alert("not localhost or missed in url with ?ip=x.x.x.x")
-            }
-            if ("undefined" === ip) {
-                return alert("not localhost or missed in url with ?ip=undefined")
-            }
-
-            if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
-
-            if (ip.indexOf("http") < 0) {
-                if (ip.indexOf("7778") > 0) {//ssl
-                    ip = `http://${ip}`;
-                } else {
-                    ip = `https://${ip}`;
-                }
-            }
-
-
-
-            //other param form url param ?inp=0.0.0.0:778&#Gen2:7
-            var idx = window.location.href.indexOf("#") //case: ?ip=1.1.1.1#Gen1:1
-            var bcv = ""
-            if (idx >= 0) {
-                //ip = window.location.href.substr(0, idx)
-                bcv = window.location.href.substr(1 + idx)
-                window.m_bcv = bcv
-            }
-            console.log("ip,pcv:", ip, bcv)
-        }
-
-        if ("undefined" != typeof RestApi) {
-            console.log("Jsonpster is already loaded. Ignore", ip)
-        }
-
-        return ip
-    },
+    
 }
 
 function BsnpRestApi() {
-    var url = BsnpRestUti.Jsonpster_crossloader_get_ip()
-    this.svrurl = url
-
+    this.init_param_fr_url()
+}
+BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
+    
     const urlParams = new URLSearchParams(window.location.search);
+    var ip = urlParams.get('ip');
+    if (!ip) {
+        //use self ip.
+        ip = window.location.host
+    }
+    if (!ip) {
+        //use self ip.
+        ip = window.location.hostname
+    }
+    if (!ip) {
+        return alert("not localhost or missed in url with ?ip=x.x.x.x")
+    }
+    if ("undefined" === ip) {
+        return alert("not localhost or missed in url with ?ip=undefined")
+    }
+
+    if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
+
+    if (ip.indexOf("http") < 0) {
+        if (ip.indexOf("7778") > 0) {//ssl
+            ip = `http://${ip}`;
+        } else {
+            ip = `https://${ip}`;
+        }
+    }
+    this.svrurl = ip
+
+    //const urlParams = new URLSearchParams(window.location.search);
     var ssid = urlParams.get('SSID');
     if (ssid) this.SSID = ssid
+
+
+    //other param form url param ?ip=0.0.0.0:778&#Gen2:7
+    var idx = window.location.href.indexOf("#") //case: ?ip=1.1.1.1#Gen1:1
+    var bcv = ""
+    if (idx >= 0) {
+        //ip = window.location.href.substr(0, idx)
+        bcv = window.location.href.substr(1 + idx)
+        window.m_bcv = bcv
+        console.log("ip,pcv:", ip, bcv)
+    }
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
@@ -72,7 +64,7 @@ BsnpRestApi.prototype.signin = function (usr, cbf) {
         })
     })
 }
-BsnpRestApi.prototype.getRedirectParam = function () {
+BsnpRestApi.prototype.urlRedirectParam = function () {
     var spar = `?ip=${this.svrurl}`
     if ("SSID" in this) {
         if (this.SSID.length > 10) {
