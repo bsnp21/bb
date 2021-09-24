@@ -140,7 +140,7 @@ var ApiUti = {
         
         var wd = "", rootdir = ""
         pwd.split("/").forEach(function (nodname) {
-            wd += "/"+nodname
+            wd += nodname+"/"
             console.log(wd)
             if (fs.existsSync(`${wd}/.git`)) {
                 rootdir = wd
