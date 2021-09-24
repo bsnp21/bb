@@ -64,13 +64,21 @@ function BsnpRestApi() {
 BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
     this._get_otk(function (otk) {
-        _this._gen_ssid(otk, usr, function (out) {
-            cbf(out)
+        _this._gen_ssid(otk, usr, function (ret) {
+            if (ret.out.state.SSID) {
+                _this.SSID = ret.out.state.SSID
+            }
+            cbf(ret)
         })
     })
 }
 BsnpRestApi.prototype.getRedirectParam = function () {
-    var spar = `?ip=${this.svrurl}&SSID=${this.SSID}`
+    var spar = `?ip=${this.svrurl}`
+    if ("SSID" in this) {
+        if (this.SSID.length > 10) {
+            spar += "&SSID=" + this.SSID
+        }
+    }
     return spar
 }
 BsnpRestApi.prototype._get_otk = function (cbf) {
@@ -160,9 +168,9 @@ BsnpRestApi.prototype.redirect_page = function (surl) {
 BsnpRestApi.prototype.run = function (sapi, obj, cbf) {
     var inp = { SSID: this.SSID }
     if (!inp.SSID) return alert("missing SSID.")
-    inp.inp = obj
+    inp.par = obj
+    inp.api = sapi
 
-    this.m_redirect_param=`?ip=${this.svrurl}&SSID=${this.SSID}`
 
     var _this = this;
     $.ajax({

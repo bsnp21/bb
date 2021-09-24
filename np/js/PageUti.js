@@ -155,8 +155,18 @@ var PageUti = {
     repo_status: function (showid) {
         $(showid).html("<font>start checking...</font>")
 
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrReposData_status, null, function (ret) {
+            Uti.Msg("ret.out.state", ret.out.state)
 
+            $(showid).html("<font color='green'>ok.</font>")
+            //PageUti.repos_status_display(ret, showid)
+            var stb = PageUti.Repo_fstat_table(ret)
+            $(showid).html(stb)
+        })
 
+        return
+        ////////
         Jsonpster.api = RestApi.ApiUsrReposData_status
         Uti.Msg("start", Jsonpster)
         Jsonpster.RunAjaxPost_Signed(function (ret) {

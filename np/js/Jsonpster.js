@@ -1,9 +1,9 @@
 
 var Jsonpster = {
-    SvrUrl: "${SvrUrl}",
+    SvrUrl: "",
     api: "",
-    inp: { CUID:"${sCUID}", usr:null, SSID:null, par:null, aux:null},
-    pkb64:"${pkb64}",
+    inp: { CUID:"", usr:null, SSID:null, par:null, aux:null},
+    pkb64:"",
 onBeforeRun : function(){},
 onAfterRun : function(){},
 
