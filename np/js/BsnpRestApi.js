@@ -93,8 +93,6 @@ BsnpRestApi.prototype._get_otk = function (cbf) {
         success: function (dat, err) {
             console.log(dat)
             console.log(err)
-
-            _this.SSID = dat.CUID
             cbf(dat)
         },
         dataType: "json", //exe script.
