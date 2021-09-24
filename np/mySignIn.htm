@@ -441,18 +441,22 @@
 
             var api = new BsnpRestApi()
             var usr = MyStorage.Repositories().repos_app_update()
-            api.signin(usr, function (rob) {
+            api.signin(usr, function (rob, err) {
                 $(".signinBtn").removeAttr("disabled")
                 console.log(rob)
                 var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
                 //alert("ok")
                 //window.open(ur, '_self');
-                var tb = PageUti.Repo_fstat_table(rob)
-                MyStorage.SSID(rob.out.state.SSID)
-                var a = `<a href='${ur}' target="_self">Successfully signed in.<br> continue to enter</a>`
-                $("#Enter").html(a)
-                $("#output").append(tb)
-                $("#input_area, #account_history_table").hide()
+                if(err){
+
+                }else{
+                    var tb = PageUti.Repo_fstat_table(rob)
+                    MyStorage.SSID(rob.out.state.SSID)
+                    var a = `<a href='${ur}' target="_self">Successfully signed in.<br> continue to enter</a>`
+                    $("#Enter").html(a)
+                    $("#output").append(tb)
+                    $("#input_area, #account_history_table").hide()
+                }
 
             })
             //init_svr(function(dat){

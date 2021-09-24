@@ -53,15 +53,6 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
         console.log("ip,pcv:", ip, bcv)
     }
 }
-BsnpRestApi.prototype.signin = function (usr, cbf) {
-    var _this = this
-    this._get_otk(function (otk) {
-        _this._gen_ssid(otk, usr, function (ret) {
-
-            cbf(ret)
-        })
-    })
-}
 BsnpRestApi.prototype.urlRedirectParam = function () {
     var spar = `?ip=${this.svrurl}`
     if ("SSID" in this) {
@@ -70,6 +61,17 @@ BsnpRestApi.prototype.urlRedirectParam = function () {
         }
     }
     return spar
+}
+BsnpRestApi.prototype.signin = function (usr, cbf) {
+    var _this = this
+    this._get_otk(function (otk) {
+        _this._gen_ssid(otk, usr, function (ret) {
+            if (ret.out.state.SSID) {
+                _this.SSID = ret.out.state.SSID
+            }
+            cbf(ret, !_this.SSID)
+        })
+    })
 }
 BsnpRestApi.prototype._get_otk = function (cbf) {
     var _this = this
@@ -138,9 +140,6 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
         })
         .done(function (ret) {
             var ret = JSON.parse(ret)
-            if (ret.out.state.SSID) {
-                _this.SSID = ret.out.state.SSID
-            }
             cbf(ret)
         })
         .fail(function (xhr, textStatus, errorThrown) {
