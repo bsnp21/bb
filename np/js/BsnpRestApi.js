@@ -63,13 +63,13 @@ function BsnpRestApi() {
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
-    this.get_otk(function (otk) {
-        _this.gen_ssid(otk, usr, function (out) {
+    this._get_otk(function (otk) {
+        _this._gen_ssid(otk, usr, function (out) {
             cbf(out)
         })
     })
 }
-BsnpRestApi.prototype.get_otk = function (cbf) {
+BsnpRestApi.prototype._get_otk = function (cbf) {
     var _this = this
     var url = this.svrurl
     $.ajax({
@@ -107,7 +107,7 @@ BsnpRestApi.prototype.get_otk = function (cbf) {
         alert(textStatus);
     });;
 }
-BsnpRestApi.prototype.gen_ssid = function (otk, usr, cbf) {
+BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
     var inp = { CUID: otk.CUID }
     if (!inp.CUID) return alert("missing CUID.")
     if (otk.pkb64.length === 0) return alert("no pubkey. Please load page again.")
