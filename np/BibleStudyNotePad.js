@@ -1859,20 +1859,11 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrReposData_destroy,{
+        api.run(RestApi.ApiUsrReposData_destroy, {
 
-        },function(ret){
+        }, function (ret) {
             $("body").attr("onbeforeunload", null)
             window.open("./index.htm", "_self")
-        })
-
-        return
-        Jsonpster.inp.par = {}
-        Jsonpster.api = RestApi.ApiUsrReposData_destroy
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            $("body").attr("onbeforeunload", null)
-            window.open("./index.htm", "_self")
-            MyStorage.SSID("")
         })
     })
 }
@@ -2040,17 +2031,16 @@ AppInstancesManager.prototype.init = function (cbf) {
 
     //tab_DocumentSelected_Search.init()
     tab_DocumentSelected_Search.cbf_click_doc_to_run_search = function () {
-        Jsonpster.inp.par = g_aim.get_search_inp();
-        Jsonpster.api = RestApi.ApiBibleObj_search_txt;
-        Uti.Msg(Jsonpster)
-        if (!Jsonpster.inp.par) return
         $("#searchNextresult").text("Serach str in server site..")
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            _This.apiCallback_Gen_output_table(ret, function (size) {
-                $("#searchNextresult").text("0/" + size)
-            });
-            Uti.Msg(ret.out.result);
-        })
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiBibleObj_search_txt,
+            g_aim.get_search_inp(),
+            function (ret) {
+                _This.apiCallback_Gen_output_table(ret, function (size) {
+                    $("#searchNextresult").text("0/" + size)
+                });
+                Uti.Msg(ret.out.result);
+            })
     }
 
     tab_DocumentSelected_Search.Update_DocSel_Table("#Tab_doc_option_for_search")
