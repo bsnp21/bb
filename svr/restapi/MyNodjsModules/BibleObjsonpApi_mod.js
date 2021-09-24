@@ -136,7 +136,7 @@ var ApiUti = {
     },
     find_workDir:function(){
         var pwd = __dirname
-        console.log(pwd)
+        console.log("__dirname=",pwd)
 
     }
 }
