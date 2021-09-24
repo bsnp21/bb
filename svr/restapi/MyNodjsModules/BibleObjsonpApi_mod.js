@@ -147,7 +147,7 @@ var ApiUti = {
             }
             prev = wd
         })
-        console.log(rootdir, " <== rootdir")
+        console.log(rootdir, "  <=== svr rootdir")
         return rootdir
     }
 }
@@ -723,10 +723,10 @@ var BibleObjJsonpApi = {
 
         // Pass to next layer of middleware
     },
-    init: function (app, rootDir) {
-        var wdir = ApiUti.find_workDir()
-        BibleObjJsonpApi.m_rootDir = rootDir
-        BibleUti.WorkingRootDir(rootDir)
+    init: function (app) {
+        var woringDir = ApiUti.find_workDir()
+        BibleObjJsonpApi.m_rootDir = woringDir
+        BibleUti.WorkingRootDir(woringDir)
         BibleUti.Update_SvrIP_in_HomeSitePage()
         //
         Object.keys(ApiJsonp_BibleObj).forEach(function (sapi) {
