@@ -138,7 +138,7 @@ var ApiUti = {
         var pwd = __dirname
         console.log("__dirname=", pwd)
         
-        var wd = "/", rootdir = ""
+        var wd = "", rootdir = ""
         pwd.split("/").forEach(function (nodname) {
             wd += "/"+nodname
             console.log(wd)
