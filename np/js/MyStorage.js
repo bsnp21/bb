@@ -50,22 +50,6 @@ var MyStorage = {
     },
     Repo_load: function (cbf) {
         var api = new BsnpRestApi()
-
-        if (!Jsonpster.inp.SSID) {//: initial load once for all.
-            Jsonpster.inp.SSID = api.SSID
-            Jsonpster.inp.usr = null
-        }
-        if (!Jsonpster.inp.SSID) return alert("inp.ssid is not set yet:" + Jsonpster.inp.SSID)
-
-        Jsonpster.inp.par = { fnames: ["./dat/localStorage"] }
-        Jsonpster.api = RestApi.ApiUsrDat_load
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            //if (cbf) cbf(ret)
-            ret;
-        })
-
-
-        
         api.run(RestApi.ApiUsrDat_load,
             {
                 fnames: ["./dat/localStorage"]

@@ -296,13 +296,20 @@ PopupMenu_EdiTag.prototype.init = function () {
         //if (htmEdit.length >= 2000) alert(`lengh=${htmEdit.length} > max 2000.`)
         var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
 
-        var pster = JSON.parse(JSON.stringify(Jsonpster))
-        pster.inp.SSID = Jsonpster.inp.SSID = MyStorage.SSID()
+        var pster = {inp:{par:''}}
+        
         pster.inp.par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
 
         pster.api = RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt
         localStorage.setItem("myNote", JSON.stringify(pster))
         return pster.inp.par
+    }
+    function _get_par_ediTxt_par() {
+        var htmEdit = _THIS.m_ediDiv.getEditHtm()
+        if (htmEdit.length >= 2000000) alert(`lengh=${htmEdit.length} > max 2MB.`)
+        var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
+        var par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
+        return par
     }
 
     $("#RevTag_Edit_Local").bind("click", function () {
@@ -325,7 +332,7 @@ PopupMenu_EdiTag.prototype.init = function () {
     })
 
     $("#RevTag_Save").bind("click", function () {
-        var par = _set_par_ediTxt()
+        var par = _get_par_ediTxt_par()
         if (!par) {
             Uti.Msg("No save")
             return
@@ -2202,16 +2209,6 @@ AppInstancesManager.prototype.loadBible_verse_by_bibOj = function (par) {
 
     var fnamesArr = par.BCVtagClusterInfo.newselary; //tab_documentsClusterList.get_selected_seq_fnamesArr();
 
-    //Jsonpster.inp.par = { fnames: fnamesArr, bibOj: oj, Search: null };
-    //Jsonpster.api = RestApi.ApiBibleObj_load_by_bibOj;
-    //Uti.Msg(Jsonpster);
-    //Jsonpster.RunAjaxPost_Signed(function (ret) {
-    //    if (!ret.out.data) return alert("no out.data")
-    //    _THIS.loadBible_verse_by_bibOj_output(ret, par)
-    //    setTimeout(function () {
-    //        _THIS.scrollToView_Vrs()
-    //    }, 2100)
-    //})
 
     var api = new BsnpRestApi()
     api.run(RestApi.ApiBibleObj_load_by_bibOj,
