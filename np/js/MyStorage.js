@@ -38,6 +38,18 @@ var MyStorage = {
 
 
 
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrDat_save,
+            {
+                fnames: ["./dat/localStorage"],
+                data: txt
+            },
+            function (ret) {
+                cbf(ret)
+            })
+
+        return
+
 
         Jsonpster.inp.par = { fnames: ["./dat/localStorage"], data: txt }
         Jsonpster.api = RestApi.ApiUsrDat_save
@@ -60,10 +72,22 @@ var MyStorage = {
 
         Jsonpster.api = RestApi.ApiUsrDat_load
         Jsonpster.RunAjaxPost_Signed(function (ret) {
-            if (cbf) cbf(ret)
+            //if (cbf) cbf(ret)
+            ret;
         })
+
+
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrDat_load,
+            {
+                fnames: ["./dat/localStorage"]
+            },
+            function (ret) {
+                if (cbf) cbf(ret)
+            })
+
     },
- 
+
     SSID: function (ssid) {
         //const sessId = "SSID"
         if (undefined === ssid) {
