@@ -102,37 +102,7 @@ var PageUti = {
 
     },
     repo_Signin: function (showid, cbf) {
-        $(showid).html("<font color='black'>Start to sign in ... </font>")
-
-        var repopath = $("#repopath").val()
-        var reo = Uti.validate_repository_url(repopath)
-        if (!reo) {
-            $(showid).html("<font color='red'>Error format: Repository</font>")
-            return;
-        }
-
-        Jsonpster.inp.usr = MyStorage.Repositories().repos_app_update()
-        Jsonpster.inp.CUID = MyStorage.GenCUID()
-        Jsonpster.api = RestApi.UsrReposPost_Signin
-        Uti.Msg("Jsonpster", Jsonpster)
-        Jsonpster.RunAjaxPost_Signin(function (ret) {
-            Uti.Msg("ret.out.state", ret.out.state)
-
-            if (ret.out.state) {
-                var ssid = ret.out.state.SSID
-                if (ssid && ssid.length > 1) {
-                    MyStorage.SSID(ssid)
-
-                    $(showid).html("<font color='green'>Success</font>")
-
-                } else {
-                    $(showid).html("<font color='red'>Error: Wrong Repository or Password or Sign-in timeout.</font>")
-                }
-            } else {
-                $(showid).html("<font color='red'>Error: Wrong Repository</font>")
-            }
-            if (cbf) cbf(ret)
-        })
+        
     },
     repo_destroy: function (bForce) {
         if (!confirm("The Bible study notes you wrote in server-site will be erased.")) return
