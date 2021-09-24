@@ -2143,45 +2143,35 @@ AppInstancesManager.prototype.init_load_storage = function () {
             }
         }
     }
-    var _init_load_repo_i = 0
+
     function _init_load_repo() {
+        Uti.Msg("start ...", "" + window.location.href);
         if ("undefined" === typeof Jsonpster) {
-            _init_load_repo_i++
-            if (_init_load_repo_i > 10) {
-                clearInterval(iid)
-            }
+            alert("Jsonpster server down.");
         }
-        else {
-            clearInterval(iid)
-            Uti.Msg("start ...", "" + window.location.href);
-            if ("undefined" === typeof Jsonpster) {
-                alert("Jsonpster server down.");
-            }
-            Uti.Msg("RestApi=", RestApi);
-            //Uti.Msg(Jsonpster.getUrl());
-            MyStorage.Repositories().repos_app_init()
-            MyStorage.Repo_load(function (ret) {
-                //if (cbf) cbf(ret)
-                Uti.set_menuContainer_color(ret)
-                Uti.Msg("Ready ret.out", ret.out)
+        Uti.Msg("RestApi=", RestApi);
+        //Uti.Msg(Jsonpster.getUrl());
+        MyStorage.Repositories().repos_app_init()
+        MyStorage.Repo_load(function (ret) {
+            //if (cbf) cbf(ret)
+            Uti.set_menuContainer_color(ret)
+            Uti.Msg("Ready ret.out", ret.out)
 
-                var memo = (ret.out.data) ? ret.out.data["#MemoryVerse"] : ""
-                if (memo) {
-                    var ar = (ret.out.data["#MemoryVerse"])
-                    for (var i = 0; i < ar.length; i++) {
-                        var bcv = ar[i]
-                        markHistory.addnew2table("MemoryVerse", bcv)
-                    }
+            var memo = (ret.out.data) ? ret.out.data["#MemoryVerse"] : ""
+            if (memo) {
+                var ar = (ret.out.data["#MemoryVerse"])
+                for (var i = 0; i < ar.length; i++) {
+                    var bcv = ar[i]
+                    markHistory.addnew2table("MemoryVerse", bcv)
                 }
-                _load_bcv_from_url_param()
-            })
-
-        }
+            }
+            _load_bcv_from_url_param()
+        })
     }
 
     ////////////////////////////////
     //
-    var iid = setInterval(_init_load_repo, 1000)
+    _init_load_repo()
 }
 AppInstancesManager.prototype.scrollToView_Vrs = function () {
     var ret = showup.get_selected_bcv_parm()
