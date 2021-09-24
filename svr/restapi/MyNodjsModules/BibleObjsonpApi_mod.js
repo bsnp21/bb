@@ -133,6 +133,11 @@ var ApiUti = {
 
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
+    },
+    find_workDir:function(){
+        var pwd = __dirname
+        console.log(pwd)
+
     }
 }
 
@@ -708,6 +713,7 @@ var BibleObjJsonpApi = {
         // Pass to next layer of middleware
     },
     init: function (app, rootDir) {
+        var wdir = ApiUti.find_workDir()
         BibleObjJsonpApi.m_rootDir = rootDir
         BibleUti.WorkingRootDir(rootDir)
         BibleUti.Update_SvrIP_in_HomeSitePage()
