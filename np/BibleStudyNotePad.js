@@ -1858,7 +1858,15 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     $(".StorageRepo_Signout").on("click", function () {
         if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
 
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrReposData_destroy,{
 
+        },function(ret){
+            $("body").attr("onbeforeunload", null)
+            window.open("./index.htm", "_self")
+        })
+
+        return
         Jsonpster.inp.par = {}
         Jsonpster.api = RestApi.ApiUsrReposData_destroy
         Jsonpster.RunAjaxPost_Signed(function (ret) {
