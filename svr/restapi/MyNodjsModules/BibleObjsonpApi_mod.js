@@ -163,30 +163,6 @@ var ApiJsonp_BibleObj = {
         res.send(otk);
         res.end();
     },
-    PostUsr_getSSID: function (req, res) {
-        console.log("PostSSID_OtkSignin", req.query)
-        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
-            //: unlimited write size. 
-            if (("CUID" in inp) && ("usr" in inp)){
-
-            } else {
-                return
-            }
-            var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
-            var proj = userProject.proj_parse_usr_signin(inp)
-            if (!proj) return console.log("proj_parse_usr_signin failed.")
-
-            userProject.run_proj_setup()
-            if (inp.out.state.bEditable === 1) {
-                if (null === userProject.git_push_test()) {
-                    //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                    userProject.run_proj_destroy()
-                } else {
-                    inp.out.state.SSID = userProject.session_create()
-                }
-            }
-        })
-    },
     Jsonpster: function (req, res) {
         ////////////////////////////////////////////
         //app.get("/Jsonpster", (req, res) => {
