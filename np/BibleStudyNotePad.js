@@ -333,41 +333,39 @@ PopupMenu_EdiTag.prototype.init = function () {
         var api = new BsnpRestApi()
         api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
             par,
-            function(ret){
+            function (ret) {
                 console.log("ret", ret)
                 Uti.Msg(ret.out)
-                _THIS.m_ediBtn.enable_edit(false, true)            }
-        )
+                _THIS.m_ediBtn.enable_edit(false, true)
+            })
     })
 
 
     $("#RevTag_Load").bind("click", function () {
         var psr = Uti.parse_bcv(_THIS.m_par.m_bcv, "")
 
-        Jsonpster.inp.par = { fnames: [_THIS.m_par.m_rev], bibOj: psr.bcvObj }
-        Jsonpster.api = RestApi.ApiBibleObj_load_by_bibOj
-        console.log("Jsonpster:", Jsonpster)
-        Uti.Msg(Jsonpster)
-
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            console.log("ret", ret.out.data)
-            Uti.Msg(ret.out)
-            if (ret.out.data) {
-                var txt = ret.out.data[psr.vol][psr.chp][psr.vrs][_THIS.m_par.m_rev]
-                var edx = _THIS.m_ediDiv.getEditHtm()
-                if (txt != edx) {
-                    var dlt = edx.length - txt.length
-                    if (!confirm(`difference:${dlt}(b): continue?`)) return
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiBibleObj_load_by_bibOj,
+            { fnames: [_THIS.m_par.m_rev], bibOj: psr.bcvObj },
+            function (ret) {
+                console.log("ret", ret.out.data)
+                Uti.Msg(ret.out)
+                if (ret.out.data) {
+                    var txt = ret.out.data[psr.vol][psr.chp][psr.vrs][_THIS.m_par.m_rev]
+                    var edx = _THIS.m_ediDiv.getEditHtm()
+                    if (txt != edx) {
+                        var dlt = edx.length - txt.length
+                        if (!confirm(`difference:${dlt}(b): continue?`)) return
+                    }
+                    var showtxt = Uti.convert_std_bcv_in_text_To_linked(txt)
+                    _THIS.m_ediDiv.html(showtxt)
+                    _THIS.m_ediDiv.setEditHtm(txt)
+                    _THIS.m_ediBtn.enable_edit(true, true)
+                    $(_THIS.m_ediDiv.m_id).toggleClass("txt_loaded")
+                } else {
+                    alert("load failed. ")
                 }
-                var showtxt = Uti.convert_std_bcv_in_text_To_linked(txt)
-                _THIS.m_ediDiv.html(showtxt)
-                _THIS.m_ediDiv.setEditHtm(txt)
-                _THIS.m_ediBtn.enable_edit(true, true)
-                $(_THIS.m_ediDiv.m_id).toggleClass("txt_loaded")
-            } else {
-                alert("load failed. ")
-            }
-        })
+            })
     })
 
 }
