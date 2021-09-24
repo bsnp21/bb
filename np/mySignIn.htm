@@ -443,7 +443,7 @@
             api.signin(usr, function (obj) {
                 $(".signinBtn").removeAttr("disabled")
                 console.log(obj)
-                var ur = `./BibleStudyNotePad.htm?ip=${api.svrurl}&SSID=${obj.out.state.SSID}`
+                var ur = `./BibleStudyNotePad.htm${api.getRedirectParam()}`
                 //alert("ok")
                 //window.open(ur, '_self');
                 MyStorage.SSID(obj.out.state.SSID)

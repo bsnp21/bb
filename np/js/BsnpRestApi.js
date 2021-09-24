@@ -69,6 +69,10 @@ BsnpRestApi.prototype.signin = function (usr, cbf) {
         })
     })
 }
+BsnpRestApi.prototype.getRedirectParam = function () {
+    var spar = `?ip=${this.svrurl}&SSID=${this.SSID}`
+    return spar
+}
 BsnpRestApi.prototype._get_otk = function (cbf) {
     var _this = this
     var url = this.svrurl
@@ -83,6 +87,7 @@ BsnpRestApi.prototype._get_otk = function (cbf) {
             //Jsonpster.CUID = dat.CUID
             //Jsonpster.pkb64 = dat.pkb64
 
+            _this.SSID = dat.CUID
             cbf(dat)
 
             //$(".signinBtn").removeAttr("disabled")
@@ -149,11 +154,15 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
             //alert("textStatus="+textStatus);
         });
 }
+BsnpRestApi.prototype.redirect_page = function (surl) {
 
+}
 BsnpRestApi.prototype.run = function (sapi, obj, cbf) {
     var inp = { SSID: this.SSID }
     if (!inp.SSID) return alert("missing SSID.")
     inp.inp = obj
+
+    this.m_redirect_param=`?ip=${this.svrurl}&SSID=${this.SSID}`
 
     var _this = this;
     $.ajax({
