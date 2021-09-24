@@ -2213,16 +2213,28 @@ AppInstancesManager.prototype.loadBible_verse_by_bibOj = function (par) {
     }
 
     var fnamesArr = par.BCVtagClusterInfo.newselary; //tab_documentsClusterList.get_selected_seq_fnamesArr();
-    Jsonpster.inp.par = { fnames: fnamesArr, bibOj: oj, Search: null };
-    Jsonpster.api = RestApi.ApiBibleObj_load_by_bibOj;
-    Uti.Msg(Jsonpster);
-    Jsonpster.RunAjaxPost_Signed(function (ret) {
-        if (!ret.out.data) return alert("no out.data")
-        _THIS.loadBible_verse_by_bibOj_output(ret, par)
-        setTimeout(function () {
-            _THIS.scrollToView_Vrs()
-        }, 2100)
-    })
+
+    //Jsonpster.inp.par = { fnames: fnamesArr, bibOj: oj, Search: null };
+    //Jsonpster.api = RestApi.ApiBibleObj_load_by_bibOj;
+    //Uti.Msg(Jsonpster);
+    //Jsonpster.RunAjaxPost_Signed(function (ret) {
+    //    if (!ret.out.data) return alert("no out.data")
+    //    _THIS.loadBible_verse_by_bibOj_output(ret, par)
+    //    setTimeout(function () {
+    //        _THIS.scrollToView_Vrs()
+    //    }, 2100)
+    //})
+
+    var api = new BsnpRestApi()
+    api.run(RestApi.ApiBibleObj_load_by_bibOj,
+        { fnames: fnamesArr, bibOj: oj, Search: null },
+        function (ret) {
+            if (!ret.out.data) return alert("no out.data")
+            _THIS.loadBible_verse_by_bibOj_output(ret, par)
+            setTimeout(function () {
+                _THIS.scrollToView_Vrs()
+            }, 2100)
+        })
 
 };///
 AppInstancesManager.prototype.apiCallback_Gen_output_table = function (ret, cbf) {
@@ -2240,15 +2252,13 @@ AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
         oj = res.oj_bc
     }
     if (!oj || Object.keys(oj) === 0) return alert("oj is null")
-
-
-
-
     var fnamesArr = tab_documentsClusterList.get_selected_seq_fnamesArr();
-    Jsonpster.inp.par = { fnames: fnamesArr, bibOj: oj, Search: null };
-    Jsonpster.api = RestApi.ApiBibleObj_load_by_bibOj;
-    Uti.Msg(Jsonpster);
-    Jsonpster.RunAjaxPost_Signed(function (ret) {
+
+    var api = new BsnpRestApi()
+    api.run(RestApi.ApiBibleObj_load_by_bibOj, {
+        fnames: fnamesArr,
+        bibOj: oj, Search: null
+    }, function (ret) {
         if (!ret.out.data) return alert("no out.data")
         _THIS.apiCallback_Gen_output_table(ret)
         setTimeout(function () {
