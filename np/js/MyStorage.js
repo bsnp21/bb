@@ -36,8 +36,6 @@ var MyStorage = {
         var txt = JSON.stringify({ "#MemoryVerse": ary }, null, 4)
         console.log(txt)
 
-
-
         var api = new BsnpRestApi()
         api.run(RestApi.ApiUsrDat_save,
             {
@@ -49,34 +47,8 @@ var MyStorage = {
             })
 
         return
-
-
-        Jsonpster.inp.par = { fnames: ["./dat/localStorage"], data: txt }
-        Jsonpster.api = RestApi.ApiUsrDat_save
-        Uti.Msg("Repo_save:", Jsonpster)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            cbf(ret)
-        })
     },
     Repo_load: function (cbf) {
-        if (!Jsonpster.inp.SSID) {//: initial load once for all.
-            Jsonpster.inp.SSID = MyStorage.SSID()
-            Jsonpster.inp.usr = null
-        }
-        if (!Jsonpster.inp.SSID) return alert("inp.ssid is not set yet:" + Jsonpster.inp.SSID)
-
-
-        var txt = JSON.stringify(localStorage, null, 4)
-        console.log(txt)
-        Jsonpster.inp.par = { fnames: ["./dat/localStorage"] }
-
-        Jsonpster.api = RestApi.ApiUsrDat_load
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            //if (cbf) cbf(ret)
-            ret;
-        })
-
-
         var api = new BsnpRestApi()
         api.run(RestApi.ApiUsrDat_load,
             {
