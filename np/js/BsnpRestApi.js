@@ -153,9 +153,8 @@ BsnpRestApi.prototype.redirect_page = function (surl) {
 BsnpRestApi.prototype.run = function (sapi, obj, cbf) {
     var inp = { SSID: this.SSID }
     if (!inp.SSID) return alert("missing SSID.")
-    inp.par = obj
     inp.api = sapi
-
+    inp.par = obj
 
     var _this = this;
     $.ajax({
