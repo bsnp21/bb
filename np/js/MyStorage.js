@@ -216,7 +216,7 @@ var MyStorage = {
 
 
     clear: function () {
-        var Ignory = ["repositories", "#MemoryVerse", "SSID"]
+        var Ignory = ["repositories", "#MemoryVerse"]
         Object.keys(localStorage).forEach(function (key) {
             console.log(key)
             if (Ignory.indexOf(key) < 0) {

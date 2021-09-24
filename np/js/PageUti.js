@@ -102,7 +102,7 @@ var PageUti = {
 
     },
     repo_Signin: function (showid, cbf) {
-        
+
     },
     repo_destroy: function (bForce) {
         if (!confirm("The Bible study notes you wrote in server-site will be erased.")) return
@@ -119,14 +119,20 @@ var PageUti = {
         Jsonpster.RunAjaxPost_Signed(function (ret) {
             $("#otb").html("<font color='green'>Repos is undocked.</font>")
             Uti.Msg("ret", ret)
-            MyStorage.SSID("")
+
         })
     },
     repo_status: function (showid) {
         $(showid).html("<font>start checking...</font>")
 
+        var uiv = $("#repodesc").val();//MyStorage.Repositories().repos_store_get().repodesc
+        var ttl = MyStorage.cacheTTL() //from localStorage
+        var par = {}
+        par.aux = { Update_repodesc: uiv, cacheTTL: ttl }
+
+
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrReposData_status, null, function (ret) {
+        api.run(RestApi.ApiUsrReposData_status, par, function (ret) {
             Uti.Msg("ret.out.state", ret.out.state)
 
             $(showid).html("<font color='green'>ok.</font>")
