@@ -395,6 +395,26 @@ ${scmd}
                     console.log("done:", ret)
                 });
         }
+        
+
+        function get_pathname_fr_window_location() {
+            var regex = new RegExp("/___maverick.editor.html$")
+            var root = window.location.pathname.replace(regex, "")
+            var name = window.location.search.replace("?fname=", "")
+            var pathname = root + "/" + name
+            return { name: name, pathname: pathname, root: root }
+        }
+        function init_ui_cmd() {
+            console.log(window.location)
+            var ret = get_pathname_fr_window_location()
+            $("title").text(ret.pathname)
+
+            gen_git_cmd_batch()
+            $("#gen_sh_cmd").append(`<option>open ${ret.name}</option>`)
+            $("#gen_sh_cmd").append(`<option>open file://${ret.root}/___maverick.editor.html?fname=${ret.name}</option>`)
+            $("#gen_sh_cmd").append(`<option>open ./${ret.name}___wordfreq.htm</option>`)
+            console.log(ret.name)
+        }
         function __save() {
             var myNotes = localStorage.getItem("myNote")
             if (!myNotes) return alert("No parent storage for myNote.")
@@ -453,25 +473,6 @@ ${scmd}
                 }
             })
             return
-        }
-
-        function get_pathname_fr_window_location() {
-            var regex = new RegExp("/___maverick.editor.html$")
-            var root = window.location.pathname.replace(regex, "")
-            var name = window.location.search.replace("?fname=", "")
-            var pathname = root + "/" + name
-            return { name: name, pathname: pathname, root: root }
-        }
-        function init_ui_cmd() {
-            console.log(window.location)
-            var ret = get_pathname_fr_window_location()
-            $("title").text(ret.pathname)
-
-            gen_git_cmd_batch()
-            $("#gen_sh_cmd").append(`<option>open ${ret.name}</option>`)
-            $("#gen_sh_cmd").append(`<option>open file://${ret.root}/___maverick.editor.html?fname=${ret.name}</option>`)
-            $("#gen_sh_cmd").append(`<option>open ./${ret.name}___wordfreq.htm</option>`)
-            console.log(ret.name)
         }
         function load_page_by_parent_storage() {
             // console.log(window.location)
