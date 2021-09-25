@@ -74,7 +74,7 @@ var ApiUti = {
         //req.pipe(res)
         if (req.method === "POST") {
             //req.pipe(res)
-            console.log("POST: ----------------", "req.url=", req.url)
+            console.log("------------------------------start... POST: ", "req.url=", req.url)
             var body = "";
             req.on("data", function (chunk) {
                 body += chunk;
@@ -100,7 +100,7 @@ var ApiUti = {
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.write(JSON.stringify(inpObj))
                 res.end();
-                console.log("finished post req------------------------------",(new Date()).toISOString())
+                console.log("______________________________finished post req",(new Date()).toISOString())
             });
         } else {
             res.writeHead(200, { "Content-Type": "text/html" });
