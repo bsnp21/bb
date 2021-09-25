@@ -790,7 +790,9 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         console.log("proj_get_usr_fr_cache_ssid: has no key: NCache.myCache.has(inp.SSID)", inp.SSID)
         //return null
     }
-
+    
+    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+    inp.usr = NCache.Get(inp.SSID, ttl)
 
     console.log("proj_get_usr_fr_cache_ssid inp.SSID:", inp.SSID)
     console.log("proj_get_usr_fr_cache_ssid:inp.par.aux.cacheTTL=", ttl)
@@ -801,10 +803,6 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         return null
     }
 
-    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
-    if (!ttl) return null
-    ttl = parseInt(ttl)
-    inp.usr = NCache.Get(inp.SSID, ttl)
 
     return inp.usr
 }
