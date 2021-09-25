@@ -740,7 +740,7 @@ NCache.Get = function (key, ttl) {
             }
         }
     }
-    console.log("NCache.Get|", key, val, ttl)
+    console.log("NCache.Get|key,val,ttl |", key, val, ttl)
     return val
 }
 NCache.Init()
