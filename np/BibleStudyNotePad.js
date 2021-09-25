@@ -308,13 +308,7 @@ PopupMenu_EdiTag.prototype.init = function () {
         localStorage.setItem("myNote", JSON.stringify(editObj))
         return true
     }
-    function _get_par_ediTxt_par() {
-        var htmEdit = _THIS.m_ediDiv.getEditHtm()
-        if (htmEdit.length >= 2000000) alert(`lengh=${htmEdit.length} > max 2MB.`)
-        var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
-        var par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
-        return par
-    }
+    
 
     $("#RevTag_Edit_Local").bind("click", function () {
         _THIS.m_ediBtn.toggle_enableEdit()
@@ -341,7 +335,13 @@ PopupMenu_EdiTag.prototype.init = function () {
         }
         return false;// diable href open
     })
-
+    function _get_par_ediTxt_par() {
+        var htmEdit = _THIS.m_ediDiv.getEditHtm()
+        if (htmEdit.length >= 2000000) alert(`lengh=${htmEdit.length} > max 2MB.`)
+        var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
+        var par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
+        return par
+    }
     $("#RevTag_Save").bind("click", function () {
         var par = _get_par_ediTxt_par()
         if (!par) {

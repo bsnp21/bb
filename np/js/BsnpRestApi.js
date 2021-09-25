@@ -1,6 +1,21 @@
-
-
-
+var RestApi = {
+    "Get_OTK": "Get_OTK",
+    "Jsonpster": "Jsonpster",
+    "ApiBibleObj_search_txt": "ApiBibleObj_search_txt",
+    "ApiBibleObj_load_by_bibOj": "ApiBibleObj_load_by_bibOj",
+    "ApiBibleObj_write_Usr_BkcChpVrs_txt": "ApiBibleObj_write_Usr_BkcChpVrs_txt",
+    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
+    "ApiUsrDat_save": "ApiUsrDat_save",
+    "ApiUsrDat_load": "ApiUsrDat_load",
+    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
+    "UsrReposPost_Signin": "UsrReposPost_Signin",
+    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
+    "ApiUsrReposData_status": "ApiUsrReposData_status",
+    "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
+    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
+    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
+    "test_https_work": "test_https_work"
+}
 var BsnpRestUti = {
 
 }
@@ -186,24 +201,3 @@ BsnpRestApi.prototype.run = function (sapi, obj, cbf) {
 
 
 
-
-
-var RestApi = {
-    "Get_OTK": "Get_OTK",
-    "PostUsr_getSSID": "PostUsr_getSSID",
-    "Jsonpster": "Jsonpster",
-    "ApiBibleObj_search_txt": "ApiBibleObj_search_txt",
-    "ApiBibleObj_load_by_bibOj": "ApiBibleObj_load_by_bibOj",
-    "ApiBibleObj_write_Usr_BkcChpVrs_txt": "ApiBibleObj_write_Usr_BkcChpVrs_txt",
-    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
-    "ApiUsrDat_save": "ApiUsrDat_save",
-    "ApiUsrDat_load": "ApiUsrDat_load",
-    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
-    "UsrReposPost_Signin": "UsrReposPost_Signin",
-    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
-    "ApiUsrReposData_status": "ApiUsrReposData_status",
-    "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
-    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
-    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
-    "test_https_work": "test_https_work"
-}
