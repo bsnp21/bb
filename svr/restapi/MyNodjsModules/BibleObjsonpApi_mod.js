@@ -78,11 +78,11 @@ var ApiUti = {
             var body = "";
             req.on("data", function (chunk) {
                 body += chunk;
-                console.log("on post data:", chunk)
+                console.log("on post data.")
             });
 
             req.on("end", async function () {
-                console.log("on post eend:", body)
+                console.log("on post eend.")
 
                 var inpObj = null
                 try {
@@ -91,11 +91,12 @@ var ApiUti = {
                 } catch (err) {
                     inpObj.err = err
                 }
-                console.log("POST:3 inp=", JSON.stringify(inpObj, null, 4));
+                console.log("POST: inp=", JSON.stringify(inpObj, null, 4));
 
 
                 console.log("cbf start ------------------------------")
                 await cbf(inpObj)
+                console.log("cbf ended ------------------------------")
 
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.write(JSON.stringify(inpObj))
