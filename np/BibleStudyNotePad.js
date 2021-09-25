@@ -205,7 +205,7 @@ PopupMenu_EdiTag.prototype.init = function () {
         this.m_rev = rev
         this.m_otxObj = ouTxtObj
     }
-    DivEditTxt.prototype.html = function (htm) {
+    DivEditTxt.prototype.txthtml = function (htm) {
         if (undefined === htm) {
             return $(this.m_id).html()
         }
@@ -214,7 +214,7 @@ PopupMenu_EdiTag.prototype.init = function () {
     DivEditTxt.prototype.getEditHtm = function () {
         var edx = ""
         if (this.isEditable()) {
-            edx = this.html()
+            edx = this.txthtml()
         } else {
             //Uti.Msg("uneditable text")
             edx = this.m_otxObj[this.m_rev]
@@ -376,7 +376,7 @@ PopupMenu_EdiTag.prototype.init = function () {
                         if (!confirm(`difference:${dlt}(b): continue?`)) return
                     }
                     var showtxt = Uti.convert_std_bcv_in_text_To_linked(txt)
-                    _THIS.m_ediDiv.html(showtxt)
+                    _THIS.m_ediDiv.txthtml(showtxt)
                     _THIS.m_ediDiv.setEditHtm(txt)
                     _THIS.m_ediBtn.enable_edit(true, true)
                     $(_THIS.m_ediDiv.m_id).toggleClass("txt_loaded")
