@@ -100,7 +100,7 @@ var ApiUti = {
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.write(JSON.stringify(inpObj))
                 res.end();
-                console.log("finished post req------------------------------")
+                console.log("finished post req------------------------------",(new Date()).toISOString())
             });
         } else {
             res.writeHead(200, { "Content-Type": "text/html" });
