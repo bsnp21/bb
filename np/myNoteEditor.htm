@@ -431,12 +431,13 @@ ${scmd}
             if (pos1 < 0 || pos2 < 0) {
                 return alert("html body not found")
             }
-            var innerHtml = html;//$(html).html()
+            var innerHtml = $(html).html()
             // if(pos2-pos1>2000){
             //     alert ("reach max 2000 characters limit.") //Maximum URL Size 2048
             // }
             var txt2save = Uti.htmlDecode(innerHtml.trim())
             txt2save = txt2save.replace(/[\n\r\t]/g, '')
+            txt2save = txt2save.replace(/[\"]/g, '\'')
 
 
 
@@ -479,27 +480,6 @@ ${scmd}
                         alert("saving has issues.")
                     }
                 })
-
-
-
-            return
-            console.log(pster)
-            Jsonpster.inp = pster.inp
-            Jsonpster.api = pster.api
-            console.log("inp:", pster.inp)
-            Jsonpster.RunAjaxPost_Signed(function (ret) {
-                console.log("ret", ret)
-                var res = ret.out.save_res
-                if (res && res.saved_size) {
-                    console.log("save_res.saved_size", ret)
-                    var dlt = theData.length - document.m_iEdiDataLen
-                    g_msg.pop(`<br>${bcv} <br>saved_size=${ret.out.save_res.saved_size}<br>* * * OK ! Saved * * *<br>nDlt= ${dlt}`);
-                    document.m_iEdiDataLen = theData.length
-                    ckEditor.resetDirty()
-                } else {
-                    alert("saving has issues.")
-                }
-            })
             return
         }
         function load_page_by_parent_storage() {

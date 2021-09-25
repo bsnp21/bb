@@ -370,6 +370,7 @@ PopupMenu_EdiTag.prototype.init = function () {
                 Uti.Msg(ret.out)
                 if (ret.out.data) {
                     var txt = ret.out.data[psr.vol][psr.chp][psr.vrs][_THIS.m_par.m_rev]
+
                     var edx = _THIS.m_ediDiv.getEditHtm()
                     if (txt != edx) {
                         var dlt = edx.length - txt.length

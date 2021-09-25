@@ -258,7 +258,9 @@ var Uti = {
         return ret;
     },
     htmlDecode: function (value) {
-        return $("<textarea/>").html(value).text();
+        var txthm = $(`<textarea>${value}</textarea>`).text();
+        var t2 = $("<textarea/>").html(value).text();//same
+        return txthm;
     },
 
     htmlEncode: function (value) {
