@@ -91,7 +91,7 @@ var ApiUti = {
                 } catch (err) {
                     inpObj.err = err
                 }
-                console.log("POST: inp=", JSON.stringify(inpObj, null, 4));
+                console.log("POST after decoding, inp=", JSON.stringify(inpObj, null, 4));
 
 
                 console.log("cbf start ------------------------------")

@@ -732,15 +732,15 @@ NCache.Set = function (key, val, ttl) {
 NCache.Get = function (key, ttl) {
     var val = this.myCache.get(key)
     if (undefined === val || null === val) { //0 and "" are allowed.
-        return null
-    }
-    if (undefined === ttl) {
-        if ("object" === typeof (val)) {
-            ttl = val.ttl
-            this.Set(key, val, ttl) //restart ttl -- reborn again.
+    } else {
+        if (undefined === ttl) {
+            if ("object" === typeof (val)) {
+                ttl = val.ttl
+                this.Set(key, val, ttl) //restart ttl -- reborn again.
+            }
         }
     }
-    console.log("reset ttl w/", val)
+    console.log("NCache.Get|", key, val, ttl)
     return val
 }
 NCache.Init()
@@ -790,7 +790,7 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         console.log("proj_get_usr_fr_cache_ssid: has no key: NCache.myCache.has(inp.SSID)", inp.SSID)
         //return null
     }
-    
+
     var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
     inp.usr = NCache.Get(inp.SSID, ttl)
 
