@@ -293,14 +293,17 @@ PopupMenu_EdiTag.prototype.init = function () {
 
     function _set_par_ediTxt() {
         var htmEdit = _THIS.m_ediDiv.getEditHtm()
+        //htmEdit = $(htmEdit).html()
+        //htmEdit = Uti.htmlDecode(htmEdit.trim())
         var editObj = {
+            fname: _THIS.m_par.m_rev,
             bcv: _THIS.m_par.m_bcv,
             txt: htmEdit
         }
         //if (htmEdit.length >= 2000) alert(`lengh=${htmEdit.length} > max 2000.`)
-        //var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
+        var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
         //var pster = {inp:{par:''}}
-        //pster.inp.par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
+        var par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
         //pster.api = RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt
         localStorage.setItem("myNote", JSON.stringify(editObj))
         return true
@@ -320,14 +323,21 @@ PopupMenu_EdiTag.prototype.init = function () {
 
     $("#RevTag_Edit_External").bind("click", function () {
         if (_set_par_ediTxt()) {
-            return true;// enable href open.
+            var api = new BsnpRestApi()
+            var shref = $(this).attr("href")
+            var url = `${shref}${api.urlRedirectParam()}`
+            window.open(url, "_blank")
+            return false;// true enable href open.
         }
         return false;// diable href open
     })
 
     $("#RevTag_SocialNetworkPlatform").bind("click", function () {
         if (_set_par_ediTxt()) {
-            return true;// enable href open.
+            var api = new BsnpRestApi()
+            var shref = $(this).attr("href")
+            window.open(`${shref}${api.urlRedirectParam()}`, "_target")
+            return false;// true enable href open.
         }
         return false;// diable href open
     })

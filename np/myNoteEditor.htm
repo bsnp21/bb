@@ -29,11 +29,14 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     <script ___src="http://localhost:7878/assets/ckeditor/ckeditor.js" note="selfseversite"></script>
     <script ___src="http://localhost:7878/assets/ckeditor/samples/old/sample.js"></script>
     <!-------------------------------------------->
+
+    <script language="javascript"
+        src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
     <script src="./js/CNST.js"></script>
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
     <script src="./js/MyStorage.js"></script>
-    <script src="./js/Jsonpster.js"></script>
+
     <script src="./js/BsnpRestApi.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
     <!----- Insert this line after script imports -->
@@ -395,7 +398,7 @@ ${scmd}
                     console.log("done:", ret)
                 });
         }
-        
+
 
         function get_pathname_fr_window_location() {
             var regex = new RegExp("/___maverick.editor.html$")
@@ -416,8 +419,7 @@ ${scmd}
             console.log(ret.name)
         }
         function __save() {
-            var myNotes = localStorage.getItem("myNote")
-            if (!myNotes) return alert("No parent storage for myNote.")
+
 
             var theData = ckEditor.getData();
             var sbody = "<body>"
@@ -429,22 +431,23 @@ ${scmd}
             if (pos1 < 0 || pos2 < 0) {
                 return alert("html body not found")
             }
+            var innerHtml = html;//$(html).html()
             // if(pos2-pos1>2000){
             //     alert ("reach max 2000 characters limit.") //Maximum URL Size 2048
             // }
-            var txt2save = Uti.htmlDecode(html.trim())
+            var txt2save = Uti.htmlDecode(innerHtml.trim())
             txt2save = txt2save.replace(/[\n\r\t]/g, '')
 
-            var pster = JSON.parse(myNotes)
-            var bcv = ""
-            for (const [bkc, chpObj] of Object.entries(pster.inp.par.inpObj)) {
-                for (const [chp, vrsObj] of Object.entries(chpObj)) {
-                    for (const [vrs, txt] of Object.entries(vrsObj)) {
-                        pster.inp.par.inpObj[bkc][chp][vrs] = txt2save.trim()
-                        bcv = bkc + chp + ":" + vrs
-                    }
-                }
-            }
+
+
+            //for (const [bkc, chpObj] of Object.entries(pster.inp.par.inpObj)) {
+            //    for (const [chp, vrsObj] of Object.entries(chpObj)) {
+            //        for (const [vrs, txt] of Object.entries(vrsObj)) {
+            //            pster.inp.par.inpObj[bkc][chp][vrs] = txt2save.trim()
+            //            bcv = bkc + chp + ":" + vrs
+            //        }
+            //    }
+            //}
 
             if (false === ckEditor.checkDirty()) {
                 document.m_iEdiDataLen = theData.length;
@@ -453,8 +456,33 @@ ${scmd}
                 return
             }
 
+            var myNotes = localStorage.getItem("myNote")
+            if (!myNotes) return alert("No parent storage for myNote.")
+            var pster = JSON.parse(myNotes)
+            var bcv = pster.bcv
+            var ret = Uti.parse_bcv(bcv, txt2save)
+            var par = { fnames: [pster.fname], inpObj: ret.bcvObj }
+
+            var api = new BsnpRestApi()
+            api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
+                par,
+                function (ret) {
+                    console.log("ret", ret)
+                    var res = ret.out.save_res
+                    if (res && res.saved_size) {
+                        console.log("save_res.saved_size", ret)
+                        var dlt = theData.length - document.m_iEdiDataLen
+                        g_msg.pop(`<br>${bcv} <br>saved_size=${ret.out.save_res.saved_size}<br>* * * OK ! Saved * * *<br>nDlt= ${dlt}`);
+                        document.m_iEdiDataLen = theData.length
+                        ckEditor.resetDirty()
+                    } else {
+                        alert("saving has issues.")
+                    }
+                })
 
 
+
+            return
             console.log(pster)
             Jsonpster.inp = pster.inp
             Jsonpster.api = pster.api
@@ -495,7 +523,7 @@ ${scmd}
             var theData = ckEditor.getData();
             document.m_iEdiDataLen = theData.length;
             var bcv = pster.bcv
-            g_msg.pop(`<br>${bcv}<br>- Init txtlen= ${txt.length}, dataLen=${theData.length}`);
+            g_msg.pop(`<br>${bcv}<br>- Init txtlen= ${pster.txt.length}, dataLen=${theData.length}`);
             ckEditor.resetDirty()
             $("title").text("_" + bcv)
             //        }
@@ -525,7 +553,7 @@ ${scmd}
         //     load_page_by_parent_storage()
         // })
         //Uti.Jsonpster_crossloader(2, function () {
-            load_page_by_parent_storage()
+        load_page_by_parent_storage()
         //})
 
 
