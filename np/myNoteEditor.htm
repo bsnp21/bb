@@ -487,19 +487,19 @@ ${scmd}
             // 
             // setTimeout(() => {
             //
-            for (const [bkn, chpObj] of Object.entries(pster.inp.par.inpObj)) {
-                for (const [chp, vrsObj] of Object.entries(chpObj)) {
-                    for (const [vrs, txt] of Object.entries(vrsObj)) {
-                        CKEDITOR.instances.editor1.setData(txt)
-                        var theData = ckEditor.getData();
-                        document.m_iEdiDataLen = theData.length;
-                        var bcv = `${bkn}${chp}:${vrs}`
-                        g_msg.pop(`<br>${bcv}<br>- Init txtlen= ${txt.length}, dataLen=${theData.length}`);
-                        ckEditor.resetDirty()
-                        $("title").text("_" + bcv)
-                    }
-                }
-            }
+            //for (const [bkn, chpObj] of Object.entries(pster.inp.par.inpObj)) {
+            //    for (const [chp, vrsObj] of Object.entries(chpObj)) {
+            //        for (const [vrs, txt] of Object.entries(vrsObj)) {
+            CKEDITOR.instances.editor1.setData(pster.txt)
+            var theData = ckEditor.getData();
+            document.m_iEdiDataLen = theData.length;
+            var bcv = pster.bcv
+            g_msg.pop(`<br>${bcv}<br>- Init txtlen= ${txt.length}, dataLen=${theData.length}`);
+            ckEditor.resetDirty()
+            $("title").text("_" + bcv)
+            //        }
+            //    }
+            //}
             //g_msg.pop(`initial load file: ${ret.name}, size:${data.length}(B)`).m_len = data.length
             //}, 1000)
             //});
@@ -523,9 +523,9 @@ ${scmd}
         // Uti.Jsonpster_page_transit_by_parent_storage(function () {
         //     load_page_by_parent_storage()
         // })
-        Uti.Jsonpster_crossloader(2, function () {
+        //Uti.Jsonpster_crossloader(2, function () {
             load_page_by_parent_storage()
-        })
+        //})
 
 
 

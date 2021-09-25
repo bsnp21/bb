@@ -293,16 +293,17 @@ PopupMenu_EdiTag.prototype.init = function () {
 
     function _set_par_ediTxt() {
         var htmEdit = _THIS.m_ediDiv.getEditHtm()
+        var editObj = {
+            bcv: _THIS.m_par.m_bcv,
+            txt: htmEdit
+        }
         //if (htmEdit.length >= 2000) alert(`lengh=${htmEdit.length} > max 2000.`)
-        var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
-
-        var pster = {inp:{par:''}}
-        
-        pster.inp.par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
-
-        pster.api = RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt
-        localStorage.setItem("myNote", JSON.stringify(pster))
-        return pster.inp.par
+        //var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
+        //var pster = {inp:{par:''}}
+        //pster.inp.par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
+        //pster.api = RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt
+        localStorage.setItem("myNote", JSON.stringify(editObj))
+        return true
     }
     function _get_par_ediTxt_par() {
         var htmEdit = _THIS.m_ediDiv.getEditHtm()
@@ -2153,9 +2154,9 @@ AppInstancesManager.prototype.init_load_storage = function () {
 
     function _init_load_repo() {
         Uti.Msg("start ...", "" + window.location.href);
-       
+
         Uti.Msg("RestApi=", RestApi);
-       
+
         MyStorage.Repositories().repos_app_init()
         MyStorage.Repo_load(function (ret) {
             //if (cbf) cbf(ret)
