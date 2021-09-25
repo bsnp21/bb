@@ -1,12 +1,28 @@
 <html>
-
 <head>
-	<meta http-equiv="Refresh" content="0;url=./mySignIn.htm?ip=34.227.20.213:7775">
-	<title></title>
 	<base target="_blank" />
+	<script src="../../home/js/config_data.js"></script>
+	<title></title>
+	<meta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?ip=34.227.20.213:7775">
+	</meta>
 </head>
 
 <body>
+	<script>
+		var url = "" + window.location
+		var pos = url.indexOf("?")
+		var par = url.substr(pos)
+		if (pos < 0) {
+			par = `0;url=./mySignIn.htm?ip=${config_data.ip}:7775`
+			alert("no param:"+par)
+		}else{
+			par = `0;url=./np/mySignIn.htm${par}`
+		}
+		var ms = document.getElementsByTagName('meta');
+		ms[0].content = par
+	</script>
+	<xmeta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?ip=34.227.20.213:7775">
+	</xmeta>
 </body>
 
 </html>
