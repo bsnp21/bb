@@ -728,7 +728,6 @@ var BibleObjJsonpApi = {
         var woringDir = ApiUti.find_workDir()
         BibleObjJsonpApi.m_rootDir = woringDir
         BibleUti.WorkingRootDir(woringDir)
-        //BibleUti.Update_SvrIP_in_HomeSitePage()
         //
         Object.keys(ApiJsonp_BibleObj).forEach(function (sapi) {
             console.log("api:", sapi)

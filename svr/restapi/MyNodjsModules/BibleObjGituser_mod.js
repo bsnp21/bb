@@ -505,42 +505,6 @@ var BibleUti = {
             state: { bGitDir: -1, bMyojDir: -1, bDatDir: -1, bEditable: -1, bRepositable: -1 }
         }
     },
-    Update_SvrIP_in_HomeSitePage: function () {
-        var inp = {}
-        inp.usr = { repopath: "https://github.com/bsnp21/home.git", passcode: "3edcFDSA", repodesc: "" }
-        inp.out = BibleUti.default_inp_out_obj()
-        //inp.SSID = "github.com/bsnp21/home"; //SSID Not Used At all. "../../../../bist/usrs/github.com/bsnp21/home"
-        var rootDir = BibleUti.WorkingRootDir();// + WorkingRootNodeName
-        var userProject = new BibleObjGituser(rootDir)
-        if (!userProject.parse_inp_usr2proj(inp)) {
-            return
-        }
-        userProject.git_clone()
-        userProject.run_proj_state()
-        console.log(inp.out.state)
-        if (1 === inp.out.state.bRepositable) {
-            //
-            var fidx = userProject.get_usr_git_dir("/index.html")//="../../../../bist/usrs/github.com/bsnp21/home/index.html"
-            if (!fs.existsSync(fidx)) {
-                return console.log("Error update HomeSiteSvrIP. Not exist", fidx)
-            }
-            BibleUti.execSync_Cmd(`echo 'lll'|  sudo -S chmod 777 ${fidx}`)
-            var txt = fs.readFileSync(fidx, "utf8")
-            var SvrIP = "0.0.0.0"
-            SvrIP = BibleUti.execSync_Cmd("dig +short myip.opendns.com @resolver1.opendns.com").toString().trim()
-            console.log("ret SvrIP=", SvrIP)
-            txt = txt.replace(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g, SvrIP)
-            fs.writeFileSync(fidx, txt, "utf8")
-            console.log(txt)
-            console.log("git dir exist. push before to delete it")
-            var res2 = userProject.execSync_cmd_git("git add *")
-            var res3 = userProject.execSync_cmd_git(`git commit -m "on del in Cache"`)
-            var res4 = userProject.git_push()
-
-            var res5 = userProject.run_proj_destroy()
-        }
-
-    },
     //// BibleUti /////
 }
 
@@ -625,7 +589,7 @@ SvrUsrsBCV.prototype.gen_crossnet_files_of = function (docpathfilname, cbf) {
 
 var NCache = {}
 NCache.m_checkperiod = 60 //s.
-NCache.m_TTL = NCache.m_checkperiod * 6 //seconds (default)
+NCache.m_TTL = NCache.m_checkperiod * 6 //360 seconds (default)
 NCache.m_MFT = 300  //MaxForgivenTimesToKeepCache== ttl * 300.
 NCache.m_MAX = 3600 * 200  //about a week
 
@@ -722,7 +686,7 @@ NCache.Init = function () {
     })
 }
 NCache.Set = function (key, val, ttl) {
-    if (undefined === ttl) ttl = NCache.m_TTL
+    if (undefined === ttl) return console.log("*** fatal err: ttl not set.")
     if ("object" === typeof val) {
         val.tms = (new Date()).getTime() //timestampe for last access.
         val.ttl = ttl
@@ -933,7 +897,12 @@ BibleObjGituser.prototype.session_create = function () {
     if (!this.m_inp.usr_proj) return null
     var ssid = this.m_inp.usr_proj.ownerId
     var ssid_b64 = Buffer.from(ssid).toString("base64")
-    NCache.Set(ssid_b64, this.m_inp.usr)
+    var ttl  = NCache.m_TTL //default.
+    if((this.m_inp.par)&&(this.m_inp.par.aux.cacheTTL)){
+        ttl = this.m_inp.par.aux.cacheTTL 
+    }
+
+    NCache.Set(ssid_b64, this.m_inp.usr, ttl)
     console.log("session_create:", ssid, ssid_b64, this.m_inp.usr)
 
     return ssid_b64
