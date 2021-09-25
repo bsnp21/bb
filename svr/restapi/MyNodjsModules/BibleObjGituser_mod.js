@@ -728,6 +728,7 @@ NCache.Set = function (key, val, ttl) {
         val.ttl = ttl
     }
     this.myCache.set(key, val, ttl) //restart ttl -- reborn again.
+    console.log("NCache.Set|key,val,ttl |", key, val, ttl)
 }
 NCache.Get = function (key, ttl) {
     var val = this.myCache.get(key)
