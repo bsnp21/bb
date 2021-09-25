@@ -791,11 +791,9 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         //return null
     }
 
-    var ttl = (inp.aux && inp.aux.cacheTTL) ? inp.aux.cacheTTL : null
 
-    inp.usr = NCache.Get(inp.SSID, ttl)
     console.log("proj_get_usr_fr_cache_ssid inp.SSID:", inp.SSID)
-    console.log("proj_get_usr_fr_cache_ssid:inp.aux.cacheTTL=", ttl)
+    console.log("proj_get_usr_fr_cache_ssid:inp.par.aux.cacheTTL=", ttl)
     console.log("proj_get_usr_fr_cache_ssid:inp=", inp)
     if (!inp.usr) {
         inp.out.state.ssid_cur = "SSID-Timeout"
@@ -803,23 +801,30 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         return null
     }
 
+    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+    if (!ttl) return null
+    ttl = parseInt(ttl)
+    inp.usr = NCache.Get(inp.SSID, ttl)
+
     return inp.usr
 }
 BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
 
-    if (!inp.SSID || inp.SSID.length === 0 || !inp.usr || !inp.aux) {
+    if (!inp.SSID || inp.SSID.length === 0 || !inp.usr || !inp.par.aux) {
         return null
     }
 
     //extra work: update repodesc
-    if ("string" === typeof inp.aux.Update_repodesc) {
-        inp.usr.repodesc = inp.aux.Update_repodesc
+    if ("string" === typeof inp.par.aux.Update_repodesc) {
+        inp.usr.repodesc = inp.par.aux.Update_repodesc
     }
-    if (inp.aux.cacheTTL) {
-
+    var ttl = inp.par.aux.cacheTTL
+    if (!ttl) {
+        return
     }
-    NCache.Set(inp.SSID, inp.usr, inp.aux.cacheTTL)
-    console.log(`Update_repodesc ************* inp.aux= ${JSON.stringify(inp.aux)}`)
+    ttl = parseInt(ttl)
+    NCache.Set(inp.SSID, inp.usr, ttl)
+    console.log(`Update_repodesc ************* inp.par.aux= ${JSON.stringify(inp.par.aux)}`)
 
     return inp.usr
 }

@@ -360,14 +360,14 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.proj_parse_usr_signed(inp)
             if (!proj) return console.log("proj_parse_usr_signed failed.")
 
-            console.log(inp.aux)
-            if (!inp.aux) {
-                console.log("no inp.aux.")
+            console.log(inp.par.aux)
+            if (!inp.par.aux) {
+                console.log("no inp.par.aux.")
             }
-            if (!inp.aux.Search_repodesc) {
+            if (!inp.par.aux.Search_repodesc) {
                 console.log("no Search_repodesc.")
             }
-            var shareID = inp.aux.Search_repodesc
+            var shareID = inp.par.aux.Search_repodesc
             var inpObj = inp.par.inpObj
 
             var doc = inp.par.fnames[0]
