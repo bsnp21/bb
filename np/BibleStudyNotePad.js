@@ -237,7 +237,7 @@ PopupMenu_EdiTag.prototype.init = function () {
             var showTxt = this.m_otxObj[this.m_rev]
             if (!showTxt) {
                 if ("e_Subtitle" === this.m_rev) {
-                    showTxt = "<a class='e_Subtitle'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>"
+                    showTxt = "<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>"
                 } else {
                     showTxt = "<ol><li></li></ol>"
                 }
@@ -245,7 +245,7 @@ PopupMenu_EdiTag.prototype.init = function () {
             showTxt = Uti.convert_std_bcv_in_text_To_unlinked(showTxt)
             $(this.m_id).html(showTxt)
         } else {
-            $(this.m_id).attr("contenteditable", null)
+            $(this.m_id).removeAttr("contenteditable")
             var showTxt = $(this.m_id).html() //storeIt
             var showTxt = Uti.convert_std_bcv_in_text_To_unlinked(showTxt)
             showTxt = Uti.htmlDecode(showTxt.trim())
