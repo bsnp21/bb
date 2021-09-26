@@ -436,6 +436,8 @@
 </script>
 <script>
     $(function () {
+        PageUti.Repositories_History("#account_history", 1)
+        PageUti.Repositories_History("#account_history", -1)
 
         $(".signinBtn").removeAttr("disabled")
 
@@ -446,6 +448,7 @@
         })
 
         $("#CheckIn").on("click", function () {
+            $(this).toggle("slow")
             sign_in(function (rob, ur) {
                 var tb = PageUti.Repo_fstat_table(rob)
                 MyStorage.SSID(rob.out.state.SSID)
