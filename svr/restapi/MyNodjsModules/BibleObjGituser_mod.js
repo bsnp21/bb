@@ -867,7 +867,7 @@ BibleObjGituser.prototype.parse_inp_usr2proj_final = function () {
         inp.usr_proj.git_Usr_Pwd_Url = `https://${inp.usr_proj.username}:${inp.usr.passcode}@${inp.usr_proj.hostname}/${inp.usr_proj.username}/${inp.usr_proj.projname}.git`
     }
 
-    inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
+    //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
 }
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
