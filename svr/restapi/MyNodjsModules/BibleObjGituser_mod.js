@@ -905,20 +905,6 @@ BibleObjGituser.prototype.session_create = function () {
     return ssid_b64
 }
 
-BibleObjGituser.prototype.get_proj_tmp_dir = function (subpath) {
-    var dir = `${this.m_rootDir}${this.m_sBaseTemp}`
-    // if (!fs.existsSync(dir)) {
-    //     //fs.mkdirSync(dir, 0777, { recursive: true });
-    //     var password = "lll"
-    //     var command = `
-    //         echo ${password} | sudo -S mkdir -p ${dir}
-    //         echo ${password} | sudo -S chmod 777 ${dir}
-    //         `
-    //     var ret = BibleUti.execSync_Cmd(command)
-    //     console.log(ret)
-    // }
-    return `${dir}${subpath}`
-}
 BibleObjGituser.prototype.get_usr_acct_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
     if (!subpath) {
