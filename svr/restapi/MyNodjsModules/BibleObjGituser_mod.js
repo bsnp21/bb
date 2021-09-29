@@ -498,7 +498,7 @@ var BibleUti = {
 
         var mat = proj_url.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
         if (mat && mat.length === 4) {
-            //console.log("mat:", mat)
+            console.log("mat:", mat)
             //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
             var username = mat[2]
             var projname = mat[3]
@@ -522,7 +522,7 @@ var BibleUti = {
             console.log("mat:", mat)
             //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
             var username = mat[1]
-            var projname = mat[3]
+            var projname = mat[4]
 
 
             var owner = `_${hostname}_${username}_${projname}`
