@@ -480,11 +480,11 @@ var BibleUti = {
 
     _interpret_repo_url: function (proj_url) {
         if (!proj_url) return null
-        if(proj_url.indexOf("github.com/")>0){
+        if (proj_url.indexOf("github.com/") > 0) {
             return this._interpret_repo_url_github(proj_url)
 
         }
-        if(proj_url.indexOf("bitbucket.org/")>0){
+        if (proj_url.indexOf("bitbucket.org/") > 0) {
             return this._interpret_repo_url_bitbucket(proj_url)
         }
         console.log(" ***** fatal err: git repository path not recognized..")
@@ -518,16 +518,17 @@ var BibleUti = {
         const hostname = "bitbucket.org"
 
         var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
-        if (mat ) {
+        if (mat) {
             console.log("mat:", mat)
             //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
             var username = mat[1]
+            var prjbitbk = mat[3]
             var projname = mat[4]
 
 
             var owner = `_${hostname}_${username}_${projname}`
             var ownerId = `${hostname}/${username}/${projname}`
-            return { hostname: hostname, username: username, projname: projname, ownerId: ownerId, ownerstr: owner }
+            return { hostname: hostname, username: username, prjbitbk: prjbitbk, projname: projname, ownerId: ownerId, ownerstr: owner }
         }
         return null
     },
@@ -897,10 +898,10 @@ BibleObjGituser.prototype.parse_inp_usr2proj_final = function () {
     var inp = this.m_inp;
     inp.usr_proj.git_Usr_Pwd_Url = ""
     if (inp.usr.passcode.trim().length > 0) {
-        if("github.com"===inp.usr_proj.hostname){
+        if ("github.com" === inp.usr_proj.hostname) {
             inp.usr_proj.git_Usr_Pwd_Url = `https://${inp.usr_proj.username}:${inp.usr.passcode}@${inp.usr_proj.hostname}/${inp.usr_proj.username}/${inp.usr_proj.projname}.git`
         }
-        if("bitbucket.org"===inp.usr_proj.hostname){
+        if ("bitbucket.org" === inp.usr_proj.hostname) {
             inp.usr_proj.git_Usr_Pwd_Url = `https://${inp.usr_proj.username}:${inp.usr.passcode}@${inp.usr_proj.hostname}/${inp.usr_proj.prjbitbk}/${inp.usr_proj.projname}.git`
         }
     }
@@ -935,7 +936,7 @@ BibleObjGituser.prototype.session_create = function () {
     if (!this.m_inp.usr_proj) return null
     var ssid = this.m_inp.usr_proj.ownerId
     var ssid_b64 = Buffer.from(ssid).toString("base64")
-    var ttl  = NCache.m_TTL //default.
+    var ttl = NCache.m_TTL //default.
 
     NCache.Set(ssid_b64, this.m_inp.usr, ttl)
     console.log("session_create:", ssid, ssid_b64, this.m_inp.usr)
