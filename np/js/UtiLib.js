@@ -137,25 +137,19 @@ var Uti = {
         })
     },
     validate_repository_url: function (repoath) {
-        if (!repoath) return null;// alert("repopath is not defined.")
         repoath = repoath.trim()
-        if (repoath.length === 0) return alert("repopath is empty")
-
-        var mat = repoath.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
-        if (mat && mat.length === 4) {
-            console.log("mat:", mat)
-            return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
+        if (!repoath || repoath.length === 0) return alert("repopath is not defined.")
+        var mat = proj_url.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
+        if (mat) {
+            return repopath
         }
 
-        var mat = repoath.match(/^(?:(?!ab).)+$/) //https://stackoverflow.com/questions/977251/regular-expressions-and-negating-a-whole-character-group
-        var mat = repoath.match(/^(?:(?!https\:\/\/github\.com[\/]).)+$/)
-        var mat = repoath.match(/^(?:(?!https\:\/\/github\.com[\/]))([^\/]+)[\/]([^\.\/]+)(?:(?![\.]git))$/)
-        if (mat && mat.length === 3) { //Format:username/reponame
-            console.log("mat:", mat)
-            var fullpath = `https://github.com/${repoath}.git`
-            return { format: 1, desc: "user_repo", full_path: fullpath, user_repo: mat[0], user: mat[1], repo: mat[2] }
+        var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
+        if (mat) {
+            return repopath
         }
-        return alert("Invalid string format of repository:", repopath)
+        alert("repository path not recognized.")
+        return repopath
     },
     addonTopOfAry: function (targetary, addon) {
         var ary = addon
@@ -535,9 +529,9 @@ var Uti = {
         var api = new BsnpRestApi()
 
         //if (0 === idx) {//initial-sign-in-page-loading only
-            //var tuid = MyStorage.GenCUID()
-            svrurl += `/Jsonpster?inp=`;
-            //SSID will be ready after sign-in success.
+        //var tuid = MyStorage.GenCUID()
+        svrurl += `/Jsonpster?inp=`;
+        //SSID will be ready after sign-in success.
         //}
 
         var e = document.createElement("script");
@@ -550,7 +544,7 @@ var Uti = {
             if ("undefined" !== typeof Jsonpster) {
                 clearInterval(tiid)
                 if (0 === idx) {//signin page loaded.
-                    
+
                 }
                 else if (idx > 0) {//1:main-page loaded  after transit from signin-page.
                     console.log("crossload-2:SSID=", MyStorage.SSID())
