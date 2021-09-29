@@ -515,7 +515,7 @@ var BibleUti = {
         //proj_url = https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git
         //proj_url = https://wdingsoft:3edcfdsa@bitbucket.org/bsnp21/pub_wd01.git
         var reg = new RegExp(/^https\:\/\/github\.com\/(\w+)\/(\w+)(\.git)$/)
-        const hostname = "bitbucket.com"
+        const hostname = "bitbucket.org"
 
         var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
         if (mat ) {
