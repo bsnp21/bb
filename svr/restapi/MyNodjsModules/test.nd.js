@@ -43,7 +43,7 @@ var temp = {
         //proj_url = https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git
         //proj_url = https://wdingsoft:3edcfdsa@bitbucket.org/bsnp21/pub_wd01.git
         var reg = new RegExp(/^https\:\/\/github\.com\/(\w+)\/(\w+)(\.git)$/)
-        const hostname = "bitbucket.com"
+        const hostname = "bitbucket.org"
 
         var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
         if (mat) {
@@ -60,12 +60,29 @@ var temp = {
         }
         return null
     },
+
+    _interpret_git_config_Usr_Pwd_Url : function (usr_proj, passcode) {
+        usr_proj.git_Usr_Pwd_Url = ""
+        if (passcode.trim().length > 0) {
+            if ("github.com" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}.git`
+            }
+            if ("bitbucket.org" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.prjbitbk}/${usr_proj.projname}.git`
+            }
+        }
+    
+        //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
+    }
 }
 
 var ret = temp._interpret_repo_url("https://github.com/wdingbox/Bible_obj_weid.git")
+temp._interpret_git_config_Usr_Pwd_Url(ret, "passcode")
 console.log(ret)
 
 
 console.log("bitbucket")
 var ret = temp._interpret_repo_url("https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git")
+
+temp._interpret_git_config_Usr_Pwd_Url(ret, "passcode")
 console.log(ret)

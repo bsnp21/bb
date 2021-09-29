@@ -528,10 +528,25 @@ var BibleUti = {
 
             var owner = `_${hostname}_${username}_${projname}`
             var ownerId = `${hostname}/${username}/${projname}`
-            return { hostname: hostname, username: username, prjbitbk: prjbitbk, projname: projname, ownerId: ownerId, ownerstr: owner }
+            return { hostname: hostname, username: username, projname: projname, prjbitbk: prjbitbk, ownerId: ownerId, ownerstr: owner }
         }
         return null
     },
+
+    _interpret_git_config_Usr_Pwd_Url : function (usr_proj, passcode) {
+        usr_proj.git_Usr_Pwd_Url = ""
+        if (passcode.trim().length > 0) {
+            if ("github.com" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}.git`
+            }
+            if ("bitbucket.org" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.prjbitbk}/${usr_proj.projname}.git`
+            }
+        }
+    
+        //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
+    },
+
 
     default_inp_out_obj: function () {
         return {
