@@ -910,7 +910,7 @@ BibleObjGituser.prototype.parse_inp_usr2proj = function (inp) {
         console.log(inp.out.desc)
         return null
     }
-    //this.parse_inp_usr2proj_final()
+    //
     return inp
 }
 
@@ -1150,12 +1150,12 @@ BibleObjGituser.prototype.run_proj_state = function (cbf) {
     //stat.bRepositable = stat.bGitDir
 
     stat.missedFiles = this.run_makingup_missing_files(false)
-    stat.config = this.load_git_config()
+    var configtxt = this.load_git_config()
 
     /////// git status
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
     this.m_inp.out.state.bRepositable = 0
-    if (stat.config.length > 0) {
+    if (configtxt.length > 0) {
         //if clone with password ok, it would ok for pull/push 
         stat.bRepositable = 1
     }
@@ -1286,11 +1286,10 @@ BibleObjGituser.prototype.load_git_config = function () {
     console.log("ipos1:", ipos1, this.m_inp.usr.repopath)
     console.log("ipos2:", ipos2, this.m_inp.usr_proj.git_Usr_Pwd_Url)
 
-    this.m_inp.out.state.config = ""
+    var configurl = ""
     if (ipos1 > 0) {
         olds = txt
         news = txt.replace(this.m_inp.usr.repopath, this.m_inp.usr_proj.git_Usr_Pwd_Url)
-        this.m_inp.out.state.config = news
     }
     if (ipos2 > 0) {
         news = txt
@@ -1305,10 +1304,11 @@ BibleObjGituser.prototype.load_git_config = function () {
         //var txt = fs.readFileSync(git_config_fname, "utf8")
         var pos0 = txt.indexOf("[remote \"origin\"]")
         var pos1 = txt.indexOf("\n\tfetch = +refs");//("[branch \"master\"]")
-        this.m_inp.out.state.config = txt.substring(pos0 + 19, pos1)
+        configurl = txt.substring(pos0 + 19, pos1)
     }
+    this.m_inp.usr_proj.configurl = configurl
     //}
-    return this.m_inp.out.state.config
+    return configurl
 }
 
 
