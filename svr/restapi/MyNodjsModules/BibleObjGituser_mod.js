@@ -899,6 +899,10 @@ BibleObjGituser.prototype.parse_inp_usr2proj = function (inp) {
     }
     BibleUti._deplore_usr_proj_dirs(inp.usr_proj, this.m_sBaseUsrs)
 
+    if (inp.usr.passcode.trim().length > 0) {
+        BibleUti._interpret_git_config_Usr_Pwd_Url(inp.usr_proj, inp.usr.passcode)
+    }
+
 
     if (null === BibleUti._check_pub_testing(inp)) {
         inp.out.desc = "failed pub test."
@@ -906,23 +910,10 @@ BibleObjGituser.prototype.parse_inp_usr2proj = function (inp) {
         console.log(inp.out.desc)
         return null
     }
-    this.parse_inp_usr2proj_final()
+    //this.parse_inp_usr2proj_final()
     return inp
 }
-BibleObjGituser.prototype.parse_inp_usr2proj_final = function () {
-    var inp = this.m_inp;
-    inp.usr_proj.git_Usr_Pwd_Url = ""
-    if (inp.usr.passcode.trim().length > 0) {
-        if ("github.com" === inp.usr_proj.hostname) {
-            inp.usr_proj.git_Usr_Pwd_Url = `https://${inp.usr_proj.username}:${inp.usr.passcode}@${inp.usr_proj.hostname}/${inp.usr_proj.username}/${inp.usr_proj.projname}.git`
-        }
-        if ("bitbucket.org" === inp.usr_proj.hostname) {
-            inp.usr_proj.git_Usr_Pwd_Url = `https://${inp.usr_proj.username}:${inp.usr.passcode}@${inp.usr_proj.hostname}/${inp.usr_proj.prjbitbk}/${inp.usr_proj.projname}.git`
-        }
-    }
 
-    //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
-}
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
     //jspfn: ../../../../bist/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
