@@ -139,12 +139,12 @@ var Uti = {
     validate_repository_url: function (repoath) {
         repoath = repoath.trim()
         if (!repoath || repoath.length === 0) return alert("repopath is not defined.")
-        var mat = proj_url.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
+        var mat = repoath.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
         if (mat) {
             return repopath
         }
 
-        var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
+        var mat = repoath.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
         if (mat) {
             return repopath
         }
