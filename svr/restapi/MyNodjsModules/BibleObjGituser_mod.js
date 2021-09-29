@@ -1279,9 +1279,11 @@ BibleObjGituser.prototype.load_git_config = function () {
     console.log("ipos1:", ipos1, this.m_inp.usr.repopath)
     console.log("ipos2:", ipos2, this.m_inp.usr_proj.git_Usr_Pwd_Url)
 
+    this.m_inp.out.state.config = ""
     if (ipos1 > 0) {
         olds = txt
         news = txt.replace(this.m_inp.usr.repopath, this.m_inp.usr_proj.git_Usr_Pwd_Url)
+        this.m_inp.out.state.config = news
     }
     if (ipos2 > 0) {
         news = txt
