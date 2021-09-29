@@ -43,7 +43,7 @@ var PageUti = {
         var stb = `<table id='account_history_table' class='center' border='1'><caption>${capary[cid]}</caption><tbody>`
         for (var i = 0; i < ar.length; i++) {
             if (!ar[i].repopath) continue
-            var str = ar[i].repopath.replace(/[\.]git$/, "").replace("https://github.com/", "")
+            var str = ar[i].repopath;//.replace(/[\.]git$/, "").replace("https://github.com/", "")
             var clsname = ["", "repo_history", "desc_history"]
             var showval = ["", str, ar[i].repodesc]
             if (uniqTmp[showval[cid]]) continue
