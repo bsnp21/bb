@@ -8,11 +8,11 @@ var temp = {
 
     _interpret_repo_url: function (proj_url) {
         if (!proj_url) return null
-        if(proj_url.indexOf("github.com/")>0){
+        if (proj_url.indexOf("github.com/") > 0) {
             return this._interpret_repo_url_github(proj_url)
 
         }
-        if(proj_url.indexOf("bitbucket.org/")>0){
+        if (proj_url.indexOf("bitbucket.org/") > 0) {
             return this._interpret_repo_url_bitbucket(proj_url)
         }
         console.log(" ***** fatal err: git repository path not recognized..")
@@ -46,25 +46,26 @@ var temp = {
         const hostname = "bitbucket.com"
 
         var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
-        if (mat ) {
+        if (mat) {
             console.log("mat:", mat)
             //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
             var username = mat[1]
+            var prjbitbk = mat[3]
             var projname = mat[4]
 
 
             var owner = `_${hostname}_${username}_${projname}`
             var ownerId = `${hostname}/${username}/${projname}`
-            return { hostname: hostname, username: username, projname: projname, ownerId: ownerId, ownerstr: owner }
+            return { hostname: hostname, username: username, projname: projname, prjbitbk: prjbitbk, ownerId: ownerId, ownerstr: owner }
         }
         return null
     },
 }
 
-var ret = temp._interpret_repo_url("https://github.com/wdingbox/Bible_obj_weid.git") 
+var ret = temp._interpret_repo_url("https://github.com/wdingbox/Bible_obj_weid.git")
 console.log(ret)
 
 
 console.log("bitbucket")
-var ret = temp._interpret_repo_url("https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git") 
+var ret = temp._interpret_repo_url("https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git")
 console.log(ret)
