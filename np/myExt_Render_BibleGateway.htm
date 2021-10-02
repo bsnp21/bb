@@ -39,11 +39,12 @@
             background-color: antiquewhite;
         }
 
-        #input,
+        #Search_repodesc,
         #output {
-            background-color: black;
+            background-color: yellowgreen;
             color: white;
-            overflow: auto
+            overflow: auto;
+            width:100%;
         }
 
 
@@ -136,12 +137,21 @@
         }
         $("#allusrs").html(trs).find(".Abbrev").on("click",function(){
             $(this).toggleClass("hili")
-            var slt=""
+            var vsn=""
             $(".hili").each(function(){
                 var val = $(this).text()
-                slt+=val + ";"
+                vsn+=val + ";"
             })
-            $("#Search_repodesc").val("version="+slt)
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const bcv = urlParams.get('search');
+            var par = `https://www.biblegateway.com/passage/?search=${bcv}&version=${vsn}` 
+            $("#Search_repodesc").val(par)
+        })
+
+
+        $("#runCmd").on("click",function(){
+            window.open($("#Search_repodesc").val())
         })
 
     })

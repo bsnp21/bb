@@ -57,8 +57,9 @@ PopupMenu_BcvTag.prototype.init_links = function () {
     $("#gtw").click(function () {
         var ret = Ext_Link_Menu.HiliEx(this)
 
+        //====/passage?search=John13:34&version=NIV;KJV
         var vol2 = CNST.BiBookName[ret.vol][0];
-        ret.set_href("?" + vol2 + ret.chp + ":" + ret.vrs + "&version=NIV;CUV;KJV;NKJV;ESV");
+        ret.set_href("?search="  + vol2 + ret.chp + ":" + ret.vrs + "&version=NIV;CUV;KJV;NKJV;ESV");
     });
     $("#studylight").click(function () {
         var ret = Ext_Link_Menu.HiliEx(this)
