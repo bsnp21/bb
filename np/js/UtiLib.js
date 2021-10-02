@@ -622,3 +622,24 @@ var Uti = {
 
 };////  Uti
 ////////////////////////////////////
+var Ext_Link_Menu = {
+    HiliEx: function (_this) {
+        $(".hiliExt").removeClass("hiliExt")
+        $(_this).parent().addClass("hiliExt")
+
+        var sbcv = $(".bcvTag.bcvMark").text();
+        var ret = Uti.parse_bcv(sbcv, "");
+        if (!ret) return alert("ERR: bcvid=" + sbcv)
+        var url = $(_this).attr("ref");
+        ret.url = url;
+        ret.set_href = function (str) {
+            var file = this.url + str
+            console.log(file);
+            $(_this).attr("href", file);
+        }
+        ret.isNT = function () {
+            return CNST.isNT(this.vol)
+        }
+        return ret
+    },
+}

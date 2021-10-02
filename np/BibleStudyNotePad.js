@@ -10,27 +10,7 @@ function PopupMenu_BcvTag() {
     this.m_id = "#divPopupMenu_BcvTag"
 }
 PopupMenu_BcvTag.prototype.init_links = function () {
-    var Ext_Link_Menu = {
-        HiliEx: function (_this) {
-            $(".hiliExt").removeClass("hiliExt")
-            $(_this).parent().addClass("hiliExt")
-
-            var sbcv = $(".bcvTag.bcvMark").text();
-            var ret = Uti.parse_bcv(sbcv, "");
-            if (!ret) return alert("ERR: bcvid=" + sbcv)
-            var url = $(_this).attr("ref");
-            ret.url = url;
-            ret.set_href = function (str) {
-                var file = this.url + str
-                console.log(file);
-                $(_this).attr("href", file);
-            }
-            ret.isNT = function () {
-                return CNST.isNT(this.vol)
-            }
-            return ret
-        },
-    }
+    
 
     $("#blueletterbible").click(function () {
         var ret = Ext_Link_Menu.HiliEx(this)
@@ -1772,6 +1752,27 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     $("#Check_bcv").click(function () {
         var str = $("#txtarea").val()
+
+
+        var regexp = new RegExp(/(\w+\s*\d+\:\d+)/gi)
+        var regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
+        var pad3 = []
+        var mat = str.match(regexp)
+        if(mat){
+            for(const name of mat){
+                console.log("name",name)
+                var mat2 = name.match(regexp2)
+                if(mat2){
+                    console.log("mat2:",mat2)
+                    var stdbkid = CNST.StdBkID(mat2[1])
+                    console.log("stdbkid",stdbkid)
+
+                }
+            }
+        }
+        console.log(mat)
+
+
         var ret = Uti.convert_std_bcv_str_To_uniq_biblicalseq_splitted_ary(str)
         Uti.Msg(ret)
         Uti.Msg(ret.biblical_order_splitted_ary.join(", "))

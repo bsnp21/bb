@@ -31,7 +31,7 @@ var BibleInputMenuContainer = `
         </tr>
         <tr>
             <td>
-                <a id="gtw" ref="https://www.biblegateway.com/passage/?search=" title='biblegateway.com'>gateway</a>
+                <a id="gtw" ref="./myExt_Render_BibleGateway.htm" _ref="https://www.biblegateway.com/passage/?search=" title='biblegateway.com'>BibleGateway.com</a>
             </td>
         </tr>
         <tr>
@@ -582,21 +582,21 @@ CNST.StdBkID_variantNames = {
     "Rev": ['Revelation', 'revelation', '启示录',],
 };
 CNST.StdBkID = function (sAnyBookName) {
+    if (!sAnyBookName) return ""
     if (sAnyBookName.length < 3) return ""
 
     var reg = new RegExp(sAnyBookName, "gi")
-    var retary = []
-    for (const [stdBkId, ar] of CNST.StdBkID_variantNames) {
-        for (let name in ar) {
-            var mat = name.match(reg)
-            if (mat) {
-                retary.push(stdBkId)
+    var retary = ''
+    for (const stdBkId in CNST.StdBkID_variantNames) {
+        for (let sname of CNST.StdBkID_variantNames[stdBkId]) {
+            if (sname == sAnyBookName) {
+                retary = stdBkId
             }
         }
     }
     if (retary.length === 0) return ""
-    if (retary.length > 1) alert("wrong sAnyBookName:" + sAnyBookName)
-    return retary[0]
+    //if (retary.length > 1) alert("wrong sAnyBookName:" + sAnyBookName)
+    return retary
 };
 CNST.BibVolNameEngChn = function (Vid, slan) {
 

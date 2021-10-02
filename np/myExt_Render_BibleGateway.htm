@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <title>~</title>
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <base target="_blank" />
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+    <!-------------------------------------------->
+    <!---- Insert this before scripts import; then restor back later -->
+    <script>//if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <!-------------- jq --------------------->
+    <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
+    <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
+    <script xxxxxxxsrc="http://localhost:7878/assets/ckeditor/adapters/jq/jquery-2_1_3.min.js"
+        note="selfseversite"></script>
+    <!-------------- ckeditor only--------------------->
+    <script src="../../../assets/ckeditor/ckeditor.js"></script>
+    <script src="../../../assets/ckeditor/samples/old/sample.js"></script>
+    <link href="../../../assets/ckeditor/samples/old/sample.css" rel="stylesheet">
+
+
+    <script ___src="http://localhost:7878/assets/ckeditor/ckeditor.js" note="selfseversite"></script>
+    <script ___src="http://localhost:7878/assets/ckeditor/samples/old/sample.js"></script>
+    <!-------------------------------------------->
+    <script src="./js/CNST.js"></script>
+    <script src="./js/UtiLib.js"></script>
+    <script src="./js/PageUti.js"></script>
+    <script src="./js/MyStorage.js"></script>
+    <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
+    <!----- Insert this line after script imports -->
+    <script>//if (window.module) module = window.module;</script>
+    <!-------------------------------------------->
+    <style>
+        .editor_state_max {
+            z-index: 999999;
+            position: absolute;
+            right: 20px;
+            background-color: antiquewhite;
+        }
+
+        #input,
+        #output {
+            background-color: black;
+            color: white;
+            overflow: auto
+        }
+
+
+        #idbtn_exec_cmd {
+            background-color: grey;
+        }
+
+        .white_space_nowrap {
+            white-space: nowrap;
+        }
+
+        .editorinfo {
+            background-color: lightblue;
+            display: inline-block;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .minitxt {
+            float: left;
+            white-space: nowrap;
+        }
+
+        .minicon {
+            float: right;
+
+            white-space: nowrap;
+        }
+
+        .scorenum {
+            float: right;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body onbeforeunload="return 'leave?';">
+
+
+
+
+
+
+    <h>shareID: </h><input id="Search_repodesc" placeholder="Fellowship Group ID"></input> <button id="runCmd">Search</button>
+    <div id="account_history"></div>
+
+    <table border="1">
+        <caption id="scap"></caption>
+        <tbody id="allusrs">
+
+        </tbody>
+    </table>
+
+
+
+
+
+    <script>
+
+    </script>
+</body>
+
+</html>
+<script>
+    if ("undefined" === typeof localStorage) {
+        alert("localStorage not supported")
+    }
+</script>
+<script>
+    $(function () {
+     
+    })
+</script>
