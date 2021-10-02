@@ -10,7 +10,7 @@ function PopupMenu_BcvTag() {
     this.m_id = "#divPopupMenu_BcvTag"
 }
 PopupMenu_BcvTag.prototype.init_links = function () {
-    
+
 
     $("#blueletterbible").click(function () {
         var ret = Ext_Link_Menu.HiliEx(this)
@@ -58,7 +58,7 @@ PopupMenu_BcvTag.prototype.init_links = function () {
         var ret = Ext_Link_Menu.HiliEx(this)
 
         var vol2 = CNST.BiBookName[ret.vol][0];
-        ret.set_href(vol2 + ret.chp + ":" + ret.vrs + "&version=NIV;CUV;KJV;NKJV;ESV");
+        ret.set_href("?" + vol2 + ret.chp + ":" + ret.vrs + "&version=NIV;CUV;KJV;NKJV;ESV");
     });
     $("#studylight").click(function () {
         var ret = Ext_Link_Menu.HiliEx(this)
@@ -288,7 +288,7 @@ PopupMenu_EdiTag.prototype.init = function () {
         localStorage.setItem("myNote", JSON.stringify(editObj))
         return true
     }
-    
+
 
     $("#RevTag_Edit_Local").bind("click", function () {
         _THIS.m_ediBtn.toggle_enableEdit()
@@ -1758,14 +1758,14 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         var regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
         var pad3 = []
         var mat = str.match(regexp)
-        if(mat){
-            for(const name of mat){
-                console.log("name",name)
+        if (mat) {
+            for (const name of mat) {
+                console.log("name", name)
                 var mat2 = name.match(regexp2)
-                if(mat2){
-                    console.log("mat2:",mat2)
+                if (mat2) {
+                    console.log("mat2:", mat2)
                     var stdbkid = CNST.StdBkID(mat2[1])
-                    console.log("stdbkid",stdbkid)
+                    console.log("stdbkid", stdbkid)
 
                 }
             }
