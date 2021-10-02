@@ -1,6 +1,7 @@
 var BibleGateway_EnglishVersionsAry = 
 [
     "Chinese Union Version (CUV) Traditional",
+    
     "21st Century King James Version (KJ21)",
     "American Standard Version (ASV)",
     "Amplified Bible (AMP)",

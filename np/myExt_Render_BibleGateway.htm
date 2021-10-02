@@ -15,7 +15,8 @@
     <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
      
     <!-------------- ckeditor only--------------------->
-    
+    <script language="javascript" src="../jq/table_Indexer.js"></script>
+    <script language="javascript" src="../jq/jquery.tablesorter.js"></script>
 
 
     <script ___src="http://localhost:7878/assets/ckeditor/ckeditor.js" note="selfseversite"></script>
@@ -150,7 +151,9 @@
             const bcv = urlParams.get('search');
             var par = `https://www.biblegateway.com/passage/?search=${bcv}&version=${vsn}` 
             $("#Search_repodesc").val(par)
-        })
+        });
+        
+        table_sort()
 
 
         $("#runCmd").on("click",function(){
