@@ -698,6 +698,13 @@ var ApiJsonp_BibleObj = {
 
     test_https_work: async function (req, res) {
         console.log("test_https_work...")
+
+        /////// show cache.keys
+        console.log("NCache.myCache.keys():")
+        console.log(NCache.myCache.keys())
+
+
+
         res.writeHead(200, { 'Content-Type': 'text/javascript' });
         res.write(`api: test_https_work, it works ok.`);
         res.end();
