@@ -533,7 +533,7 @@ var BibleUti = {
         return null
     },
 
-    _interpret_git_config_Usr_Pwd_Url : function (usr_proj, passcode) {
+    _interpret_git_config_Usr_Pwd_Url: function (usr_proj, passcode) {
         usr_proj.git_Usr_Pwd_Url = ""
         if (passcode.trim().length > 0) {
             if ("github.com" === usr_proj.hostname) {
@@ -543,7 +543,7 @@ var BibleUti = {
                 usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.prjbitbk}/${usr_proj.projname}.git`
             }
         }
-    
+
         //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
     },
 
@@ -946,6 +946,12 @@ BibleObjGituser.prototype.session_create = function () {
     var ssid = this.m_inp.usr_proj.ownerId
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
+    if (this.m_inp.aux && this.m_inp.aux.cacheTTL) {
+        var val = parseInt(this.m_inp.aux.cacheTTL)
+        if (val > 1) {
+            ttl = val
+        }
+    }
 
     NCache.Set(ssid_b64, this.m_inp.usr, ttl)
     console.log("session_create:", ssid, ssid_b64, this.m_inp.usr)

@@ -77,10 +77,10 @@ BsnpRestApi.prototype.urlRedirectParam = function () {
     }
     return spar
 }
-BsnpRestApi.prototype.signin = function (usr, cbf) {
+BsnpRestApi.prototype.signin = function (par, cbf) {
     var _this = this
     this._get_otk(function (otk) {
-        _this._gen_ssid(otk, usr, function (ret) {
+        _this._gen_ssid(otk, par, function (ret) {
             if (ret.out.state.SSID) {
                 _this.SSID = ret.out.state.SSID
             }
@@ -120,13 +120,13 @@ BsnpRestApi.prototype._get_otk = function (cbf) {
         alert(textStatus);
     });;
 }
-BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
+BsnpRestApi.prototype._gen_ssid = function (otk, par, cbf) {
     var inp = { CUID: otk.CUID }
     if (!inp.CUID) return alert("missing CUID.")
     if (otk.pkb64.length === 0) return alert("no pubkey. Please load page again.")
 
-    if ('object' != typeof usr) return alert("missing usr.")
-    var usrs = JSON.stringify(usr)
+    if ('object' != typeof par.usr) return alert("missing usr.")
+    var usrs = JSON.stringify(par.usr)
     if (usrs.length > 500) { return alert("max 4096-bit rsa: 501B. len=" + usrs.length) }
 
     var encrypt = new JSEncrypt();
@@ -134,6 +134,10 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
     inp.cipherusrs = encrypt.encrypt(usrs);
 
     console.log(inp.cipherusrs.length)
+
+    if (par.aux) {
+        inp.aux = par.aux
+    }
 
     var _this = this;
     $.ajax({

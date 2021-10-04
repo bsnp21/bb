@@ -209,7 +209,7 @@
 
 
 
-    
+
     <hr id="toggle_txtarea">
 
     <div id="footer" style="text-align: center;margin-top: 50px;">
@@ -253,7 +253,7 @@
 
         $("#GitInfo").on("click", function () {
             PageUti.Repositories_History("#account_history", 1)
-        }).on("blur",function(){
+        }).on("blur", function () {
             //PageUti.Repositories_History("#account_history", 0)
         })
 
@@ -278,11 +278,11 @@
 </script>
 <script>
     $(function () {
-    
+
         PageUti.Repositories_History("#account_history", 1)
         PageUti.Repositories_History("#account_history", -1)
 
-        $("#otb").on("click",function(){
+        $("#otb").on("click", function () {
             PageUti.Repositories_History("#account_history", 1)
         })
 
@@ -313,11 +313,12 @@
         $("#errmsg").text("runing ...")
         var api = new BsnpRestApi()
         var usr = MyStorage.Repositories().repos_app_update()
-        api.signin(usr, function (rob, err) {
+        var par = { usr: usr, aux: { cacheTTL: 36000 } }
+        api.signin(par, function (rob, err) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
-        
+
             if (err) {
                 failed(rob, ur)
             } else {
@@ -327,11 +328,11 @@
 
         })
     }
-    $("#errmsg").on("click",function(){
+    $("#errmsg").on("click", function () {
         $("*[disabled").removeAttr("disabled")
         $("#CheckIn").show("slow")
     })
-    function failure(){
+    function failure() {
         $("#errmsg").text("failed to sign in.")
     }
 
