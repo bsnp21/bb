@@ -746,6 +746,9 @@ NCache.Set = function (key, val, ttl) {
 NCache.Get = function (key, ttl) {
     var val = this.myCache.get(key)
     if (undefined === val || null === val) { //0 and "" are allowed.
+        var ar = NCache.myCache.keys()
+        console.log("Not found in NCache.myCache.Keys for:", key)
+        console.log(ar)
     } else {
         if (undefined === ttl) {
             if ("object" === typeof (val)) {
