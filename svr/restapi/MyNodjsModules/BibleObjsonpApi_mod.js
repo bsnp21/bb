@@ -702,7 +702,7 @@ var ApiJsonp_BibleObj = {
         /////// show cache.keys
         console.log("NCache.myCache.keys():")
         console.log(NCache.myCache.keys())
-        Object.keys(NCache.myCache.keys()).forEach(function(skey){
+        Object.keys(NCache.myCache.keys()).forEach(function(i, skey){
             console.log(skey)
             var obj = NCache.Get(skey)
             console.log(obj)
