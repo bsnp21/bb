@@ -601,6 +601,8 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiUsrReposData_status: function (req, res) {
+        console.log("ApiUsrReposData_status Current NCache.myCache.Keys()")
+        console.log(NCache.myCache.keys())
 
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
@@ -617,8 +619,7 @@ var ApiJsonp_BibleObj = {
             userProject.run_proj_state()
         })
 
-        console.log("Current NCache.myCache.Keys()")
-        console.log(NCache.myCache.keys())
+        
 
         // var sret = JSON.stringify(inp, null, 4)
         // var sid = ""
