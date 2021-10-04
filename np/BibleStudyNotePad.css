@@ -689,5 +689,8 @@ input[title='NIV']:checked:after {
 input[readonly], textarea[readonly]{
     background-color: lightgray;
 }
+#cacheTTL{
+    width: 100px;
+}
 
 
