@@ -203,12 +203,13 @@
         </div>
     </div>
 
+    <div style="text-align: center;margin-top: 0px;" onclick="$('#txtarea').val('');" id="otb">...</div>
     <div id="account_history" class="center" style="display: none;">.</div>
 
 
 
 
-    <div style="text-align: center;margin-top: 50px;" onclick="$('#txtarea').val('');" id="otb">...</div>
+    
     <hr id="toggle_txtarea">
 
     <div id="footer" style="text-align: center;margin-top: 50px;">
@@ -277,8 +278,13 @@
 </script>
 <script>
     $(function () {
+    
         PageUti.Repositories_History("#account_history", 1)
         PageUti.Repositories_History("#account_history", -1)
+
+        $("#otb").on("click",function(){
+            PageUti.Repositories_History("#account_history", 1)
+        })
 
         $(".signinBtn").removeAttr("disabled")
 
