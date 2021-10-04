@@ -133,7 +133,7 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
     encrypt.setPublicKey(atob(otk.pkb64));
     inp.cipherusrs = encrypt.encrypt(usrs);
 
-    console.log(inp.cipherusrs.length)
+    console.log("cipherusrs:",inp.cipherusrs.length)
 
     var _this = this;
     $.ajax({
