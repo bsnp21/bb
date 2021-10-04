@@ -1841,7 +1841,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         MyStorage.Repositories().repos_app_update()
     })
 
-    $("#cacheTTL").on("change", function () {
+    $("#cacheTTL").on("change, keyup, click, blur", function () {
         MyStorage.cacheTTL($(this).val())
     })
 

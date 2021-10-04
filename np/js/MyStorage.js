@@ -278,9 +278,15 @@ var MyStorage = {
             })
         }
         if (undefined === v) {
-            v = parseInt(localStorage.getItem("cacheTTL"));
-            if (!v || !Number.isInteger(v) || v.length === 0 || v < 1) return defaultVal
-            return v
+            var vs = parseInt(localStorage.getItem("cacheTTL"));
+            var vu = $("#cacheTTL").val()
+            if(vs != vu){
+                if (!vu || !Number.isInteger(vu) || vu.length === 0 || vu < 1) {
+                    vu = defaultVal
+                }
+                localStorage.setItem("cacheTTL", vu)
+            }
+            return vu
         } else {
             v = parseInt(v)
             if (!Number.isInteger(v)) return alert(`not Number.isInteger(${v})`)
