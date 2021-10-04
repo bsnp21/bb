@@ -101,7 +101,7 @@ var ApiUti = {
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.write(JSON.stringify(inpObj))
                 res.end();
-                console.log("______________________________finished post req",(new Date()).toISOString())
+                console.log("______________________________finished post req", (new Date()).toISOString())
             });
         } else {
             res.writeHead(200, { "Content-Type": "text/html" });
@@ -138,10 +138,10 @@ var ApiUti = {
     find_workDir: function () {
         var pwd = __dirname
         console.log("__dirname=", pwd)
-        
+
         var wd = "", rootdir = "", prev = ""
         pwd.split("/").forEach(function (nodname) {
-            wd += nodname+"/"
+            wd += nodname + "/"
             console.log(wd)
             if (fs.existsSync(`${wd}/.git`)) {
                 rootdir = prev
@@ -601,8 +601,6 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiUsrReposData_status: function (req, res) {
-        console.log("ApiUsrReposData_status Current NCache.myCache.Keys()")
-        console.log(NCache.myCache.keys())
 
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
@@ -617,9 +615,12 @@ var ApiJsonp_BibleObj = {
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
             }
             userProject.run_proj_state()
+
+            console.log("ApiUsrReposData_status Current NCache.myCache.Keys()")
+            console.log(NCache.myCache.keys())
         })
 
-        
+
 
         // var sret = JSON.stringify(inp, null, 4)
         // var sid = ""
