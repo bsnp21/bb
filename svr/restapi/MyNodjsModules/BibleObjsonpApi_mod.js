@@ -617,6 +617,9 @@ var ApiJsonp_BibleObj = {
             userProject.run_proj_state()
         })
 
+        console.log("Current NCache.myCache.Keys()")
+        console.log(NCache.myCache.keys())
+
         // var sret = JSON.stringify(inp, null, 4)
         // var sid = ""
         // 
