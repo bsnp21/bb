@@ -746,9 +746,6 @@ NCache.Set = function (key, val, ttl) {
 NCache.Get = function (key, ttl) {
     var val = this.myCache.get(key)
     if (undefined === val || null === val) { //0 and "" are allowed.
-        var ar = NCache.myCache.keys()
-        console.log("Not found in NCache.myCache.Keys for:", key)
-        console.log(ar)
     } else {
         if (undefined === ttl) {
             if ("object" === typeof (val)) {
@@ -946,12 +943,6 @@ BibleObjGituser.prototype.session_create = function () {
     var ssid = this.m_inp.usr_proj.ownerId
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
-    if (this.m_inp.aux && this.m_inp.aux.cacheTTL) {
-        var val = parseInt(this.m_inp.aux.cacheTTL)
-        if (val > 1) {
-            ttl = val
-        }
-    }
 
     NCache.Set(ssid_b64, this.m_inp.usr, ttl)
     console.log("session_create:", ssid, ssid_b64, this.m_inp.usr)

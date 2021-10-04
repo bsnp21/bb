@@ -313,8 +313,7 @@
         $("#errmsg").text("runing ...")
         var api = new BsnpRestApi()
         var usr = MyStorage.Repositories().repos_app_update()
-        var par = { usr: usr, aux: { cacheTTL: 36000 } }
-        api.signin(par, function (rob, err) {
+        api.signin(usr, function (rob, err) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`

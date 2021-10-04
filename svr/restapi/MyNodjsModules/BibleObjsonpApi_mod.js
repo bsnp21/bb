@@ -615,9 +615,6 @@ var ApiJsonp_BibleObj = {
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
             }
             userProject.run_proj_state()
-
-            console.log("ApiUsrReposData_status Current NCache.myCache.Keys()")
-            console.log(NCache.myCache.keys())
         })
 
 
