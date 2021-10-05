@@ -20,8 +20,13 @@ var MyStorage = {
 
 
             $("#cacheTTL").val(MyStorage.cacheTTL())
-            $("#cacheTTL").on("click, change, keyup, blur", function () {
+            $("#cacheTTL").bind("click change keyup blur", function () {
                 var v = $(this).val()
+                var size = parseInt($(this).attr("maxlength"))
+                if (v.length >= size) {
+                    v = v.substr(0, size)
+                    $(this).val(v)
+                }
                 MyStorage.cacheTTL(v)
             })
 
@@ -256,7 +261,7 @@ var MyStorage = {
         }
     },
     cacheTTL: function (v) {
-        const defaultVal = 3600
+        const defaultVal = 99999999 //max in seconds = 1157 days
         if (undefined === v) {//get 
             var vs = parseInt(localStorage.getItem("cacheTTL"));
             if (!vs) vs = defaultVal
