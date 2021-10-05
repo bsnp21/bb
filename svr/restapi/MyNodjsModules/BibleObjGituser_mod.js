@@ -1015,7 +1015,7 @@ BibleObjGituser.prototype.get_pfxname = function (DocCode) {
                 dest_pfname = this.get_usr_acct_dir(`${fnam}_json.js`)
             }
             break;
-        default: //: NIV, CUVS,  
+        default: //: NIV, CUVS, NIV_Jw  
             dest_pfname = `${this.m_rootDir}bible_obj_lib/jsdb/jsBibleObj/${DocCode}.json.js`;
             break;
     }

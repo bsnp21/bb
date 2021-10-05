@@ -121,6 +121,7 @@ BsnpRestApi.prototype._get_otk = function (cbf) {
     });;
 }
 BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
+    console.log("BsnpRestApi input usr:", usr)
     var inp = { CUID: otk.CUID }
     if (!inp.CUID) return alert("missing CUID.")
     if (otk.pkb64.length === 0) return alert("no pubkey. Please load page again.")
@@ -133,7 +134,7 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
     encrypt.setPublicKey(atob(otk.pkb64));
     inp.cipherusrs = encrypt.encrypt(usrs);
 
-    console.log("cipherusrs:",inp.cipherusrs.length)
+    console.log("cipherusrs.len:",inp.cipherusrs.length)
 
 
     var _this = this;
@@ -166,11 +167,12 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
 BsnpRestApi.prototype.redirect_page = function (surl) {
 
 }
-BsnpRestApi.prototype.run = function (sapi, obj, cbf) {
+BsnpRestApi.prototype.run = function (sapi, par, cbf) {
+    console.log("BsnpRestApi input par:", par)
     var inp = { SSID: this.SSID }
     if (!inp.SSID) return alert("missing SSID.")
     inp.api = sapi
-    inp.par = obj
+    inp.par = par
 
     var _this = this;
     $.ajax({
