@@ -360,7 +360,7 @@ var BibleInputMenuContainer = `
                     <br>
                     <input id="repodesc" value='' placeholder='' ></input>
                     <br>
-                    <lable>Timeout(s):<lable> <input id="cacheTTL" type='number' min='1' max='3600000' length='100' unit='minute' placeholder=''></input> <a id='idatetiemstampe'></a>
+                    <lable>Timeout(s):<lable> <input id="cacheTTL" type='number' min='1' max='360000000' maxlength='9' size='9' unit='s' placeholder='123'></input> <a id='idatetiemstampe'></a>
                     <br>
                     
                     <button id="account_updateStatus">UpdateStatus</button>
