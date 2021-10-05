@@ -313,6 +313,7 @@
         $("#errmsg").text("runing ...")
         var api = new BsnpRestApi()
         var usr = MyStorage.Repositories().repos_app_update()
+        usr.ttl = MyStorage.cacheTTL()
         api.signin(usr, function (rob, err) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
@@ -322,9 +323,7 @@
                 failed(rob, ur)
             } else {
                 success(rob, ur)
-
             }
-
         })
     }
     $("#errmsg").on("click", function () {
