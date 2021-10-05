@@ -59,7 +59,7 @@ PopupMenu_BcvTag.prototype.init_links = function () {
 
         //====/passage?search=John13:34&version=NIV;KJV
         var vol2 = CNST.BiBookName[ret.vol][0];
-        ret.set_href("?search="  + vol2 + ret.chp + ":" + ret.vrs + "&version=NIV;CUV;KJV;NKJV;ESV");
+        ret.set_href("?search=" + vol2 + ret.chp + ":" + ret.vrs + "&version=NIV;CUV;KJV;NKJV;ESV");
     });
     $("#studylight").click(function () {
         var ret = Ext_Link_Menu.HiliEx(this)
@@ -1841,9 +1841,10 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         MyStorage.Repositories().repos_app_update()
     })
 
-    $("#cacheTTL").on("change, keyup, click, blur", function () {
-        MyStorage.cacheTTL($(this).val())
-    })
+    //$("#cacheTTL").on("change, keyup, click, blur", function () {
+    //    MyStorage.cacheTTL($(this).val())
+    //})
+ 
 
     //  $("#passcode").bind("focus", function () {
     //      PageUti.Repositories_History("#outConfig", -1)

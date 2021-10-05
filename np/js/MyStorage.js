@@ -20,6 +20,10 @@ var MyStorage = {
 
 
             $("#cacheTTL").val(MyStorage.cacheTTL())
+            $("#cacheTTL").on("click, change, keyup, blur", function () {
+                var v = $(this).val()
+                MyStorage.cacheTTL(v)
+            })
 
 
 
@@ -57,20 +61,6 @@ var MyStorage = {
             function (ret) {
                 if (cbf) cbf(ret)
             })
-
-    },
-
-    SSID: function (ssid) {
-        //const sessId = "SSID"
-        if (undefined === ssid) {
-            //var ret = localStorage.getItem(sessId)
-            //if (!ret) return alert("Invalid SessionID. \n- Please sign out/in again.")
-            //return ret
-            var api = new BsnpRestApi()
-            return api.SSID
-        } else {
-            //localStorage.setItem(sessId, ssid)
-        }
     },
 
     Repositories: function () {
@@ -267,30 +257,14 @@ var MyStorage = {
     },
     cacheTTL: function (v) {
         const defaultVal = 3600
-        if ("#" === v) {
-            v = $("#cacheTTL").val()
-            return v
-        }
-        if ("on" === v) {
-            $("#cacheTTL").on("click, change", function () {
-                var v = $(this).val()
-
-            })
-        }
-        if (undefined === v) {
+        if (undefined === v) {//get 
             var vs = parseInt(localStorage.getItem("cacheTTL"));
-            var vu = $("#cacheTTL").val()
-            if(vs != vu){
-                if (!vu || !Number.isInteger(vu) || vu.length === 0 || vu < 1) {
-                    vu = defaultVal
-                }
-                localStorage.setItem("cacheTTL", vu)
-            }
-            return vu
-        } else {
+            if (!vs) vs = defaultVal
+            return vs
+        } else {//set
             v = parseInt(v)
-            if (!Number.isInteger(v)) return alert(`not Number.isInteger(${v})`)
-            if (v < 1) v = defaultVal
+            if (!Number.isInteger(v) || isNaN(v)) return alert(`not Number.isInteger(${v})`)
+            if (v < 1) v = 1
             localStorage.setItem("cacheTTL", v)
         }
     },
