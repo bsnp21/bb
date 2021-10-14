@@ -1755,7 +1755,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         var str = $("#txtarea").val()
 
         var bcvAry = CNST.StdBcvAry_FromAnyStr(str)
-        if(bcvAry.length>0){
+        if (bcvAry.length > 0) {
             str = bcvAry.join()
         }
 
@@ -1829,7 +1829,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     //$("#cacheTTL").on("change, keyup, click, blur", function () {
     //    MyStorage.cacheTTL($(this).val())
     //})
- 
+
 
     //  $("#passcode").bind("focus", function () {
     //      PageUti.Repositories_History("#outConfig", -1)
