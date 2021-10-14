@@ -1754,25 +1754,10 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     $("#Check_bcv").click(function () {
         var str = $("#txtarea").val()
 
-
-        var regexp = new RegExp(/(\w+\s*\d+\:\d+)/gi)
-        var regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
-        var pad3 = []
-        var mat = str.match(regexp)
-        if (mat) {
-            for (const name of mat) {
-                console.log("name", name)
-                var mat2 = name.match(regexp2)
-                if (mat2) {
-                    console.log("mat2:", mat2)
-                    var stdbkid = CNST.StdBkID(mat2[1])
-                    console.log("stdbkid", stdbkid)
-
-                }
-            }
+        var bcvAry = CNST.StdBcvAry_FromAnyStr(str)
+        if(bcvAry.length>0){
+            str = bcvAry.join()
         }
-        console.log(mat)
-
 
         var ret = Uti.convert_std_bcv_str_To_uniq_biblicalseq_splitted_ary(str)
         Uti.Msg(ret)

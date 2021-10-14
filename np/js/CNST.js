@@ -598,6 +598,25 @@ CNST.StdBkID = function (sAnyBookName) {
     //if (retary.length > 1) alert("wrong sAnyBookName:" + sAnyBookName)
     return retary
 };
+CNST.StdBcvAry_FromAnyStr = function (str) {
+    var regexp = new RegExp(/(\w+\s*\d+\:\d+)/gi)
+    var regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
+    var ret3 = []
+    var mat = str.match(regexp)
+    if (mat) {
+        for (const name of mat) {
+            console.log("name", name)
+            var mat2 = name.match(regexp2)
+            if (mat2) {
+                console.log("mat2:", mat2)
+                var stdbkid = CNST.StdBkID(mat2[1])
+                console.log("stdbkid", stdbkid)
+                ret3.push(stdbkid + mat2[2] + ":" + mat2[3])
+            }
+        }
+    }
+    return ret3
+}
 CNST.BibVolNameEngChn = function (Vid, slan) {
 
     switch (slan) {
