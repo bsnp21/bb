@@ -1,7 +1,7 @@
 <html>
 <head>
 	<base target="_blank" />
-	<script src="../../home/js/config_data.js"></script>
+	<script src="../../home/js/config_websvr_data.js"></script>
 	<title></title>
 	<meta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?ip=34.227.20.213:7775">
 	</meta>
@@ -13,7 +13,7 @@
 		var pos = url.indexOf("?")
 		var par = url.substr(pos)
 		if (pos < 0) {
-			par = `0;url=./mySignIn.htm?ip=${config_data.ip}:7778`
+			par = `0;url=./mySignIn.htm?ip=${config_websvr_data.ip}:7778`
 			//alert("no param:"+par)
 		}else{
 			par = `0;url=./np/mySignIn.htm${par}`

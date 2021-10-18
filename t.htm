@@ -27,7 +27,7 @@
 
 			var shref=$(this).attr("href")
 			if(shref && shref.indexOf("1.1.1.1")>0){
-				var url = shref.replace("1.1.1.1",config_data.ip)
+				var url = shref.replace("1.1.1.1",config_websvr_data.ip)
 				$(this).attr("href",url)
 			}
 
