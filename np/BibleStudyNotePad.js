@@ -2380,6 +2380,10 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
         $("#divPopupMenu").hide()
         $("#Tab_OutputBooksList").hide()
     });
+
+    $(tbid).find("td").bind("click", function () {
+        $(this).toggleClass("hili_obi_td");
+    });
 }
 OutputBibleTable.prototype.Gen_output_table = function (cbf) {
 

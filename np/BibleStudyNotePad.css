@@ -121,6 +121,9 @@ body {
     .hili {
         background-color: red;
     }
+    .hili_obi_td{
+        border: 2px solid red;
+    }
    
   
 
