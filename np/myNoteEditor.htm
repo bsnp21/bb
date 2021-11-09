@@ -420,35 +420,14 @@ ${scmd}
         }
         function __save() {
 
-
             var theData = ckEditor.getData();
-            var sbody = "<body>"
-            var pos0 = theData.search(sbody)
-            if (pos0 < 0) return alert("<body> not found")
-            var pos1 = pos0 + sbody.length
-            var pos2 = theData.search(/\<\/body\>/)
-            var html = theData.substring(pos1, pos2)
-            if (pos1 < 0 || pos2 < 0) {
-                return alert("html body not found")
-            }
-            var innerHtml = $(html).html()
-            // if(pos2-pos1>2000){
-            //     alert ("reach max 2000 characters limit.") //Maximum URL Size 2048
-            // }
-            var txt2save = Uti.htmlDecode(innerHtml.trim())
-            txt2save = txt2save.replace(/[\n\r\t]/g, '')
-            txt2save = txt2save.replace(/[\"]/g, '\'')
-
-
-
-            //for (const [bkc, chpObj] of Object.entries(pster.inp.par.inpObj)) {
-            //    for (const [chp, vrsObj] of Object.entries(chpObj)) {
-            //        for (const [vrs, txt] of Object.entries(vrsObj)) {
-            //            pster.inp.par.inpObj[bkc][chp][vrs] = txt2save.trim()
-            //            bcv = bkc + chp + ":" + vrs
-            //        }
-            //    }
-            //}
+           
+            parser = new DOMParser();
+            xmlDoc = parser.parseFromString(theData, "text/xml");
+            var obdy = xmlDoc.childNodes[0].getElementsByTagName("body")
+            var txt2save = $(obdy).html()
+            //txt2save = txt2save.replace(/[\n\r\t]/g, '')
+            //txt2save = txt2save.replace(/[\"]/g, '\'')
 
             if (false === ckEditor.checkDirty()) {
                 document.m_iEdiDataLen = theData.length;
@@ -461,6 +440,7 @@ ${scmd}
             if (!myNotes) return alert("No parent storage for myNote.")
             var pster = JSON.parse(myNotes)
             var bcv = pster.bcv
+            if(!bcv) return alert("no bcv to save:" + txt2save )
             var ret = Uti.parse_bcv(bcv, txt2save)
             var par = { fnames: [pster.fname], inpObj: ret.bcvObj }
 
@@ -503,6 +483,10 @@ ${scmd}
             var theData = ckEditor.getData();
             document.m_iEdiDataLen = theData.length;
             var bcv = pster.bcv
+            if (!bcv) {
+                alert("bcv not exit")
+                bcv = "~"
+            }
             g_msg.pop(`<br>${bcv}<br>- Init txtlen= ${pster.txt.length}, dataLen=${theData.length}`);
             ckEditor.resetDirty()
             $("title").text("_" + bcv)
@@ -532,9 +516,9 @@ ${scmd}
         // Uti.Jsonpster_page_transit_by_parent_storage(function () {
         //     load_page_by_parent_storage()
         // })
-       
+
         load_page_by_parent_storage()
-       
+
 
 
 
