@@ -683,7 +683,7 @@ CNST.BlueLetterBibleCode = {
     "Zec": "Zec",
     "Mal": "Mal",
     "Mat": "Mat",
-    "Mak": "Mak",
+    "Mak": "Mar",
     "Luk": "Luk",
     "Jhn": "Jhn",
     "Act": "Act",
