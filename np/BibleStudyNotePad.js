@@ -1528,8 +1528,9 @@ Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
         trs += `<tr><td>${ar[i]}</td><tr>`
     }
     $(tbodyID).html(trs).find("td").on("click", function () {
-        $(tbodyID).find(".hili").removeClass("hili")
-        $(this).addClass("hili")
+        $(tbodyID).find(".hili_SearchStrInBibleStart").removeClass("hili_SearchStrInBibleStart")
+        $(tbodyID).find(".hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStopd")
+        $(this).addClass("hili_SearchStrInBibleStart")
         var txt = $(this).text()
         MyStorage.LastSearchInDocument(txt)
         _THIS.onclick_inSvr_BibleObj_search_str()
@@ -2045,6 +2046,7 @@ AppInstancesManager.prototype.init = function (cbf) {
             function (ret) {
                 _This.apiCallback_Gen_output_table(ret, function (size) {
                     $("#searchNextresult").text("0/" + size)
+                    $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")
                 });
                 Uti.Msg(ret.out.result);
             })

@@ -118,9 +118,14 @@ body {
 
    
 
-    .hili {
+    .hili, .hili_SearchStrInBibleStart {
         background-color: red;
     }
+    .hili_SearchStrInBibleStopd {
+        border: 2px 2px 2px 2px solid greenyellow;    
+    }
+
+
     .hili_obi_td{
         border: 2px solid red;
     }
