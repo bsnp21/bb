@@ -243,7 +243,7 @@ var BibleInputMenuContainer = `
                 </div>  
                 <br>
                 <table id="Tab_selected_Doc_Search" border='1' style="float:left;">
-                    <caption>Search</caption>
+                    <caption>SearchIn</caption>
                     <tbody id="Tab_doc_option_for_search">
                         <tr>
                             <td>
