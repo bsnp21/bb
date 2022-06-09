@@ -418,8 +418,10 @@ var BibleInputMenuContainer = `
         `;//////backtick for multiple lines. 
 
 
-//(1) add bibl_obj_lib/jsdb/jsBibleObj/bbe.json.js
-//(2) add the idential file name in CNST FnameOfBibleObj. 
+///////////////////////////////
+// Steps to add new a book.
+// 1. add bibl_obj_lib/jsdb/jsBibleObj/bbe.json.js
+// 2. add the idential file name in CNST FnameOfBibleObj. 
 CNST.FnameOfBibleObj =
 {
     "BBE": "Basic Bible in English",
@@ -441,7 +443,9 @@ CNST.FnameOfBibleObj =
     "e_Note": "personal biblical study notes, commentary, questions, testimony, reflections, takeaway, other website links etc.",
     "e_Prayer": "personal prayer, preach, prophect, paper or project related to the verse and real life..",
     "e_Subtitle": "sub-title of its following verses.",
-    "e_Summary": "summary of chapter or pericope."
+    "e_Summary": "summary of chapter or pericope.",
+    "e_v_CUVS_enn2": "CUVS special names latinization. For easy reading/study, consistency to the West.",
+    "e_v_CUVS_enn3": "CUVS divine God's names latinization."
 };
 
 CNST.BiBookName = {
