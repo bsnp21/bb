@@ -419,7 +419,7 @@ var BibleInputMenuContainer = `
 
 
 ///////////////////////////////
-// Steps to add new a book.
+// Steps to add a new book or e_* book.
 // 1. add the idential file name in CNST FnameOfBibleObj. 
 // 2. add bibl_obj_lib/jsdb/jsBibleObj/bbe.json.js
 // 3. add in user myoj if it is e_* files. 
