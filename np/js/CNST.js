@@ -420,8 +420,9 @@ var BibleInputMenuContainer = `
 
 ///////////////////////////////
 // Steps to add new a book.
-// 1. add bibl_obj_lib/jsdb/jsBibleObj/bbe.json.js
-// 2. add the idential file name in CNST FnameOfBibleObj. 
+// 1. add the idential file name in CNST FnameOfBibleObj. 
+// 2. add bibl_obj_lib/jsdb/jsBibleObj/bbe.json.js
+// 3. add in user myoj if it is e_* files. 
 CNST.FnameOfBibleObj =
 {
     "BBE": "Basic Bible in English",
