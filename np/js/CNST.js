@@ -654,8 +654,8 @@ CNST.BlueLetterBibleCode = {
     "Num": "Num",
     "Deu": "Deu",
     "Jos": "Jos",
-    "Jug": "Jug",
-    "Rut": "Rut",
+    "Jug": "Jdg",//diff
+    "Rut": "Rth",//diff
     "1Sa": "1Sa",
     "2Sa": "2Sa",
     "1Ki": "1Ki",
@@ -666,10 +666,10 @@ CNST.BlueLetterBibleCode = {
     "Neh": "Neh",
     "Est": "Est",
     "Job": "Job",
-    "Psm": "Psa",//
+    "Psm": "Psa",//diff
     "Pro": "Pro",
     "Ecc": "Ecc",
-    "Son": "Son",
+    "Son": "Sng",//diff
     "Isa": "Isa",
     "Jer": "Jer",
     "Lam": "Lam",
