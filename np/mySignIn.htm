@@ -347,7 +347,9 @@
             $("#passcode").val(pat)
         }
         if(opt==='run'){
-            $("#signInAsUsers").trigger("click")
+            setTimeout(function(){
+                $("#signInAsUsers").trigger("click")
+            }, 1000)
         }
     }
 
