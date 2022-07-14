@@ -343,8 +343,8 @@
         const pat = urlParams.get('pat');
         const opt = urlParams.get('opt');
         if (rep && pat) {
-            repopath = rep
-            passcode = pat
+            $("#repopath").val(rep)
+            $("#passcode").val(pat)
         }
         if(opt==='run'){
             $("#signInAsUsers").trigger("click")
