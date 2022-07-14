@@ -282,6 +282,8 @@
         PageUti.Repositories_History("#account_history", 1)
         PageUti.Repositories_History("#account_history", -1)
 
+        init_by_url_params()
+
         $("#otb").on("click", function () {
             PageUti.Repositories_History("#account_history", 1)
         })
@@ -334,5 +336,19 @@
         $("#errmsg").text("failed to sign in.")
     }
 
+
+    function init_by_url_params() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rep = urlParams.get('rep');
+        const pat = urlParams.get('pat');
+        const opt = urlParams.get('opt');
+        if (rep && pat) {
+            repopath = rep
+            passcode = pat
+        }
+        if(opt==='run'){
+            $("#signInAsUsers").trigger("click")
+        }
+    }
 
 </script>

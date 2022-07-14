@@ -647,6 +647,7 @@ CNST.BibVolName_Studylight = function (Vid) {
 CNST.BibVolName_ccel = function (Vid) {
     return CNST.BiBookName[Vid][0];
 };
+//std:blue
 CNST.BlueLetterBibleCode = {
     "Gen": "Gen",
     "Exo": "Exo",
