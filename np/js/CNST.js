@@ -329,8 +329,8 @@ var BibleInputMenuContainer = `
                 <tr><td>
                 
                 <a href='https://bsnp21.github.io/home/' owner='williamwding' email='yahoo.com' xxxhref='https://wdingbox.github.io/ham12/'>Home</a> |
-                <a id='NewPage' target='_blank'>New</a> | 
-                <a id="account_helper">More</a> |
+                <a id="account_helper" title='new user sign in'>Login</a> |
+                <a id='NewPage' target='_blank' title='multiple browser'>Multi</a> | 
 
                 
                 <button class="StorageRepo_Signout">Sign Out</button>
