@@ -420,9 +420,12 @@ var BibleInputMenuContainer = `
 
 ///////////////////////////////
 // Steps to add a new book or e_* book.
-// 1. add the idential file name in CNST FnameOfBibleObj. 
-// 2. add bibl_obj_lib/jsdb/jsBibleObj/bbe.json.js
-// 3. add in user myoj if it is e_* files. 
+// 1. add the idential file name in FnameOfBibleObj in CNST.js. 
+// 2. add the file in github(wdingbox).
+//    a. if the file is a new version of the Bible, e.g. BBE.json.js,
+//       add it in bible_obj_lib/jsdb/jsBibleObj/BBE.json.js 
+//    b. if the file is the editiable e_* files,
+//       add it in bible_obj_lib/jsdb/UsrDataTemplate/myoj/e_*_json.js. 
 CNST.FnameOfBibleObj =
 {
     "BBE": "Basic Bible in English",
@@ -445,6 +448,7 @@ CNST.FnameOfBibleObj =
     "e_Prayer": "personal prayer, preach, prophect, paper or project related to the verse and real life..",
     "e_Subtitle": "sub-title of its following verses.",
     "e_Summary": "summary of chapter or pericope.",
+    "e_YouTxt": "your any text unlimited.",
     "e_v_CUVS_enn2": "CUVS special names latinization. For easy reading/study, consistency to the West.",
     "e_v_CUVS_enn3": "CUVS divine God's names latinization."
 };
