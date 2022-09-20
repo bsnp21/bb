@@ -426,6 +426,9 @@ var BibleInputMenuContainer = `
 //       add it in bible_obj_lib/jsdb/jsBibleObj/BBE.json.js 
 //    b. if the file is the editiable e_* files,
 //       add it in bible_obj_lib/jsdb/UsrDataTemplate/myoj/e_*_json.js. 
+// 3. on svr (/var/www/html/wdas/) by (wdingbox/ham12/utility/wsaws/keypair, ssh)
+//    a. git pull in bb/. 
+//    b. git pull in bible_obj_lib/.
 CNST.FnameOfBibleObj =
 {
     "BBE": "Basic Bible in English",
