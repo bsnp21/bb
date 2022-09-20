@@ -440,7 +440,7 @@ CNST.FnameOfBibleObj =
     "H_G": "Hebrew and Greek",
     "KJV": "King James Version",
     "KJV_Jw": "King James Version Jesus' Words",
-    "NHEB_yhwh": "New Heart Enlish Bible, yhwy, 2021",
+    "NHEB_yhwh": "New Heart English Bible, yhwy, 2021",
     "NIV": "New International Version",
     "NIV_Jw": "New International Version Jesus' Words",
     "STUS": "Studium Biblicum Version by Catholic,1968",
