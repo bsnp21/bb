@@ -42,6 +42,8 @@ var MyStorage = {
         var stores = MyStorage.MostRecentAryInStore("#MemoryVerse")
         var ary = stores.get_ary()
 
+        if(!confirm(ary.length + " items will be saved in svr\nAre you sure?")) return; 
+
         var txt = JSON.stringify({ "#MemoryVerse": ary }, null, 4)
         console.log(txt)
 

@@ -1683,9 +1683,8 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var This = this
         //$(this).text("...")
         Uti.Msg("#save2Repo")
-        if(!confirm("Save in svr?")) return; 
         MyStorage.Repo_save(function (ret) {
-            $(This).html("&#9635;")
+            //$(This).html("&#9635;")
             //Uti.show_save_results(ret, "#StorageRepo_save_res")
             //$("#StorageRepo_save").prop("checked", false)
         })
@@ -1693,21 +1692,19 @@ Tab_MostRecent_BCV.prototype.init = function () {
     $("#load2Repo").on("click", function () {
         var This = this
         Uti.Msg("#load2Repo")
-        if(!confirm("Load from svr?")) return; 
         MyStorage.Repo_load(function (ret) {
             console.log(ret)
-            if (ret.out.state.bEditable) {
-                //$(This).text("^")
-                var memo = (ret.out.data) ? ret.out.data["#MemoryVerse"] : ""
-                if (memo) {
-                    var ar = (ret.out.data["#MemoryVerse"])
+            if (ret.out.data) {
+                var ar = ret.out.data["#MemoryVerse"]
+                if (ar) {
+                    if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
                     for (var i = 0; i < ar.length; i++) {
                         var bcv = ar[i]
                         markHistory.addnew2table("MemoryVerse", bcv)
                     }
                 }
             } else {
-                //$(This).addClass("hili")
+                alert("failed to load.")
             }
         })
     })
