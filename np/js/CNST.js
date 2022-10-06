@@ -189,8 +189,8 @@ var BibleInputMenuContainer = `
                 <table id="Tab_MostRecent_BCV" border="1" style="float:left;">
                     <caption>
                        <div id='Tab_MostRecent_BCV_caps'></div>
-                       <button class='docSwitch ColorRecentMarks' title="RecentBooks">B</button>
-                       <button class='docSwitch' title="RecentTouch">T</button>
+                       <button class='docSwitch ' title="RecentBooks">B</button>
+                       <button class='docSwitch ColorRecentMarks' title="RecentTouch">T</button>
                        <button class='docSwitch' title="MemoryVerse">M</button><br>
                        
                     </caption>
@@ -216,10 +216,11 @@ var BibleInputMenuContainer = `
                     <tbody id='MemoryVerse'>
                     </tbody>
                     <caption>
-                       <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'> x </a> 
-                       <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected'> &#8767; </a>
-                       <a id="sortTbIts" class="RecentBCVsBtn" title='sort the list'> &#8710; </a>
-                       <a id="save2Repo" class="RecentBCVsBtn" style="display: none;" title='save to repo'>&#9635;</a>
+                    <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'> x </a> 
+                    <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected'> &#8767; </a>
+                    <a id="sortTbIts" class="RecentBCVsBtn" title='sort the list'> &#8710; </a>
+                    <a id="save2Repo" class="RecentBCVsBtn" style="display: none;" title='save to repo'>&#9635;</a>
+                    <a id="load2Repo" class="RecentBCVsBtn" style="display: none;" title='load to repo'>^</a>
                     </caption>
                 </table>
             </div>
@@ -306,10 +307,6 @@ var BibleInputMenuContainer = `
                             <td>Storage</td>
                             <td>
                             <input type="radio" id="Storage_clear" title='clear up storage'>Clear</input>
-
-                             
-                            
-                            <a type="radio" id="StorageRepo_load" title='load up storage'></a> 
                             
                             <a id="Storage_local_repos_exchange"></a>
                             </td>

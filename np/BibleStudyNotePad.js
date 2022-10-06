@@ -1648,19 +1648,23 @@ Tab_MostRecent_BCV.prototype.init = function () {
 
     //var cap = _THIS.getCap()
     _THIS.show_all(false)
-    _THIS.m_tbodies["RecentBooks"].show(true)
-    $("#Tab_MostRecent_BCV_caps").text("RecentBooks")
+    _THIS.m_tbodies["RecentTouch"].show(true)
+    $("#Tab_MostRecent_BCV_caps").text("RecentTouch")
 
 
     $(this.m_tableID).find("caption:eq(0)").find("button").bind("click", function () {
         _THIS.show_all(false)
         $("#save2Repo").hide()
+        $("#load2Repo").hide()
         var cap = $(this).attr("title")
         $("#Tab_MostRecent_BCV_caps").text(cap)
         _THIS.m_tbodies[cap].show(true)
         $(this).parent().find(".ColorRecentMarks").removeClass("ColorRecentMarks")
         $(this).addClass("ColorRecentMarks")
-        if (cap === "MemoryVerse") $("#save2Repo").show()
+        if (cap === "MemoryVerse") {
+            $("#save2Repo").show()
+            $("#load2Repo").show()
+        }
     });
 
     $("#clearUnse").bind("click", function () {
@@ -1677,12 +1681,34 @@ Tab_MostRecent_BCV.prototype.init = function () {
     })
     $("#save2Repo").on("click", function () {
         var This = this
-        $(this).text("...")
+        //$(this).text("...")
         Uti.Msg("#save2Repo")
+        if(!confirm("Save in svr?")) return; 
         MyStorage.Repo_save(function (ret) {
             $(This).html("&#9635;")
             //Uti.show_save_results(ret, "#StorageRepo_save_res")
             //$("#StorageRepo_save").prop("checked", false)
+        })
+    })
+    $("#load2Repo").on("click", function () {
+        var This = this
+        Uti.Msg("#load2Repo")
+        if(!confirm("Load from svr?")) return; 
+        MyStorage.Repo_load(function (ret) {
+            console.log(ret)
+            if (ret.out.state.bEditable) {
+                //$(This).text("^")
+                var memo = (ret.out.data) ? ret.out.data["#MemoryVerse"] : ""
+                if (memo) {
+                    var ar = (ret.out.data["#MemoryVerse"])
+                    for (var i = 0; i < ar.length; i++) {
+                        var bcv = ar[i]
+                        markHistory.addnew2table("MemoryVerse", bcv)
+                    }
+                }
+            } else {
+                //$(This).addClass("hili")
+            }
         })
     })
 }
@@ -1853,16 +1879,6 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     })
 
 
-    $("#StorageRepo_load").on("click", function () {
-        $("#outConfig").text($(this).text() + " ...").show()
-        MyStorage.Repo_load(function (ret) {
-            if (ret.out.state.bEditable) {
-                $("#outConfig").html("<font color='lightgreen'>bEditable=true</font>")
-            } else {
-                $("#outConfig").html("<font color='red'>bEditable=false</font>")
-            }
-        })
-    })
     $(".StorageRepo_Signout").on("click", function () {
         if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
 
@@ -2005,7 +2021,8 @@ AppInstancesManager.prototype.init = function (cbf) {
             digi.init_Vrs_digiKeys_by_vol()
 
             var bcv = `${vol}1:1`
-            markHistory.m_tbodies.RecentBooks.addnew2table(bcv)
+            markHistory.m_tbodies.RecentTouch.addnew2table(bcv)
+            //markHistory.m_tbodies.RecentBooks.addnew2table(bcv)
             //d1.init_Chp_digiKeys_by_vol()
             //d2.disable_all_digiKey(true)
 
@@ -2385,6 +2402,8 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
 
     $(tbid).find("td").bind("click", function () {
         $(this).toggleClass("hili_obi_td");
+        var bcv = $(this).find(".popupclicklabel").attr("title")
+        markHistory.m_tbodies.RecentTouch.addnew2table(bcv)
     });
 }
 OutputBibleTable.prototype.Gen_output_table = function (cbf) {
