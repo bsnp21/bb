@@ -1640,12 +1640,10 @@ Tab_MostRecent_BCV.prototype.init = function () {
     var _THIS = this
     this.m_tbodies = {
         MemoryVerse: new Tab_MostRecentBody(false),
-        //RecentBooks: new Tab_MostRecentBody(true),
         RecentTouch: new Tab_MostRecentBody(false),
     }
     //this.m_Tab_HistoryMostRecentBodyMarks = new Tab_MostRecentBody()
     this.m_tbodies.RecentTouch.init("#RecentTouch")
-    //this.m_tbodies.RecentBooks.init("#RecentBooks")
     this.m_tbodies.MemoryVerse.init("#MemoryVerse")
 
     //var cap = _THIS.getCap()
@@ -1721,7 +1719,6 @@ Tab_MostRecent_BCV.prototype.getCap = function () {
 
 Tab_MostRecent_BCV.prototype.onClickHistoryItem = function (onClickHistoryItm) {
     this.m_tbodies.RecentTouch.onClickHistoryItem(onClickHistoryItm)
-    //this.m_tbodies.RecentBooks.onClickHistoryItem(onClickHistoryItm)
     this.m_tbodies.MemoryVerse.onClickHistoryItem(onClickHistoryItm)
 }
 Tab_MostRecent_BCV.prototype.addnew2table = function (itm, bcv) {
@@ -2021,7 +2018,6 @@ AppInstancesManager.prototype.init = function (cbf) {
 
             var bcv = `${vol}1:1`
             markHistory.m_tbodies.RecentTouch.addnew2table(bcv)
-            //markHistory.m_tbodies.RecentBooks.addnew2table(bcv)
             //d1.init_Chp_digiKeys_by_vol()
             //d2.disable_all_digiKey(true)
 
