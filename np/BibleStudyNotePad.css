@@ -118,7 +118,7 @@ body {
 
    
 
-    .hili, .hili_SearchStrInBibleStart {
+    .hili, .hili_SearchStrInBibleStart, .hiliRecentBCV {
         background-color: red;
     }
     .hili_SearchStrInBibleStopd {
@@ -405,10 +405,14 @@ body {
 
     #Tab_selected_Doc_Search tbody,
     #Tab_regex_history_search tbody,
-    #Tab_MostRecent_BCV tbody {
+    #Tab_MostRecent_BCV tbody,
+    #MemoryVerse,
+    #RecentTouch
+    {
         height: 225px;
         overflow-y: scroll;
         display: block;
+        background-color:darkblue;
     }
 
 

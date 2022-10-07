@@ -1549,6 +1549,8 @@ Tab_MostRecentBody.prototype.init = function (tbodyID) {
     this.m_tbodyID = tbodyID
     this.m_MostRecentInStore = MyStorage.MostRecentAryInStore(tbodyID)
     this.m_bcvHistory = this.m_MostRecentInStore.get_ary()
+    var _THIS = this
+
 }
 Tab_MostRecentBody.prototype.show = function (bShow) {
     if (bShow) $(this.m_tbodyID).show()
@@ -1573,27 +1575,32 @@ Tab_MostRecentBody.prototype.addnew2table = function (bcv) {
 
 Tab_MostRecentBody.prototype.update_tab = function () {
     var _THIS = this
-    var trs = ""
+    var tid = this.m_tbodyID + "_subtable"
+    var tid2 = tid.replace(/^\#/, "")
+    var trs = `<table border='1' id='${tid2}'><tr><th>#</th><th>verse</th></tr>`
     this.m_bcvHistory.forEach(function (vcv, i) {
-        trs += (`<tr><td>${vcv}</td></tr>`)
+        var stri=i.toString().padStart(2,'0')
+        trs += (`<tr><td>${stri}</td><td class='RecentBCV'>${vcv}</td></tr>`)
     });
+    trs += "</table>"
 
-    $(this.m_tbodyID).html(trs).find("td").bind("click", function (evt) {
-        evt.stopImmediatePropagation()
+    $(this.m_tbodyID).html(trs).find(".RecentBCV").bind("click", function (evt) {
+        //evt.stopImmediatePropagation()
 
         if (_THIS.m_bSingleSel) {
-            $(_THIS.m_tbodyID).find(".hili").removeClass("hili")
+            $(_THIS.m_tbodyID).find(".hiliRecentBCV").removeClass("hiliRecentBCV")
         }
 
-        $(this).toggleClass("hili")
+        $(this).toggleClass("hiliRecentBCV")
         var hiliary = []
-        $(this).parentsUntil("table").find(".hili").each(function () {
+        $(this).parentsUntil("table").find(".RecentBCV.hiliRecentBCV").each(function () {
             hiliary.push($(this).text())
         })
 
         if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
     })
-    //table_sort("#Tab_MostRecent_BCV")
+   
+    Sort_Table(tid2)
 }
 Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var _THIS = this
@@ -1602,7 +1609,7 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var n = 0;
     $(this.m_tbodyID).find("td").each(function () {
         var tx = $(this).text().trim()
-        if ($(this)[0].classList.contains("hili")) {
+        if ($(this)[0].classList.contains("hiliRecentBCV")) {
             $(this).parent().hide()
             n++
         } else {
@@ -1621,7 +1628,7 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     Uti.Msg(stdbcv)
 }
 Tab_MostRecentBody.prototype.toggleSelAll = function () {
-    $(this.m_tbodyID).find("td").toggleClass("hili")
+    $(this.m_tbodyID).find("td").toggleClass("hiliRecentBCV")
 }
 Tab_MostRecentBody.prototype.sortAllItems = function () {
     this.m_sortType++
@@ -1667,15 +1674,14 @@ Tab_MostRecent_BCV.prototype.init = function () {
     _THIS.m_tbodies["RecentTouch"].show(true)
     $("#Tab_MostRecent_BCV_caps").text("RecentTouch")
 
-
-    $(this.m_tableID).find("caption:eq(0)").find("button").bind("click", function () {
+    $(".docSwitchRecent").on("click", function () {
         _THIS.show_all(false)
         $("#save2Repo").hide()
         $("#load2Repo").hide()
         var cap = $(this).attr("title")
         $("#Tab_MostRecent_BCV_caps").text(cap)
         _THIS.m_tbodies[cap].show(true)
-        $(this).parent().find(".ColorRecentMarks").removeClass("ColorRecentMarks")
+        $(".ColorRecentMarks").removeClass("ColorRecentMarks")
         $(this).addClass("ColorRecentMarks")
         if (cap === "MemoryVerse") {
             $("#save2Repo").show()

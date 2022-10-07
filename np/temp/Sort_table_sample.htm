@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sort a HTML Table Alphabetically</title>
+    <script src="../../jq/jquery.js"></script>
+    <script src="../../np/js/Sort_Table.js"></script>
+    <style>
+        table {
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            cursor: pointer;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    </style>
+    <script>
+        $(function () {
+            Sort_Table("myTable")
+        })
+
+        function gen_tab(tid, ar) {
+            var tbid=tid+"_tb"
+            var trs = `<table border='1' id='${tbid}'><tr><th>#</th><th>v</th><th>d</th></tr>`
+            ar.forEach(function (vcv, i) {
+                trs += (`<tr><td>${i}</td><td>${vcv}</td><td>-</td></tr>`)
+            });
+            trs += "</table>"
+
+            $("#testable").html(trs)
+            Sort_Table(tbid)
+
+        }
+        function doit(){
+            var ar=[1,2,3,4,5,6,10,'Ab','aB','bb','zzzzzzz','b']
+            gen_tab("testable", ar)
+
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="doit()">test</button>
+    <div id="testable">--</div>
+
+    <p><strong>Click the headers to sort the table.</strong></p>
+    <p>The first time you click, the sorting direction is ascending (A to Z).</p>
+    <p>Click again, and the sorting direction will be descending (Z to A):</p>
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
+                <th xonclick="sortTableOnColumnIdx(0)">Name</th>
+                <th xonclick="sortTableOnColumnIdx(1)">Country</th>
+            </tr>
+        </thead>
+
+
+
+        <tr>
+            <td>00Berglunds snabbkop</td>
+            <td>Sweden</td>
+        </tr>
+        <tr>
+            <td>North/South</td>
+            <td>UK</td>
+        </tr>
+        <tr>
+            <td>Alfreds Futterkiste</td>
+            <td>Germany</td>
+        </tr>
+        <tr>
+            <td>Koniglich Essen</td>
+            <td>Germany</td>
+        </tr>
+        <tr>
+            <td>Magazzini Alimentari Riuniti</td>
+            <td>Italy</td>
+        </tr>
+        <tr>
+            <td>Paris specialites</td>
+            <td>France</td>
+        </tr>
+        <tr>
+            <td>Island Trading</td>
+            <td>UK</td>
+        </tr>
+        <tr>
+            <td>Laughing Bacchus Winecellars</td>
+            <td>Canada</td>
+        </tr>
+
+    </table>
+
+    <script>
+
+    </script>
+
+</body>
+
+</html>

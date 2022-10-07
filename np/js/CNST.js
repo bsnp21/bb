@@ -186,29 +186,29 @@ var BibleInputMenuContainer = `
                     </tbody>
                 </table>
 
-                <table id="Tab_MostRecent_BCV" border="1" style="float:left;">
-                    <caption>
+                <div id="Tab_MostRecent_BCV" border="1" style="float:left;">
+                    <div>
                        <div id='Tab_MostRecent_BCV_caps'></div>
                        
-                       <button class='docSwitch ColorRecentMarks' title="RecentTouch">T</button>
-                       <button class='docSwitch' title="MemoryVerse">M</button><br>
+                       <button class='docSwitchRecent ColorRecentMarks' title="RecentTouch">T</button>
+                       <button class='docSwitchRecent' title="MemoryVerse">M</button><br>
                        
-                    </caption>
+                    </div>
             
-                    <tbody id='MemoryVerse'>
-                    </tbody>
-                    <tbody id='RecentTouch'>
-                    </tbody>
+                    <div id='MemoryVerse'>
+                    </div>
+                    <div id='RecentTouch'>
+                    </div>
                 
                     
-                    <caption>
+                    <div>
                     <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'> x </a> 
                     <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected'> &#8767; </a>
                     <a id="sortTbIts" class="RecentBCVsBtn" title='sort the list'> &#8710; </a>
                     <a id="save2Repo" class="RecentBCVsBtn" style="display: none;" title='save to repo'>&#9635;</a>
                     <a id="load2Repo" class="RecentBCVsBtn" style="display: none;" title='load to repo'>&#9842;</a>
-                    </caption>
-                </table>
+                    </div>
+                </div>
             </div>
 
             <!----------------------------->
