@@ -1578,9 +1578,11 @@ Tab_MostRecentBody.prototype.update_tab = function () {
     var tid = this.m_tbodyID + "_subtable"
     var tid2 = tid.replace(/^\#/, "")
     var trs = `<table border='1' id='${tid2}'><tr><th>#</th><th>verse</th></tr>`
+    var idx=0;
     this.m_bcvHistory.forEach(function (vcv, i) {
-        var stri=i.toString().padStart(2,'0')
-        trs += (`<tr><td>${stri}</td><td class='RecentBCV'>${vcv}</td></tr>`)
+        //if(vcv.length<3) return;
+        var stri=(idx++).toString().padStart(2,'0')
+        trs += (`<tr><td>${(i).toString().padStart(2,'0')}</td><td class='RecentBCV'>${vcv}</td></tr>`)
     });
     trs += "</table>"
 
@@ -1607,7 +1609,7 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
 
     _THIS.m_MostRecentInStore.cleanup()
     var n = 0;
-    $(this.m_tbodyID).find("td").each(function () {
+    $(this.m_tbodyID).find("td.RecentBCV").each(function () {
         var tx = $(this).text().trim()
         if ($(this)[0].classList.contains("hiliRecentBCV")) {
             $(this).parent().hide()
@@ -1628,28 +1630,9 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     Uti.Msg(stdbcv)
 }
 Tab_MostRecentBody.prototype.toggleSelAll = function () {
-    $(this.m_tbodyID).find("td").toggleClass("hiliRecentBCV")
+    $(this.m_tbodyID).find("td.RecentBCV").toggleClass("hiliRecentBCV")
 }
-Tab_MostRecentBody.prototype.sortAllItems = function () {
-    this.m_sortType++
-    if (this.m_sortType > 2) this.m_sortType = 0
-    switch (this.m_sortType) {
-        case 0:
-            this.m_bcvHistory = this.m_MostRecentInStore.get_ary()
-            break;
-        case 1:
-            this.m_bcvHistory.sort()
-            break;
-        case 2:
-            this.m_bcvHistory.reverse()
-            break;
-        default:
-            this.m_sortType = 0
-            console.log("Error Value:this.m_sortType=", this.m_sortType)
-            break;
-    }
-    this.update_tab()
-}
+
 
 
 
@@ -1697,10 +1680,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var cap = _THIS.getCap()
         _THIS.m_tbodies[cap].toggleSelAll()
     })
-    $("#sortTbIts").bind("click", function () {
-        var cap = _THIS.getCap()
-        _THIS.m_tbodies[cap].sortAllItems()
-    })
+    
     $("#save2Repo").on("click", function () {
         var This = this
         //$(this).text("...")
@@ -1732,9 +1712,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
     })
 }
 Tab_MostRecent_BCV.prototype.getCap = function () {
-    var cap = $(this.m_tableID).find("caption:eq(0)").find(".ColorRecentMarks").text().trim()
-    var capmap = { "T": "RecentTouch", "M": "MemoryVerse" }
-    var scap = capmap[cap]
+    var scap = $(this.m_tableID).find(".ColorRecentMarks").attr("title").trim()
     $("#Tab_MostRecent_BCV_caps").text(scap)
     return scap
 }
