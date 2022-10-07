@@ -1577,12 +1577,12 @@ Tab_MostRecentBody.prototype.update_tab = function () {
     var _THIS = this
     var tid = this.m_tbodyID + "_subtable"
     var tid2 = tid.replace(/^\#/, "")
-    var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th></tr>`
-    var idx=0;
+    var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th><th>DT</th></tr>`
+    var idx = 0;
     this.m_bcvHistory.forEach(function (vcv, i) {
         //if(vcv.length<3) return;
-        var stri=(idx++).toString().padStart(2,'0')
-        trs += (`<tr><td>${(i).toString().padStart(2,'0')}</td><td class='RecentBCV'>${vcv}</td></tr>`)
+        var stri = (idx++).toString().padStart(2, '0')
+        trs += (`<tr><td class="MemoIdx">${(i).toString().padStart(2, '0')}</td><td class='RecentBCV'>${vcv}</td><td class="MemoTime">220901</td></tr>`)
     });
     trs += "</table>"
 
@@ -1601,7 +1601,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
 
         if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
     })
-   
+
     Sort_Table(tid2)
 }
 Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
@@ -1680,10 +1680,11 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var cap = _THIS.getCap()
         _THIS.m_tbodies[cap].toggleSelAll()
     })
-    
+
     $("#save2Repo").on("click", function () {
         var This = this
         Uti.Msg("#save2Repo")
+
         MyStorage.Repo_save(function (ret) {
             //$(This).html("&#9635;")
             //Uti.show_save_results(ret, "#StorageRepo_save_res")

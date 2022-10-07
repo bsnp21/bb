@@ -417,6 +417,9 @@ body {
         display: block;
         background-color:darkblue;
     }
+    .MemoTime, .MemoIdx{
+        font-size: xx-small;
+    }
 
 
 
