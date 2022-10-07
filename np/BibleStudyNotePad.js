@@ -1577,7 +1577,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
     var _THIS = this
     var tid = this.m_tbodyID + "_subtable"
     var tid2 = tid.replace(/^\#/, "")
-    var trs = `<table border='1' id='${tid2}'><tr><th>#</th><th>verse</th></tr>`
+    var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th></tr>`
     var idx=0;
     this.m_bcvHistory.forEach(function (vcv, i) {
         //if(vcv.length<3) return;

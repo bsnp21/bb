@@ -283,6 +283,9 @@ body {
         border-top-color: rgb(103, 247, 67);
     }
 
+    .trRecentBCV{
+        background-color: gray;
+    }
     .ColorRecentMarks {
         background-color:cyan;
     }
