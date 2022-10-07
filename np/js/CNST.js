@@ -197,20 +197,13 @@ var BibleInputMenuContainer = `
                     <thead>
                         <tr><th>sort</th></tr>
                     </thead>
-                 
+
+                    <tbody id='MemoryVerse'>
+                    </tbody>
                     <tbody id='RecentTouch'>
-                        <tr>
-                            <td>
-                                Pleas click H button <br>for History.<br>
-                                <br>
-                                Pleas click ^ button <br>sort by str.<br>
-                            </td>
-                        </tr>
                     </tbody>
                 
-                    <tbody id='MemoryVerse'>
-
-                    </tbody>
+                    
                     <caption>
                     <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'> x </a> 
                     <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected'> &#8767; </a>

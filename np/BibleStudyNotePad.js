@@ -1540,9 +1540,10 @@ Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
 
 
 function Tab_MostRecentBody(bSingpleSel) {
-    
+
     this.m_tbodyID = null; //"#Tab_MostRecent_BCV"
     this.m_bSingleSel = bSingpleSel
+    this.m_sortType = 0
 }
 Tab_MostRecentBody.prototype.init = function (tbodyID) {
     this.m_tbodyID = tbodyID
@@ -1592,7 +1593,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
 
         if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
     })
-    table_sort("#Tab_MostRecent_BCV")
+    //table_sort("#Tab_MostRecent_BCV")
 }
 Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var _THIS = this
@@ -1611,7 +1612,6 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     if (n === 0) alert("nothing is selected to delete.")
     this.m_bcvHistory = _THIS.m_MostRecentInStore.get_ary()
 
-    //this.MyStorage_add2HistoryMostRecentBook(this.m_bcvHistory)
 
     var std_bcv_strn = this.m_bcvHistory.join(", ")
     Uti.Msg(std_bcv_strn)
@@ -1624,7 +1624,23 @@ Tab_MostRecentBody.prototype.toggleSelAll = function () {
     $(this.m_tbodyID).find("td").toggleClass("hili")
 }
 Tab_MostRecentBody.prototype.sortAllItems = function () {
-    this.m_bcvHistory.sort()
+    this.m_sortType++
+    if (this.m_sortType > 2) this.m_sortType = 0
+    switch (this.m_sortType) {
+        case 0:
+            this.m_bcvHistory = this.m_MostRecentInStore.get_ary()
+            break;
+        case 1:
+            this.m_bcvHistory.sort()
+            break;
+        case 2:
+            this.m_bcvHistory.reverse()
+            break;
+        default:
+            this.m_sortType = 0
+            console.log("Error Value:this.m_sortType=", this.m_sortType)
+            break;
+    }
     this.update_tab()
 }
 
