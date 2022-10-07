@@ -189,21 +189,15 @@ var BibleInputMenuContainer = `
                 <table id="Tab_MostRecent_BCV" border="1" style="float:left;">
                     <caption>
                        <div id='Tab_MostRecent_BCV_caps'></div>
-                       <button class='docSwitch ' title="RecentBooks">B</button>
+                       
                        <button class='docSwitch ColorRecentMarks' title="RecentTouch">T</button>
                        <button class='docSwitch' title="MemoryVerse">M</button><br>
                        
                     </caption>
-                    <thead></thead>
-                    <tbody id='RecentBooks'>
-                        <tr>
-                            <td>
-                                Pleas click H button <br>for History.<br>
-                                <br>
-                                Pleas click ^ button <br>sort by str.<br>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <thead>
+                        <tr><th>sort</th></tr>
+                    </thead>
+                 
                     <tbody id='RecentTouch'>
                         <tr>
                             <td>
@@ -213,7 +207,9 @@ var BibleInputMenuContainer = `
                             </td>
                         </tr>
                     </tbody>
+                
                     <tbody id='MemoryVerse'>
+
                     </tbody>
                     <caption>
                     <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'> x </a> 

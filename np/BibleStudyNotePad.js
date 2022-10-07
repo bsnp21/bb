@@ -1540,6 +1540,7 @@ Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
 
 
 function Tab_MostRecentBody(bSingpleSel) {
+    
     this.m_tbodyID = null; //"#Tab_MostRecent_BCV"
     this.m_bSingleSel = bSingpleSel
 }
@@ -1591,6 +1592,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
 
         if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
     })
+    table_sort("#Tab_MostRecent_BCV")
 }
 Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var _THIS = this
@@ -1638,12 +1640,12 @@ Tab_MostRecent_BCV.prototype.init = function () {
     var _THIS = this
     this.m_tbodies = {
         MemoryVerse: new Tab_MostRecentBody(false),
-        RecentBooks: new Tab_MostRecentBody(true),
+        //RecentBooks: new Tab_MostRecentBody(true),
         RecentTouch: new Tab_MostRecentBody(false),
     }
     //this.m_Tab_HistoryMostRecentBodyMarks = new Tab_MostRecentBody()
     this.m_tbodies.RecentTouch.init("#RecentTouch")
-    this.m_tbodies.RecentBooks.init("#RecentBooks")
+    //this.m_tbodies.RecentBooks.init("#RecentBooks")
     this.m_tbodies.MemoryVerse.init("#MemoryVerse")
 
     //var cap = _THIS.getCap()
@@ -1711,7 +1713,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
 }
 Tab_MostRecent_BCV.prototype.getCap = function () {
     var cap = $(this.m_tableID).find("caption:eq(0)").find(".ColorRecentMarks").text().trim()
-    var capmap = { "B": "RecentBooks", "T": "RecentTouch", "M": "MemoryVerse" }
+    var capmap = { "T": "RecentTouch", "M": "MemoryVerse" }
     var scap = capmap[cap]
     $("#Tab_MostRecent_BCV_caps").text(scap)
     return scap
@@ -1719,7 +1721,7 @@ Tab_MostRecent_BCV.prototype.getCap = function () {
 
 Tab_MostRecent_BCV.prototype.onClickHistoryItem = function (onClickHistoryItm) {
     this.m_tbodies.RecentTouch.onClickHistoryItem(onClickHistoryItm)
-    this.m_tbodies.RecentBooks.onClickHistoryItem(onClickHistoryItm)
+    //this.m_tbodies.RecentBooks.onClickHistoryItem(onClickHistoryItm)
     this.m_tbodies.MemoryVerse.onClickHistoryItem(onClickHistoryItm)
 }
 Tab_MostRecent_BCV.prototype.addnew2table = function (itm, bcv) {
