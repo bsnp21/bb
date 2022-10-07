@@ -1683,7 +1683,6 @@ Tab_MostRecent_BCV.prototype.init = function () {
     
     $("#save2Repo").on("click", function () {
         var This = this
-        //$(this).text("...")
         Uti.Msg("#save2Repo")
         MyStorage.Repo_save(function (ret) {
             //$(This).html("&#9635;")
@@ -1696,9 +1695,11 @@ Tab_MostRecent_BCV.prototype.init = function () {
         Uti.Msg("#load2Repo")
         MyStorage.Repo_load(function (ret) {
             console.log(ret)
+            Uti.Msg(ret)
             if (ret.out.data) {
                 var ar = ret.out.data["#MemoryVerse"]
                 if (ar) {
+
                     if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
                     for (var i = 0; i < ar.length; i++) {
                         var bcv = ar[i]
