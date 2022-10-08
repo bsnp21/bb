@@ -488,7 +488,7 @@ PopupMenu.prototype.popup = function (par) {
     }
     $("#divPopupMenu_CaptionBCV").text(par.m_bcv)
     if (par.m_bcv) {
-        var stores = MyStorage.MrObjInStore("#MemoryVerse")
+        var stores = MyStorage.CreateMrObj("#MemoryVerse")
         var ary = Object.keys(stores.get_obj())
         if (ary.indexOf(par.m_bcv) >= 0) {
             $("#divPopupMenu_CaptionBCV").addClass("divPopupMenu_CaptionBCV_MemoVerse")
@@ -1547,7 +1547,7 @@ function Tab_MostRecentBody(bSingpleSel) {
 }
 Tab_MostRecentBody.prototype.init = function (tbodyID) {
     this.m_tbodyID = tbodyID
-    this.m_MrObjInStore = MyStorage.MrObjInStore(tbodyID)
+    this.m_MrObjInStore = MyStorage.CreateMrObj(tbodyID)
 }
 Tab_MostRecentBody.prototype.show = function (bShow) {
     if (bShow) $(this.m_tbodyID).show()
@@ -2480,7 +2480,7 @@ OutputBibleTable.prototype.create_trs = function (odat) {
         return { trs: "", size: 0 };
     }
 
-    var stores = MyStorage.MrObjInStore("#MemoryVerse")
+    var stores = MyStorage.CreateMrObj("#MemoryVerse")
     var obj = stores.get_obj()
     var MemoryVersary = Object.keys(obj)
 

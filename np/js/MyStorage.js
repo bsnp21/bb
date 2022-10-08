@@ -39,7 +39,7 @@ var MyStorage = {
     },
     Repo_save: function (cbf) {
         //localStorage.getItem("#MemoryVerse")
-        var stores = MyStorage.MrObjInStore("#MemoryVerse")
+        var stores = MyStorage.CreateMrObj("#MemoryVerse")
         var obj = stores.get_obj()
 
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
@@ -206,11 +206,11 @@ var MyStorage = {
         return new MostRecentAry(sid)
     },
 
-    MrObjInStore: function (sid) {
-        var MostRecentAry = function (sid) {
+    CreateMrObj: function (sid) {
+        var MrObj = function (sid) {
             this.m_sid = sid
         }
-        MostRecentAry.prototype.get_obj = function () {
+        MrObj.prototype.get_obj = function () {
             var ar = localStorage.getItem(this.m_sid)
             if (!ar) {
                 ar = {}
@@ -219,17 +219,17 @@ var MyStorage = {
             }
             return ar
         }
-        MostRecentAry.prototype.cleanup = function () {
+        MrObj.prototype.cleanup = function () {
             var ar = localStorage.setItem(this.m_sid, "")
         }
-        MostRecentAry.prototype.set_obj = function (obj) {
+        MrObj.prototype.set_obj = function (obj) {
             var s = ""
             if (obj) {
                 s = JSON.stringify(obj)
             }
             var ar = localStorage.setItem(this.m_sid, s)
         }
-        MostRecentAry.prototype.add_key_val = function (key, val) {
+        MrObj.prototype.add_key_val = function (key, val) {
             if (!key) return
             var obj = this.get_obj()
             if (null === val) {
@@ -241,7 +241,7 @@ var MyStorage = {
             localStorage.setItem(this.m_sid, JSON.stringify(obj))
             return obj;
         }
-        MostRecentAry.prototype.gen_obj_table = function (tid2, cbf_click) {
+        MrObj.prototype.gen_obj_table = function (tid2, cbf_click) {
             var idx = 0, trs = "";
             var obj = this.get_obj()
             for (const [key, val] of Object.entries(obj)) {
@@ -252,7 +252,7 @@ var MyStorage = {
             if (cbf_click) cbf_click(stb)
             return stb;
         }
-        return new MostRecentAry(sid)
+        return new MrObj(sid)
     },    ////--------
 
 
