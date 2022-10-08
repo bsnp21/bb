@@ -39,12 +39,12 @@ var MyStorage = {
     },
     Repo_save: function (cbf) {
         //localStorage.getItem("#MemoryVerse")
-        var stores = MyStorage.MostRecentAryInStore("#MemoryVerse")
-        var ary = stores.get_ary()
+        var stores = MyStorage.MrObjInStore("#MemoryVerse")
+        var obj = stores.get_obj()
 
-        if (!confirm(ary.length + " items will be saved in svr\nAre you sure?")) return;
+        if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
 
-        var txt = JSON.stringify({ "#MemoryVerse": ary }, null, 4)
+        var txt = JSON.stringify({ "#MemoryVerse": obj }, null, 4)
         console.log(txt)
 
         var api = new BsnpRestApi()
@@ -226,7 +226,7 @@ var MyStorage = {
         MostRecentAry.prototype.set_obj = function (obj) {
             var s = ""
             if (obj) {
-                s = JSON.stringify(ary)
+                s = JSON.stringify(obj)
             }
             var ar = localStorage.setItem(this.m_sid, s)
         }
@@ -243,7 +243,7 @@ var MyStorage = {
             return obj;
         }
         MostRecentAry.prototype.gen_obj_table = function (tid2, cbf_click) {
-            var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th><th>D</th></tr>`
+            var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th><th>Dt</th></tr>`
             var idx = 0;
             var obj = this.get_obj()
             for (const [key, val] of Object.entries(obj)) {

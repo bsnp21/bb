@@ -1548,7 +1548,7 @@ function Tab_MostRecentBody(bSingpleSel) {
 Tab_MostRecentBody.prototype.init = function (tbodyID) {
     this.m_tbodyID = tbodyID
     this.m_MostRecentInStore = MyStorage.MrObjInStore(tbodyID)
-    this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
+    //this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
 }
 Tab_MostRecentBody.prototype.show = function (bShow) {
     if (bShow) $(this.m_tbodyID).show()
@@ -1609,10 +1609,10 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
         }
     })
     if (n === 0) alert("nothing is selected to delete.")
-    this.m_bcvHistory = _THIS.m_MostRecentInStore.get_ary()
+    return
 
-
-    var std_bcv_strn = this.m_bcvHistory.join(", ")
+    var obj= _THIS.m_MostRecentInStore.get_obj()
+    var std_bcv_strn = JSON.stringify(obj)
     Uti.Msg(std_bcv_strn)
     var ret = Uti.convert_std_bcv_str_To_uniq_biblicalseq_splitted_ary(std_bcv_strn)
     Uti.Msg(ret)
@@ -1676,6 +1676,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var This = this
         Uti.Msg("#save2Repo")
 
+
         MyStorage.Repo_save(function (ret) {
             //$(This).html("&#9635;")
             //Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -1683,20 +1684,17 @@ Tab_MostRecent_BCV.prototype.init = function () {
         })
     })
     $("#load2Repo").on("click", function () {
-        var This = this
         Uti.Msg("#load2Repo")
         MyStorage.Repo_load(function (ret) {
             console.log(ret)
             Uti.Msg(ret)
             if (ret.out.data) {
-                var ar = ret.out.data["#MemoryVerse"]
-                if (ar) {
-
+                var obj = ret.out.data["#MemoryVerse"]
+                if (obj) {
+                    var ar = Object.keys(obj)
                     if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
-                    for (var i = 0; i < ar.length; i++) {
-                        var bcv = ar[i]
-                        markHistory.addnew2table("MemoryVerse", bcv)
-                    }
+                    _THIS.m_tbodies.MemoryVerse.m_MostRecentInStore.set_obj(obj)
+                    _THIS.m_tbodies.MemoryVerse.update_tab()
                 }
             } else {
                 alert("failed to load.")
