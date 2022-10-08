@@ -1728,9 +1728,9 @@ Tab_MostRecent_BCV.prototype.onClickHistoryItem = function (onClickHistoryItm) {
     this.m_tbodies.RecentTouch.onClickHistoryItem(onClickHistoryItm)
     this.m_tbodies.MemoryVerse.onClickHistoryItem(onClickHistoryItm)
 }
-Tab_MostRecent_BCV.prototype.addnew2table = function (itm, bcv) {
-    this.m_tbodies[itm].addnew2table(bcv)
-}
+//Tab_MostRecent_BCV.prototype.addnew2table = function (itm, bcv) {
+//    this.m_tbodies[itm].addnew2table(bcv)
+//}
 Tab_MostRecent_BCV.prototype.clearHistory = function (idtxtout) {
     var cap = this.getCap()
     this.m_tbodies[cap].clearHistory(idtxtout)
@@ -2117,7 +2117,7 @@ AppInstancesManager.prototype.init = function (cbf) {
     })
 
     popupMenu.init(function (bcv) {
-        tab_MostRecent_BCV.addnew2table("MemoryVerse", bcv)
+        tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
 
         MyStorage.Repo_save(function (ret) {
             Uti.show_save_results(ret, "#StorageRepo_save_res")
