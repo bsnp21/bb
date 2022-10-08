@@ -237,22 +237,21 @@ var MyStorage = {
                 if (key in obj) delete obj[key]
                 return obj
             }
-            if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g,"").substring(2,15).replace(/[T]/g, " ")
+            if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g, "").substring(2, 15).replace(/[T]/g, " ")
             obj[key] = val
             localStorage.setItem(this.m_sid, JSON.stringify(obj))
             return obj;
         }
         MostRecentAry.prototype.gen_obj_table = function (tid2, cbf_click) {
-            var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>`
-            var idx = 0;
+            var idx = 0, trs = "";
             var obj = this.get_obj()
             for (const [key, val] of Object.entries(obj)) {
                 var sid = (idx++).toString().padStart(2, '0')
-                trs += (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`)
+                trs = (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`) + trs
             };
-            trs += "</table>"
-            if (cbf_click) cbf_click(trs)
-            return trs;
+            var stb = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>${trs}</table>`
+            if (cbf_click) cbf_click(stb)
+            return stb;
         }
         return new MostRecentAry(sid)
     },    ////--------
