@@ -488,8 +488,8 @@ PopupMenu.prototype.popup = function (par) {
     }
     $("#divPopupMenu_CaptionBCV").text(par.m_bcv)
     if (par.m_bcv) {
-        var stores = MyStorage.MostRecentAryInStore("#MemoryVerse")
-        var ary = stores.get_ary()
+        var stores = MyStorage.MrObjInStore("#MemoryVerse")
+        var ary = Object.keys(stores.get_obj())
         if (ary.indexOf(par.m_bcv) >= 0) {
             $("#divPopupMenu_CaptionBCV").addClass("divPopupMenu_CaptionBCV_MemoVerse")
         } else {
@@ -1565,7 +1565,7 @@ Tab_MostRecentBody.prototype.addnew2table = function (bcv) {
     var ret = Uti.parse_bcv(bcv)
     if (!ret) return Uti.Msg("addnew is not valid: " + bcv)
 
-    this.m_MostRecentInStore.add_key_val(bcv,"yymmdd")
+    this.m_MostRecentInStore.add_key_val(bcv, "yymmdd")
     //this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
     //this.m_bcvHistory = this.m_bcvHistory.slice(0, 100) //:max in size. fetch idx range [0, 100].
     this.update_tab()
@@ -1592,7 +1592,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
 
             if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
         })
-        tab.find(".MemoTime").bind("click", function(){
+        tab.find(".MemoTime").bind("click", function () {
             var tm = $(this).text()
             $("#Tab_MostRecent_BCV_caps").text(tm)
         })
@@ -1603,20 +1603,28 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var _THIS = this
 
     _THIS.m_MostRecentInStore.cleanup()
-    var n = 0;
+    var n = 0, obj = {};
     $(this.m_tbodyID).find("td.RecentBCV").each(function () {
-        var tx = $(this).text().trim()
+        var key = $(this).text().trim()
         if ($(this)[0].classList.contains("hiliRecentBCV")) {
-            $(this).parent().hide()
+            //$(this).parent().hide()
+            $(this).addClass("ItmemToBeRemoved")
             n++
         } else {
-            _THIS.m_MostRecentInStore.addonTop(tx)
+            var val = $(this).parent().find(".MemoTime").text()
+            obj[key] = val;
+            //_THIS.m_MostRecentInStore.add_key_val(tx, "")
         }
     })
-    if (n === 0) alert("nothing is selected to delete.")
+    if (confirm(n + " selected items will be removed. \nSure?")) {
+        $(".ItmemToBeRemoved").each(function(){
+            $(this).parent().remove()
+        })
+        _THIS.m_MostRecentInStore.set_obj(obj)
+    }
     return
 
-    var obj= _THIS.m_MostRecentInStore.get_obj()
+    var obj = _THIS.m_MostRecentInStore.get_obj()
     var std_bcv_strn = JSON.stringify(obj)
     Uti.Msg(std_bcv_strn)
     var ret = Uti.convert_std_bcv_str_To_uniq_biblicalseq_splitted_ary(std_bcv_strn)
@@ -1667,7 +1675,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
             $("#load2Repo").show()
         }
     });
-   
+
 
     $("#clearUnse").bind("click", function () {
         var cap = _THIS.getCap()

@@ -237,7 +237,7 @@ var MyStorage = {
                 if (key in obj) delete obj[key]
                 return obj
             }
-            if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g,"").substring(2,15)
+            if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g,"").substring(2,15).replace(/[T]/g, " ")
             obj[key] = val
             localStorage.setItem(this.m_sid, JSON.stringify(obj))
             return obj;
