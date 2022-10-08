@@ -1596,6 +1596,12 @@ Tab_MostRecentBody.prototype.update_tab = function () {
             var tm = $(this).text()
             $("#Tab_MostRecent_BCV_caps").text(tm)
         })
+
+        tab.find("th").bind("click", function () {
+            tab.find(".Hili_RecentBCV_Column_Sel").removeClass("Hili_RecentBCV_Column_Sel")
+            $(this).addClass("Hili_RecentBCV_Column_Sel")
+            $(this).toggleClass("Hili_RecentBCV_Column_Sort")
+        })
         Sort_Table(tid2)
     })
 }

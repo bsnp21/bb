@@ -418,6 +418,13 @@ body {
         background-color:darkblue;
     }
   
+    .Hili_RecentBCV_Column_Sort{
+        color:black;
+    }
+    .Hili_RecentBCV_Column_Sel{
+        background-color: #a00000;
+    }
+
     .MemoTime, .MemoIdx{
         font-size: xx-small;
     }
