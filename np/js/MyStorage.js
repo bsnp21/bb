@@ -209,7 +209,7 @@ var MyStorage = {
 
     MrObjInStore: function (sid) {
         var MostRecentAry = function (sid) {
-            this.m_sid = "Mr" + sid
+            this.m_sid = sid
         }
         MostRecentAry.prototype.get_obj = function () {
             var ar = localStorage.getItem(this.m_sid)
@@ -237,13 +237,13 @@ var MyStorage = {
                 if (key in obj) delete obj[key]
                 return obj
             }
-            if ("yymmdd" === val) val = (new Date).toISOString()
+            if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g,"").substring(2,15)
             obj[key] = val
             localStorage.setItem(this.m_sid, JSON.stringify(obj))
             return obj;
         }
         MostRecentAry.prototype.gen_obj_table = function (tid2, cbf_click) {
-            var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th><th>Dt</th></tr>`
+            var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>`
             var idx = 0;
             var obj = this.get_obj()
             for (const [key, val] of Object.entries(obj)) {

@@ -1576,7 +1576,8 @@ Tab_MostRecentBody.prototype.update_tab = function () {
     var tid = this.m_tbodyID + "_table"
     var tid2 = tid.replace(/^\#/, "")
     this.m_MostRecentInStore.gen_obj_table(tid2, function (stb) {
-        $(_THIS.m_tbodyID).html(stb).find(".RecentBCV").bind("click", function (evt) {
+        var tab = $(_THIS.m_tbodyID).html(stb)
+        tab.find(".RecentBCV").bind("click", function (evt) {
             //evt.stopImmediatePropagation()
 
             if (_THIS.m_bSingleSel) {
@@ -1590,6 +1591,10 @@ Tab_MostRecentBody.prototype.update_tab = function () {
             })
 
             if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
+        })
+        tab.find(".MemoTime").bind("click", function(){
+            var tm = $(this).text()
+            $("#Tab_MostRecent_BCV_caps").text(tm)
         })
         Sort_Table(tid2)
     })
@@ -1662,6 +1667,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
             $("#load2Repo").show()
         }
     });
+   
 
     $("#clearUnse").bind("click", function () {
         var cap = _THIS.getCap()
@@ -2464,9 +2470,9 @@ OutputBibleTable.prototype.create_trs = function (odat) {
         return { trs: "", size: 0 };
     }
 
-    var stores = MyStorage.MostRecentAryInStore("#MemoryVerse")
-    //this.m_tbodies.MemoryVerse.init("#MemoryVerse")
-    var MemoryVersary = stores.get_ary()
+    var stores = MyStorage.MrObjInStore("#MemoryVerse")
+    var obj = stores.get_obj()
+    var MemoryVersary = Object.keys(obj)
 
 
     //console.log("result:", this.m_data.out.result)
