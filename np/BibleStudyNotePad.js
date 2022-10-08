@@ -1547,10 +1547,8 @@ function Tab_MostRecentBody(bSingpleSel) {
 }
 Tab_MostRecentBody.prototype.init = function (tbodyID) {
     this.m_tbodyID = tbodyID
-    this.m_MostRecentInStore = MyStorage.MostRecentAryInStore(tbodyID)
-    this.m_bcvHistory = this.m_MostRecentInStore.get_ary()
-    var _THIS = this
-
+    this.m_MostRecentInStore = MyStorage.MrObjInStore(tbodyID)
+    this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
 }
 Tab_MostRecentBody.prototype.show = function (bShow) {
     if (bShow) $(this.m_tbodyID).show()
@@ -1567,42 +1565,34 @@ Tab_MostRecentBody.prototype.addnew2table = function (bcv) {
     var ret = Uti.parse_bcv(bcv)
     if (!ret) return Uti.Msg("addnew is not valid: " + bcv)
 
-    this.m_MostRecentInStore.addonTop(bcv)
-    this.m_bcvHistory = this.m_MostRecentInStore.get_ary()
-    this.m_bcvHistory = this.m_bcvHistory.slice(0, 100) //:max in size. fetch idx range [0, 100].
+    this.m_MostRecentInStore.add_key_val(bcv,"yymmdd")
+    //this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
+    //this.m_bcvHistory = this.m_bcvHistory.slice(0, 100) //:max in size. fetch idx range [0, 100].
     this.update_tab()
 }
 
 Tab_MostRecentBody.prototype.update_tab = function () {
     var _THIS = this
-    var tid = this.m_tbodyID + "_subtable"
+    var tid = this.m_tbodyID + "_table"
     var tid2 = tid.replace(/^\#/, "")
-    var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th><th>DT</th></tr>`
-    var idx = 0;
-    this.m_bcvHistory.forEach(function (vcv, i) {
-        //if(vcv.length<3) return;
-        var stri = (idx++).toString().padStart(2, '0')
-        trs += (`<tr><td class="MemoIdx">${(i).toString().padStart(2, '0')}</td><td class='RecentBCV'>${vcv}</td><td class="MemoTime">220901</td></tr>`)
-    });
-    trs += "</table>"
+    this.m_MostRecentInStore.gen_obj_table(tid2, function (stb) {
+        $(_THIS.m_tbodyID).html(stb).find(".RecentBCV").bind("click", function (evt) {
+            //evt.stopImmediatePropagation()
 
-    $(this.m_tbodyID).html(trs).find(".RecentBCV").bind("click", function (evt) {
-        //evt.stopImmediatePropagation()
+            if (_THIS.m_bSingleSel) {
+                $(_THIS.m_tbodyID).find(".hiliRecentBCV").removeClass("hiliRecentBCV")
+            }
 
-        if (_THIS.m_bSingleSel) {
-            $(_THIS.m_tbodyID).find(".hiliRecentBCV").removeClass("hiliRecentBCV")
-        }
+            $(this).toggleClass("hiliRecentBCV")
+            var hiliary = []
+            $(this).parentsUntil("table").find(".RecentBCV.hiliRecentBCV").each(function () {
+                hiliary.push($(this).text())
+            })
 
-        $(this).toggleClass("hiliRecentBCV")
-        var hiliary = []
-        $(this).parentsUntil("table").find(".RecentBCV.hiliRecentBCV").each(function () {
-            hiliary.push($(this).text())
+            if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
         })
-
-        if (_THIS.m_onClickHistoryItm) _THIS.m_onClickHistoryItm(hiliary)
+        Sort_Table(tid2)
     })
-
-    Sort_Table(tid2)
 }
 Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var _THIS = this
@@ -1655,6 +1645,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
     //var cap = _THIS.getCap()
     _THIS.show_all(false)
     _THIS.m_tbodies["RecentTouch"].show(true)
+    _THIS.m_tbodies["MemoryVerse"].show(false)
     $("#Tab_MostRecent_BCV_caps").text("RecentTouch")
 
     $(".docSwitchRecent").on("click", function () {

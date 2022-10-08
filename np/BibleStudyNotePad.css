@@ -417,8 +417,14 @@ body {
         display: block;
         background-color:darkblue;
     }
+  
     .MemoTime, .MemoIdx{
         font-size: xx-small;
+    }
+    .MemoTime{
+        width: 10px;
+        overflow-x: hidden;
+        color: #5F95FC;
     }
 
 

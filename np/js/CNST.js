@@ -195,9 +195,9 @@ var BibleInputMenuContainer = `
                        
                     </div>
             
-                    <div id='MemoryVerse'>
+                    <div id='RecentTouch' class='RecentTable'>
                     </div>
-                    <div id='RecentTouch'>
+                    <div id='MemoryVerse' class='RecentTable'>
                     </div>
                 
                     

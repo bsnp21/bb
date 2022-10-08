@@ -42,7 +42,7 @@ var MyStorage = {
         var stores = MyStorage.MostRecentAryInStore("#MemoryVerse")
         var ary = stores.get_ary()
 
-        if(!confirm(ary.length + " items will be saved in svr\nAre you sure?")) return; 
+        if (!confirm(ary.length + " items will be saved in svr\nAre you sure?")) return;
 
         var txt = JSON.stringify({ "#MemoryVerse": ary }, null, 4)
         console.log(txt)
@@ -169,6 +169,7 @@ var MyStorage = {
             var ar = localStorage.setItem(this.m_sid, s)
         }
         MostRecentAry.prototype.addonTop = function (strn) {
+            var dt = (new Date).toISOString()
             if (!strn) return
             var ar = this.get_ary()
             if (!ar) {
@@ -205,7 +206,56 @@ var MyStorage = {
         }
         return new MostRecentAry(sid)
     },
-    ////--------
+
+    MrObjInStore: function (sid) {
+        var MostRecentAry = function (sid) {
+            this.m_sid = "Mr" + sid
+        }
+        MostRecentAry.prototype.get_obj = function () {
+            var ar = localStorage.getItem(this.m_sid)
+            if (!ar) {
+                ar = {}
+            } else {
+                ar = JSON.parse(ar)
+            }
+            return ar
+        }
+        MostRecentAry.prototype.cleanup = function () {
+            var ar = localStorage.setItem(this.m_sid, "")
+        }
+        MostRecentAry.prototype.set_obj = function (obj) {
+            var s = ""
+            if (obj) {
+                s = JSON.stringify(ary)
+            }
+            var ar = localStorage.setItem(this.m_sid, s)
+        }
+        MostRecentAry.prototype.add_key_val = function (key, val) {
+            if (!key) return
+            var obj = this.get_obj()
+            if (null === val) {
+                if (key in obj) delete obj[key]
+                return obj
+            }
+            if ("yymmdd" === val) val = (new Date).toISOString()
+            obj[key] = val
+            localStorage.setItem(this.m_sid, JSON.stringify(obj))
+            return obj;
+        }
+        MostRecentAry.prototype.gen_obj_table = function (tid2, cbf_click) {
+            var trs = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>verse</th><th>D</th></tr>`
+            var idx = 0;
+            var obj = this.get_obj()
+            for (const [key, val] of Object.entries(obj)) {
+                var sid = (idx++).toString().padStart(2, '0')
+                trs += (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`)
+            };
+            trs += "</table>"
+            if (cbf_click) cbf_click(trs)
+            return trs;
+        }
+        return new MostRecentAry(sid)
+    },    ////--------
 
 
     clear: function () {
