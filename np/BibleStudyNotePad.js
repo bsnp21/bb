@@ -1921,7 +1921,7 @@ var digi = new DigitNumberInputZone()
 var skout = new SingleKeyOutputBooksTable("#Tab_OutputBooksList")
 
 var tab_category = new Tab_Category()
-var markHistory = new Tab_MostRecent_BCV()
+var tab_MostRecent_BCV = new Tab_MostRecent_BCV()
 
 var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_NamesOfBibleDocuments")
 
@@ -1951,7 +1951,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         //popupMenu.hide()
     })
 
-    groupsMenuMgr.gen_grp_bar(skout, markHistory)
+    groupsMenuMgr.gen_grp_bar(skout, tab_MostRecent_BCV)
 
 
 
@@ -1975,7 +1975,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
         //store before clearup
         var ret = showup.get_selected_bcv_parm()
-        if (ret && ret.m_bcv) markHistory.m_tbodies.RecentTouch.addnew2table(ret.m_bcv)
+        if (ret && ret.m_bcv) tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(ret.m_bcv)
 
         //clearup
         showup.m_Chp.set_showupVal("")
@@ -2024,7 +2024,7 @@ AppInstancesManager.prototype.init = function (cbf) {
             digi.init_Vrs_digiKeys_by_vol()
 
             var bcv = `${vol}1:1`
-            markHistory.m_tbodies.RecentTouch.addnew2table(bcv)
+            tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(bcv)
             //d1.init_Chp_digiKeys_by_vol()
             //d2.disable_all_digiKey(true)
 
@@ -2094,8 +2094,8 @@ AppInstancesManager.prototype.init = function (cbf) {
 
 
 
-    markHistory.init()
-    markHistory.onClickHistoryItem(function (bcvAry) {
+    tab_MostRecent_BCV.init()
+    tab_MostRecent_BCV.onClickHistoryItem(function (bcvAry) {
         if (bcvAry.length === 0) {
             return
         } else if (bcvAry.length === 1) {
@@ -2117,7 +2117,7 @@ AppInstancesManager.prototype.init = function (cbf) {
     })
 
     popupMenu.init(function (bcv) {
-        markHistory.addnew2table("MemoryVerse", bcv)
+        tab_MostRecent_BCV.addnew2table("MemoryVerse", bcv)
 
         MyStorage.Repo_save(function (ret) {
             Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -2142,7 +2142,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         par.m_tab_documentsClusterList = tab_documentsClusterList
         par.m_groupsMenuMgr = groupsMenuMgr
         popupMenu.popup(par)
-        markHistory.m_tbodies.RecentTouch.addnew2table(par.m_bcv)
+        tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(par.m_bcv)
         $("title").text(par.m_bcv)
 
         showup.update_showup(par.m_bcv)
@@ -2188,7 +2188,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
                 var ar = (ret.out.data["#MemoryVerse"])
                 for (var i = 0; i < ar.length; i++) {
                     var bcv = ar[i]
-                    markHistory.addnew2table("MemoryVerse", bcv)
+                    tab_MostRecent_BCV.addnew2table("MemoryVerse", bcv)
                 }
             }
             _load_bcv_from_url_param()
@@ -2405,7 +2405,7 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
     $(tbid).find("td").bind("click", function () {
         $(this).toggleClass("hili_obi_td");
         var bcv = $(this).find(".popupclicklabel").attr("title")
-        markHistory.m_tbodies.RecentTouch.addnew2table(bcv)
+        tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(bcv)
     });
 }
 OutputBibleTable.prototype.Gen_output_table = function (cbf) {
