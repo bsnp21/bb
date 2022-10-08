@@ -1547,8 +1547,7 @@ function Tab_MostRecentBody(bSingpleSel) {
 }
 Tab_MostRecentBody.prototype.init = function (tbodyID) {
     this.m_tbodyID = tbodyID
-    this.m_MostRecentInStore = MyStorage.MrObjInStore(tbodyID)
-    //this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
+    this.m_MrObjInStore = MyStorage.MrObjInStore(tbodyID)
 }
 Tab_MostRecentBody.prototype.show = function (bShow) {
     if (bShow) $(this.m_tbodyID).show()
@@ -1565,9 +1564,7 @@ Tab_MostRecentBody.prototype.addnew2table = function (bcv) {
     var ret = Uti.parse_bcv(bcv)
     if (!ret) return Uti.Msg("addnew is not valid: " + bcv)
 
-    this.m_MostRecentInStore.add_key_val(bcv, "yymmdd")
-    //this.m_bcvHistory = this.m_MostRecentInStore.get_obj()
-    //this.m_bcvHistory = this.m_bcvHistory.slice(0, 100) //:max in size. fetch idx range [0, 100].
+    this.m_MrObjInStore.add_key_val(bcv, "yymmdd")
     this.update_tab()
 }
 
@@ -1575,7 +1572,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
     var _THIS = this
     var tid = this.m_tbodyID + "_table"
     var tid2 = tid.replace(/^\#/, "")
-    this.m_MostRecentInStore.gen_obj_table(tid2, function (stb) {
+    this.m_MrObjInStore.gen_obj_table(tid2, function (stb) {
         var tab = $(_THIS.m_tbodyID).html(stb)
         tab.find(".RecentBCV").bind("click", function (evt) {
             //evt.stopImmediatePropagation()
@@ -1608,7 +1605,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
 Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
     var _THIS = this
 
-    _THIS.m_MostRecentInStore.cleanup()
+    _THIS.m_MrObjInStore.cleanup()
     var n = 0, obj = {};
     $(this.m_tbodyID).find("td.RecentBCV").each(function () {
         var key = $(this).text().trim()
@@ -1619,18 +1616,17 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
         } else {
             var val = $(this).parent().find(".MemoTime").text()
             obj[key] = val;
-            //_THIS.m_MostRecentInStore.add_key_val(tx, "")
         }
     })
     if (confirm(n + " selected items will be removed. \nSure?")) {
         $(".ItmemToBeRemoved").each(function(){
             $(this).parent().remove()
         })
-        _THIS.m_MostRecentInStore.set_obj(obj)
+        _THIS.m_MrObjInStore.set_obj(obj)
     }
     return
 
-    var obj = _THIS.m_MostRecentInStore.get_obj()
+    var obj = _THIS.m_MrObjInStore.get_obj()
     var std_bcv_strn = JSON.stringify(obj)
     Uti.Msg(std_bcv_strn)
     var ret = Uti.convert_std_bcv_str_To_uniq_biblicalseq_splitted_ary(std_bcv_strn)
@@ -1713,7 +1709,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
                 if (obj) {
                     var ar = Object.keys(obj)
                     if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
-                    _THIS.m_tbodies.MemoryVerse.m_MostRecentInStore.set_obj(obj)
+                    _THIS.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(obj)
                     _THIS.m_tbodies.MemoryVerse.update_tab()
                 }
             } else {
