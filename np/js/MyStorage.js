@@ -169,7 +169,6 @@ var MyStorage = {
             var ar = localStorage.setItem(this.m_sid, s)
         }
         MostRecentAry.prototype.addonTop = function (strn) {
-            var dt = (new Date).toISOString()
             if (!strn) return
             var ar = this.get_ary()
             if (!ar) {
