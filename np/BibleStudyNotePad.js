@@ -1697,7 +1697,6 @@ Tab_MostRecent_BCV.prototype.init = function () {
         _THIS.m_tbodies[cap].show(true)
         $(".ColorRecentMarks").removeClass("ColorRecentMarks")
         $(this).addClass("ColorRecentMarks")
-        
     });
 
 
@@ -1717,9 +1716,12 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var stores = MyStorage.CreateMrObj("#MemoryVerse")
         var obj = stores.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
+        var stores = MyStorage.CreateMrObj("#RecentTouch")
+        var obj1 = stores.get_obj()
 
         MyStorage.Repo_save(
             {
+                "#RecentTouch": obj1,
                 "#MemoryVerse": obj
             },
             function (ret) {
@@ -1731,21 +1733,23 @@ Tab_MostRecent_BCV.prototype.init = function () {
     $("#load2Repo").on("click", function () {
         Uti.Msg("#load2Repo")
 
-        var key = "MemoryVerse", keyID = "#" + key
+        //var key = "MemoryVerse", keyID = "#" + key
+        var cap = _THIS.getCap()
         MyStorage.Repo_load(
             {
+                "#RecentTouch": {},
                 "#MemoryVerse": {}
             },
             function (ret) {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    var obj = ret.out.data[keyID]
+                    var obj = ret.out.data["#" + cap]
                     if (obj) {
                         var ar = Object.keys(obj)
                         if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
-                        _THIS.m_tbodies[key].m_MrObjInStore.set_obj(obj)
-                        _THIS.m_tbodies[key].update_tab()
+                        _THIS.m_tbodies[cap].m_MrObjInStore.set_obj(obj)
+                        _THIS.m_tbodies[cap].update_tab()
                     }
                 } else {
                     alert("failed to load.")
@@ -2208,7 +2212,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
         Uti.Msg("RestApi=", RestApi);
 
         MyStorage.Repositories().repos_app_init()
-        MyStorage.Repo_load({"#MemoryVerse":{}}, function (ret) {
+        MyStorage.Repo_load({ "#MemoryVerse": {} }, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
