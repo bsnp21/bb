@@ -1728,9 +1728,7 @@ Tab_MostRecent_BCV.prototype.onClickHistoryItem = function (onClickHistoryItm) {
     this.m_tbodies.RecentTouch.onClickHistoryItem(onClickHistoryItm)
     this.m_tbodies.MemoryVerse.onClickHistoryItem(onClickHistoryItm)
 }
-//Tab_MostRecent_BCV.prototype.addnew2table = function (itm, bcv) {
-//    this.m_tbodies[itm].addnew2table(bcv)
-//}
+
 Tab_MostRecent_BCV.prototype.clearHistory = function (idtxtout) {
     var cap = this.getCap()
     this.m_tbodies[cap].clearHistory(idtxtout)
@@ -1921,9 +1919,9 @@ var digi = new DigitNumberInputZone()
 var skout = new SingleKeyOutputBooksTable("#Tab_OutputBooksList")
 
 var tab_category = new Tab_Category()
+var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_NamesOfBibleDocuments")
 var tab_MostRecent_BCV = new Tab_MostRecent_BCV()
 
-var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_NamesOfBibleDocuments")
 
 var popupMenu = new PopupMenu()
 
@@ -2185,11 +2183,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
 
             var memo = (ret.out.data) ? ret.out.data["#MemoryVerse"] : ""
             if (memo) {
-                var ar = (ret.out.data["#MemoryVerse"])
-                for (var i = 0; i < ar.length; i++) {
-                    var bcv = ar[i]
-                    tab_MostRecent_BCV.addnew2table("MemoryVerse", bcv)
-                }
+                tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(memo)
             }
             _load_bcv_from_url_param()
         })
