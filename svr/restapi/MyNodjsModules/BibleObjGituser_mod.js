@@ -1366,7 +1366,7 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     inp.par.data = ""
     //save_res.ret = ret
     inp.out.save_res = save_res
-    return inp;
+    return save_res;
 }
 
 BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {

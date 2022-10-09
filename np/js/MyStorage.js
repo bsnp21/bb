@@ -44,7 +44,7 @@ var MyStorage = {
 
         //if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
 
-        var txt = JSON.stringify({ "#MemoryVerse": obj }, null, 4)
+        var txt = JSON.stringify({ "#MemoryVerse": obj, "test": { "a": 1 } }, null, 4)
         console.log(txt)
 
         var api = new BsnpRestApi()
@@ -60,10 +60,13 @@ var MyStorage = {
         return
     },
     Repo_load: function (cbf) {
+        var txt = JSON.stringify({ "#MemoryVerse": "" }, null, 4)
+
         var api = new BsnpRestApi()
         api.run(RestApi.ApiUsrDat_load,
             {
-                fnames: ["./dat/localStorage"]
+                fnames: ["./dat/localStorage"],
+                data: txt
             },
             function (ret) {
                 if (cbf) cbf(ret)

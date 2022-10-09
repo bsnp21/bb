@@ -448,7 +448,7 @@ var ApiJsonp_BibleObj = {
             if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
 
             //
-            userProject.save_userData_frm_client(inp)
+            var save_res = userProject.save_userData_frm_client(inp)
             
             //
             userProject.git_add_commit_push_Sync(save_res.desc);//after saved
