@@ -421,12 +421,31 @@ PopupMenu.prototype.init = function (cbf) {
         $(_THIS.m_id).hide()
     })
     $("#divPopupMenu_CaptionBCV").on("click", function () {
-        var bcv = $(this).text().trim()
+        var bcv = $(this).attr("SaveToMemoryVerse")
         if (bcv.length > 0) {
             Uti.copy2clipboard(`(${bcv})`, this)
         }
-        if (cbf) cbf(bcv)
-        $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
+        //if (cbf) cbf(bcv)
+        if ($(this)[0].classList.contains("divPopupMenu_CaptionBCV_MemoVerse")) {
+            return alert(bcv + " is already in MemoryVerses.")
+        }
+
+
+        
+        //var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        var obj =  tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+        if (!confirm(`${bcv} \nwill be saved to MemoryVerse (${Object.keys(obj).length}) in Server.\nSure?`)) return;
+
+      
+        tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
+        MyStorage.Repo_save(function (ret) {
+            Uti.show_save_results(ret, "#StorageRepo_save_res")
+            Uti.Msg("MyStorage.Repo_save:", ret)
+            //$("#StorageRepo_save").prop("checked", false)
+
+            $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
+        })
+
         _THIS.hide()
     })
 
@@ -486,7 +505,7 @@ PopupMenu.prototype.popup = function (par) {
             this.popupMenu_RevTag.init_popup(par)
         }
     }
-    $("#divPopupMenu_CaptionBCV").text(par.m_bcv)
+    $("#divPopupMenu_CaptionBCV").text(`SaveToMemoryVerse: ${par.m_bcv}`).attr("SaveToMemoryVerse", par.m_bcv)
     if (par.m_bcv) {
         var stores = MyStorage.CreateMrObj("#MemoryVerse")
         var ary = Object.keys(stores.get_obj())
@@ -1619,7 +1638,7 @@ Tab_MostRecentBody.prototype.clearHistory = function (idtxtout) {
         }
     })
     if (confirm(n + " selected items will be removed. \nSure?")) {
-        $(".ItmemToBeRemoved").each(function(){
+        $(".ItmemToBeRemoved").each(function () {
             $(this).parent().remove()
         })
         _THIS.m_MrObjInStore.set_obj(obj)
@@ -1692,6 +1711,9 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var This = this
         Uti.Msg("#save2Repo")
 
+        var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        var obj = stores.get_obj()
+        if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
 
         MyStorage.Repo_save(function (ret) {
             //$(This).html("&#9635;")
@@ -1718,7 +1740,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
         })
     })
 
-    $(".RecentBCVsBtn").on("click",function(){
+    $(".RecentBCVsBtn").on("click", function () {
         $(".RecentBCVsBtn_Hilit").removeClass("RecentBCVsBtn_Hilit")
         $(this).addClass("RecentBCVsBtn_Hilit")
     })
@@ -2119,15 +2141,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
     })
 
-    popupMenu.init(function (bcv) {
-        tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
-
-        MyStorage.Repo_save(function (ret) {
-            Uti.show_save_results(ret, "#StorageRepo_save_res")
-            Uti.Msg("MyStorage.Repo_save:", ret)
-            //$("#StorageRepo_save").prop("checked", false)
-        })
-    })
+    popupMenu.init()
     g_obt.onclick_ob_table(function () {
         //$("#menuContainer").hide()
         $("#divPopupMenu").hide()

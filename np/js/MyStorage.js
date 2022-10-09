@@ -42,7 +42,7 @@ var MyStorage = {
         var stores = MyStorage.CreateMrObj("#MemoryVerse")
         var obj = stores.get_obj()
 
-        if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
+        //if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
 
         var txt = JSON.stringify({ "#MemoryVerse": obj }, null, 4)
         console.log(txt)

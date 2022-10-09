@@ -11,8 +11,12 @@ var BibleInputMenuContainer = `
 <!----------------------------->
 <div id="divPopupMenu">
     <table id='xxrefslist' border="1" align="left">
-    
     <tbody id="divPopupMenu_BcvTag">
+        <tr>
+            <td>
+                <a id='divPopupMenu_CaptionBCV' title='push to MemoryVerse; save to repository; copy to clickboard.'></a>
+            </td>
+        </tr>
         <tr>
             <td>
                 <a id="blueletterbible" ref="https://www.blueletterbible.org/kjv/">blueletterbible.org</a>
@@ -115,7 +119,7 @@ var BibleInputMenuContainer = `
             </td>
         </tr>
     </tbody>
-    <caption><div id='divPopupMenu_CaptionBCV' title='push to MemoryVerse; save to repository; copy to clickboard.'></div></caption>
+    <caption><a xid='divPopupMenu_CaptionBCV' title='push to MemoryVerse; save to repository; copy to clickboard.'></a></caption>
     </table>
 </div>
 
