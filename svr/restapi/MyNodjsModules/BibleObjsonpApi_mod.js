@@ -455,7 +455,11 @@ var ApiJsonp_BibleObj = {
             var ret = BibleUti.loadObj_by_fname(jsfname)
             if (!ret.obj) return console.log("failed:=", jsfname)
             try {
-                ret.obj = JSON.parse(inp.par.data, null, 4)
+                var inpObj = JSON.parse(inp.par.data)
+                Object.keys(inpObj).forEach(function (key) {
+                    ret.obj[key] = inpObj[key]
+                })
+
                 console.log("ret", ret)
                 ret.writeback()
             } catch (err) {
@@ -495,11 +499,7 @@ var ApiJsonp_BibleObj = {
                     })
                 }
 
-                //inp = BibleUti.Write2vrs_txt(inp, false)
-                var doc = inp.par.fnames[0]
-                var jsfname = userProject.get_pfxname(doc)
-                var ret = BibleUti.loadObj_by_fname(jsfname)
-                inp.out.data = ret.obj
+                inp.out.data = userProject.load_turnback_userData()
                 if (!inp.out.state) inp.out.state.bEditable = 1
             }
         })
@@ -705,9 +705,9 @@ var ApiJsonp_BibleObj = {
         console.log("NCache.myCache.keys():")
         var ar = NCache.myCache.keys()
         console.log(ar)
-        Object.keys(NCache.myCache.keys()).forEach(function(i){
+        Object.keys(NCache.myCache.keys()).forEach(function (i) {
             var sky = ar[i]
-            console.log("skey:",sky)
+            console.log("skey:", sky)
             var obj = NCache.Get(sky)
             console.log(obj)
         })

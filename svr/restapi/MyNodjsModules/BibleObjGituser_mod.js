@@ -193,7 +193,7 @@ var BibleUti = {
         for (const [rev, revObj] of Object.entries(rbcv)) {
             for (const [vol, chpObj] of Object.entries(revObj)) {
                 if (!bcvRobj[vol]) bcvRobj[vol] = {}
-                if(!chpObj) continue
+                if (!chpObj) continue
                 for (const [chp, vrsObj] of Object.entries(chpObj)) {
                     if (!bcvRobj[vol][chp]) bcvRobj[vol][chp] = {}
                     if (!vrsObj) continue
@@ -1313,6 +1313,30 @@ BibleObjGituser.prototype.load_git_config = function () {
     this.m_inp.usr_proj.configurl = configurl
     //}
     return configurl
+}
+
+BibleObjGituser.prototype.load_turnback_userData = function () {
+    var inp = this.m_inp
+    var doc = inp.par.fnames[0]
+    var jsfname = this.get_pfxname(doc)
+    var ret = BibleUti.loadObj_by_fname(jsfname)
+
+    var retObj = {}
+    if (!inp.par.data) {
+        retObj = ret.obj //return back the whole object data.
+    } else {
+        try {
+            var inpkeyObj = JSON.parse(inp.par.data) //return back the specifiec key data,  
+            Object.keys(inpkeyObj).forEach(function (key) {
+                retObj[key] = ret.obj[key]
+            })
+            console.log("inp.out.data", retObj)
+        } catch (err) {
+            console.log("err", err)
+            inp.out.state.err = err
+        }
+    }
+    return retObj;
 }
 
 
