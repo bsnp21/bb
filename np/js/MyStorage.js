@@ -37,14 +37,13 @@ var MyStorage = {
             alert("Sorry, your browser does not support Web Storage...")
         }
     },
-    Repo_save: function (cbf) {
-        //localStorage.getItem("#MemoryVerse")
-        var stores = MyStorage.CreateMrObj("#MemoryVerse")
-        var obj = stores.get_obj()
+    Repo_save: function (keyObj, cbf) {
+       
+        //var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        //var obj = stores.get_obj(){ "#MemoryVerse": obj, "test": { "a": 1 } }
 
-        //if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
 
-        var txt = JSON.stringify({ "#MemoryVerse": obj, "test": { "a": 1 } }, null, 4)
+        var txt = JSON.stringify(keyObj, null, 4)
         console.log(txt)
 
         var api = new BsnpRestApi()
@@ -59,8 +58,9 @@ var MyStorage = {
 
         return
     },
-    Repo_load: function (cbf) {
-        var txt = JSON.stringify({ "#MemoryVerse": "" }, null, 4)
+    Repo_load: function (keyObj, cbf) {
+        //var txt = JSON.stringify({ "#MemoryVerse": "" }, null, 4)
+        var txt = JSON.stringify(keyObj, null, 4)
 
         var api = new BsnpRestApi()
         api.run(RestApi.ApiUsrDat_load,

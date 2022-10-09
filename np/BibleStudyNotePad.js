@@ -431,20 +431,26 @@ PopupMenu.prototype.init = function (cbf) {
         }
 
 
-        
+
         //var stores = MyStorage.CreateMrObj("#MemoryVerse")
-        var obj =  tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+        var obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
         if (!confirm(`${bcv} \nwill be saved to MemoryVerse (${Object.keys(obj).length}) in Server.\nSure?`)) return;
 
-      
-        tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
-        MyStorage.Repo_save(function (ret) {
-            Uti.show_save_results(ret, "#StorageRepo_save_res")
-            Uti.Msg("MyStorage.Repo_save:", ret)
-            //$("#StorageRepo_save").prop("checked", false)
 
-            $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
-        })
+        tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
+        obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+
+        MyStorage.Repo_save(
+            {
+                "#MemoryVerse": obj
+            },
+            function (ret) {
+                Uti.show_save_results(ret, "#StorageRepo_save_res")
+                Uti.Msg("MyStorage.Repo_save:", ret)
+                //$("#StorageRepo_save").prop("checked", false)
+
+                $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
+            })
 
         _THIS.hide()
     })
@@ -1715,29 +1721,39 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var obj = stores.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
 
-        MyStorage.Repo_save(function (ret) {
-            //$(This).html("&#9635;")
-            //Uti.show_save_results(ret, "#StorageRepo_save_res")
-            //$("#StorageRepo_save").prop("checked", false)
-        })
+        MyStorage.Repo_save(
+            {
+                "#MemoryVerse": obj
+            },
+            function (ret) {
+                //$(This).html("&#9635;")
+                //Uti.show_save_results(ret, "#StorageRepo_save_res")
+                //$("#StorageRepo_save").prop("checked", false)
+            })
     })
     $("#load2Repo").on("click", function () {
         Uti.Msg("#load2Repo")
-        MyStorage.Repo_load(function (ret) {
-            console.log(ret)
-            Uti.Msg(ret)
-            if (ret.out.data) {
-                var obj = ret.out.data["#MemoryVerse"]
-                if (obj) {
-                    var ar = Object.keys(obj)
-                    if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
-                    _THIS.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(obj)
-                    _THIS.m_tbodies.MemoryVerse.update_tab()
+
+        var key = "MemoryVerse", keyID = "#" + key
+        MyStorage.Repo_load(
+            {
+                "#MemoryVerse": {}
+            },
+            function (ret) {
+                console.log(ret)
+                Uti.Msg(ret)
+                if (ret.out.data) {
+                    var obj = ret.out.data[keyID]
+                    if (obj) {
+                        var ar = Object.keys(obj)
+                        if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
+                        _THIS.m_tbodies[key].m_MrObjInStore.set_obj(obj)
+                        _THIS.m_tbodies[key].update_tab()
+                    }
+                } else {
+                    alert("failed to load.")
                 }
-            } else {
-                alert("failed to load.")
-            }
-        })
+            })
     })
 
     $(".RecentBCVsBtn").on("click", function () {
@@ -2195,7 +2211,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
         Uti.Msg("RestApi=", RestApi);
 
         MyStorage.Repositories().repos_app_init()
-        MyStorage.Repo_load(function (ret) {
+        MyStorage.Repo_load({"#MemoryVerse":{}}, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
