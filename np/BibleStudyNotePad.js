@@ -432,7 +432,7 @@ PopupMenu.prototype.init = function (cbf) {
 
 
 
-        //var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        //
         var obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
         if (!confirm(`${bcv} \nwill be saved to MemoryVerse (${Object.keys(obj).length}) in Server.\nSure?`)) return;
 
@@ -442,7 +442,7 @@ PopupMenu.prototype.init = function (cbf) {
 
         MyStorage.Repo_save(
             {
-                "#MemoryVerse": obj
+                "MemoryVerse": obj
             },
             function (ret) {
                 Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -513,7 +513,7 @@ PopupMenu.prototype.popup = function (par) {
     }
     $("#divPopupMenu_CaptionBCV").text(`SaveToMemoryVerse: ${par.m_bcv}`).attr("SaveToMemoryVerse", par.m_bcv)
     if (par.m_bcv) {
-        var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        var stores = MyStorage.CreateMrObj("MemoryVerse")
         var ary = Object.keys(stores.get_obj())
         if (ary.indexOf(par.m_bcv) >= 0) {
             $("#divPopupMenu_CaptionBCV").addClass("divPopupMenu_CaptionBCV_MemoVerse")
@@ -1669,7 +1669,6 @@ Tab_MostRecentBody.prototype.toggleSelAll = function () {
 
 function Tab_MostRecent_BCV() {
     this.m_tableID = "#Tab_MostRecent_BCV"
-
 }
 
 Tab_MostRecent_BCV.prototype.init = function () {
@@ -1678,11 +1677,11 @@ Tab_MostRecent_BCV.prototype.init = function () {
         MemoryVerse: new Tab_MostRecentBody(false),
         RecentTouch: new Tab_MostRecentBody(false),
     }
-    //this.m_Tab_HistoryMostRecentBodyMarks = new Tab_MostRecentBody()
+    //
     this.m_tbodies.RecentTouch.init("#RecentTouch")
     this.m_tbodies.MemoryVerse.init("#MemoryVerse")
 
-    //var cap = _THIS.getCap()
+    //
     _THIS.show_all(false)
     _THIS.m_tbodies["RecentTouch"].show(true)
     _THIS.m_tbodies["MemoryVerse"].show(false)
@@ -1690,8 +1689,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
 
     $(".docSwitchRecent").on("click", function () {
         _THIS.show_all(false)
-        //$("#save2Repo").hide()
-        //$("#load2Repo").hide()
+
         var cap = $(this).attr("title")
         $("#Tab_MostRecent_BCV_caps").text(cap)
         _THIS.m_tbodies[cap].show(true)
@@ -1715,26 +1713,20 @@ Tab_MostRecent_BCV.prototype.init = function () {
 
         var cap = _THIS.getCap()
 
-        //var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        //
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
         var inpkeyObj = {}
         inpkeyObj[cap] = obj
 
-        //var stores = MyStorage.CreateMrObj("#RecentTouch")
-        //var obj1 = stores.get_obj()
-
         MyStorage.Repo_save(inpkeyObj,
             function (ret) {
-                //$(This).html("&#9635;")
-                //Uti.show_save_results(ret, "#StorageRepo_save_res")
-                //$("#StorageRepo_save").prop("checked", false)
+
             })
     })
     $("#load2Repo").on("click", function () {
         Uti.Msg("#load2Repo")
 
-        //var key = "MemoryVerse", keyID = "#" + key
         var cap = _THIS.getCap()
         var inpkeyObj = {}
         inpkeyObj[cap] = {}
@@ -2212,12 +2204,12 @@ AppInstancesManager.prototype.init_load_storage = function () {
         Uti.Msg("RestApi=", RestApi);
 
         MyStorage.Repositories().repos_app_init()
-        MyStorage.Repo_load({ "#MemoryVerse": {} }, function (ret) {
+        MyStorage.Repo_load({ "MemoryVerse": {} }, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
 
-            var memo = (ret.out.data) ? ret.out.data["#MemoryVerse"] : ""
+            var memo = (ret.out.data) ? ret.out.data["MemoryVerse"] : ""
             if (memo) {
                 tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(memo)
             }
@@ -2510,7 +2502,7 @@ OutputBibleTable.prototype.create_trs = function (odat) {
         return { trs: "", size: 0 };
     }
 
-    var stores = MyStorage.CreateMrObj("#MemoryVerse")
+    var stores = MyStorage.CreateMrObj("MemoryVerse")
     var obj = stores.get_obj()
     var MemoryVersary = Object.keys(obj)
 

@@ -39,10 +39,7 @@ var MyStorage = {
     },
     Repo_save: function (keyObj, cbf) {
        
-        //var stores = MyStorage.CreateMrObj("#MemoryVerse")
-        //var obj = stores.get_obj(){ "#MemoryVerse": obj, "test": { "a": 1 } }
-
-
+    
         var txt = JSON.stringify(keyObj, null, 4)
         console.log(txt)
 
@@ -59,7 +56,7 @@ var MyStorage = {
         return
     },
     Repo_load: function (keyObj, cbf) {
-        //var txt = JSON.stringify({ "#MemoryVerse": "" }, null, 4)
+        //
         var txt = JSON.stringify(keyObj, null, 4)
 
         var api = new BsnpRestApi()
@@ -269,7 +266,7 @@ var MyStorage = {
 
 
     clear: function () {
-        var Ignory = ["repositories", "#MemoryVerse"]
+        var Ignory = ["repositories", "MemoryVerse"]
         Object.keys(localStorage).forEach(function (key) {
             console.log(key)
             if (Ignory.indexOf(key) < 0) {
