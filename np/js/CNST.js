@@ -209,8 +209,8 @@ var BibleInputMenuContainer = `
                     <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'>&nbsp; x &nbsp;</a> 
                     <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected'>&nbsp; &#8767; &nbsp; </a>
                     
-                    <a id="save2Repo" class="RecentBCVsBtn" style="display: none;" title='save to repo'>&#9635;</a>
-                    <a id="load2Repo" class="RecentBCVsBtn" style="display: none;" title='load to repo'>&#9842;</a>
+                    <a id="save2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
+                    <a id="load2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
                     </div>
                 </div>
             </div>

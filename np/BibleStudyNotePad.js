@@ -1690,17 +1690,14 @@ Tab_MostRecent_BCV.prototype.init = function () {
 
     $(".docSwitchRecent").on("click", function () {
         _THIS.show_all(false)
-        $("#save2Repo").hide()
-        $("#load2Repo").hide()
+        //$("#save2Repo").hide()
+        //$("#load2Repo").hide()
         var cap = $(this).attr("title")
         $("#Tab_MostRecent_BCV_caps").text(cap)
         _THIS.m_tbodies[cap].show(true)
         $(".ColorRecentMarks").removeClass("ColorRecentMarks")
         $(this).addClass("ColorRecentMarks")
-        if (cap === "MemoryVerse") {
-            $("#save2Repo").show()
-            $("#load2Repo").show()
-        }
+        
     });
 
 
