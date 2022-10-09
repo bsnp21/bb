@@ -1713,17 +1713,18 @@ Tab_MostRecent_BCV.prototype.init = function () {
         var This = this
         Uti.Msg("#save2Repo")
 
-        var stores = MyStorage.CreateMrObj("#MemoryVerse")
-        var obj = stores.get_obj()
-        if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
-        var stores = MyStorage.CreateMrObj("#RecentTouch")
-        var obj1 = stores.get_obj()
+        var cap = _THIS.getCap()
 
-        MyStorage.Repo_save(
-            {
-                "#RecentTouch": obj1,
-                "#MemoryVerse": obj
-            },
+        //var stores = MyStorage.CreateMrObj("#MemoryVerse")
+        var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
+        if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
+        var inpkeyObj = {}
+        inpkeyObj[cap] = obj
+
+        //var stores = MyStorage.CreateMrObj("#RecentTouch")
+        //var obj1 = stores.get_obj()
+
+        MyStorage.Repo_save(inpkeyObj,
             function (ret) {
                 //$(This).html("&#9635;")
                 //Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -1735,16 +1736,15 @@ Tab_MostRecent_BCV.prototype.init = function () {
 
         //var key = "MemoryVerse", keyID = "#" + key
         var cap = _THIS.getCap()
+        var inpkeyObj = {}
+        inpkeyObj[cap] = {}
         MyStorage.Repo_load(
-            {
-                "#RecentTouch": {},
-                "#MemoryVerse": {}
-            },
+            inpkeyObj,
             function (ret) {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    var obj = ret.out.data["#" + cap]
+                    var obj = ret.out.data[cap]
                     if (obj) {
                         var ar = Object.keys(obj)
                         if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
