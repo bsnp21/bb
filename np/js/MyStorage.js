@@ -217,7 +217,7 @@ var MyStorage = {
             } else {
                 ar = JSON.parse(ar)
             }
-            return ar
+            return this.sort_obj_desc_by_val(ar)
         }
         MrObj.prototype.cleanup = function () {
             var ar = localStorage.setItem(this.m_sid, "")
@@ -225,6 +225,7 @@ var MyStorage = {
         MrObj.prototype.set_obj = function (obj) {
             var s = ""
             if (obj) {
+                obj = this.sort_obj_desc_by_val(obj)
                 s = JSON.stringify(obj)
             }
             var ar = localStorage.setItem(this.m_sid, s)
@@ -238,15 +239,23 @@ var MyStorage = {
             }
             if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g, "").substring(2, 15).replace(/[T]/g, " ")
             obj[key] = val
+
+            obj = this.sort_obj_desc_by_val(obj)  //sort by val desc
             localStorage.setItem(this.m_sid, JSON.stringify(obj))
             return obj;
+        }
+        MrObj.prototype.sort_obj_desc_by_val = function (obj) {
+            const sorted_obj = Object.fromEntries(
+                Object.entries(obj).sort(([k1, a], [k2, b]) => a > b ? -1 : 1) //descend. 
+            )
+            return sorted_obj
         }
         MrObj.prototype.gen_obj_table = function (tid2, cbf_click) {
             var idx = 0, trs = "";
             var obj = this.get_obj()
             for (const [key, val] of Object.entries(obj)) {
                 var sid = (idx++).toString().padStart(2, '0')
-                trs = (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`) + trs
+                trs += (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`)
             };
             var stb = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>${trs}</table>`
             if (cbf_click) cbf_click(stb)
