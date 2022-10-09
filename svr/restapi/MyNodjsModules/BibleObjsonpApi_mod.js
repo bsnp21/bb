@@ -447,36 +447,9 @@ var ApiJsonp_BibleObj = {
             var stat = userProject.run_proj_setup()
             if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
 
-
-            //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
-            var doc = inp.par.fnames[0]
-            var jsfname = userProject.get_pfxname(doc)
-            console.log("jsfname=", jsfname)
-            var ret = BibleUti.loadObj_by_fname(jsfname)
-            if (!ret.obj) return console.log("failed:=", jsfname)
-            try {
-                var inpObj = JSON.parse(inp.par.data)
-                Object.keys(inpObj).forEach(function (key) {
-                    ret.obj[key] = inpObj[key]
-                })
-
-                console.log("ret", ret)
-                ret.writeback()
-            } catch (err) {
-                console.log("err", err)
-                inp.out.state.err = err
-            }
-
-            //// 
-            var save_res = {}
-            save_res.desc = "len:" + inp.par.data.length + ",dlt:" + ret.dlt_size
-            save_res.dlt = ret.dlt_size
-            save_res.len = inp.par.data.length
-            inp.par.data = ""
-            //save_res.ret = ret
-            inp.out.save_res = save_res
-            var msg = jsfname + " saved."
-
+            //
+            userProject.save_userData_frm_client(inp)
+            
             //
             userProject.git_add_commit_push_Sync(save_res.desc);//after saved
         })

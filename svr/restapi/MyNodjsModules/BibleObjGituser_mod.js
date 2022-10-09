@@ -1338,7 +1338,36 @@ BibleObjGituser.prototype.load_turnback_userData = function () {
     }
     return retObj;
 }
+BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
+    //var inp = this.m_inp
+    var doc = inp.par.fnames[0]
+    var jsfname = this.get_pfxname(doc)
+    console.log("jsfname=", jsfname)
+    var ret = BibleUti.loadObj_by_fname(jsfname)
+    if (!ret.obj) return console.log("failed:=", jsfname)
+    try {
+        var inpObj = JSON.parse(inp.par.data)
+        Object.keys(inpObj).forEach(function (key) {
+            ret.obj[key] = inpObj[key]
+        })
 
+        console.log("ret", ret)
+        ret.writeback()
+    } catch (err) {
+        console.log("err", err)
+        inp.out.state.err = err
+    }
+
+    //// 
+    var save_res = {}
+    save_res.desc = "len:" + inp.par.data.length + ",dlt:" + ret.dlt_size
+    save_res.dlt = ret.dlt_size
+    save_res.len = inp.par.data.length
+    inp.par.data = ""
+    //save_res.ret = ret
+    inp.out.save_res = save_res
+    return inp;
+}
 
 BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
     { /****.git/config
