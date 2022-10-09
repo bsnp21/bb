@@ -1717,6 +1717,11 @@ Tab_MostRecent_BCV.prototype.init = function () {
             }
         })
     })
+
+    $(".RecentBCVsBtn").on("click",function(){
+        $(".RecentBCVsBtn_Hilit").removeClass("RecentBCVsBtn_Hilit")
+        $(this).addClass("RecentBCVsBtn_Hilit")
+    })
 }
 Tab_MostRecent_BCV.prototype.getCap = function () {
     var scap = $(this.m_tableID).find(".ColorRecentMarks").attr("title").trim()

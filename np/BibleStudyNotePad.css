@@ -720,6 +720,9 @@ input[title='NIV']:checked:after {
     padding: 1px 1px 1px 1px;
     margin: 1px 1px 1px 1px;
 }
+.RecentBCVsBtn_Hilit{
+    border: 2px  solid #a00000;
+}
 
 input[readonly], textarea[readonly]{
     background-color: lightgray;
