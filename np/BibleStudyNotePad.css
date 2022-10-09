@@ -398,6 +398,9 @@ body {
         display: inline-block;
         white-space: nowrap;
     }
+    #Tab_MostRecent_BCV{
+        background-color: rgb(179, 130, 5);
+    }
 
 
     #Tab_selected_Doc_Search thead,
@@ -417,6 +420,7 @@ body {
         display: block;
         background-color:darkblue;
     }
+    
   
     .Hili_RecentBCV_Column_Sort{
         color:black;
