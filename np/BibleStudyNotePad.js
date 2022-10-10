@@ -427,8 +427,8 @@ PopupMenu.prototype.init = function (cbf) {
         }
         //if (cbf) cbf(bcv)
         if ($(this)[0].classList.contains("divPopupMenu_CaptionBCV_MemoVerse")) {
-            if(!confirm(bcv + " is already in MemoryVerses. \nContinue to update?"))
-            return;
+            if (!confirm(bcv + " is already in MemoryVerses. \nContinue to update?"))
+                return;
         }
 
 
