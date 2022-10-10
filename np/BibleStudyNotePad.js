@@ -1699,7 +1699,7 @@ Tab_MostRecent_BCV.prototype.init = function () {
 
 
     $("#clearUnse").bind("click", function () {
-        var cap = _THIS.getCap()
+        var cap = _THIS.getCap() //RecentTouch or MemoryVerse
         _THIS.m_tbodies[cap].clearHistory()
     })
     $("#toggleSel").bind("click", function () {
@@ -2204,7 +2204,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
         Uti.Msg("RestApi=", RestApi);
 
         MyStorage.Repositories().repos_app_init()
-        MyStorage.Repo_load({ "MemoryVerse": {} }, function (ret) {
+        MyStorage.Repo_load({ "MemoryVerse": {}, "RecentTouch": {} }, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
@@ -2212,6 +2212,10 @@ AppInstancesManager.prototype.init_load_storage = function () {
             var memo = (ret.out.data) ? ret.out.data["MemoryVerse"] : ""
             if (memo) {
                 tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(memo)
+            }
+            memo = (ret.out.data) ? ret.out.data["RecentTouch"] : ""
+            if (memo) {
+                tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(memo)
             }
             _load_bcv_from_url_param()
         })
