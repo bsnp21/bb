@@ -38,8 +38,8 @@ var MyStorage = {
         }
     },
     Repo_save: function (keyObj, cbf) {
-       
-    
+
+
         var txt = JSON.stringify(keyObj, null, 4)
         console.log(txt)
 
@@ -251,10 +251,10 @@ var MyStorage = {
             return sorted_obj
         }
         MrObj.prototype.gen_obj_table = function (tid2, cbf_click) {
-            var idx = 0, trs = "";
             var obj = this.get_obj()
+            var idx = Object.keys(obj).length, trs = "";
             for (const [key, val] of Object.entries(obj)) {
-                var sid = (idx++).toString().padStart(2, '0')
+                var sid = (idx--).toString().padStart(2, '0')
                 trs += (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`)
             };
             var stb = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>${trs}</table>`
