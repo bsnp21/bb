@@ -477,9 +477,10 @@ body {
 
   
 
-    #sinput,#searchResult{
+   
+    #sinput,#searchNextresult, #searchResult{
         width:100%;
-        margin:0 0 0 1px;
+        margin:0 0 0 4px;
         padding:4px 4px 4px 4px;
     }
     #searchResult{
