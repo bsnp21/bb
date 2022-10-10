@@ -355,25 +355,26 @@ body {
     #Tab_OutputBooksList{
         position: fixed;
         left: 2px;
-        background-color: #5F95FC;
+        background-color:brown;
         z-index: 9999;
         padding: 0px 10px 10px 1px;
         margin: 0px 1px 1px 78px;
+        min-width: 321px;
     }
     
-    #Tab_NamesOfBibleDocuments_caps, #Tab_MostRecent_BCV_caps{
+    #Tab_VersionNamesOfTheBible_caps, #Tab_MostRecent_BCV_caps{
         font-size: small;
     }
     #Tab_OutputBooksList thead,
     #Tab_CatagryOfBooks thead,
-    #Tab_NamesOfBibleDocuments thead {
+    #Tab_VersionNamesOfTheBible thead {
         display: block;
     }
 
-    #Tab_NamesOfBibleDocuments{
+    #Tab_VersionNamesOfTheBible{
         min-width: 5px;
     }
-    #Tab_NamesOfBibleDocuments tbody tr td{
+    #Tab_VersionNamesOfTheBible tbody tr td{
         width: 100px;
     }
     
@@ -382,7 +383,7 @@ body {
         overflow-y: scroll;
         display: block;
     }
-    #Tab_NamesOfBibleDocuments tbody {
+    #Tab_VersionNamesOfTheBible tbody {
         height: 250px;
         overflow: scroll;
         display: block;

@@ -912,7 +912,7 @@ SingleKeyOutputBooksTable.prototype.Popup_BookList_Table = function (scat, vol_a
 
     $(tid).html(trs).find(".v3").bind("click", function () {
 
-        if ("Custom" === scat) {
+        if ("Wholistic" === scat) {
             //$(".v3.hili").removeClass("hili");
             $(this).find("td.custom_cat").toggleClass("Custom_Selected_Book_Category");
             var custom_cat_ary = []
@@ -1177,7 +1177,7 @@ Tab_Category.prototype.Gen_Cat_Table = function (par) {
         var scat = $(this).addClass("hili").text();
 
         var vol_arr = CNST.Cat2VolArr[scat];
-        if ("Custom" === scat) {
+        if ("Wholistic" === scat) {
             vol_arr = Object.keys(_Max_struct)
         }
 
@@ -1199,7 +1199,7 @@ Tab_Category.prototype.Gen_Cat_Table = function (par) {
 
 
 function Tab_DocumentsClusterList(tid) {
-    this.m_tbid = tid // "#Tab_NamesOfBibleDocuments"
+    this.m_tbid = tid // "#Tab_VersionNamesOfTheBible"
     this.m_onClickItm2Select = null
     this.m_selectedItems_ary = MyStorage.LastSelectedDocsList();//["CUVS"] //default
 }
@@ -1220,7 +1220,7 @@ Tab_DocumentsClusterList.prototype.Set_TabState = function (val) {
     $(this.m_tbid + " caption").find(".HiliSelctedDoc").removeClass("HiliSelctedDoc")
     $(this.m_tbid + " caption").find(".HiliSelctedDocFromTag").removeClass("HiliSelctedDocFromTag")
     $(this.m_tbid + " caption").find(`*[title=${val}]`).addClass("HiliSelctedDoc")
-    $("#Tab_NamesOfBibleDocuments_caps").text(val)
+    $("#Tab_VersionNamesOfTheBible_caps").text(val)
     switch (val) {
         case "Selection": _THIS.Gen_table_for_Documents(); break;
         case "Sequences": _THIS.Gen_table_for_Sequencer(); break;
@@ -1379,7 +1379,7 @@ Tab_DocumentsClusterList.prototype.get_selected_seq_fnamesArr = function () {
 
 
 function Tab_DocumentSelected_Search(tid) {
-    //this.m_tbid = tid // "#Tab_NamesOfBibleDocuments"
+    //this.m_tbid = tid // "#Tab_VersionNamesOfTheBible"
     this.cbf_click_doc_to_run_search = null
 
     //this.m_selectedItems_ary = MyStorage.LastSelectedDocsList();//["CUVS"] //default
@@ -1949,7 +1949,7 @@ var digi = new DigitNumberInputZone()
 var skout = new SingleKeyOutputBooksTable("#Tab_OutputBooksList")
 
 var tab_category = new Tab_Category()
-var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_NamesOfBibleDocuments")
+var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_VersionNamesOfTheBible")
 var tab_MostRecent_BCV = new Tab_MostRecent_BCV()
 
 

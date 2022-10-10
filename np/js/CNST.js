@@ -165,7 +165,7 @@ var BibleInputMenuContainer = `
             <!----------------------------->
 
             <div class="GrpMenu" id="grp_Cluster" style="float:left;display:none;overflow-x:scroll;">
-            <table>
+            <table n='frames of containers.'>
             <tr>
             <td>
                 <table border="1" style="float:left;display:" id="Tab_CatagryOfBooks">
@@ -180,12 +180,12 @@ var BibleInputMenuContainer = `
             </td>
             <td>
 
-                <table id="Tab_NamesOfBibleDocuments" border="1" style="float:left;">
+                <table id="Tab_VersionNamesOfTheBible" border="1" style="float:left;">
                     <caption>
-                    <div id='Tab_NamesOfBibleDocuments_caps'></div>
-                    <button class='docSwitch' title='Selection' note='doclist'>=</button>
-                    <button class='docSwitch' title='Sequences' note='uparrow'>&#8645;</button>
-                    <a class='docSwitch' title='Searching' note='searchi' old='&#8635;'></a>
+                        <div id='Tab_VersionNamesOfTheBible_caps'></div>
+                        <button class='docSwitch' title='Selection' note='doclist'>=</button>
+                        <button class='docSwitch' title='Sequences' note='uparrow'>&#8645;</button>
+                        <a class='docSwitch' title='Searching' note='searchi' old='&#8635;'></a>
                     </caption>
                     <thead id=""></thead>
                     <tbody>
@@ -868,7 +868,7 @@ CNST.Cat2VolArr = {
     "Gospel": ["Mat", "Mak", "Luk", "Jhn"],
     "Paulines": ["Rom", "1Co", "2Co", "Gal", "Eph", "Phl", "Col", "1Ts", "2Ts", "1Ti", "2Ti", "Tit", "Phm"],
     "Epistles": ["Heb", "Jas", "1Pe", "2Pe", "1Jn", "2Jn", "3Jn", "Jud"],
-    "Custom": []
+    "Wholistic": []
 };
 var BookJsFlavor = {
     OTNT: ['#510000', 'wholistic Bible', '圣经全书'],

@@ -340,7 +340,7 @@ var MyStorage = {
         } else {
             localStorage.setItem("CustomCatAry", JSON.stringify(obj))
         }
-        CNST.Cat2VolArr.Custom = obj
+        CNST.Cat2VolArr.Wholistic = obj
     },
     getCustomCatAry: function () {
         var ar = localStorage.getItem("CustomCatAry")
@@ -349,7 +349,7 @@ var MyStorage = {
         } else {
             ar = JSON.parse(ar)
         }
-        CNST.Cat2VolArr.Custom = ar
+        CNST.Cat2VolArr.Wholistic = ar
         return ar
     },
 
