@@ -22,6 +22,9 @@ body {
         opacity: 100;
 
     }
+    #menuContainer{
+        right: -5px;
+    }
 
     #menuContainer {
         top: 30px;
@@ -30,7 +33,7 @@ body {
         display: block;
 
         height: 25px;
-        width:350px;
+        width:360px;
     }
     .menuContainer_red{
         background-color: red;
@@ -83,7 +86,7 @@ body {
     .GrpMenu{
         background-color: gray;
         display:none;
-        width:350px;
+        width:360px;
     }
    
 
