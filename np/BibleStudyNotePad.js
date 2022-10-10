@@ -427,7 +427,8 @@ PopupMenu.prototype.init = function (cbf) {
         }
         //if (cbf) cbf(bcv)
         if ($(this)[0].classList.contains("divPopupMenu_CaptionBCV_MemoVerse")) {
-            return alert(bcv + " is already in MemoryVerses.")
+            if(!confirm(bcv + " is already in MemoryVerses. \nContinue to update?"))
+            return;
         }
 
 
@@ -1564,15 +1565,11 @@ Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
 
 
 
-function Tab_MostRecentBody(bSingpleSel) {
+function Tab_MostRecentBody(tbodyID) {
 
-    this.m_tbodyID = null; //"#Tab_MostRecent_BCV"
-    this.m_bSingleSel = bSingpleSel
-    this.m_sortType = 0
-}
-Tab_MostRecentBody.prototype.init = function (tbodyID) {
-    this.m_tbodyID = tbodyID
+    this.m_tbodyID = "#" + tbodyID; //"#Tab_MostRecent_BCV"
     this.m_MrObjInStore = MyStorage.CreateMrObj(tbodyID)
+    this.m_bSingleSel = false
 }
 Tab_MostRecentBody.prototype.show = function (bShow) {
     if (bShow) $(this.m_tbodyID).show()
@@ -1671,15 +1668,12 @@ function Tab_MostRecent_BCV() {
     this.m_tableID = "#Tab_MostRecent_BCV"
 }
 
-Tab_MostRecent_BCV.prototype.init = function () {
+Tab_MostRecent_BCV.prototype.init_Mrs = function () {
     var _THIS = this
     this.m_tbodies = {
-        MemoryVerse: new Tab_MostRecentBody(false),
-        RecentTouch: new Tab_MostRecentBody(false),
+        MemoryVerse: new Tab_MostRecentBody("MemoryVerse"),
+        RecentTouch: new Tab_MostRecentBody("RecentTouch"),
     }
-    //
-    this.m_tbodies.RecentTouch.init("#RecentTouch")
-    this.m_tbodies.MemoryVerse.init("#MemoryVerse")
 
     //
     _THIS.show_all(false)
@@ -2128,7 +2122,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
 
 
-    tab_MostRecent_BCV.init()
+    tab_MostRecent_BCV.init_Mrs()
     tab_MostRecent_BCV.onClickHistoryItem(function (bcvAry) {
         if (bcvAry.length === 0) {
             return
