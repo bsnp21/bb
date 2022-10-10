@@ -2091,9 +2091,15 @@ AppInstancesManager.prototype.init = function (cbf) {
     //tab_DocumentSelected_Search.init()
     tab_DocumentSelected_Search.cbf_click_doc_to_run_search = function () {
         $("#searchNextresult").text("Serach str in server site..")
+        var inpobj = g_aim.get_search_inp()
+        if(Object.keys(inpobj.bibOj).length===0){
+            if(!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)){
+                return;
+            }
+        }
         var api = new BsnpRestApi()
         api.run(RestApi.ApiBibleObj_search_txt,
-            g_aim.get_search_inp(),
+            inpobj,
             function (ret) {
                 _This.apiCallback_Gen_output_table(ret, function (size) {
                     $("#searchNextresult").text("0/" + size)
@@ -2301,13 +2307,13 @@ AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
 AppInstancesManager.prototype.get_search_inp = function () {
     //
     var fnamesArr = tab_documentsClusterList.get_selected_seq_fnamesArr();
-    var searchFileName = MyStorage.LastSearchInDocument();// nambib.get_search_fname();
+    var searchInFileName = MyStorage.LastSearchInDocument();// nambib.get_search_fname();
     var searchStrn = $("#sinput").val();
     if (searchStrn.length === 0) {
         return alert("no search str.")
     }
 
-    var inp = { fnames: fnamesArr, bibOj: null, Search: { File: searchFileName, Strn: searchStrn } };
+    var inp = { fnames: fnamesArr, bibOj: null, Search: { File: searchInFileName, Strn: searchStrn } };
     var res = showup.get_selected_bcv_parm();
     if (res) {
         inp.bibOj = res.oj_search
