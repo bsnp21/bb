@@ -399,7 +399,7 @@ var BibleInputMenuContainer = `
 
 <!----------------------------->
 <!----------------------------->
-<table id="Tab_OutputBooksList" border="1">
+<table id="Tab_OutputVolumnNamesList" border="1">
     <caption></caption>
     <thead id="">
     </thead>

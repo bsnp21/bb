@@ -352,7 +352,7 @@ body {
         background-color: rgb(24, 117, 117);
     }
 
-    #Tab_OutputBooksList{
+    #Tab_OutputVolumnNamesList{
         position: fixed;
         left: 2px;
         background-color:brown;
@@ -365,7 +365,7 @@ body {
     #Tab_VersionNamesOfTheBible_caps, #Tab_MostRecent_BCV_caps{
         font-size: small;
     }
-    #Tab_OutputBooksList thead,
+    #Tab_OutputVolumnNamesList thead,
     #Tab_CatagryOfBooks thead,
     #Tab_VersionNamesOfTheBible thead {
         display: block;
@@ -389,7 +389,7 @@ body {
         display: block;
     }
 
-    #Tab_OutputBooksList tbody{
+    #Tab_OutputVolumnNamesList tbody{
         height: 340px;
         overflow-y: scroll;
         display: block;

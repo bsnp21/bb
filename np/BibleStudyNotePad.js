@@ -853,7 +853,7 @@ SingleKeyInputPanel.prototype.Get_Vol_Arr_from_KeyChar = function (ch) {
 
 
 function SingleKeyOutputBooksTable(tid) {
-    this.m_id = tid; //"#Tab_OutputBooksList"
+    this.m_id = tid; //"#Tab_OutputVolumnNamesList"
     this.cbf_onClickItm = null
 }
 SingleKeyOutputBooksTable.prototype.init = function (par) {
@@ -1946,7 +1946,7 @@ var tab_DocumentSelected_Search = new Tab_DocumentSelected_Search()
 var showup = new ShowupBCV() // ShowupBknChpVrsPanel()
 var skinp = new SingleKeyInputPanel()
 var digi = new DigitNumberInputZone()
-var skout = new SingleKeyOutputBooksTable("#Tab_OutputBooksList")
+var skout = new SingleKeyOutputBooksTable("#Tab_OutputVolumnNamesList")
 
 var tab_category = new Tab_Category()
 var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_VersionNamesOfTheBible")
@@ -1974,7 +1974,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         evt.stopImmediatePropagation();
         //$("#menuContainer").hide()
         $("#divPopupMenu").hide()
-        $("#Tab_OutputBooksList").hide()
+        $("#Tab_OutputVolumnNamesList").hide()
         groupsMenuMgr.collapse()
         //popupMenu.hide()
     })
@@ -2148,7 +2148,7 @@ AppInstancesManager.prototype.init = function (cbf) {
     g_obt.onclick_ob_table(function () {
         //$("#menuContainer").hide()
         $("#divPopupMenu").hide()
-        $("#Tab_OutputBooksList").hide()
+        $("#Tab_OutputVolumnNamesList").hide()
         //popupMenu.hide()
         groupsMenuMgr.collapse()
     })
@@ -2419,7 +2419,7 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
 
         Uti.Msg(txt);
         $("#divPopupMenu").hide()
-        $("#Tab_OutputBooksList").hide()
+        $("#Tab_OutputVolumnNamesList").hide()
     });
 
     $(tbid).find("td").bind("click", function () {
