@@ -862,6 +862,10 @@ SingleKeyOutputBooksTable.prototype.init = function (par) {
         //$(_THIS.m_id).hide()
     }).hide().draggable();
     this.cbf_onClickItm = par.onClickItm
+
+    $(this.m_id + " tbody").bind("click", function () {
+        $(_THIS.m_id).hide()
+    })
 }
 SingleKeyOutputBooksTable.prototype.get_selary = function () {
     var vol_arr = []
@@ -912,7 +916,7 @@ SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat
 
     $(tid).html(trs).find(".v3").bind("click", function () {
 
-        if ("Wholistic" === scat) {
+        if ("UserDef" === scat) {
             //$(".v3.hili").removeClass("hili");
             $(this).find("td.custom_cat").toggleClass("Custom_Selected_Book_Category");
             var custom_cat_ary = []
@@ -1177,7 +1181,7 @@ Tab_Category.prototype.Gen_Cat_Table = function (par) {
         var scat = $(this).addClass("hili").text();
 
         var vol_arr = CNST.Cat2VolArr[scat];
-        if ("Wholistic" === scat) {
+        if ("UserDef" === scat) {
             vol_arr = Object.keys(_Max_struct)
         }
 
