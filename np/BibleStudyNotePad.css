@@ -383,8 +383,8 @@ body {
         display: block;
     }
     #Tab_NamesOfBibleDocuments tbody {
-        height: 240px;
-        overflow-y: scroll;
+        height: 250px;
+        overflow: scroll;
         display: block;
     }
 

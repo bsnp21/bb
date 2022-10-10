@@ -164,7 +164,10 @@ var BibleInputMenuContainer = `
 
             <!----------------------------->
 
-            <div class="GrpMenu" id="grp_Cluster" style="float:left;display:none;overflow:scroll;">
+            <div class="GrpMenu" id="grp_Cluster" style="float:left;display:none;overflow-x:scroll;">
+            <table>
+            <tr>
+            <td>
                 <table border="1" style="float:left;display:" id="Tab_CatagryOfBooks">
                     <caption class='' id='' title='Catagory of Books in Bible'>Category</caption>
                     <thead id=""></thead>
@@ -174,6 +177,8 @@ var BibleInputMenuContainer = `
                         </tr>
                     </tbody>
                 </table>
+            </td>
+            <td>
 
                 <table id="Tab_NamesOfBibleDocuments" border="1" style="float:left;">
                     <caption>
@@ -189,7 +194,8 @@ var BibleInputMenuContainer = `
                         </tr>
                     </tbody>
                 </table>
-
+            </td>
+            <td>
                 <div id="Tab_MostRecent_BCV" border="1" style="float:left;">
                     <div>
                        <div id='Tab_MostRecent_BCV_caps'></div>
@@ -213,6 +219,9 @@ var BibleInputMenuContainer = `
                     <a id="load2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
                     </div>
                 </div>
+            </td>
+            </tr>
+            </table>
             </div>
 
             <!----------------------------->
