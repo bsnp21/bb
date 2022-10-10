@@ -897,7 +897,7 @@ SingleKeyOutputBooksTable.prototype.show = function (bShow) {
     }
 }
 
-SingleKeyOutputBooksTable.prototype.Popup_BookList_Table = function (scat, vol_arr, alreadyhili, Yoffset) {
+SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat, vol_arr, alreadyhili, Yoffset) {
 
     if (!scat || vol_arr.length === 0) {
         $(this.m_id).hide()
@@ -1946,7 +1946,7 @@ var tab_DocumentSelected_Search = new Tab_DocumentSelected_Search()
 var showup = new ShowupBCV() // ShowupBknChpVrsPanel()
 var skinp = new SingleKeyInputPanel()
 var digi = new DigitNumberInputZone()
-var skout = new SingleKeyOutputBooksTable("#Tab_OutputVolumnNamesList")
+var popoutputVolumnNamesList = new SingleKeyOutputBooksTable("#Tab_OutputVolumnNamesList")
 
 var tab_category = new Tab_Category()
 var tab_documentsClusterList = new Tab_DocumentsClusterList("#Tab_VersionNamesOfTheBible")
@@ -1979,7 +1979,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         //popupMenu.hide()
     })
 
-    groupsMenuMgr.gen_grp_bar(skout, tab_MostRecent_BCV)
+    groupsMenuMgr.gen_grp_bar(popoutputVolumnNamesList, tab_MostRecent_BCV)
 
 
 
@@ -2025,7 +2025,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         groupsMenuMgr.sel_default()
     })
     showup.onclick_face(function () {
-        skout.show(false)
+        popoutputVolumnNamesList.show(false)
         //$('#menuContainer').slideToggle();
         _This.scrollToView_Vrs() //before clearup.
     })
@@ -2042,7 +2042,7 @@ AppInstancesManager.prototype.init = function (cbf) {
     })
 
 
-    skout.init({
+    popoutputVolumnNamesList.init({
         onClickItm: function (vol) {
             showup.m_Bki.set_showupBkc(vol);
             showup.m_Chp.set_showupVal("")
@@ -2067,7 +2067,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
     skinp.gen_panel({
         onClickItm: function (ch, volary, alreadyhili) {
-            skout.Popup_BookList_Table(ch, volary, alreadyhili, 90)
+            popoutputVolumnNamesList.Popup_VolumnNamesList_Table(ch, volary, alreadyhili, 90)
 
             tab_category.rm_hili()
         }
@@ -2075,7 +2075,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
     tab_category.Gen_Cat_Table({
         onClickItm: function (scat, volary, alreadyHili) {
-            skout.Popup_BookList_Table(scat, volary, alreadyHili, 2);
+            popoutputVolumnNamesList.Popup_VolumnNamesList_Table(scat, volary, alreadyHili, 2);
             skinp.rm_hili()
 
             //showup.m_Bki.set_showupBkc(scat);
