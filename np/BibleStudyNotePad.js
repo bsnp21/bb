@@ -860,11 +860,14 @@ SingleKeyOutputBooksTable.prototype.init = function (par) {
     var _THIS = this
     $(this.m_id).bind("click", function () {
         //$(_THIS.m_id).hide()
+        alert()
     }).hide().draggable();
     this.cbf_onClickItm = par.onClickItm
 
     $(this.m_id + " tbody").bind("click", function () {
-        $(_THIS.m_id).hide()
+        if(_THIS.m_sCatName !== "UserDef"){
+            $(_THIS.m_id).hide()
+        }
     })
 }
 SingleKeyOutputBooksTable.prototype.get_selary = function () {
@@ -903,6 +906,7 @@ SingleKeyOutputBooksTable.prototype.show = function (bShow) {
 
 SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat, vol_arr, alreadyhili, Yoffset) {
 
+    this.m_sCatName = scat
     if (!scat || vol_arr.length === 0) {
         $(this.m_id).hide()
         return
