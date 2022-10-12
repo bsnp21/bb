@@ -440,6 +440,8 @@ PopupMenu.prototype.init = function (cbf) {
 
         tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
         obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+        var inpObj = {}
+        
 
         MyStorage.Repo_save(
             {
@@ -1713,13 +1715,14 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var This = this
         Uti.Msg("#save2Repo")
 
-        var cap = _THIS.getCap()
-
+        var cap2 = $("#Mr_Input_Datalist").val()
+        
         //
+        var cap = _THIS.getCap()
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
         var inpkeyObj = {}
-        inpkeyObj[cap] = [obj]
+        inpkeyObj[cap2] = [obj]
 
         MyStorage.Repo_save(inpkeyObj,
             function (ret) {
@@ -1730,15 +1733,16 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         Uti.Msg("#load2Repo")
 
         var cap = _THIS.getCap()
+        var skey = $("#Mr_Input_Datalist").val()
         var inpkeyObj = {}
-        inpkeyObj[cap] = {}
+        inpkeyObj[skey] = {}
         MyStorage.Repo_load(
             inpkeyObj,
             function (ret) {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    var obj = ret.out.data[cap][0]
+                    var obj = ret.out.data[skey][0]
                     if (obj) {
                         var ar = Object.keys(obj)
                         if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
@@ -1754,6 +1758,9 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
     $(".RecentBCVsBtn").on("click", function () {
         $(".RecentBCVsBtn_Hilit").removeClass("RecentBCVsBtn_Hilit")
         $(this).addClass("RecentBCVsBtn_Hilit")
+    })
+    $("#clear_Tab_MostRecent_BCV_caps").on("click",function(){
+        $("#Mr_Input_Datalist").val("")
     })
 }
 Tab_MostRecent_BCV.prototype.getCap = function () {

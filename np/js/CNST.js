@@ -201,13 +201,14 @@ var BibleInputMenuContainer = `
                        <div id='Tab_MostRecent_BCV_caps'></div>
                        <input list="browsers" name="browser"  id='Mr_Input_Datalist'>
                        <datalist id="browsers">
-                           <option value="Internet Explorer">
-                           <option value="Firefox">
+                           <option value="RecentTouch">
+                           <option value="MemoryVerse">
                            <option value="Chrome">
                            <option value="Opera">
                            <option value="Safari">
                        </datalist>
                        </input>
+                       <a id='clear_Tab_MostRecent_BCV_caps'>x</a>
                        
                        <button class='docSwitchRecent ColorRecentMarks' title="RecentTouch">T</button>
                        <button class='docSwitchRecent' title="MemoryVerse">M</button><br>
