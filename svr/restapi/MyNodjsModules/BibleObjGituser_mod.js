@@ -1321,12 +1321,13 @@ BibleObjGituser.prototype.load_turnback_userData = function () {
     var jsfname = this.get_pfxname(doc)
     var ret = BibleUti.loadObj_by_fname(jsfname)
 
-    var retObj = {}
-    if (!inp.par.data) {
-        retObj = ret.obj //return back the whole object data.
+    var retObj = Uti.GetEmptyObj(ret.obj)  //get obj structure w/ keys.
+    if (!inp.par.data) {  // ===undefined, null, or ''. 
+        retObj = ret.obj  // return back the whole object data.
     } else {
         try {
-            var inpkeyObj = JSON.parse(inp.par.data) //return back the specifiec key data,  
+            var inpkeyObj = JSON.parse(inp.par.data) //return back only keys user wanted,  
+
             Object.keys(inpkeyObj).forEach(function (key) {
                 retObj[key] = ret.obj[key]
             })
