@@ -154,7 +154,17 @@ var ApiUti = {
 }
 
 
-
+//  var inp_struct_base = {
+//      par: {
+//          Search: { File: "searchInFileName", Strn: "searchStrn" },   //for strSearch in one Bible.
+//      }
+//  }
+//  var inp_struct_base = {
+//      par: {
+//          fnames: [],                             /user pathfile name. './Dat/fname'
+//          data: "" // for user stringified obj data holder for read or data for write into fnames[0]
+//      }
+//  }
 var inp_struct_base = {
     usr: {
         repopath: "",
@@ -162,8 +172,8 @@ var inp_struct_base = {
         repodesc: ""
     },
     par: {
-        fnames: [],
-        bibOj: { bkc: { chp: { vrs: "" } } }
+        fnames: [],                             //for BibleObject Read.
+        bibOj: { bkc: { chp: { vrs: "" } } },   //for BibleObject Read.
     }
 }
 var inp_struct_search = JSON.parse(JSON.stringify(inp_struct_base))
