@@ -21,7 +21,15 @@
 </head>
 
 <body>
-
+    <input list="browsers" name="browser">
+    <datalist id="browsers">
+        <option value="Internet Explorer">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="Safari">
+    </datalist>
+    </input>
 </body>
 
 </html>
@@ -73,7 +81,7 @@
 
         var ret = GetEmptyObj(aobject)
         console.log("object", ret)
-        console.log(JSON.stringify(ret, null,4))
+        console.log(JSON.stringify(ret, null, 4))
     }
     test_obj_reiterater()
 

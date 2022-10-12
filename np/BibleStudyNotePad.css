@@ -362,7 +362,12 @@ body {
         min-width: 321px;
     }
     
-    #Tab_VersionNamesOfTheBible_caps, #Tab_MostRecent_BCV_caps{
+    #Tab_MostRecent_BCV_caps, #Mr_Input_Datalist{
+        font-size: small;
+        width: 120px;
+    }
+
+    #Tab_VersionNamesOfTheBible_caps{
         font-size: small;
     }
     #Tab_OutputVolumnNamesList thead,
