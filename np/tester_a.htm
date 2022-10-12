@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title>~</title>
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <base target="_blank" />
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+    <!-------------------------------------------->
+    <!---- Insert this before scripts import; then restor back later -->
+    <script>//if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <!-------------- jq --------------------->
+    <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
+    <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
+
+    <!-------------------------------------------->
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    if ("undefined" === typeof localStorage) {
+        alert("localStorage not supported")
+    }
+</script>
+<script>
+    $(function () {
+
+
+    })
+    function test_obj_reiterater() {
+
+        function GetEmptyObj(obj) {
+            function _iterate(obj, shellOfObj) {
+                for (var sproperty in obj) {
+                    if (obj.hasOwnProperty(sproperty)) {
+                        var tps = typeof obj[sproperty]
+                        var bary = Array.isArray(obj[sproperty])
+                        if (tps === "object" && !bary) {
+                            shellOfObj[sproperty] = {}
+                            _iterate(obj[sproperty], shellOfObj[sproperty]);
+                        } else {
+                            shellOfObj[sproperty] = 0
+                            //console.log(property + "   " + obj[property]);
+                            //$('#output').append($("<div/>").text(stack + '.' + property))
+                        }
+                    }
+                }
+            }
+            var structObj = {}
+            _iterate(obj, structObj)
+            return structObj
+        }
+
+        var aobject = {
+            a: {
+                x: 'ax',
+                y: "ay",
+                z: "az"
+            },
+            b: {
+                c: { d: { e: ["bcde", { ax: "a" }], f: 'ff' } },
+                ar: ["1", '2', '3', { ax: "a" },]
+            }
+        }
+
+        var ret = GetEmptyObj(aobject)
+        console.log("object", ret)
+        console.log(JSON.stringify(ret, null,4))
+    }
+    test_obj_reiterater()
+
+
+</script>
