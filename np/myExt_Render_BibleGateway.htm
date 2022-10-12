@@ -13,7 +13,7 @@
     <!-------------- jq --------------------->
     <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
     <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
-     
+
     <!-------------- ckeditor only--------------------->
     <script language="javascript" src="../jq/table_Indexer.js"></script>
     <script language="javascript" src="../jq/jquery.tablesorter.js"></script>
@@ -45,12 +45,12 @@
             background-color: yellowgreen;
             color: white;
             overflow: auto;
-            width:100%;
+            width: 100%;
         }
 
 
         .hili {
-            background-color:lightgreen;
+            background-color: lightgreen;
         }
 
         .white_space_nowrap {
@@ -79,7 +79,8 @@
             float: right;
             white-space: nowrap;
         }
-        th{
+
+        th {
             background-color: lightgrey;
         }
     </style>
@@ -101,10 +102,14 @@
     <table border="1">
         <caption id="scap"></caption>
         <thead>
-            <tr><th>#</th><th>Abbrv</th><th>Desc</th></tr>
+            <tr>
+                <th>#</th>
+                <th>Abbrv</th>
+                <th>Desc</th>
+            </tr>
         </thead>
         <tbody id="allusrs">
-    
+
         </tbody>
     </table>
 
@@ -125,40 +130,78 @@
 </script>
 <script>
     $(function () {
-        var trs=""
-        for(const i in BibleGateway_EnglishVersionsAry){
+        var trs = ""
+        for (const i in BibleGateway_EnglishVersionsAry) {
             var str = BibleGateway_EnglishVersionsAry[i]
-            var reg = new RegExp(".*[\(]([A-Z0-9a-z ]+)[\)].*","")
+            var reg = new RegExp(".*[\(]([A-Z0-9a-z ]+)[\)].*", "")
             var mat = str.match(reg)
-            if(mat){
+            if (mat) {
                 console.log(mat)
-                trs+=`<tr><td>${i}</td><td class='Abbrev'>${mat[1]}</td><td>${str}</td></tr>`
-            }else{
+                trs += `<tr><td>${i}</td><td class='Abbrev'>${mat[1]}</td><td>${str}</td></tr>`
+            } else {
                 console.log("Error string", str)
                 alert(str)
             }
             console.log(i, str)
         }
-        $("#allusrs").html(trs).find(".Abbrev").on("click",function(){
+        $("#allusrs").html(trs).find(".Abbrev").on("click", function () {
             $(this).toggleClass("hili")
-            var vsn=""
-            $(".hili").each(function(){
+            var vsn = ""
+            $(".hili").each(function () {
                 var val = $(this).text()
-                vsn+=val + ";"
+                vsn += val + ";"
             })
 
             const urlParams = new URLSearchParams(window.location.search);
             const bcv = urlParams.get('search');
-            var par = `https://www.biblegateway.com/passage/?search=${bcv}&version=${vsn}` 
+            var par = `https://www.biblegateway.com/passage/?search=${bcv}&version=${vsn}`
             $("#Search_repodesc").val(par)
         });
-        
+
         table_sort()
 
 
-        $("#runCmd").on("click",function(){
+        $("#runCmd").on("click", function () {
             window.open($("#Search_repodesc").val())
         })
 
     })
+
+
+
+
+    var aobject = {
+        a: {
+            x: 'ax',
+            y: "ay",
+            z: "az"
+        },
+        b: {
+            c: { d: { e: ["bcde"], f: 'ff' } },
+            ar: ["1", '2', '3']
+        }
+    }
+
+    var ret = {}
+    function iterate(obj, stack) {
+        for (var property in obj) {
+            stack[property] = {}
+            if (obj.hasOwnProperty(property)) {
+                var tobj = typeof obj[property]
+                var bary = Array.isArray(obj[property])
+                if (bary) tobj = []
+                if (tobj === "object" && !bary) {
+                    iterate(obj[property], stack[property]);
+                } else {
+                    stack[property] = tobj
+                    console.log(property + "   " + obj[property]);
+                    $('#output').append($("<div/>").text(stack + '.' + property))
+                }
+            }
+        }
+    }
+
+    var s
+    iterate(aobject, ret)
+    console.log("object", ret)
 </script>
