@@ -18,6 +18,27 @@ const NodeCache = require("node-cache");
 
 const WorkingRootNodeName = "bist"
 var BibleUti = {
+
+    GetEmptyObj: function (obj) {
+        function _iterate(obj, shellOfObj) {
+            for (var sproperty in obj) {
+                if (obj.hasOwnProperty(sproperty)) {
+                    var tps = typeof obj[sproperty]
+                    var bary = Array.isArray(obj[sproperty])
+                    if (tps === "object" && !bary) {
+                        shellOfObj[sproperty] = {}
+                        _iterate(obj[sproperty], shellOfObj[sproperty]);
+                    } else {
+                        shellOfObj[sproperty] = 0
+                    }
+                }
+            }
+        }
+        var structObj = {}
+        _iterate(obj, structObj)
+        return structObj
+    },
+
     WorkingRootDir: function (v) {
         if (undefined === v) {
             return BibleUti.m_rootDir
@@ -1321,7 +1342,7 @@ BibleObjGituser.prototype.load_turnback_userData = function () {
     var jsfname = this.get_pfxname(doc)
     var ret = BibleUti.loadObj_by_fname(jsfname)
 
-    var retObj = Uti.GetEmptyObj(ret.obj)  //get obj structure w/ keys.
+    var retObj = BibleUti.GetEmptyObj(ret.obj)  //get obj structure w/ keys.
     if (!inp.par.data) {  // ===undefined, null, or ''. 
         retObj = ret.obj  // return back the whole object data.
     } else {
