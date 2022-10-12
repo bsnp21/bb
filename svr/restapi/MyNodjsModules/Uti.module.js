@@ -326,6 +326,26 @@ var Utility = {
             frq90pcnt_PosRate: indxAt90pcntPosRate.toFixed(2)
         }
         return ret;
+    },
+
+    GetEmptyObj: function (obj) {
+        function _iterate(obj, shellOfObj) {
+            for (var sproperty in obj) {
+                if (obj.hasOwnProperty(sproperty)) {
+                    var tps = typeof obj[sproperty]
+                    var bary = Array.isArray(obj[sproperty])
+                    if (tps === "object" && !bary) {
+                        shellOfObj[sproperty] = {}
+                        _iterate(obj[sproperty], shellOfObj[sproperty]);
+                    } else {
+                        shellOfObj[sproperty] = 0
+                    }
+                }
+            }
+        }
+        var structObj = {}
+        _iterate(obj, structObj)
+        return structObj
     }
 };/////
 
