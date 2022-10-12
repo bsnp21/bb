@@ -443,7 +443,7 @@ PopupMenu.prototype.init = function (cbf) {
 
         MyStorage.Repo_save(
             {
-                "MemoryVerse": obj
+                "MemoryVerse": [obj]
             },
             function (ret) {
                 Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -1719,7 +1719,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
         var inpkeyObj = {}
-        inpkeyObj[cap] = obj
+        inpkeyObj[cap] = [obj]
 
         MyStorage.Repo_save(inpkeyObj,
             function (ret) {
@@ -1738,7 +1738,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    var obj = ret.out.data[cap]
+                    var obj = ret.out.data[cap][0]
                     if (obj) {
                         var ar = Object.keys(obj)
                         if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
@@ -2219,11 +2219,11 @@ AppInstancesManager.prototype.init_load_storage = function () {
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
 
-            var memo = (ret.out.data) ? ret.out.data["MemoryVerse"] : ""
+            var memo = (ret.out.data) ? ret.out.data["MemoryVerse"][0] : ""
             if (memo) {
                 tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(memo)
             }
-            memo = (ret.out.data) ? ret.out.data["RecentTouch"] : ""
+            memo = (ret.out.data) ? ret.out.data["RecentTouch"][0] : ""
             if (memo) {
                 tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(memo)
             }
