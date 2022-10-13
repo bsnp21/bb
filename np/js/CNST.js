@@ -259,30 +259,28 @@ var BibleInputMenuContainer = `
                            <option value="MostRecentSearch">
                         </datalist>
                     </input>
-                    <a id='clear_Tab_MostRecent_BCV_caps'>x</a>
+                    <a id='clear_MrSearchHistoryInput'>x</a>
                 </div>
-                <table border="1">
+                <table border="1" note="frame">
                 <tr>
                 <td>
-                <table id="Tab_selected_Doc_Search" border='1' style="float:left;">
-                    <caption>SearchIn</caption>
-                    <tbody id="Tab_doc_option_for_search">
-                        <tr>
-                            <td>
-                                                       
-    
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table id="Tab_selected_Doc_Search" border='1' style="float:left;">
+                        <caption>SearchIn</caption>
+                        <tbody id="Tab_doc_option_for_search">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </td>
                 <td>
-                <table id="Tab_regex_history_search" border="1" style="float:left;">
-                    <caption>History</caption>
-                    <tbody>
-                      
-                    </tbody>
-                </table>
+                    <table id="Tab_regex_history_search" border="1" style="float:left;">
+                        <caption>History</caption>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </td>
                 </table>
                

@@ -1516,7 +1516,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         Uti.Msg("#saveSearchHistory2Repo")
 
         var skey = $("#MrSearchHistoryInput").val()
-        if(!skey) return alert("Saved name is empty.")
+        if (!skey) return alert("Saved name is empty.")
         var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
 
         //
@@ -1534,9 +1534,8 @@ Tab_DocumentSelected_Search.prototype.init = function () {
     $("#load_SearchHistory2Repo").on("click", function () {
         Uti.Msg("#load2Repo")
         var skey = $("#MrSearchHistoryInput").val()
-        if(!skey) return alert("Saved name is empty.")
+        if (!skey) return alert("Saved name is empty.")
 
-     
         var inpkeyObj = {}
         inpkeyObj[skey] = {}
         MyStorage.Repo_load_dat_MostRecentSearches(
@@ -1545,6 +1544,8 @@ Tab_DocumentSelected_Search.prototype.init = function () {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
+                    _THIS.gen_historysearch_datalist(ret.out.data)
+
                     var obj = ret.out.data[skey][0]
                     if (obj) {
                         var ar = Object.keys(obj)
@@ -1559,10 +1560,21 @@ Tab_DocumentSelected_Search.prototype.init = function () {
             })
     })
 
+    $("#clear_MrSearchHistoryInput").on("click", function () {
+        $("#MrSearchHistoryInput").val("")
+    })
+
 
     this.gen_search_strn_history()
 }
+Tab_DocumentSelected_Search.prototype.gen_historysearch_datalist = function (obj) {
+    var trs = ""
+    Object.keys(obj).forEach(function (sky) {
+        trs += `<option value='${sky}'></option>`
+    })
 
+    $("#MrSearchHistoryDatalist").html(trs)
+}
 Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     if (undefined === document.m_SearchStrnInPage) document.m_SearchStrnInPage = ""
     var s = document.m_SearchStrnInPage
@@ -1578,15 +1590,6 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
             }
         }
     }
-
-    //var ar = MyStorage.MostRecentSearchStrn.get_ary()
-    //ar.forEach(function (strn, i) {
-    //    shob.add_key_val(strn, "yymmdd", "results")
-    //    var matcls = (s === strn.trim()) ? "SearchStrnInPage" : ""
-    //    if (strn.trim().length > 0) {
-    //        //trs += (`<tr><td>${i}</td><td class='option'>${strn}</td><td>oo</td></tr>`);
-    //    }
-    //})
 
     //history
     //console.log(ret);
