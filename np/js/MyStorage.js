@@ -37,7 +37,7 @@ var MyStorage = {
             alert("Sorry, your browser does not support Web Storage...")
         }
     },
-    Repo_save: function (keyObj, cbf) {
+    Repo_save_data_MostRecentVerses: function (keyObj, cbf) {
 
 
         var txt = JSON.stringify(keyObj, null, 4)
@@ -55,6 +55,24 @@ var MyStorage = {
 
         return
     },
+    Repo_save_dat_MostRecentSearches: function (keyObj, cbf) {
+
+
+        var txt = JSON.stringify(keyObj, null, 4)
+        console.log(txt)
+
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrDat_save,
+            {
+                fnames: ["./dat/MostRecentSearches"],
+                data: txt
+            },
+            function (ret) {
+                cbf(ret)
+            })
+
+        return
+    },
     Repo_load: function (keyObj, cbf) {
         //
         var txt = JSON.stringify(keyObj, null, 4)
@@ -63,6 +81,20 @@ var MyStorage = {
         api.run(RestApi.ApiUsrDat_load,
             {
                 fnames: ["./dat/localStorage"],
+                data: txt
+            },
+            function (ret) {
+                if (cbf) cbf(ret)
+            })
+    },
+    Repo_load_dat_MostRecentSearches: function (keyObj, cbf) {
+        //
+        var txt = JSON.stringify(keyObj, null, 4)
+
+        var api = new BsnpRestApi()
+        api.run(RestApi.ApiUsrDat_load,
+            {
+                fnames: ["./dat/MostRecentSearches"],
                 data: txt
             },
             function (ret) {

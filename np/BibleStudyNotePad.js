@@ -443,13 +443,13 @@ PopupMenu.prototype.init = function (cbf) {
         var inpObj = {}
 
 
-        MyStorage.Repo_save(
+        MyStorage.Repo_save_data_MostRecentVerses(
             {
                 "MemoryVerse": [obj]
             },
             function (ret) {
                 Uti.show_save_results(ret, "#StorageRepo_save_res")
-                Uti.Msg("MyStorage.Repo_save:", ret)
+                Uti.Msg("MyStorage.Repo_save_data_MostRecentVerses:", ret)
                 //$("#StorageRepo_save").prop("checked", false)
 
                 $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
@@ -1789,7 +1789,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var inpkeyObj = {}
         inpkeyObj[cap2] = [obj]
 
-        MyStorage.Repo_save(inpkeyObj,
+        MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
 
             })
