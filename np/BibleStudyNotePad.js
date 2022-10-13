@@ -1511,7 +1511,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
     })
 
     /////////
-    $("#saveSearchHistory2Repo").on("click", function () {
+    $("#save_SearchHistory2Repo").on("click", function () {
         var This = this
         Uti.Msg("#saveSearchHistory2Repo")
 
@@ -1522,7 +1522,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         //
         //
         var obj = shob.get_obj()
-        if (!confirm(Object.keys(obj).length + " items will be saved in '${skey}'\nSure?")) return;
+        if (!confirm(`${Object.keys(obj).length} items will be saved in '${skey}'\nSure?`)) return;
         var inpkeyObj = {}
         inpkeyObj[skey] = [obj]
 
