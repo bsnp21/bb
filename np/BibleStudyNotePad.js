@@ -1388,11 +1388,17 @@ Tab_DocumentsClusterList.prototype.get_selected_seq_fnamesArr = function () {
 
 
 
+
+
+
+
+
 function Tab_DocumentSelected_Search(tid) {
-    //this.m_tbid = tid // "#Tab_VersionNamesOfTheBible"
+    //this.m_tbid = tid // "#Tab_VersionNamesOfTheBible" Tab_doc_option_for_search
     this.cbf_click_doc_to_run_search = null
 
     //this.m_selectedItems_ary = MyStorage.LastSelectedDocsList();//["CUVS"] //default
+    this.m_gAppInstancesManager = null;
 }
 Tab_DocumentSelected_Search.prototype.init = function () {
     var _THIS = this
@@ -1507,19 +1513,30 @@ Tab_DocumentSelected_Search.prototype.init = function () {
     this.gen_search_strn_history()
 }
 
-
 Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     if (undefined === document.m_SearchStrnInPage) document.m_SearchStrnInPage = ""
     var s = document.m_SearchStrnInPage
+    var trs = "<tr class='trRecentBCV'><th>#</th><th>Search</th><th>Date</th><th>Txt</th></tr>", idx = 0
 
-    var trs = ""
-    var ar = MyStorage.MostRecentSearchStrn.get_ary()
-    ar.forEach(function (strn) {
-        var matcls = (s === strn.trim()) ? "SearchStrnInPage" : ""
-        if (strn.trim().length > 0) {
-            trs += (`<tr><td class='option ${matcls}'>${strn}</td></tr>`);
+    var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+    var obj = shob.get_obj()
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
+            if (mat) {
+                trs += `<tr><td class="MemoIdx">${idx++}</td><td class='option'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
+            }
         }
-    })
+    }
+
+    //var ar = MyStorage.MostRecentSearchStrn.get_ary()
+    //ar.forEach(function (strn, i) {
+    //    shob.add_key_val(strn, "yymmdd", "results")
+    //    var matcls = (s === strn.trim()) ? "SearchStrnInPage" : ""
+    //    if (strn.trim().length > 0) {
+    //        //trs += (`<tr><td>${i}</td><td class='option'>${strn}</td><td>oo</td></tr>`);
+    //    }
+    //})
 
     //history
     //console.log(ret);
@@ -1531,31 +1548,7 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
 
 
 }
-Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = function () {
-    $("#Btn_Prev, #Btn_Next").hide()
 
-    var s = $("#sinput").val().trim();
-    if (s.length === 0) return alert("empty input")
-
-    MyStorage.MostRecentSearchStrn.addonTop(s)
-    this.gen_search_strn_history()
-    document.g_NextIndex = -1
-
-
-
-    this.cbf_click_doc_to_run_search()
-
-
-    //test
-    var unicds = "";
-    for (var i = 0; i < s.length; i++) {
-        var ch = s.charCodeAt(i);
-        if (ch > 512) {
-            unicds += "\\u" + ch.toString(16);
-        }
-    }
-    Uti.Msg(s, "unicode:", unicds);
-}
 Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
     var _THIS = this
     var ar = MyStorage.LastSelectedDocsList();
@@ -1569,10 +1562,82 @@ Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
         $(this).addClass("hili_SearchStrInBibleStart")
         var txt = $(this).text()
         MyStorage.LastSearchInDocument(txt)
-        _THIS.onclick_inSvr_BibleObj_search_str()
+        _THIS.onclick_inSvr_BibleObj_search_str(txt)
     })
 }
+Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = function (searchInFileName) {
+    $("#Btn_Prev, #Btn_Next").hide()
 
+    var _This = this;
+
+    var searchStrn = $("#sinput").val().trim();
+    if (searchStrn.length === 0) return alert("empty input")
+
+    //MyStorage.MostRecentSearchStrn.addonTop(s)
+    //this.gen_search_strn_history()
+    document.g_NextIndex = -1
+
+
+
+    //this.cbf_click_doc_to_run_search()
+
+    $("#searchNextresult").text("Serach str in server site..")
+    var inpobj = g_aim.get_search_inp()
+
+    var fnamesArr = MyStorage.LastSelectedDocsList();
+
+    //var inpobj = { fnames: fnamesArr, bibOj: {}, Search: { File: searchInFileName, Strn: searchStrn } };
+    //var res = showup.get_selected_bcv_parm();
+    //if (res) {
+    //    inp.bibOj = res.oj_search
+    //}
+    //return inp;
+
+    var volar = Object.keys(inpobj.bibOj)
+    var SearchedVolumn = $("#bk_name").text()
+    if ("UserDef" === SearchedVolumn) {
+        SearchedVolumn += ": " + volar.join(" ")
+    }
+    if (SearchedVolumn.indexOf("Select") >= 0) {
+        SearchedVolumn = "all"
+    }
+
+
+    if (volar.length === 0) {
+        if (!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)) {
+            return;
+        }
+    }
+
+    var msg = ` found in '${inpobj.Search.File}' in '${SearchedVolumn}'.`
+    var api = new BsnpRestApi()
+    api.run(RestApi.ApiBibleObj_search_txt,
+        inpobj,
+        function (ret) {
+            var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+            _This.m_gAppInstancesManager.apiCallback_Gen_output_table(ret, function (size) {
+                var txt = size + msg
+                $("#searchNextresult").text("0/" + txt)
+                shob.add_key_val(searchStrn, "yymmdd", `${size}, ${inpobj.Search.File}, ${SearchedVolumn}`)
+                _This.gen_search_strn_history()
+                $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")
+            });
+            Uti.Msg(ret.out.result);
+        })
+
+
+
+    return
+    //test
+    var unicds = "";
+    for (var i = 0; i < s.length; i++) {
+        var ch = s.charCodeAt(i);
+        if (ch > 512) {
+            unicds += "\\u" + ch.toString(16);
+        }
+    }
+    Uti.Msg(s, "unicode:", unicds);
+}
 
 
 function Tab_MostRecentBody(tbodyID) {
@@ -1604,7 +1669,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
     var _THIS = this
     var tid = this.m_tbodyID + "_table"
     var tid2 = tid.replace(/^\#/, "")
-    this.m_MrObjInStore.gen_obj_table(tid2, function (stb) {
+    this.m_MrObjInStore.gen_obj_table_MrVerses(tid2, function (stb) {
         var tab = $(_THIS.m_tbodyID).html(stb)
         tab.find(".RecentBCV").bind("click", function (evt) {
             //evt.stopImmediatePropagation()
@@ -2110,6 +2175,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
 
     //tab_DocumentSelected_Search.init()
+    tab_DocumentSelected_Search.m_gAppInstancesManager = this;
     tab_DocumentSelected_Search.cbf_click_doc_to_run_search = function () {
         $("#searchNextresult").text("Serach str in server site..")
         var inpobj = g_aim.get_search_inp()

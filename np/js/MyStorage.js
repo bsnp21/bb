@@ -230,7 +230,7 @@ var MyStorage = {
             }
             var ar = localStorage.setItem(this.m_sid, s)
         }
-        MrObj.prototype.add_key_val = function (key, val) {
+        MrObj.prototype.add_key_val = function (key, val, txt) {
             if (!key) return
             var obj = this.get_obj()
             if (null === val) {
@@ -238,6 +238,7 @@ var MyStorage = {
                 return obj
             }
             if ("yymmdd" === val) val = (new Date).toISOString().replace(/[\-\:]/g, "").substring(2, 15).replace(/[T]/g, " ")
+            if (txt) val += "," + txt
             obj[key] = val
 
             obj = this.sort_obj_desc_by_val(obj)  //sort by val desc
@@ -250,12 +251,23 @@ var MyStorage = {
             )
             return sorted_obj
         }
-        MrObj.prototype.gen_obj_table = function (tid2, cbf_click) {
+        MrObj.prototype.gen_obj_table_MrVerses = function (tid2, cbf_click) {
             var obj = this.get_obj()
             var idx = Object.keys(obj).length, trs = "";
             for (const [key, val] of Object.entries(obj)) {
                 var sid = (idx--).toString().padStart(2, '0')
                 trs += (`<tr><td class="MemoIdx">${sid}</td><td class='RecentBCV'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`)
+            };
+            var stb = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>${trs}</table>`
+            if (cbf_click) cbf_click(stb)
+            return stb;
+        }
+        MrObj.prototype.gen_obj_table_MrHistorySearch = function (tid2, cbf_click) {
+            var obj = this.get_obj()
+            var idx = Object.keys(obj).length, trs = "";
+            for (const [key, val] of Object.entries(obj)) {
+                var sid = (idx--).toString().padStart(2, '0')
+                trs += (`<tr><td class="MemoIdx">${sid}</td><td class='SearchStrnInPage'>${key}</td><td><div class="MemoTime">${val}</div></td></tr>`)
             };
             var stb = `<table border='1' id='${tid2}'><tr class='trRecentBCV'><th>#</th><th>Verse</th><th>Date</th></tr>${trs}</table>`
             if (cbf_click) cbf_click(stb)

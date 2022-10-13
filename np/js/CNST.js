@@ -250,8 +250,20 @@ var BibleInputMenuContainer = `
                 <a id="REGEXP_IgnoreCase">IgnoreCase</a> | 
                 <a id="toggle_Case">toggleCase</a>  | 
                 <a id="RemoveSearchStrn">Del</a>
-                </div>  
-                <br>
+                </div>  <br>
+                <div> 
+                    <a id="saveSearchHistory2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
+                    <a id="loadSearchHistory2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
+                    <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput'>
+                       <datalist id="MrSearchHistoryDatalist">
+                           <option value="MostRecentSearch">
+                        </datalist>
+                    </input>
+                    <a id='clear_Tab_MostRecent_BCV_caps'>x</a>
+                </div>
+                <table border="1">
+                <tr>
+                <td>
                 <table id="Tab_selected_Doc_Search" border='1' style="float:left;">
                     <caption>SearchIn</caption>
                     <tbody id="Tab_doc_option_for_search">
@@ -263,18 +275,17 @@ var BibleInputMenuContainer = `
                         </tr>
                     </tbody>
                 </table>
-                <table id="Tab_regex_history_search" border='1' style="float:left;">
+                </td>
+                <td>
+                <table id="Tab_regex_history_search" border="1" style="float:left;">
                     <caption>History</caption>
                     <tbody>
-                        <tr>
-                            <td>
-                                click search results<br>
-                                to show history serch<br>                           
-
-                            </td>
-                        </tr>
+                      
                     </tbody>
                 </table>
+                </td>
+                </table>
+               
                 
            
             </div>
