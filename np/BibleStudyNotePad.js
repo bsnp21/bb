@@ -1578,15 +1578,15 @@ Tab_DocumentSelected_Search.prototype.gen_historysearch_datalist = function (obj
 Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     if (undefined === document.m_SearchStrnInPage) document.m_SearchStrnInPage = ""
     var s = document.m_SearchStrnInPage
-    var trs = "<tr class='trRecentBCV'><th>#</th><th>Search</th><th>Date</th><th>Txt</th></tr>", idx = 0
+    var trs = "<tr class='trRecentBCV'><th>#</th><th>Search</th><th>Date</th><th>Txt</th></tr>"
 
     var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
-    var obj = shob.get_obj()
+    var obj = shob.get_obj(), idx = Object.keys(obj).length
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
             if (mat) {
-                trs += `<tr><td class="MemoIdx">${idx++}</td><td class='option'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
+                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
             }
         }
     }
@@ -1598,6 +1598,7 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
         var s = $(this).text().trim();
         $("#sinput").val(s);
     });
+    Sort_Table("Tab_regex_history_search")
 
 
 }
