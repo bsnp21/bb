@@ -1518,9 +1518,6 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         var skey = $("#MrSearchHistoryInput").val()
         if (!skey) return alert("Saved name is empty.")
         var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
-
-        //
-        //
         var obj = shob.get_obj()
         if (!confirm(`${Object.keys(obj).length} items will be saved in '${skey}'\nSure?`)) return;
         var inpkeyObj = {}
