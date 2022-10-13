@@ -252,8 +252,8 @@ var BibleInputMenuContainer = `
                 <a id="RemoveSearchStrn">Del</a>
                 </div>  <br>
                 <div> 
-                    <a id="saveSearchHistory2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
-                    <a id="loadSearchHistory2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
+                    <a id="save_SearchHistory2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
+                    <a id="load_SearchHistory2Repo" class="RecentBCVsBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
                     <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput'>
                        <datalist id="MrSearchHistoryDatalist">
                            <option value="MostRecentSearch">

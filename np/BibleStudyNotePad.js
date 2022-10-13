@@ -1510,6 +1510,56 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         $("#sinput").val(s)
     })
 
+    /////////
+    $("#saveSearchHistory2Repo").on("click", function () {
+        var This = this
+        Uti.Msg("#saveSearchHistory2Repo")
+
+        var skey = $("#MrSearchHistoryInput").val()
+        if(!skey) return alert("Saved name is empty.")
+        var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+
+        //
+        //
+        var obj = shob.get_obj()
+        if (!confirm(Object.keys(obj).length + " items will be saved in '${skey}'\nSure?")) return;
+        var inpkeyObj = {}
+        inpkeyObj[skey] = [obj]
+
+        MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
+            function (ret) {
+
+            })
+    })
+    $("#load_SearchHistory2Repo").on("click", function () {
+        Uti.Msg("#load2Repo")
+        var skey = $("#MrSearchHistoryInput").val()
+        if(!skey) return alert("Saved name is empty.")
+
+     
+        var inpkeyObj = {}
+        inpkeyObj[skey] = {}
+        MyStorage.Repo_load_dat_MostRecentSearches(
+            inpkeyObj,
+            function (ret) {
+                console.log(ret)
+                Uti.Msg(ret)
+                if (ret.out.data) {
+                    var obj = ret.out.data[skey][0]
+                    if (obj) {
+                        var ar = Object.keys(obj)
+                        if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
+                        var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+                        shob.set_obj(obj)
+                        _THIS.gen_search_strn_history()
+                    }
+                } else {
+                    alert("failed to load.")
+                }
+            })
+    })
+
+
     this.gen_search_strn_history()
 }
 
@@ -1638,6 +1688,13 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     }
     Uti.Msg(s, "unicode:", unicds);
 }
+
+
+
+
+
+
+
 
 
 function Tab_MostRecentBody(tbodyID) {
