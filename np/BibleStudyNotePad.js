@@ -441,7 +441,7 @@ PopupMenu.prototype.init = function (cbf) {
         tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
         obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
         var inpObj = {}
-        
+
 
         MyStorage.Repo_save(
             {
@@ -867,7 +867,7 @@ SingleKeyOutputBooksTable.prototype.init = function (par) {
     this.cbf_onClickItm = par.onClickItm
 
     $(this.m_id + " tbody").bind("click", function () {
-        if(_THIS.m_sCatName !== "UserDef"){
+        if (_THIS.m_sCatName !== "UserDef") {
             $(_THIS.m_id).hide()
         }
     })
@@ -1716,7 +1716,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         Uti.Msg("#save2Repo")
 
         var cap2 = $("#Mr_Input_Datalist").val()
-        
+
         //
         var cap = _THIS.getCap()
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
@@ -1734,6 +1734,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
         var cap = _THIS.getCap()
         var skey = $("#Mr_Input_Datalist").val()
+        if (!skey) skey = cap
         var inpkeyObj = {}
         inpkeyObj[skey] = {}
         MyStorage.Repo_load(
@@ -1749,6 +1750,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                         _THIS.m_tbodies[cap].m_MrObjInStore.set_obj(obj)
                         _THIS.m_tbodies[cap].update_tab()
                     }
+                    _THIS.gen_input_datalist(ret.out.data)
                 } else {
                     alert("failed to load.")
                 }
@@ -1759,9 +1761,17 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         $(".RecentBCVsBtn_Hilit").removeClass("RecentBCVsBtn_Hilit")
         $(this).addClass("RecentBCVsBtn_Hilit")
     })
-    $("#clear_Tab_MostRecent_BCV_caps").on("click",function(){
+    $("#clear_Tab_MostRecent_BCV_caps").on("click", function () {
         $("#Mr_Input_Datalist").val("")
     })
+}
+Tab_MostRecent_BCV.prototype.gen_input_datalist = function (obj) {
+    var str = ""
+    var keyary = Object.keys(obj).sort().forEach(function (key) {
+        str += `<option value="${key}"></option>`
+    })
+    $("#input_browsers").html(str)
+
 }
 Tab_MostRecent_BCV.prototype.getCap = function () {
     var scap = $(this.m_tableID).find(".ColorRecentMarks").attr("title").trim()
@@ -2109,7 +2119,7 @@ AppInstancesManager.prototype.init = function (cbf) {
                 return;
             }
         }
-        var msg=` found in '${inpobj.Search.File}' for '${volar.join()}.'`
+        var msg = ` found in '${inpobj.Search.File}' for '${volar.join()}.'`
         var api = new BsnpRestApi()
         api.run(RestApi.ApiBibleObj_search_txt,
             inpobj,

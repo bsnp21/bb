@@ -199,8 +199,8 @@ var BibleInputMenuContainer = `
                 <div id="Tab_MostRecent_BCV" border="1" style="float:left;">
                     <div>
                        <div id='Tab_MostRecent_BCV_caps'></div>
-                       <input list="browsers" name="browser"  id='Mr_Input_Datalist'>
-                       <datalist id="browsers">
+                       <input list="input_browsers" name="browser"  id='Mr_Input_Datalist'>
+                       <datalist id="input_browsers">
                            <option value="RecentTouch">
                            <option value="MemoryVerse">
                            <option value="Chrome">
