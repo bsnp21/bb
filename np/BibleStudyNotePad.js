@@ -1525,7 +1525,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
 
         MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
             function (ret) {
-
+                $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
     })
     $("#load_SearchHistory2Repo").on("click", function () {
@@ -1538,6 +1538,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         MyStorage.Repo_load_dat_MostRecentSearches(
             inpkeyObj,
             function (ret) {
+                $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
@@ -1859,7 +1860,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
         MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
-
+                $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
     })
     $("#load2Repo").on("click", function () {
@@ -1873,6 +1874,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         MyStorage.Repo_load(
             inpkeyObj,
             function (ret) {
+                $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
@@ -1888,6 +1890,10 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                     alert("failed to load.")
                 }
             })
+    })
+    $(".RestSvrBtn").on("click", function () {
+        $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
+        $(this).addClass("RestSvrBtn_Running")
     })
 
     $(".RecentBCVsBtn").on("click", function () {

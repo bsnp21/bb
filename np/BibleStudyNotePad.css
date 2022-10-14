@@ -734,6 +734,10 @@ input[title='NIV']:checked:after {
     border: 2px  solid #a00000;
 }
 
+.RestSvrBtn_Running{
+    background-color: red;
+}
+
 input[readonly], textarea[readonly]{
     background-color: lightgray;
 }
