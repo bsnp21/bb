@@ -1575,16 +1575,25 @@ Tab_DocumentSelected_Search.prototype.gen_historysearch_datalist = function (obj
 Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     if (undefined === document.m_SearchStrnInPage) document.m_SearchStrnInPage = ""
     var s = document.m_SearchStrnInPage
-    var trs = "<tr class='trRecentBCV'><th>#</th><th>Search</th><th>Date</th><th>Txt</th></tr>"
+    var trs = "<tr class='trRecentBCV'><th>#</th><th>Search</th><th>n</th><th>Vsn</th><th>Vols</th><th>Tm</th></tr>"
 
     var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
     var obj = shob.get_obj(), idx = Object.keys(obj).length
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
-            var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
-            if (mat) {
-                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
+            var val = obj[key]
+            if(key.indexOf("[")<0) continue; 
+            var keyary = JSON.parse(key)
+            if (keyary.length == 4) {
+                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${keyary[0]}</td><td class="MemoNum">${keyary[1]}</td><td>${keyary[2]}</td><td>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
+            } else {
+                var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
+                if (mat) {
+                    trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
+
+                }
             }
+
         }
     }
 
@@ -1669,7 +1678,8 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
             _This.m_gAppInstancesManager.apiCallback_Gen_output_table(ret, function (size) {
                 var txt = size + msg
                 $("#searchNextresult").text("0/" + txt)
-                shob.add_key_val(searchStrn, "yymmdd", `${size}, ${inpobj.Search.File}, ${SearchedVolumn}`)
+                var keyary = [searchStrn, size, inpobj.Search.File, SearchedVolumn]
+                shob.add_key_val(JSON.stringify(keyary), "yymmdd")
                 _This.gen_search_strn_history()
                 $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")
             });
