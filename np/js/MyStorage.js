@@ -46,7 +46,7 @@ var MyStorage = {
         var api = new BsnpRestApi()
         api.run(RestApi.ApiUsrDat_save,
             {
-                fnames: ["./dat/localStorage"],
+                fnames: ["./dat/MostRecentVerses"],
                 data: txt
             },
             function (ret) {
@@ -73,14 +73,14 @@ var MyStorage = {
 
         return
     },
-    Repo_load: function (keyObj, cbf) {
+    Repo_load_data_MostRecentVerses: function (keyObj, cbf) {
         //
         var txt = JSON.stringify(keyObj, null, 4)
 
         var api = new BsnpRestApi()
         api.run(RestApi.ApiUsrDat_load,
             {
-                fnames: ["./dat/localStorage"],
+                fnames: ["./dat/MostRecentVerses"],
                 data: txt
             },
             function (ret) {

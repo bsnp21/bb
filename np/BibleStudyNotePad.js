@@ -1539,9 +1539,8 @@ Tab_DocumentSelected_Search.prototype.init = function () {
             inpkeyObj,
             function (ret) {
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
-                console.log(ret)
                 Uti.Msg(ret)
-                if (ret.out.data) {
+                try {
                     _THIS.gen_historysearch_datalist(ret.out.data)
 
                     var obj = ret.out.data[skey][0]
@@ -1552,8 +1551,8 @@ Tab_DocumentSelected_Search.prototype.init = function () {
                         shob.set_obj(obj)
                         _THIS.gen_search_strn_history()
                     }
-                } else {
-                    alert("failed to load.")
+                } catch {
+                    alert("warn: ret cannot gratify", ret)
                 }
             })
     })
@@ -1583,7 +1582,7 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             var val = obj[key]
-            if(key.indexOf("[")<0) continue; 
+            if (key.indexOf("[") < 0) continue;
             var keyary = JSON.parse(key)
             if (keyary.length == 4) {
                 trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${keyary[0]}</td><td class="MemoNum">${keyary[1]}</td><td>${keyary[2]}</td><td>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
@@ -1871,21 +1870,26 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         if (!skey) skey = cap
         var inpkeyObj = {}
         inpkeyObj[skey] = {}
-        MyStorage.Repo_load(
+        MyStorage.Repo_load_data_MostRecentVerses(
             inpkeyObj,
             function (ret) {
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    var obj = ret.out.data[skey][0]
-                    if (obj) {
-                        var ar = Object.keys(obj)
-                        if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
-                        _THIS.m_tbodies[cap].m_MrObjInStore.set_obj(obj)
-                        _THIS.m_tbodies[cap].update_tab()
-                    }
                     _THIS.gen_input_datalist(ret.out.data)
+                    try {
+                        var obj = ret.out.data[skey][0]
+                        if (obj) {
+                            var ar = Object.keys(obj)
+                            if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
+                            _THIS.m_tbodies[cap].m_MrObjInStore.set_obj(obj)
+                            _THIS.m_tbodies[cap].update_tab()
+                        }
+                    } catch {
+                        console.error("Warn: ret cannot gratify usr.", ret)
+                    }
+
                 } else {
                     alert("failed to load.")
                 }
@@ -2371,18 +2375,15 @@ AppInstancesManager.prototype.init_load_storage = function () {
         Uti.Msg("RestApi=", RestApi);
 
         MyStorage.Repositories().repos_app_init()
-        MyStorage.Repo_load({ "MemoryVerse": {}, "RecentTouch": {} }, function (ret) {
+        MyStorage.Repo_load_data_MostRecentVerses({ "MemoryVerse": {}, "RecentTouch": {} }, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
-
-            var memo = (ret.out.data) ? ret.out.data["MemoryVerse"][0] : ""
-            if (memo) {
-                tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(memo)
-            }
-            memo = (ret.out.data) ? ret.out.data["RecentTouch"][0] : ""
-            if (memo) {
-                tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(memo)
+            try {
+                tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data["MemoryVerse"][0])
+                tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(ret.out.data["RecentTouch"][0])
+            } catch {
+                console.error("warn: ret:", ret)
             }
             _load_bcv_from_url_param()
         })

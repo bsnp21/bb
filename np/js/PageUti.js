@@ -220,7 +220,7 @@ var PageUti = {
     },
     LoadStorageInRepos: function (eid) {
 
-        MyStorage.Repo_load(function (ret) {
+        MyStorage.Repo_load_data_MostRecentVerses(function (ret) {
             console.log("data", ret)
             Uti.Msg("LoadStorage", ret)
             if (!ret.out || !ret.out.data) return alert("repository data not available.")
