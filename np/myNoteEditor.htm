@@ -421,7 +421,7 @@ ${scmd}
         function __save() {
 
             var theData = ckEditor.getData();
-           
+
             parser = new DOMParser();
             xmlDoc = parser.parseFromString(theData, "text/xml");
             var obdy = xmlDoc.childNodes[0].getElementsByTagName("body")
@@ -440,7 +440,7 @@ ${scmd}
             if (!myNotes) return alert("No parent storage for myNote.")
             var pster = JSON.parse(myNotes)
             var bcv = pster.bcv
-            if(!bcv) return alert("no bcv to save:" + txt2save )
+            if (!bcv) return alert("no bcv to save:" + txt2save)
             var ret = Uti.parse_bcv(bcv, txt2save)
             var par = { fnames: [pster.fname], inpObj: ret.bcvObj }
 
