@@ -470,6 +470,9 @@ ${scmd}
             var pster = JSON.parse(myNotes)
             if (pster === null) {
                 pster = { bcv: "", fname: "e_note", txt: "" }
+                //alert("bcv not exit")
+                var str = prompt("Input a verse number: ", "Gen1:1")
+                pster.bcv = str ? str : ""
             }
             // //localStorage.setItem("myNote", "")
             // console.log("Storage myNode", pster)
@@ -485,14 +488,10 @@ ${scmd}
             CKEDITOR.instances.editor1.setData(pster.txt)
             var theData = ckEditor.getData();
             document.m_iEdiDataLen = theData.length;
-            var bcv = pster.bcv
-            if (!bcv) {
-                alert("bcv not exit")
-                bcv = "~"
-            }
-            g_msg.pop(`<br>${bcv}<br>- Init txtlen= ${pster.txt.length}, dataLen=${theData.length}`);
+
+            g_msg.pop(`<br>${pster.bcv}<br>- Init txtlen= ${pster.txt.length}, dataLen=${theData.length}`);
             ckEditor.resetDirty()
-            $("title").text("_" + bcv)
+            $("title").text("_" + pster.bcv)
             //        }
             //    }
             //}
