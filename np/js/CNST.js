@@ -92,12 +92,12 @@ var BibleInputMenuContainer = `
         </tr>
         <tr>
             <td>
-                <a id="RevTag_Load">Load</a>
+                <a id="RevTag_Load">Load From Svr</a>
             </td>
         </tr>
         <tr>
             <td>
-                <a id="RevTag_Info"></a>
+                <a id="RevTag_ReadLocalStorage">Read Local Storage</a>
             </td>
         </tr>
         

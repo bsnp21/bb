@@ -367,6 +367,20 @@ PopupMenu_EdiTag.prototype.init = function () {
                 }
             })
     })
+    $("#RevTag_ReadLocalStorage").bind("click", function () {
+        var str = localStorage.getItem("myNote")
+        if (str) {
+            if(!confirm("Read from localStorage, len=" + str.length)) return
+            var obj = JSON.parse(str)
+            var txt = obj.txt
+
+            var showtxt = Uti.convert_std_bcv_in_text_To_linked(txt)
+            _THIS.m_ediDiv.txthtml(showtxt)
+            _THIS.m_ediDiv.setEditHtm(txt)
+            _THIS.m_ediBtn.enable_edit(true, true)
+            $(_THIS.m_ediDiv.m_id).toggleClass("txt_loaded")
+        }
+    })
 
 }
 

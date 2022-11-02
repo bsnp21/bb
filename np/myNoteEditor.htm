@@ -433,16 +433,20 @@ ${scmd}
                 document.m_iEdiDataLen = theData.length;
                 console.log("checkDirty : false")
                 g_msg.pop(`<br>${bcv} <br> * No change; No saving; len:${theData.length}. max:2000`);
-                return
+                if(!confirm("not changes found\n-force to save?")) return
             }
 
             var myNotes = localStorage.getItem("myNote")
             if (!myNotes) return alert("No parent storage for myNote.")
             var pster = JSON.parse(myNotes)
             var bcv = pster.bcv
+            pster.txt = txt2save
+            localStorage.setItem("myNote", JSON.stringify(pster))
             if (!bcv) return alert("no bcv to save:" + txt2save)
             var ret = Uti.parse_bcv(bcv, txt2save)
             var par = { fnames: [pster.fname], inpObj: ret.bcvObj }
+            
+            if (!confirm(bcv + " will be saved on server.\nOk?")) return;
 
             var api = new BsnpRestApi()
             api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
