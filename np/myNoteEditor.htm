@@ -468,6 +468,9 @@ ${scmd}
             // if (!document.m_myNotes) return alert("No parent storage for myNote.")
             // 
             var pster = JSON.parse(myNotes)
+            if (pster === null) {
+                pster = { bcv: "", fname: "e_note", txt: "" }
+            }
             var txt = pster ? pster.txt : ""
             // //localStorage.setItem("myNote", "")
             // console.log("Storage myNode", pster)
@@ -480,10 +483,10 @@ ${scmd}
             //for (const [bkn, chpObj] of Object.entries(pster.inp.par.inpObj)) {
             //    for (const [chp, vrsObj] of Object.entries(chpObj)) {
             //        for (const [vrs, txt] of Object.entries(vrsObj)) {
-            CKEDITOR.instances.editor1.setData(txt)
+            CKEDITOR.instances.editor1.setData(pster.txt)
             var theData = ckEditor.getData();
             document.m_iEdiDataLen = theData.length;
-            var bcv = pster ? pster.bcv : ""
+            var bcv = pster.bcv
             if (!bcv) {
                 alert("bcv not exit")
                 bcv = "~"
