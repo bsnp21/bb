@@ -446,7 +446,7 @@ ${scmd}
             var ret = Uti.parse_bcv(bcv, txt2save)
             var par = { fnames: [pster.fname], inpObj: ret.bcvObj }
             
-            if (!confirm(bcv + " will be saved on server.\nOk?")) return;
+            if (!confirm(bcv + " was saved in LocalStorage. \nTo continue to save on server,ok?")) return;
 
             var api = new BsnpRestApi()
             api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,

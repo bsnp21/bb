@@ -87,17 +87,17 @@ var BibleInputMenuContainer = `
     </tr>
         <tr>
             <td>
-                <a id="RevTag_Save">Save</a>
+                <a id="RevTag_Save">Save (to svr)</a>
             </td>
         </tr>
         <tr>
             <td>
-                <a id="RevTag_Load">Load From Svr</a>
+                <a id="RevTag_Load">Load (from svr)</a>
             </td>
         </tr>
         <tr>
             <td>
-                <a id="RevTag_ReadLocalStorage">Read Local Storage</a>
+                <a id="RevTag_ReadLocalStorage">Read External Editor Storage</a>
             </td>
         </tr>
         
