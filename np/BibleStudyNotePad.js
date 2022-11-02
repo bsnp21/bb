@@ -370,10 +370,13 @@ PopupMenu_EdiTag.prototype.init = function () {
     $("#RevTag_ReadLocalStorage").bind("click", function () {
         var str = localStorage.getItem("myNote")
         if (str) {
-            if(!confirm("Read from localStorage, len=" + str.length)) return
             var obj = JSON.parse(str)
+            if (!obj || obj.bcv != _THIS.m_par.m_bcv) {
+                if (!confirm(`Storage ${obj.bcv} dismatch ${_THIS.m_par.m_bcv}.\nForce to read, ok?`)) return;
+            } else {
+                if (!confirm("Read from localStorage, len=" + str.length)) return
+            }
             var txt = obj.txt
-
             var showtxt = Uti.convert_std_bcv_in_text_To_linked(txt)
             _THIS.m_ediDiv.txthtml(showtxt)
             _THIS.m_ediDiv.setEditHtm(txt)
