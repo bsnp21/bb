@@ -106,7 +106,7 @@ var PageUti = {
     },
     repo_destroy: function (bForce) {
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrReposData_destroy, {
+        api.ajaxion(RestApi.ApiUsrReposData_destroy, {
 
         }, function (ret) {
             $("#otb").html("<font color='green'>Repos is undocked.</font>")
@@ -123,7 +123,7 @@ var PageUti = {
 
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrReposData_status, par, function (ret) {
+        api.ajaxion(RestApi.ApiUsrReposData_status, par, function (ret) {
             Uti.Msg("ret.out.state", ret.out.state)
 
             $(showid).html("<font color='green'>ok.</font>")
@@ -199,7 +199,7 @@ var PageUti = {
 
 
             var api = new BsnpRestApi()
-            api.run(RestApi.ApiUsr_Cmdline_Exec,
+            api.ajaxion(RestApi.ApiUsr_Cmdline_Exec,
                 {
                     cmdline: cmd
                 },
