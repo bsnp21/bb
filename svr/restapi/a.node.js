@@ -83,11 +83,11 @@ app.get("/", (req, res) => {
   res.send("restapi Jsonpster. clientSite:" + s);
 });
 
-app.listen(app.g_iPort, () => {
-  console.log("* -http svr is listerning on port: " + app.g_iPort);
+app.listen(MASTER_SVR.http.port, () => {
+  console.log("* -http svr is listerning on port: " + MASTER_SVR.http.port);
   //hbrq.get_VocabHebrewBufObj();
 });
-console.log("http svr port:", app.g_iPort);
+console.log("http svr port:", MASTER_SVR.http.port);
 //
 ////////////////////////////////////////////////
 //require("../../htmf/studynotes")

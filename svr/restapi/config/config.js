@@ -11,7 +11,7 @@ const MASTER_SVR = {
     hostname: 'ec2-52-91-188-59.compute-1.amazonaws.com', // 'ec2-54-236-26-26.compute-1.amazonaws.com', // 'ec2-54-146-65-28.compute-1.amazonaws.com',
     ip: '52.91.188.59',
     https: { port: 7775 },  // disable https if http and https share the same port.
-    http: { port: 7770 },
+    http: { port: 7778 },
     root: "ubuntu",
     routine_read_prxport_intervaltime: 3 * ROUTINE_BASE_INTERVALTIME, //ms
     bAllowSlaveInMaster: false,
