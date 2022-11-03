@@ -103,9 +103,9 @@ if (MASTER_SVR.https.port === MASTER_SVR.http.port) {
   const options = {
     //key: fs.readFileSync('./config/https_credentials/key.pem'),
     //cert: fs.readFileSync('./config/https_credentials/cert.pem')
-    key: fs.readFileSync('./config/t90/private.key'),
-    cert: fs.readFileSync('./config/t90/certificate.crt'),
-    ca_bundle: fs.readFileSync('./config/t90/ca_bundle.crt'),
+    key: fs.readFileSync('./config/ssl_https/private.key'),
+    cert: fs.readFileSync('./config/ssl_https/certificate.crt'),
+    ca_bundle: fs.readFileSync('./config/ssl_https/ca_bundle.crt'),
   };
   https_svr = https.createServer(options, app).listen(MASTER_SVR.https.port, async function () {
     console.log(`* Https svr listerning: ${MASTER_SVR.https.port}\n-----------\n`);
