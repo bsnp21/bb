@@ -84,7 +84,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(app.g_iPort, () => {
-  console.log("* -http svr is listerning on port:" + app.g_iPort);
+  console.log("* -http svr is listerning on port: " + app.g_iPort);
   //hbrq.get_VocabHebrewBufObj();
 });
 console.log("http svr port:", app.g_iPort);
