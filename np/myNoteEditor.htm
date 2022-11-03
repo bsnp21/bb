@@ -449,7 +449,7 @@ ${scmd}
             if (!confirm(bcv + " was saved in LocalStorage. \nTo continue to save on server,ok?")) return;
 
             var api = new BsnpRestApi()
-            api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
+            api.ajaxion(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
                 par,
                 function (ret) {
                     console.log("ret", ret)

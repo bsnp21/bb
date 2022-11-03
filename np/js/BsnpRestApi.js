@@ -167,7 +167,7 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
 BsnpRestApi.prototype.redirect_page = function (surl) {
 
 }
-BsnpRestApi.prototype.run = function (sapi, par, cbf) {
+BsnpRestApi.prototype.ajaxion = function (sapi, par, cbf) {
     console.log("BsnpRestApi input par:", par)
     var inp = { SSID: this.SSID }
     if (!inp.SSID) return alert("missing SSID.")

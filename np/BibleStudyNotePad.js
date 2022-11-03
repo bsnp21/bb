@@ -330,7 +330,7 @@ PopupMenu_EdiTag.prototype.init = function () {
             return
         }
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
+        api.ajaxion(RestApi.ApiBibleObj_write_Usr_BkcChpVrs_txt,
             par,
             function (ret) {
                 console.log("ret", ret)
@@ -344,7 +344,7 @@ PopupMenu_EdiTag.prototype.init = function () {
         var psr = Uti.parse_bcv(_THIS.m_par.m_bcv, "")
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiBibleObj_load_by_bibOj,
+        api.ajaxion(RestApi.ApiBibleObj_load_by_bibOj,
             { fnames: [_THIS.m_par.m_rev], bibOj: psr.bcvObj },
             function (ret) {
                 console.log("ret", ret.out.data)
@@ -1688,7 +1688,7 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     var msg = ` found in '${inpobj.Search.File}' in '${SearchedVolumn}'.`
     var api = new BsnpRestApi()
-    api.run(RestApi.ApiBibleObj_search_txt,
+    api.ajaxion(RestApi.ApiBibleObj_search_txt,
         inpobj,
         function (ret) {
             var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
@@ -2099,7 +2099,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrReposData_destroy, {
+        api.ajaxion(RestApi.ApiUsrReposData_destroy, {
 
         }, function (ret) {
             $("body").attr("onbeforeunload", null)
@@ -2282,7 +2282,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         }
         var msg = ` found in '${inpobj.Search.File}' for '${volar.join()}.'`
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiBibleObj_search_txt,
+        api.ajaxion(RestApi.ApiBibleObj_search_txt,
             inpobj,
             function (ret) {
                 _This.apiCallback_Gen_output_table(ret, function (size) {
@@ -2443,7 +2443,7 @@ AppInstancesManager.prototype.loadBible_verse_by_bibOj = function (par) {
 
 
     var api = new BsnpRestApi()
-    api.run(RestApi.ApiBibleObj_load_by_bibOj,
+    api.ajaxion(RestApi.ApiBibleObj_load_by_bibOj,
         { fnames: fnamesArr, bibOj: oj, Search: null },
         function (ret) {
             if (!ret.out.data) return alert("no out.data")
@@ -2472,7 +2472,7 @@ AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
     var fnamesArr = tab_documentsClusterList.get_selected_seq_fnamesArr();
 
     var api = new BsnpRestApi()
-    api.run(RestApi.ApiBibleObj_load_by_bibOj, {
+    api.ajaxion(RestApi.ApiBibleObj_load_by_bibOj, {
         fnames: fnamesArr,
         bibOj: oj, Search: null
     }, function (ret) {

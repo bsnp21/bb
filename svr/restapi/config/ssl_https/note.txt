@@ -1,9 +1,76 @@
 https://app.zerossl.com/certificate/install/9d9cf3f23ea812d74840f0b81ec38b4d
 
-https://app.zerossl.com/login/bye
+https://app.zerossl.com/login/
 wdingsoft@123!@#QWEqwe
+$10/month
 
 
 
 
-https://help.zerossl.com/hc/en-us/articles/360060120373
+
+
+
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+https://ap.www.namecheap.com/
+wdingsoft
+Melchizedek2022
+$5.99/yr 
+
+Do you have instructions step by step that I can follow?
+
+03 Nov 2022, 1:19 PM
+
+After the certificate is purchased, it will need an activation. In order to complete the activation, it is necessary to generate CSR code.
+
+You can generate a new CSR via the tool: https://decoder.link/csr_generator
+
+Please fill in the following fields: Domain name, State ...
+
+Show All
+
+Once the CSR is generated, it will be possible to begin the activation process. You can find the guide on activation here:
+https://www.namecheap.com/support/knowledgebase/article.aspx/794/67/how-do-i-activate-an-ssl-certificate
+
+When the certificate is activated, it needs to be validated. Domain control validation (DCV) is used by a Certificate Authority before issuing an SSL certificate to check that a person making the request is in fact authorized to use the domain related to that request. The ...
+
+Show All
+
+
+Here is the guide on how to install the certificate on different servers:
+
+https://www.namecheap.com/support/knowledgebase/article.aspx/795/14/how-to-install-ssl-certificates/
+
+03 Nov 2022, 1:21 PM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------
+-------------------------------------------------------
+https://www.ssls.com/authorize/fromCheckout/stripe_cc
+wdingsoft@gmail.com
+Melchizedek2020
+
+DNS:ec2-34-227-20-213.compute-1.amazonaws.com

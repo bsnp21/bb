@@ -44,7 +44,7 @@ var MyStorage = {
         console.log(txt)
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrDat_save,
+        api.ajaxion(RestApi.ApiUsrDat_save,
             {
                 fnames: ["./dat/MostRecentVerses"],
                 data: txt
@@ -62,7 +62,7 @@ var MyStorage = {
         console.log(txt)
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrDat_save,
+        api.ajaxion(RestApi.ApiUsrDat_save,
             {
                 fnames: ["./dat/MostRecentSearches"],
                 data: txt
@@ -78,7 +78,7 @@ var MyStorage = {
         var txt = JSON.stringify(keyObj, null, 4)
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrDat_load,
+        api.ajaxion(RestApi.ApiUsrDat_load,
             {
                 fnames: ["./dat/MostRecentVerses"],
                 data: txt
@@ -92,7 +92,7 @@ var MyStorage = {
         var txt = JSON.stringify(keyObj, null, 4)
 
         var api = new BsnpRestApi()
-        api.run(RestApi.ApiUsrDat_load,
+        api.ajaxion(RestApi.ApiUsrDat_load,
             {
                 fnames: ["./dat/MostRecentSearches"],
                 data: txt
