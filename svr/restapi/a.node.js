@@ -73,7 +73,7 @@ app.use(express.urlencoded({ extended: true })); //:return req.query
 
 /////////////////////////////////////////////////// 
 //
-app.g_iPort = 7778;
+//app.g_iPort = 7778;
 app.get("/", (req, res) => {
   console.log("root ok");
   console.log("res.req.headers.host=", res.req.headers.host);
