@@ -84,10 +84,10 @@ app.get("/", (req, res) => {
 });
 
 app.listen(app.g_iPort, () => {
-  console.log("nodejs app is listerning ...");
+  console.log("* http svr is listerning on port:" + app.g_iPort);
   //hbrq.get_VocabHebrewBufObj();
 });
-console.log("port:", app.g_iPort);
+console.log("http svr port:", app.g_iPort);
 //
 ////////////////////////////////////////////////
 //require("../../htmf/studynotes")
@@ -108,7 +108,7 @@ if (MASTER_SVR.https.port === MASTER_SVR.http.port) {
     ca_bundle: fs.readFileSync('./config/ssl_https/ca_bundle.crt'),
   };
   https_svr = https.createServer(options, app).listen(MASTER_SVR.https.port, async function () {
-    console.log(`* Https svr listerning: ${MASTER_SVR.https.port}\n-----------\n`);
+    console.log(`* Https svr is listerning on port: ${MASTER_SVR.https.port}\n-----------\n`);
   });
 }
 
