@@ -173,7 +173,7 @@ BsnpRestApi.prototype.urlRedirectParam = function () {
     }
     return spar
 }
-BsnpRestApi.prototype.signin = function (usr, cbf) {
+BsnpRestApi.prototype.signin = function (usr, cbf) { // usr = {repopath:"", passcode:"", ttl:9999}
     var _this = this
     BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
         var inp = _this._get_encrypt_usr_inp(otk, usr)
