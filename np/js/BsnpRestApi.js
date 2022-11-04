@@ -16,6 +16,30 @@ var RestApi = {
     "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
     "test_https_work": "test_https_work"
 }
+var RestApi_uPar = {
+    "Get_OTK": {},
+    "Jsonpster": "Jsonpster",
+    "ApiBibleObj_search_txt": { Search: { Strn: "", File: "" }, bibOj: {} },
+    "ApiBibleObj_load_by_bibOj": { fnames: [], bibOj: {} },
+    "ApiBibleObj_write_Usr_BkcChpVrs_txt": { fnames: [], inpObj: {} },
+    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
+    "ApiUsrDat_save": {
+        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+        data: ""
+    },
+    "ApiUsrDat_load": {
+        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+        data: ""
+    },
+    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
+    "UsrReposPost_Signin": "UsrReposPost_Signin",
+    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
+    "ApiUsrReposData_status": "ApiUsrReposData_status",
+    "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
+    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
+    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
+    "test_https_work": "test_https_work"
+}
 var BsnpRestUti = {
     ajax_post: function (urls, str, cbf) {
         $.ajax({
