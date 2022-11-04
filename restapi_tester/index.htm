@@ -92,7 +92,7 @@
             var sample_apiPar = {
                 ApiBibleObj_load_by_bibOj: { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: { fnames: ['e_v_CUVs_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } },
-                ApiBibleObj_search_txt: {  fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } },
+                ApiBibleObj_search_txt: { fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } },
                 ApiUsrDat_load: {
                     fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
                     data: ""
@@ -107,7 +107,7 @@
                 lis += `<li><button class="restapi_label">${key}</button><pre>${JSON.stringify(sample_apiPar[key])}</pre></li>`
             }
             $("#apiIdStr").html(lis)
-        
+
             $(".restapi_label").on("click", function () {
                 var _this = this
                 var txt = $(this).next().val()
@@ -137,13 +137,18 @@
 
 
         function gen_BibleNames() {
-            var lis = ""
-            for (key in CNST.FnameOfBibleObj) {
-                lis += `<li>${key}</li>`
-            }
-            $("#BibleNames").html(lis)
+            var trs=""
+            var ar=Object.keys(CNST.FnameOfBibleObj).concat(["./dat/MostRecentVerses", "./dat/MemoryVerses"])
+            ar.forEach(function(key,i){
+                var stp="<td>read</td><td></td><td>search</td>"
+                if(key[0]==='e') stp = "<td>read</td><td>write</td><td>search</td>"
+                if(key[0]==='.') stp = "<td>read</td><td>write</td><td></td>"
+                trs+=`<tr><td>${i+1}</td><td>${key}</td>${stp}</tr>`
+            })
+
+            $("#BibleNames").html(`<table border='1'>${trs}</table>`)
         }
-        function gen_bibOjStdKeys(){
+        function gen_bibOjStdKeys() {
             var lis = ""
             for (key in CNST.BiBookName) {
                 lis += `<li>${key}</li>`
