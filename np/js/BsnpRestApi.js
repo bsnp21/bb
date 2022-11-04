@@ -16,38 +16,15 @@ var RestApi = {
     "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
     "test_https_work": "test_https_work"
 }
-var RestApi_uPar = {
-    "Get_OTK": {},
-    "Jsonpster": "Jsonpster",
-    "ApiBibleObj_search_txt": { Search: { Strn: "", File: "" }, bibOj: {} },
-    "ApiBibleObj_load_by_bibOj": { fnames: [], bibOj: {} },
-    "ApiBibleObj_write_Usr_BkcChpVrs_txt": { fnames: [], inpObj: {} },
-    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
-    "ApiUsrDat_save": {
-        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
-        data: ""
-    },
-    "ApiUsrDat_load": {
-        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
-        data: ""
-    },
-    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
-    "UsrReposPost_Signin": "UsrReposPost_Signin",
-    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
-    "ApiUsrReposData_status": "ApiUsrReposData_status",
-    "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
-    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
-    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
-    "test_https_work": "test_https_work"
-}
+
 var BsnpRestUti = {
-    ajax_post: function (urls, str, cbf) {
+    ajax_post: function (urls, inp, cbf) {
         $.ajax({
             type: "POST",
             dataType: 'text',
             contentType: "application/json; charset=utf-8",
             url: urls,
-            data: str,
+            data: JSON.stringify(inp),
             username: 'user',
             password: 'pass',
             crossDomain: true,
@@ -97,7 +74,53 @@ var BsnpRestUti = {
             alert(xhr.responseText);
             alert(textStatus);
         });;
+    },
+    walk_obj: function (upar, obj) {
+        function obj_iterate_walk(obj, par, cbf) {
+            for (var property in obj) {
+                if (obj.hasOwnProperty(property)) {
+                    if (par.hasOwnProperty(property)) {
+                        if (typeof obj[property] == "object") {
+                            obj_iterate_walk(obj[property], par[property], cbf);
+                        }
+                    } else {
+                        cbf(property)
+                    }
+                }
+            }
+        }
+        obj_iterate_walk(obj, upar, function (prop) {
+            alert("Api uPar missed key: " + prop)
+        })
     }
+}
+var RestApi_uPar_Validate = {
+    "Get_OTK": function (upar) { },
+    "Jsonpster": "Jsonpster",
+    "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
+    "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
+    "ApiBibleObj_write_Usr_BkcChpVrs_txt": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], inpObj: {} }) },
+    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
+    "ApiUsrDat_save": function (upar) {
+        BsnpRestUti.walk_obj(upar, {
+            fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+            data: ""
+        })
+    },
+    "ApiUsrDat_load": function (upar) {
+        BsnpRestUti.walk_obj(upar, {
+            fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+            data: ""
+        })
+    },
+    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
+    "UsrReposPost_Signin": "UsrReposPost_Signin",
+    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
+    "ApiUsrReposData_status": "ApiUsrReposData_status",
+    "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
+    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
+    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
+    "test_https_work": "test_https_work"
 }
 
 function BsnpRestApi() {
@@ -161,7 +184,7 @@ BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
     BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
         var inp = _this._get_encrypt_usr_inp(otk, usr)
-        BsnpRestUti.ajax_post(`${_this.svrurl}/UsrReposPost_Signin`, JSON.stringify(inp), function (ret) {
+        BsnpRestUti.ajax_post(`${_this.svrurl}/UsrReposPost_Signin`, inp, function (ret) {
             if (ret.out.state.SSID) {
                 _this.SSID = ret.out.state.SSID //for urlRedirectParam
             }
@@ -196,7 +219,9 @@ BsnpRestApi.prototype.ajaxion = function (sapi, par, cbf) {
     inp.api = sapi
     inp.par = par
 
-    BsnpRestUti.ajax_post(`${this.svrurl}/${sapi}`, JSON.stringify(inp), cbf)
+    RestApi_uPar_Validate[sapi](par)
+
+    BsnpRestUti.ajax_post(`${this.svrurl}/${sapi}`, inp, cbf)
 }
 
 
