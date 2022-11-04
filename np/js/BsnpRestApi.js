@@ -102,7 +102,7 @@ var RestApi_uPar_Validate = {
     },
     "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "UsrReposPost_Signin": "UsrReposPost_Signin",
-    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
+    "ApiUsrReposData_destroy": function(){},
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
     "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",

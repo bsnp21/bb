@@ -44,11 +44,11 @@
         $(function () {
             $("#get_api_svrip_https").on("click", function () {
                 var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
-                $(this).attr("href", `?ip=${urls}`).parent().append(`<pre>${urls}</pre>`)
+                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
             })
             $("#get_api_svrip_http").on("click", function () {
                 var urls = `http://${config_websvr_data.ip}:${config_websvr_data.http_port}`
-                $(this).attr("href", `?ip=${urls}`)
+                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
             })
 
             $("#api_signin_ip").on("click", function () {
@@ -76,18 +76,30 @@
                 })
             })
 
+            $("#sign_out").on("click", function () {
+                if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
+
+                $(this).addClass("hili")
+                var api = new BsnpRestApi()
+                api.ajaxion(RestApi.ApiUsrReposData_destroy, {}, function (ret) {
+                    //$("body").attr("onbeforeunload", null)
+                    $("#sign_out").removeClass("hili").next().append(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
+                    if(confirm("reload?")) window.open("./index.htm", "_self")
+                })
+            })
+
             $(".restapi_label").on("click", function () {
                 var _this = this
                 var txt = $(this).next().val()
                 //var par = JSON.parse(txt)
                 var sApiNameID = $(this).text()
 
-                par = { fnames: ['NIV'], bibOj: {Gen:{1:{1:''}}} }
+                par = { fnames: ['NIV'], bibOj: { Gen: { 1: { 1: '' } } } }
                 $(this).next().val(JSON.stringify(par))
                 var api = new BsnpRestApi()
                 api.ajaxion(
                     sApiNameID,
-                    { fnames: ['NIV', 'CUVS'], bibOj: {Gen:{1:{1:''}}} },
+                    { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
                     function (ret) {
                         console.log("ret", ret.out.data)
 
@@ -110,9 +122,9 @@
 <BODY>
     <ol>
         <li>
-            <h3 id="">api server ip on url param</h3>
-            <a id="get_api_svrip_https">get api server ip (https)</a><br>
-            <a id="get_api_svrip_http" href="">get api server ip (http)</a><br><br>
+            <h3 id="">api server ip for url param</h3>
+            <button id="get_api_svrip_https">get api server ip (https)</button><a>./</a><br>
+            <button id="get_api_svrip_http" href="">get api server ip (http)</button><a>./</a><br><br>
         </li>
 
         <li>
@@ -124,12 +136,17 @@
         </li>
 
         <li>
-            <h3 id="">api signin ip</h3>
-            <a id="api_signin_ip">api_signin_ip: </a><a>add SSID on url param</a><br>
+            <h3 id="">signin ip</h3>
+            <button id="api_signin_ip">BsnpRestApi.signin: </button><a>add SSID on url param</a><br>
+        </li>
+
+        <li>
+            <h3>sign out</h3>
+            <a id="sign_out">ApiUsrReposData_destroy</a> <a>...</a>
         </li>
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
-            <a class="restapi_label">ApiBibleObj_load_by_bibOj</a>
+            <button class="restapi_label">ApiBibleObj_load_by_bibOj</button>
             <pre>
                 { 'fnames': ['NIV', 'CUVS'], 'bibOj': {'Gen':{'1':{'1':''}}} }
             </pre>
