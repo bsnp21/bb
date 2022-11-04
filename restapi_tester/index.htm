@@ -84,7 +84,7 @@
                 api.ajaxion(RestApi.ApiUsrReposData_destroy, {}, function (ret) {
                     //$("body").attr("onbeforeunload", null)
                     $("#sign_out").removeClass("hili").next().append(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
-                    if(confirm("reload?")) window.open("./index.htm", "_self")
+                    if (confirm("reload?")) window.open("./index.htm", "_self")
                 })
             })
 
@@ -94,12 +94,17 @@
                 //var par = JSON.parse(txt)
                 var sApiNameID = $(this).text()
 
+                var sample_par = {
+                    ApiBibleObj_load_by_bibOj: { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
+                    ApiBibleObj_search_txt: { Search: { File: "NIV", Strn: "Melchizedek" }, fnames: ['NIV', 'e_Note'], bibOj: {Gen:{}} },
+                }
+
                 par = { fnames: ['NIV'], bibOj: { Gen: { 1: { 1: '' } } } }
-                $(this).next().val(JSON.stringify(par))
+                $(this).next().append(JSON.stringify(sample_par[sApiNameID]))
                 var api = new BsnpRestApi()
                 api.ajaxion(
                     sApiNameID,
-                    { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
+                    sample_par[sApiNameID],
                     function (ret) {
                         console.log("ret", ret.out.data)
 
@@ -142,7 +147,7 @@
 
         <li>
             <h3>sign out</h3>
-            <a id="sign_out">ApiUsrReposData_destroy</a> <a>...</a>
+            <button id="sign_out">ApiUsrReposData_destroy</button> <a>...</a>
         </li>
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
@@ -150,6 +155,14 @@
             <pre>
                 { 'fnames': ['NIV', 'CUVS'], 'bibOj': {'Gen':{'1':{'1':''}}} }
             </pre>
+
+            <button class="restapi_label">ApiBibleObj_search_txt</button>
+            <pre>
+                { 'fnames': ['NIV', 'CUVS'], 'bibOj': {'Gen':{'1':{'1':''}}} }
+            </pre>
+        </li>
+        <li>
+
         </li>
     </ol>
 
