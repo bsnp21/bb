@@ -1368,9 +1368,9 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     var ret = BibleUti.loadObj_by_fname(jsfname)
     if (!ret.obj) return console.log("failed:=", jsfname)
     try {
-        var inpObj = JSON.parse(inp.par.data)
-        Object.keys(inpObj).forEach(function (key) {
-            ret.obj[key] = inpObj[key]
+        //var inpObj = JSON.parse(inp.par.data)
+        Object.keys(inp.par.data).forEach(function (key) {
+            ret.obj[key] = inp.par.data[key]
         })
 
         console.log("ret", ret)

@@ -40,14 +40,14 @@ var MyStorage = {
     Repo_save_data_MostRecentVerses: function (keyObj, cbf) {
 
 
-        var txt = JSON.stringify(keyObj, null, 4)
-        console.log(txt)
+        //var txt = JSON.stringify(keyObj, null, 4)
+        console.log(keyObj)
 
         var api = new BsnpRestApi()
         api.ajaxion(RestApi.ApiUsrDat_save,
             {
                 fnames: ["./dat/MostRecentVerses"],
-                data: txt
+                data: keyObj
             },
             function (ret) {
                 cbf(ret)
@@ -58,14 +58,14 @@ var MyStorage = {
     Repo_save_dat_MostRecentSearches: function (keyObj, cbf) {
 
 
-        var txt = JSON.stringify(keyObj, null, 4)
-        console.log(txt)
+        //var txt = JSON.stringify(keyObj, null, 4)
+        console.log(keyObj)
 
         var api = new BsnpRestApi()
         api.ajaxion(RestApi.ApiUsrDat_save,
             {
                 fnames: ["./dat/MostRecentSearches"],
-                data: txt
+                data: keyObj
             },
             function (ret) {
                 cbf(ret)
