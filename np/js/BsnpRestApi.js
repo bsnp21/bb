@@ -82,7 +82,7 @@ var BsnpRestUti = {
     }
 }
 var RestApi_uPar_Validate = {
-    "Get_OTK": function (upar) { },
+    "Get_OTK": function (upar) {},
     "Jsonpster": "Jsonpster",
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },

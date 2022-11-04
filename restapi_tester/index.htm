@@ -21,6 +21,7 @@
     <script language="javascript" src="../jq/jquery.js"></script>
 
     <script src="../np/js/BsnpRestApi.js"></script>
+    <script src="../np/js/CNST.js"></script>
     <!---------->
 
 
@@ -88,14 +89,25 @@
                 })
             })
 
-            var sample_par = {
+            var sample_apiPar = {
                 ApiBibleObj_load_by_bibOj: { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
+                ApiBibleObj_write_Usr_BkcChpVrs_txt: { fnames: ['e_v_CUVs_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } },
                 ApiBibleObj_search_txt: { Search: { File: "NIV", Strn: "Melchizedek" }, fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} } },
+                ApiUsrDat_load: {
+                    fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                    data: ""
+                },
+                ApiUsrDat_save: {
+                    fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                    data: JSON.stringify({ "testkey": { "Gen1:1": "1000", "Gen2:1": "2000" } })
+                },
             }
-            $(".restapi_label").each(function () {
-                var sApiNameID = $(this).text()
-                $(this).next().text(JSON.stringify(sample_par[sApiNameID]))
-            })
+            var lis = ""
+            for (key in sample_apiPar) {
+                lis += `<li><button class="restapi_label">${key}</button><pre>${JSON.stringify(sample_apiPar[key])}</pre></li>`
+            }
+            $("#apiIdStr").html(lis)
+        
             $(".restapi_label").on("click", function () {
                 var _this = this
                 var txt = $(this).next().val()
@@ -119,7 +131,27 @@
                     })
             })
 
+            gen_BibleNames()
+            gen_bibOjStdKeys()
         })
+
+
+        function gen_BibleNames() {
+            var lis = ""
+            for (key in CNST.FnameOfBibleObj) {
+                lis += `<li>${key}</li>`
+            }
+            $("#BibleNames").html(lis)
+        }
+        function gen_bibOjStdKeys(){
+            var lis = ""
+            for (key in CNST.BiBookName) {
+                lis += `<li>${key}</li>`
+            }
+            $("#bibOjStdKeys").html(lis)
+
+        }
+
 
     </script>
 
@@ -154,6 +186,9 @@
         </li>
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
+            <ol id="apiIdStr">
+
+            </ol>
             <button class="restapi_label">ApiBibleObj_load_by_bibOj</button>
             <pre></pre>
 
@@ -173,7 +208,14 @@
             <pre></pre>
         </li>
         <li>
+            <h3>Available values for fnames or Search.File</h3>
+            <ol id="BibleNames">
 
+            </ol>
+        </li>
+        <li>
+            <h3>bibOj std keys</h3>
+            <ol id="bibOjStdKeys"></ol>
         </li>
     </ol>
 
