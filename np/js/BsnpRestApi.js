@@ -17,7 +17,63 @@ var RestApi = {
     "test_https_work": "test_https_work"
 }
 var BsnpRestUti = {
+    ajax_post: function (urls, str, cbf) {
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            contentType: "application/json; charset=utf-8",
+            url: urls,
+            data: str,
+            username: 'user',
+            password: 'pass',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: false
+            }
+        })
+            .success(function (data) {
+                //console.log("success",data);
+                //cbf(JSON.parse(data))
+            })
+            .done(function (ret) {
+                var ret = JSON.parse(ret)
+                cbf(ret)
+            })
+            .fail(function (xhr, textStatus, errorThrown) {
+                alert("xhr.responseText=" + xhr.responseText + "\n,textStatus=" + textStatus);
+                //alert("textStatus="+textStatus);
+            });
+    },
+    ajax_get: function (urls, datum, cbf) {
+        $.ajax({
+            type: "GET",
+            url: urls,//
 
+            data: datum,
+            crossDomain: true,
+            success: function (dat, err) {
+                console.log(dat)
+                console.log(err)
+                cbf(dat)
+            },
+            dataType: "json", //exe script.
+
+            //no effect
+            xhrFields: {
+                withCredentials: false
+            },
+            //no effect
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+
+        }).done(function (data) {
+            console.log("done");
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+            alert(textStatus);
+        });;
+    }
 }
 
 function BsnpRestApi() {
@@ -79,48 +135,17 @@ BsnpRestApi.prototype.urlRedirectParam = function () {
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) {
     var _this = this
-    this._get_otk(function (otk) {
-        _this._gen_ssid(otk, usr, function (ret) {
+    BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
+        var inp = _this._get_encrypt_usr_inp(otk, usr)
+        BsnpRestUti.ajax_post(`${_this.svrurl}/UsrReposPost_Signin`, JSON.stringify(inp), function (ret) {
             if (ret.out.state.SSID) {
-                _this.SSID = ret.out.state.SSID
+                _this.SSID = ret.out.state.SSID //for urlRedirectParam
             }
             cbf(ret, !_this.SSID)
         })
     })
 }
-BsnpRestApi.prototype._get_otk = function (cbf) {
-    var _this = this
-    var url = this.svrurl
-    $.ajax({
-        type: "GET",
-        url: `${url}/Get_OTK`,//
-
-        data: {},
-        crossDomain: true,
-        success: function (dat, err) {
-            console.log(dat)
-            console.log(err)
-            cbf(dat)
-        },
-        dataType: "json", //exe script.
-
-        //no effect
-        xhrFields: {
-            withCredentials: false
-        },
-        //no effect
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-
-    }).done(function (data) {
-        console.log("done");
-    }).fail(function (xhr, textStatus, errorThrown) {
-        alert(xhr.responseText);
-        alert(textStatus);
-    });;
-}
-BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
+BsnpRestApi.prototype._get_encrypt_usr_inp = function (otk, usr) {
     console.log("BsnpRestApi input usr:", usr)
     var inp = { CUID: otk.CUID }
     if (!inp.CUID) return alert("missing CUID.")
@@ -134,35 +159,8 @@ BsnpRestApi.prototype._gen_ssid = function (otk, usr, cbf) {
     encrypt.setPublicKey(atob(otk.pkb64));
     inp.cipherusrs = encrypt.encrypt(usrs);
 
-    console.log("cipherusrs.len:",inp.cipherusrs.length)
-
-
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        dataType: 'text',
-        contentType: "application/json; charset=utf-8",
-        url: _this.svrurl + "/UsrReposPost_Signin",
-        data: JSON.stringify(inp),
-        username: 'user',
-        password: 'pass',
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: false
-        }
-    })
-        .success(function (data) {
-            //console.log("success",data);
-            //cbf(JSON.parse(data))
-        })
-        .done(function (ret) {
-            var ret = JSON.parse(ret)
-            cbf(ret)
-        })
-        .fail(function (xhr, textStatus, errorThrown) {
-            alert("xhr.responseText=" + xhr.responseText + "\n,textStatus=" + textStatus);
-            //alert("textStatus="+textStatus);
-        });
+    console.log("cipherusrs.len:", inp.cipherusrs.length)
+    return inp
 }
 BsnpRestApi.prototype.redirect_page = function (surl) {
 
@@ -174,32 +172,7 @@ BsnpRestApi.prototype.ajaxion = function (sapi, par, cbf) {
     inp.api = sapi
     inp.par = par
 
-    var _this = this;
-    $.ajax({
-        type: "POST",
-        dataType: 'text',
-        contentType: "application/json; charset=utf-8",
-        url: _this.svrurl + "/" + sapi,
-        data: JSON.stringify(inp),
-        username: 'user',
-        password: 'pass',
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: false
-        }
-    })
-        .success(function (data) {
-            //console.log("success",data);
-            //cbf(JSON.parse(data))
-        })
-        .done(function (ret) {
-            var ret = JSON.parse(ret)
-            cbf(ret)
-        })
-        .fail(function (xhr, textStatus, errorThrown) {
-            alert("xhr.responseText=" + xhr.responseText + "\n,textStatus=" + textStatus);
-            //alert("textStatus="+textStatus);
-        });
+    BsnpRestUti.ajax_post(`${this.svrurl}/${sapi}`, JSON.stringify(inp), cbf)
 }
 
 
