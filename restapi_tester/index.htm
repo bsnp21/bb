@@ -88,19 +88,22 @@
                 })
             })
 
+            var sample_par = {
+                ApiBibleObj_load_by_bibOj: { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
+                ApiBibleObj_search_txt: { Search: { File: "NIV", Strn: "Melchizedek" }, fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} } },
+            }
+            $(".restapi_label").each(function () {
+                var sApiNameID = $(this).text()
+                $(this).next().text(JSON.stringify(sample_par[sApiNameID]))
+            })
             $(".restapi_label").on("click", function () {
                 var _this = this
                 var txt = $(this).next().val()
                 //var par = JSON.parse(txt)
                 var sApiNameID = $(this).text()
 
-                var sample_par = {
-                    ApiBibleObj_load_by_bibOj: { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
-                    ApiBibleObj_search_txt: { Search: { File: "NIV", Strn: "Melchizedek" }, fnames: ['NIV', 'e_Note'], bibOj: {Gen:{}} },
-                }
-
-                par = { fnames: ['NIV'], bibOj: { Gen: { 1: { 1: '' } } } }
-                $(this).next().append(JSON.stringify(sample_par[sApiNameID]))
+                //par = { fnames: ['NIV'], bibOj: { Gen: { 1: { 1: '' } } } }
+                $(this).next().text(JSON.stringify(sample_par[sApiNameID]))
                 var api = new BsnpRestApi()
                 api.ajaxion(
                     sApiNameID,
@@ -152,14 +155,22 @@
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
             <button class="restapi_label">ApiBibleObj_load_by_bibOj</button>
-            <pre>
-                { 'fnames': ['NIV', 'CUVS'], 'bibOj': {'Gen':{'1':{'1':''}}} }
-            </pre>
+            <pre></pre>
 
             <button class="restapi_label">ApiBibleObj_search_txt</button>
-            <pre>
-                { 'fnames': ['NIV', 'CUVS'], 'bibOj': {'Gen':{'1':{'1':''}}} }
-            </pre>
+            <pre></pre>
+
+            <button class="restapi_label">ApiUsrDat_load</button>
+            <pre></pre>
+
+            <button class="restapi_label">ApiBibleObj_search_txt</button>
+            <pre></pre>
+
+            <button class="restapi_label">ApiBibleObj_search_txt</button>
+            <pre></pre>
+
+            <button class="restapi_label">ApiBibleObj_search_txt</button>
+            <pre></pre>
         </li>
         <li>
 
