@@ -1,21 +1,3 @@
-var RestApi = {
-    "Get_OTK": "Get_OTK",
-    "Jsonpster": "Jsonpster",
-    "ApiBibleObj_search_txt": "ApiBibleObj_search_txt",
-    "ApiBibleObj_load_by_bibOj": "ApiBibleObj_load_by_bibOj",
-    "ApiBibleObj_write_Usr_BkcChpVrs_txt": "ApiBibleObj_write_Usr_BkcChpVrs_txt",
-    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
-    "ApiUsrDat_save": "ApiUsrDat_save",
-    "ApiUsrDat_load": "ApiUsrDat_load",
-    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
-    "UsrReposPost_Signin": "UsrReposPost_Signin",
-    "ApiUsrReposData_destroy": "ApiUsrReposData_destroy",
-    "ApiUsrReposData_status": "ApiUsrReposData_status",
-    "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
-    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
-    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
-    "test_https_work": "test_https_work"
-}
 
 var BsnpRestUti = {
     ajax_post: function (urls, inp, cbf) {
@@ -92,6 +74,11 @@ var BsnpRestUti = {
         obj_iterate_walk(obj, upar, function (prop) {
             alert("Api uPar missed key: " + prop)
         })
+    },
+    Init_RestApiStrn:function(uPar_Validate, RestApi){
+        for (var property in uPar_Validate) {
+            RestApi[property] = property
+        }
     }
 }
 var RestApi_uPar_Validate = {
@@ -122,6 +109,12 @@ var RestApi_uPar_Validate = {
     "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
     "test_https_work": "test_https_work"
 }
+
+
+var RestApi = {}
+BsnpRestUti.Init_RestApiStrn(RestApi_uPar_Validate, RestApi)
+
+
 
 function BsnpRestApi() {
     this.init_param_fr_url()
