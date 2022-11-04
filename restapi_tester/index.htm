@@ -32,7 +32,8 @@
         .hili {
             background-color: red;
         }
-        pre[contenteditable]{
+
+        pre[contenteditable] {
             background-color: lightsalmon;
         }
     </style>
@@ -119,9 +120,9 @@
                 var _this = this
                 var txt = $(this).next().text()
                 var par = {}
-                try{
+                try {
                     par = JSON.parse(txt)
-                }catch{
+                } catch {
                     return alert("err:" + txt)
                 }
                 var sApiNameID = $(this).text()
@@ -141,7 +142,7 @@
         }
         function gen_BibleNames() {
             var trs = ""
-            var ar = Object.keys(CNST.FnameOfBibleObj).concat(["./dat/MostRecentVerses", "./dat/MemoryVerses"])
+            var ar = Object.keys(CNST.FnameOfBibleObj).concat(["./dat/MostRecentVerses", "./dat/MostRecentSearches"])
             ar.forEach(function (key, i) {
                 var stp = "<td>read</td><td></td><td>search</td>"
                 if (key[0] === 'e') stp = "<td>read</td><td>write</td><td>search</td>"
@@ -195,6 +196,11 @@
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
             <ol id="apiIdStr">
+            </ol>
+        </li>
+        <li>
+            <h3>Available fnames or Research.File </h3>
+            <ol id="BibleNames">
             </ol>
         </li>
         <li>
