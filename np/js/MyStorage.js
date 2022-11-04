@@ -81,7 +81,7 @@ var MyStorage = {
         api.ajaxion(RestApi.ApiUsrDat_load,
             {
                 fnames: ["./dat/MostRecentVerses"],
-                data: txt
+                data: keyObj
             },
             function (ret) {
                 if (cbf) cbf(ret)
@@ -95,7 +95,7 @@ var MyStorage = {
         api.ajaxion(RestApi.ApiUsrDat_load,
             {
                 fnames: ["./dat/MostRecentSearches"],
-                data: txt
+                data: keyObj
             },
             function (ret) {
                 if (cbf) cbf(ret)

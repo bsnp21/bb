@@ -1347,9 +1347,9 @@ BibleObjGituser.prototype.load_turnback_userData = function () {
         retObj = ret.obj  // return back the whole object data.
     } else {
         try {
-            var inpkeyObj = JSON.parse(inp.par.data) //return back only keys user wanted,  
+            //var inpkeyObj = JSON.parse(inp.par.data) //return back only keys user wanted,  
 
-            Object.keys(inpkeyObj).forEach(function (key) {
+            Object.keys(inp.par.data).forEach(function (key) {
                 retObj[key] = ret.obj[key]
             })
             console.log("inp.out.data", retObj)
