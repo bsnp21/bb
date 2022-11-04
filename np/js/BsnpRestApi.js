@@ -75,7 +75,7 @@ var BsnpRestUti = {
             alert("Api uPar missed key: " + prop)
         })
     },
-    Init_RestApiStrn:function(uPar_Validate, RestApi){
+    Init_RestApiStrn: function (uPar_Validate, RestApi) {
         for (var property in uPar_Validate) {
             RestApi[property] = property
         }
@@ -174,6 +174,7 @@ BsnpRestApi.prototype.urlRedirectParam = function () {
     return spar
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) { // usr = {repopath:"", passcode:"", ttl:9999}
+    if (!usr.repopath || !usr.passcode || !usr.ttl) return alert("usr dat err:" + JSON.stringify(usr))
     var _this = this
     BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
         var inp = _this._get_encrypt_usr_inp(otk, usr)
