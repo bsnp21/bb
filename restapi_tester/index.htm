@@ -1,0 +1,111 @@
+<HTML>
+
+<HEAD>
+    <TITLE>test</TITLE>
+    <base target="_blank" />
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+
+
+    <!--------->
+
+    <!------ api ---->
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+
+
+    <script language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+
+    <script language="javascript" src="../jq/jquery.js"></script>
+
+    <script src="../np/js/BsnpRestApi.js"></script>
+    <!---------->
+
+
+    <!----------------------------------------------------------------------------->
+    <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+    <!----------------------------------------------------------------------------->
+
+
+    <style>
+        input {
+            width: 500px;
+        }
+        .hili{
+            background-color: red;
+        }
+    </style>
+    <script>
+
+
+        $(function () {
+            $("#get_api_svrip_https").on("click", function () {
+                var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
+                $(this).attr("href", `?ip=${urls}`).parent().append(`<pre>${urls}</pre>`)
+            })
+            $("#get_api_svrip_http").on("click", function () {
+                var urls = `http://${config_websvr_data.ip}:${config_websvr_data.http_port}`
+                $(this).attr("href", `?ip=${urls}`)
+            })
+
+            $("#api_signin_ip").on("click", function () {
+                $(this).addClass("hili")
+                var usr = {}
+                usr.repopath = $("#repopath").val()
+                usr.passcode = $("#passcode").val()
+                usr.ttl = $("#ttl").val()
+
+                var api = new BsnpRestApi()
+                api.signin(usr, function (rob, err) {
+                    $("#api_signin_ip").removeClass("hili")
+                    console.log(rob)
+                    
+                    if (err) {
+                        console.log(rob, ur)
+                        alert("failed")
+                    } else {
+                        var ur = `${api.urlRedirectParam()}`
+                        alert("ok=\n"+ur)
+                        $("#api_signin_ip").attr("href", `${ur}`).parent().append(`<pre>${JSON.stringify(rob,null,4)}</pre>`)
+                        console.log(rob, ur)
+
+                    }
+                })
+            })
+
+        })
+
+    </script>
+
+
+
+</HEAD>
+
+<BODY>
+    <ol>
+        <li>
+            <h3>Repository</h3>
+            repopath:<input id="repopath" value="https://wdingsoft@bitbucket.org/bsnp21/guest_02.git"></input><br>
+            passcode:<input id="passcode" value="gSzk" val2="TPgFNnz" v3="9v5wGF5eN"
+                onclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
+            ttl<input id="ttl" value="9999"></input>
+        </li>
+        <li>
+            <h3 id="">api server ip</h3>
+            <a id="get_api_svrip_https" >get api server ip (https)</a><br>
+            <a id="get_api_svrip_http" href="">get api server ip (http)</a><br><br>
+        </li>
+        <li>
+            <h3 id="">api signin ip</h3>
+            <a id="api_signin_ip">api_signin_ip</a><br>
+        </li>
+        <li>
+            <h3>BsnpRestApi.ajaxion: ApiBibleObj_load_by_bibOj </h3>
+        </li>
+    </ol>
+
+</BODY>
+
+</HTML>

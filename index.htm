@@ -13,7 +13,7 @@
 		var pos = url.indexOf("?")
 		var par = url.substr(pos)
 		if (pos < 0) {
-			par = `0;url=./np/mySignIn.htm?ip=${config_websvr_data.ip}:7778`
+			par = `0;url=./np/mySignIn.htm?ip=${config_websvr_data.ip}:${config_websvr_data.http_port}`
 			//alert("no param:"+par)
 		}else{
 			par = `0;url=./np/mySignIn.htm${par}`
