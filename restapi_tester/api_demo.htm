@@ -69,6 +69,10 @@
             })
 
             $("#api_signin_ip").on("click", function () {
+                
+                $("#ret_signin").html("")
+                $("#addur_ssid").attr("href", null).text("add SSID on url.")
+
                 $(this).addClass("hili")
                 var usr = {}
                 usr.repopath = $("#repopath").val()
@@ -82,11 +86,12 @@
 
                     if (err) {
                         console.log(rob, ur)
-                        alert("failed")
+                        alert("sorry, sign in failed.")
                     } else {
                         var ur = `${api.urlRedirectParam()}`
                         //alert("ok=\n" + ur)
-                        $("#api_signin_ip").next().attr("href", `${ur}`).text(ur).parent().append(`<pre class='outp'>ret = ${JSON.stringify(rob, null, 4)}</pre>`)
+                        $("#addur_ssid").attr("href", `${ur}`).text(ur);
+                        $("#ret_signin").html(`ret = ${JSON.stringify(rob, null, 4)}`)
                         console.log(rob, ur)
 
                     }
@@ -191,8 +196,8 @@
                         console.log("ret", ret.out.data)
                         $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
                         if (ret.out.err) {
-                            alert("load failed ret.out.err= "+ret.out.err)
-                        } 
+                            alert("load failed ret.out.err= " + ret.out.err)
+                        }
                     })
             })
         }
@@ -338,7 +343,9 @@
                     var api = new BsnpRestApi()
                     api.signin(usr, function (ret, err);
                 </pre>
-            <a>add SSID on url param</a><br>
+            <a id="addur_ssid">add SSID on url param</a>
+            <pre class="outp" id="ret_signin"></pre>
+            <br>
         </li>
 
         <li>
