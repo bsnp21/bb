@@ -251,16 +251,7 @@ var BibleInputMenuContainer = `
                 <a id="toggle_Case">toggleCase</a>  | 
                 <a id="RemoveSearchStrn">Del</a>
                 </div>  <br>
-                <div> 
-                    <a id="save_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
-                    <a id="load_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
-                    <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput'>
-                       <datalist id="MrSearchHistoryDatalist">
-                           <option value="MostRecentSearch">
-                        </datalist>
-                    </input>
-                    <a id='clear_MrSearchHistoryInput'>x</a>
-                </div>
+               
                 <table border="1" note="frame">
                 <tr>
                 <td>
@@ -283,6 +274,16 @@ var BibleInputMenuContainer = `
                     </table>
                 </td>
                 </table>
+                <div> 
+                <a id="save_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
+                <a id="load_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
+                <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput' value='MostRecentSearch'>
+                   <datalist id="MrSearchHistoryDatalist">
+                       <option value="MostRecentSearch">
+                    </datalist>
+                </input>
+                <a id='clear_MrSearchHistoryInput'>X</a>
+            </div>
                
                 
            

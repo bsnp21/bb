@@ -1551,7 +1551,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         var inpkeyObj = { MostRecent_Searches: {} }
         inpkeyObj.MostRecent_Searches[skey] = [obj] //must be an array to stop key walk through.
 
-        
+
         MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
             function (ret) {
                 //add into datalist.
@@ -1572,7 +1572,6 @@ Tab_DocumentSelected_Search.prototype.init = function () {
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
                 Uti.Msg(ret)
                 try {
-                    _THIS.gen_historysearch_datalist(ret.out.data)
 
                     var obj = ret.out.data.MostRecent_Searches[skey][0] //// must be an array to stop key walk through.
                     if (obj) {
@@ -1593,16 +1592,9 @@ Tab_DocumentSelected_Search.prototype.init = function () {
     })
 
 
-    this.gen_search_strn_history()
+    //this.gen_search_strn_history()//mast be after api load
 }
-Tab_DocumentSelected_Search.prototype.gen_historysearch_datalist = function (obj) {
-    var trs = ""
-    Object.keys(obj).forEach(function (sky) {
-        trs += `<option value='${sky}'></option>`
-    })
 
-    //$("#MrSearchHistoryDatalist").html(trs)
-}
 Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     if (undefined === document.m_SearchStrnInPage) document.m_SearchStrnInPage = ""
     var s = document.m_SearchStrnInPage
@@ -1911,7 +1903,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    
+
                     try {
                         var obj = ret.out.data.MostRecent_Verses[skey][0] //must be an array to stop walking through
                         if (obj) {
@@ -2375,10 +2367,10 @@ AppInstancesManager.prototype.init = function (cbf) {
         //_This.scrollToView_Vrs()
     })
 
+    this.init_load_storage() //load first.
     //this.onclicks_btns_in_grpMenu_search()
     tab_DocumentSelected_Search.init()
 
-    this.init_load_storage()
 };
 AppInstancesManager.prototype.init_load_storage = function () {
 
@@ -2417,17 +2409,23 @@ AppInstancesManager.prototype.init_load_storage = function () {
                     str += `<option value="${key}"></option>`
                 })
                 $("#input_browsers").html(str)
-                //
+
+
+                ///////
                 str = ""
                 MrKysSearc.sort().forEach(function (sky) {
                     str += `<option value='${sky}'></option>`
                 })
                 $("#MrSearchHistoryDatalist").html(str)
-
-
-
-
-
+                //
+                var obj = ret.out.data.MostRecent_Searches["MostRecentSearch"][0] //// must be an array to stop key walk through.
+                if (obj) {
+                    var ar = Object.keys(obj)
+                    //if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
+                    var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+                    shob.set_obj(obj)
+                    tab_DocumentSelected_Search.gen_search_strn_history()//
+                }
 
             } catch {
                 console.error("warn: ret:", ret)
