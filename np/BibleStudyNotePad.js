@@ -1551,8 +1551,11 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         var inpkeyObj = { MostRecent_Searches: {} }
         inpkeyObj.MostRecent_Searches[skey] = [obj] //must be an array to stop key walk through.
 
+        
         MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
             function (ret) {
+                //add into datalist.
+                $("#MrSearchHistoryDatalist").prepend(`<option value='${skey}'></option>`)
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
     })
@@ -1887,6 +1890,9 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
         MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
+                //add into datalist.
+                $("#input_browsers").prepend(`<option value='${cap2}'></option>`)
+
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
     })
