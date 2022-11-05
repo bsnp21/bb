@@ -34,7 +34,11 @@
         }
 
         pre[contenteditable] {
-            background-color: lightsalmon;
+            background-color: lightblue;
+        }
+        pre.outp{
+            border: 1px solid black;
+            background-color:antiquewhite;
         }
     </style>
     <script>
@@ -97,17 +101,26 @@
 
         function gen_api_sam() {
             var sample_apiPar = {
-                ApiBibleObj_load_by_bibOj: { fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } },
-                ApiBibleObj_write_Usr_BkcChpVrs_txt: { fnames: ['e_v_CUVs_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } },
-                ApiBibleObj_search_txt: { fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } },
-                ApiUsrDat_load: {
-                    fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
-                    data: {
-                        "MostRecent_Searches": { MostRecentSearch: '', Group01: '' },
-                        "MostRecent_Verses": {},
+                ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } }],
+                ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVs_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
+                ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
+                ApiUsrDat_load: [
+                    {
+                        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                        data: {
+                            "MostRecent_Searches": {},
+                            "MostRecent_Verses": {},
+                        }
+                    },
+                    {
+                        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                        data: {
+                            "MostRecent_Searches": { MostRecentSearch: '', Group01: '' },
+                            "MostRecent_Verses": {},
+                        }
                     }
-                },
-                ApiUsrDat_save: {
+                ],
+                ApiUsrDat_save: [{
                     fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
                     data: {
                         "MostRecent_Searches": {
@@ -121,32 +134,36 @@
                             Group03: [{ "Gen5:1": "1000", "Gen6:1": "2000" }]
                         },
                     }
-                },
+                }],
             }
 
             var lis = ""
             for (key in sample_apiPar) {
-                lis += `<li><button class="restapi_label">${key}</button><pre contenteditable='true'>${JSON.stringify(sample_apiPar[key], null,4)}</pre><pre></pre></li>`
+                var sam = ""
+                sample_apiPar[key].forEach(function (obj) {
+                    sam += `<pre contenteditable='true'>${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>run</button><pre class='outp'></pre><br>`
+                })
+                lis += `<li><h4>${key}</h4>${sam}</li>`
             }
             $("#apiIdStr").html(lis)
 
-            $(".restapi_label").on("click", function () {
-                var _this = this
-                var txt = $(this).next().text()
+            $(".run_sam").on("click",function(){
+                var txt = $(this).prev().text()
                 var par = {}
                 try {
                     par = JSON.parse(txt)
                 } catch {
-                    return alert("err:" + txt)
+                    return alert("obj err:" + txt)
                 }
-                var sApiNameID = $(this).text()
+                var sApiNameID = $(this).attr("apiId")
                 var api = new BsnpRestApi()
+                var _this = this
                 api.ajaxion(
                     sApiNameID,
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
-                        $(_this).next().next().text(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
+                        $(_this).next().text(`${JSON.stringify(ret, null, 4)}`)
                         if (ret.out.data) {
                         } else {
                             alert("load failed. ")
