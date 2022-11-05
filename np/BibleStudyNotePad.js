@@ -1474,16 +1474,27 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         $("#sinput").val("").focus()
     })
     $("#RemoveSearchStrn").on("click", function () {
+        var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+        var obj = shob.get_obj()
         var ar = []
         $("#Tab_regex_history_search").find(".option").each(function () {
-            var tx = $(this).text().trim()
+            var strn = $(this).text().trim()
+            var nums = $(this).next().text().trim()
+            var srcs = $(this).next().next().text().trim()
+            var rabg = $(this).next().next().next().text().trim()
+            var key = ([strn, nums, srcs, rabg])
             if ($(this).hasClass("hili")) {
                 $(this).parentsUntil("tbody").empty()
+                var key = $(this).attr("objkey")
+                delete obj[key]
+                //var skey = JSON.stringify(key)
+                //delete obj[skey]
             } else {
-                ar.push(tx)
+                //ar.push(JSON.stringify([strn, nums, srcs, rabg]))
             }
         })
-        MyStorage.MostRecentSearchStrn.set_ary(ar)
+        shob.set_obj(obj)
+        //MyStorage.MostRecentSearchStrn.set_ary(ar)
     })
     $("#REGEXP_AND").on("click", function () {
         var s = $("#sinput").val().trim();
@@ -1602,11 +1613,11 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
             if (key.indexOf("[") < 0) continue;
             var keyary = JSON.parse(key)
             if (keyary.length == 4) {
-                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${keyary[0]}</td><td class="MemoNum">${keyary[1]}</td><td>${keyary[2]}</td><td>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
+                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option' objkey='${key}'>${keyary[0]}</td><td class="MemoNum">${keyary[1]}</td><td>${keyary[2]}</td><td>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
             } else {
                 var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
                 if (mat) {
-                    trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
+                    trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option' objkey='${key}'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
 
                 }
             }
