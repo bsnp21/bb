@@ -59,19 +59,27 @@ var BibleUti = {
         _iterate(datObj, SrcObj)
         return datObj
     },
-    UpdateObjDat: function (datObj, targObj) {
-        function _iterate(obj, tarObj) {
-            for (var sproperty in obj) {
+    FlushObjDat: function (datObj, targObj) {
+        function _iterate(carObj, tarObj) {
+            for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
-                if (obj.hasOwnProperty(sproperty)) {
-                    if (tarObj.hasOwnProperty(sproperty)) {
-                        if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
-                            _iterate(obj[sproperty], tarObj[sproperty]);
+                if (carObj.hasOwnProperty(sproperty)) {
+                    if (tarObj.hasOwnProperty(sproperty)) {//match keys
+                        if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
+                            _iterate(carObj[sproperty], tarObj[sproperty]); //non-arry obj. 
                         } else {
-                            tarObj[sproperty] = obj[sproperty]
+                            if (null === carObj[sproperty]) { //to delete key in targetObj.
+                                delete tarObj[sproperty]
+                            } else {  //flush update target obj.
+                                tarObj[sproperty] = carObj[sproperty]
+                            }
                         }
-                    } else {
-                        tarObj[sproperty] = obj[sproperty]
+                    } else {//mismatch keys
+                        if (null === carObj[sproperty]) {
+                            //nothing to delete. 
+                        } else {//add new key to targetObj.
+                            tarObj[sproperty] = carObj[sproperty]
+                        }
                     }
                 }
             }
@@ -1404,7 +1412,7 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     var ret = BibleUti.loadObj_by_fname(jsfname)
     if (!ret.obj) return console.log("FATAL: loadObj_by_fname failed:=", jsfname)
     try {
-        BibleUti.UpdateObjDat(inp.par.data, ret.obj)
+        BibleUti.FlushObjDat(inp.par.data, ret.obj)
         console.log("ret", ret)
         ret.writeback()
     } catch (err) {
