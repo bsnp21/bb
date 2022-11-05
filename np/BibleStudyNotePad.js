@@ -1598,7 +1598,7 @@ Tab_DocumentSelected_Search.prototype.gen_historysearch_datalist = function (obj
         trs += `<option value='${sky}'></option>`
     })
 
-    $("#MrSearchHistoryDatalist").html(trs)
+    //$("#MrSearchHistoryDatalist").html(trs)
 }
 Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     if (undefined === document.m_SearchStrnInPage) document.m_SearchStrnInPage = ""
@@ -1905,7 +1905,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    _THIS.gen_input_datalist(ret.out.data)
+                    //_THIS.gen_input_datalist(ret.out.data)
                     try {
                         var obj = ret.out.data.MostRecent_Verses[skey][0] //must be an array to stop walking through
                         if (obj) {
@@ -1937,11 +1937,11 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
     })
 }
 Tab_MostRecent_BCV.prototype.gen_input_datalist = function (obj) {
-    var str = ""
-    var keyary = Object.keys(obj).sort().forEach(function (key) {
-        str += `<option value="${key}"></option>`
-    })
-    $("#input_browsers").html(str)
+    //var str = ""
+    //var keyary = Object.keys(obj).sort().forEach(function (key) {
+    //    str += `<option value="${key}"></option>`
+    //})
+    //$("#input_browsers").html(str)
 
 }
 Tab_MostRecent_BCV.prototype.getCap = function () {
@@ -2403,13 +2403,33 @@ AppInstancesManager.prototype.init_load_storage = function () {
         Uti.Msg("RestApi=", RestApi);
 
         MyStorage.Repositories().repos_app_init()
-        MyStorage.Repo_load_data_MostRecentVerses({ "MemoryVerse": {}, "RecentTouch": {} }, function (ret) {
+        MyStorage.Repo_load_data_MostRecentVerses({ MostRecent_Verses: {}, MostRecent_Searches: {} }, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
             try {
-                tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data["MemoryVerse"][0])
-                tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(ret.out.data["RecentTouch"][0])
+                var MrKysVerse = Object.keys(ret.out.data.MostRecent_Verses)
+                var MrKysSearc = Object.keys(ret.out.data.MostRecent_Searches)
+                tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.MemoryVerse[0])
+                tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.RecentTouch[0])
+
+                var str = ""
+                MrKysVerse.sort().forEach(function (key) {
+                    str += `<option value="${key}"></option>`
+                })
+                $("#input_browsers").html(str)
+                //
+                str = ""
+                MrKysSearc.sort().forEach(function (sky) {
+                    str += `<option value='${sky}'></option>`
+                })
+                $("#MrSearchHistoryDatalist").html(str)
+
+
+
+
+
+
             } catch {
                 console.error("warn: ret:", ret)
             }
