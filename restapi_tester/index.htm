@@ -126,7 +126,7 @@
 
             var lis = ""
             for (key in sample_apiPar) {
-                lis += `<li><button class="restapi_label">${key}</button><pre contenteditable='true'>${JSON.stringify(sample_apiPar[key])}</pre><pre></pre></li>`
+                lis += `<li><button class="restapi_label">${key}</button><pre contenteditable='true'>${JSON.stringify(sample_apiPar[key], null,4)}</pre><pre></pre></li>`
             }
             $("#apiIdStr").html(lis)
 
