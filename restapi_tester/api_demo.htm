@@ -166,9 +166,9 @@
             for (key in sample_apiPar) {
                 var sam = ""
                 sample_apiPar[key].forEach(function (obj) {
-                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.ajaxion(${key}, par, (ret)=>{});</button><pre class='outp'></pre><br>`
+                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.ajaxion('${key}', par, (ret)=>{});</button><pre class='outp'></pre><br>`
                 })
-                lis += `<li><h4>${key}</h4>${sam}</li>`
+                lis += `<li><h4>RestApi.${key}</h4>${sam}</li>`
             }
             $("#apiIdStr").html(lis)
 
@@ -298,6 +298,7 @@
 </HEAD>
 
 <BODY>
+    <h1>Api Demo Usage</h1>
     <ol>
         <li>
             <h3>include headers</h3>
