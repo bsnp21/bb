@@ -190,10 +190,9 @@
                     function (ret) {
                         console.log("ret", ret.out.data)
                         $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
-                        if (ret.out.data) {
-                        } else {
-                            alert("load failed. ")
-                        }
+                        if (ret.out.err) {
+                            alert("load failed ret.out.err= "+ret.out.err)
+                        } 
                     })
             })
         }
