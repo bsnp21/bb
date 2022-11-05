@@ -24,13 +24,36 @@
 
 
     <style>
+        pre{
+            border: 1px solid black;
+        }
 
     </style>
     <script>
+        var srcObj = {
+                a: {
+                    b: { c: { x: 0 } },
+                },
+                a1: {
+                    b1: { c1: { x1: 1 } },
+                    b1a: { c1a: { x1a: 1 } }
+                },
+                a2: {
+                    b2: { c2: { x2: 2 } },
+                    b2b: { c2b: { x2b: 2 } }
+                },
+                a3: {
+                    u: { v: { w: '11111', x: [1, 2, 3, 4, 5], z: [222, 11] } },
+                    ar: [1111, 22222],
+                    test: [{ m: "1", n: '2' }]
+                }
+
+            }
 
 
 
         $(function () {
+            $("body").append(`<pre>FetchObjDat=${JSON.stringify(srcObj, null, 4)}</pre>`)
             testuti()
         })
 
