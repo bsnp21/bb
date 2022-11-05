@@ -49,6 +49,7 @@
     <script>
 
 
+
         $(function () {
             $("#get_api_svrip_https").on("click", function () {
                 var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
@@ -106,7 +107,8 @@
                 api.ajaxion(RestApi.ApiUsrReposData_destroy, {}, function (ret) {
                     //$("body").attr("onbeforeunload", null)
                     $("#sign_out").removeClass("hili").next().append(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
-                    if (confirm("reload?")) window.open("./api_demo.htm", "_self")
+                    var urs = window.location.origin + window.location.pathname;
+                    if (confirm("reset page?")) window.open(urs, "_self")
                 })
             })
 
@@ -352,7 +354,7 @@
             <h3>sign out</h3>
             <pre id="sign_out">
                 api.ajaxion('ApiUsrReposData_destroy', {}, (ret)=>{})
-            </pre> 
+            </pre><a>..</a> 
         </li>
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
