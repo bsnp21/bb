@@ -1911,7 +1911,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                 console.log(ret)
                 Uti.Msg(ret)
                 if (ret.out.data) {
-                    //_THIS.gen_input_datalist(ret.out.data)
+                    
                     try {
                         var obj = ret.out.data.MostRecent_Verses[skey][0] //must be an array to stop walking through
                         if (obj) {
@@ -1942,14 +1942,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         $("#Mr_Input_Datalist").val("")
     })
 }
-Tab_MostRecent_BCV.prototype.gen_input_datalist = function (obj) {
-    //var str = ""
-    //var keyary = Object.keys(obj).sort().forEach(function (key) {
-    //    str += `<option value="${key}"></option>`
-    //})
-    //$("#input_browsers").html(str)
 
-}
 Tab_MostRecent_BCV.prototype.getCap = function () {
     var scap = $(this.m_tableID).find(".ColorRecentMarks").attr("title").trim()
     $("#Tab_MostRecent_BCV_caps").text(scap)
