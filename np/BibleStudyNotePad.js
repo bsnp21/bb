@@ -462,7 +462,7 @@ PopupMenu.prototype.init = function (cbf) {
 
         MyStorage.Repo_save_data_MostRecentVerses(
             {
-                "MemoryVerse": [obj]
+                "MemoryVerse": obj
             },
             function (ret) {
                 Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -1560,7 +1560,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
                 try {
                     _THIS.gen_historysearch_datalist(ret.out.data)
 
-                    var obj = ret.out.data[skey][0]
+                    var obj = ret.out.data[skey]
                     if (obj) {
                         var ar = Object.keys(obj)
                         if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
@@ -1872,7 +1872,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
         var inpkeyObj = {}
-        inpkeyObj[cap2] = [obj]
+        inpkeyObj[cap2] = obj
 
         MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
@@ -1896,7 +1896,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                 if (ret.out.data) {
                     _THIS.gen_input_datalist(ret.out.data)
                     try {
-                        var obj = ret.out.data[skey][0]
+                        var obj = ret.out.data[skey]
                         if (obj) {
                             var ar = Object.keys(obj)
                             if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;

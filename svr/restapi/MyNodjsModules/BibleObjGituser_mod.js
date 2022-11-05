@@ -39,6 +39,47 @@ var BibleUti = {
         return structObj
     },
 
+    FetchObjDat: function (datObj, SrcObj) {
+        function _iterate(obj, srcObj) {
+            for (var sproperty in obj) {
+                console.log("sproperty=", sproperty)
+                if (obj.hasOwnProperty(sproperty)) {
+                    if (srcObj.hasOwnProperty(sproperty)) {
+                        if ("object" === typeof (obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                            _iterate(obj[sproperty], srcObj[sproperty]);
+                        } else {
+                            obj[sproperty] = srcObj[sproperty]
+                        }
+                    } else {
+                        delete obj[sproperty]
+                    }
+                }
+            }
+        }
+        _iterate(datObj, SrcObj)
+        return datObj
+    },
+    UpdateObjDat: function (datObj, targObj) {
+        function _iterate(obj, tarObj) {
+            for (var sproperty in obj) {
+                console.log("sproperty=", sproperty)
+                if (obj.hasOwnProperty(sproperty)) {
+                    if (tarObj.hasOwnProperty(sproperty)) {
+                        if ("object" === typeof (obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                            _iterate(obj[sproperty], tarObj[sproperty]);
+                        } else {
+                            tarObj[sproperty] = obj[sproperty]
+                        }
+                    } else {
+                        tarObj[sproperty] = obj[sproperty]
+                    }
+                }
+            }
+        }
+        _iterate(datObj, targObj)
+        return datObj
+    },
+
     WorkingRootDir: function (v) {
         if (undefined === v) {
             return BibleUti.m_rootDir
@@ -1031,7 +1072,7 @@ BibleObjGituser.prototype.get_pfxname = function (DocCode) {
                 dest_pfname = this.get_usr_myoj_dir(`/${fnam}`)
             }
             break
-        case ".": //-: ./dat/MostRecentVerses; MostRecentSearches
+        case ".": //-: ./dat/MostRecentVerses; //not used MostRecentSearches
             {
                 var fnam = DocCode.substr(1)
                 dest_pfname = this.get_usr_acct_dir(`${fnam}_json.js`)
@@ -1342,16 +1383,11 @@ BibleObjGituser.prototype.load_turnback_userData = function () {
     var jsfname = this.get_pfxname(doc)
     var ret = BibleUti.loadObj_by_fname(jsfname)
 
-    var retObj = BibleUti.GetEmptyObj(ret.obj)  //get obj structure w/ keys.
-    if (!inp.par.data) {  // ===undefined, null, or ''. 
-        retObj = ret.obj  // return back the whole object data.
-    } else {
+    var retObj = ret.obj  //get obj structure w/ keys.
+    if ("object" === typeof (inp.par.data) && Object.keys(inp.par.data).length > 0) {  // ===undefined, null, or ''. 
         try {
-            //var inpkeyObj = JSON.parse(inp.par.data) //return back only keys user wanted,  
-
-            Object.keys(inp.par.data).forEach(function (key) {
-                retObj[key] = ret.obj[key]
-            })
+            retObj = inp.par.data;// 
+            BibleUti.FetchObjDat(retObj, ret.obj)
             console.log("inp.out.data", retObj)
         } catch (err) {
             console.log("err", err)
@@ -1366,13 +1402,9 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     var jsfname = this.get_pfxname(doc)
     console.log("jsfname=", jsfname)
     var ret = BibleUti.loadObj_by_fname(jsfname)
-    if (!ret.obj) return console.log("failed:=", jsfname)
+    if (!ret.obj) return console.log("FATAL: loadObj_by_fname failed:=", jsfname)
     try {
-        //var inpObj = JSON.parse(inp.par.data)
-        Object.keys(inp.par.data).forEach(function (key) {
-            ret.obj[key] = inp.par.data[key]
-        })
-
+        BibleUti.UpdateObjDat(inp.par.data, ret.obj)
         console.log("ret", ret)
         ret.writeback()
     } catch (err) {

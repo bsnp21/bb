@@ -106,7 +106,10 @@
                 },
                 ApiUsrDat_save: {
                     fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
-                    data: { "testkey": { "Gen1:1": "1000", "Gen2:1": "2000" } }
+                    data: {
+                        "MostRecent_Searches": { Group01: [{ "Melchizedek": "1000", "YHWH": "2000" }] },
+                        "MostRecent_Verses": { Group01: [{ "Gen1:1": "1000", "Gen2:1": "2000" }] },
+                    }
                 },
             }
 
@@ -161,6 +164,75 @@
 
         }
 
+
+        function testuti() {
+            var test = {
+                FetchObjDat: function (datObj, SrcObj) {
+                    function _iterate(obj, srcObj) {
+                        for (var sproperty in obj) {
+                            console.log("sproperty=", sproperty)
+                            if (obj.hasOwnProperty(sproperty)) {
+                                if (srcObj.hasOwnProperty(sproperty)) {
+                                    if ("object" === typeof (obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                                        _iterate(obj[sproperty], srcObj[sproperty]);
+                                    } else {
+                                        obj[sproperty] = srcObj[sproperty]
+                                    }
+                                } else {
+                                    delete obj[sproperty]
+                                }
+                            }
+                        }
+                    }
+                    _iterate(datObj, SrcObj)
+                    return datObj
+                },
+                UpdateObjDat: function (datObj, targObj) {
+                    function _iterate(obj, tarObj) {
+                        for (var sproperty in obj) {
+                            console.log("sproperty=", sproperty)
+                            if (obj.hasOwnProperty(sproperty)) {
+                                if (tarObj.hasOwnProperty(sproperty)) {
+                                    if ("object" === typeof (obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                                        _iterate(obj[sproperty], tarObj[sproperty]);
+                                    } else {
+                                        tarObj[sproperty] = obj[sproperty]
+                                    }
+                                } else {
+                                    tarObj[sproperty] = obj[sproperty]
+                                }
+                            }
+                        }
+                    }
+                    _iterate(datObj, targObj)
+                    return datObj
+                },
+            }
+
+            var srcObj = {
+                a: {
+                    b: { c: { x: 0 } },
+                },
+                a1: {
+                    b1: { c1: { x1: 1 } },
+                    b1a: { c1a: { x1a: 1 } }
+                },
+                a2: {
+                    b2: { c2: { x2: 2 } },
+                    b2b: { c2b: { x2b: 2 } }
+                },
+                a3: { u: { v: { w: '11111', x: [1], z: [222, 11] } } }
+
+            }
+            var out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } } } }
+            test.FetchObjDat(out, srcObj)
+            console.log("test:", out)
+
+            out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } } } }
+            test.UpdateObjDat(out, srcObj)
+            console.log("srcObj:", srcObj)
+        }
+        testuti()
 
     </script>
 

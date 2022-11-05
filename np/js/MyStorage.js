@@ -64,7 +64,7 @@ var MyStorage = {
         var api = new BsnpRestApi()
         api.ajaxion(RestApi.ApiUsrDat_save,
             {
-                fnames: ["./dat/MostRecentSearches"],
+                fnames: ["./dat/MostRecentVerses"],
                 data: keyObj
             },
             function (ret) {
@@ -94,7 +94,7 @@ var MyStorage = {
         var api = new BsnpRestApi()
         api.ajaxion(RestApi.ApiUsrDat_load,
             {
-                fnames: ["./dat/MostRecentSearches"],
+                fnames: ["./dat/MostRecentVerses"],
                 data: keyObj
             },
             function (ret) {
