@@ -1537,8 +1537,8 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
         var obj = shob.get_obj()
         if (!confirm(`${Object.keys(obj).length} items will be saved in '${skey}'\nSure?`)) return;
-        var inpkeyObj = {}
-        inpkeyObj[skey] = [obj]
+        var inpkeyObj = { MostRecent_Searches: {} }
+        inpkeyObj.MostRecent_Searches[skey] = [obj] //must be an array to stop key walk through.
 
         MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
             function (ret) {
@@ -1550,8 +1550,8 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         var skey = $("#MrSearchHistoryInput").val()
         if (!skey) return alert("Saved name is empty.")
 
-        var inpkeyObj = {}
-        inpkeyObj[skey] = {}
+        var inpkeyObj = { MostRecent_Searches: {} }
+        inpkeyObj.MostRecent_Searches[skey] = {}
         MyStorage.Repo_load_dat_MostRecentSearches(
             inpkeyObj,
             function (ret) {
@@ -1560,7 +1560,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
                 try {
                     _THIS.gen_historysearch_datalist(ret.out.data)
 
-                    var obj = ret.out.data[skey]
+                    var obj = ret.out.data.MostRecent_Searches[skey][0] //// must be an array to stop key walk through.
                     if (obj) {
                         var ar = Object.keys(obj)
                         if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
@@ -1871,8 +1871,8 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var cap = _THIS.getCap()
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
         if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
-        var inpkeyObj = {}
-        inpkeyObj[cap2] = obj
+        var inpkeyObj = { MostRecent_Verses: {} }
+        inpkeyObj.MostRecent_Verses[cap2] = [obj] // must be an array
 
         MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
@@ -1885,8 +1885,8 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var cap = _THIS.getCap()
         var skey = $("#Mr_Input_Datalist").val()
         if (!skey) skey = cap
-        var inpkeyObj = {}
-        inpkeyObj[skey] = {}
+        var inpkeyObj = { MostRecent_Verses: {} }
+        inpkeyObj.MostRecent_Verses[skey] = {}
         MyStorage.Repo_load_data_MostRecentVerses(
             inpkeyObj,
             function (ret) {
@@ -1896,7 +1896,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
                 if (ret.out.data) {
                     _THIS.gen_input_datalist(ret.out.data)
                     try {
-                        var obj = ret.out.data[skey]
+                        var obj = ret.out.data.MostRecent_Verses[skey][0] //must be an array to stop walking through
                         if (obj) {
                             var ar = Object.keys(obj)
                             if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
