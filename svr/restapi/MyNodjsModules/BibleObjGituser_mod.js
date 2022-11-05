@@ -1386,7 +1386,7 @@ BibleObjGituser.prototype.load_turnback_userData = function () {
     var retObj = ret.obj  //get obj structure w/ keys.
     if ("object" === typeof (inp.par.data) && Object.keys(inp.par.data).length > 0) {  // ===undefined, null, or ''. 
         try {
-            retObj = inp.par.data;// 
+            retObj = JSON.parse(JSON.stringify(inp.par.data));// 
             BibleUti.FetchObjDat(retObj, ret.obj)
             console.log("inp.out.data", retObj)
         } catch (err) {
