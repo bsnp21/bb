@@ -65,7 +65,7 @@ var BibleUti = {
                 console.log("sproperty=", sproperty)
                 if (obj.hasOwnProperty(sproperty)) {
                     if (tarObj.hasOwnProperty(sproperty)) {
-                        if ("object" === typeof (obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                        if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
                             _iterate(obj[sproperty], tarObj[sproperty]);
                         } else {
                             tarObj[sproperty] = obj[sproperty]

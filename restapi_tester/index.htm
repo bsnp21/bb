@@ -104,14 +104,22 @@
                     fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
                     data: {
                         "MostRecent_Searches": { Group01: '' },
-                        "MostRecent_Verses": { Group01: ''},
+                        "MostRecent_Verses": {},
                     }
                 },
                 ApiUsrDat_save: {
                     fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
                     data: {
-                        "MostRecent_Searches": { Group01: [{ "Melchizedek": "1000", "YHWH": "2000" }] },
-                        "MostRecent_Verses": { Group01: [{ "Gen1:1": "1000", "Gen2:1": "2000" }] },
+                        "MostRecent_Searches": {
+                            Group01: [{ "Melchizedek": "1000", "YHWH": "2000" }],
+                            Group02: [{ "Melchizedek": "3000", "YHWH": "4000" }],
+                            Group03: [{ "Melchizedek": "5000", "YHWH": "6000" }]
+                        },
+                        "MostRecent_Verses": {
+                            Group01: [{ "Gen30:1": "1000" }],
+                            Group02: [{ "Gen3:1": "1000", "Gen4:1": "2000" }],
+                            Group03: [{ "Gen5:1": "1000", "Gen6:1": "2000" }]
+                        },
                     }
                 },
             }
@@ -196,7 +204,7 @@
                             console.log("sproperty=", sproperty)
                             if (obj.hasOwnProperty(sproperty)) {
                                 if (tarObj.hasOwnProperty(sproperty)) {
-                                    if ("object" === typeof (obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                                    if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
                                         _iterate(obj[sproperty], tarObj[sproperty]);
                                     } else {
                                         tarObj[sproperty] = obj[sproperty]
@@ -224,14 +232,18 @@
                     b2: { c2: { x2: 2 } },
                     b2b: { c2b: { x2b: 2 } }
                 },
-                a3: { u: { v: { w: '11111', x: [1], z: [222, 11] } } }
+                a3: {
+                    u: { v: { w: '11111', x: [1, 2, 3, 4, 5], z: [222, 11] } },
+                    ar: [1111, 22222]
+                }
 
             }
+            console.log("srcObj:", JSON.stringify(srcObj,null,4))
             var out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } } } }
             test.FetchObjDat(out, srcObj)
-            console.log("test:", out)
+            console.log("out:", out)
 
-            out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } } } }
+            out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } }, ar: [1, 22, 33, 44] } }
             test.UpdateObjDat(out, srcObj)
             console.log("srcObj:", srcObj)
         }
