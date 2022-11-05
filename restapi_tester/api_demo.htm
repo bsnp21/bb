@@ -1,0 +1,366 @@
+<HTML>
+
+<HEAD>
+    <TITLE>test</TITLE>
+    <base target="_blank" />
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+
+
+    <!--------->
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <script language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+    <script language="javascript" src="../jq/jquery.js"></script>
+
+    <!----------------------------------------------------------------------------->
+    <!------ api ---->
+    <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+    <script src="../np/js/BsnpRestApi.js"></script>
+    <script src="../np/js/CNST.js"></script>
+    <!----------------------------------------------------------------------------->
+
+
+    <style>
+        input {
+            width: 500px;
+        }
+
+        .hili {
+            background-color: red;
+        }
+
+        pre {
+            border: 1px solid black;
+            background-color: lightgray;
+        }
+
+        pre[contenteditable] {
+            background-color: lightblue;
+        }
+
+        pre.outp {
+
+            background-color: antiquewhite;
+        }
+    </style>
+    <script>
+
+
+        $(function () {
+            $("#get_api_svrip_https").on("click", function () {
+                var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
+                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
+            })
+            $("#get_api_svrip_http").on("click", function () {
+                var urls = `http://${config_websvr_data.ip}:${config_websvr_data.http_port}`
+                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
+            })
+
+            $("#passcode").on("click", function () {
+                var usr = {}
+                usr.repopath = $("#repopath").val()
+                usr.passcode = $("#passcode").val()
+                usr.ttl = $("#ttl").val()
+
+                $("#usrobj").html("var usr=" + JSON.stringify(usr, null, 4))
+            })
+
+            $("#api_signin_ip").on("click", function () {
+                $(this).addClass("hili")
+                var usr = {}
+                usr.repopath = $("#repopath").val()
+                usr.passcode = $("#passcode").val()
+                usr.ttl = $("#ttl").val()
+
+                var api = new BsnpRestApi()
+                api.signin(usr, function (rob, err) {
+                    $("#api_signin_ip").removeClass("hili")
+                    console.log(rob)
+
+                    if (err) {
+                        console.log(rob, ur)
+                        alert("failed")
+                    } else {
+                        var ur = `${api.urlRedirectParam()}`
+                        //alert("ok=\n" + ur)
+                        $("#api_signin_ip").next().attr("href", `${ur}`).text(ur).parent().append(`<pre class='outp'>ret = ${JSON.stringify(rob, null, 4)}</pre>`)
+                        console.log(rob, ur)
+
+                    }
+                })
+            })
+
+            $("#sign_out").on("click", function () {
+                if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
+
+                $(this).addClass("hili")
+                var api = new BsnpRestApi()
+                api.ajaxion(RestApi.ApiUsrReposData_destroy, {}, function (ret) {
+                    //$("body").attr("onbeforeunload", null)
+                    $("#sign_out").removeClass("hili").next().append(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
+                    if (confirm("reload?")) window.open("./api_demo.htm", "_self")
+                })
+            })
+
+            gen_api_sam()
+
+
+            gen_BibleNames()
+            gen_bibOjStdKeys()
+        })
+
+
+        function gen_api_sam() {
+            var sample_apiPar = {
+                ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } }],
+                ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
+                ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
+                ApiUsrDat_load: [
+                    {
+                        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                        data: {
+                            "MostRecent_Searches": {},
+                            "MostRecent_Verses": {},
+                        }
+                    },
+                    {
+                        fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                        data: {
+                            "MostRecent_Searches": { MostRecentSearch: '', Group01: '' },
+                            "MostRecent_Verses": {},
+                        }
+                    }
+                ],
+                ApiUsrDat_save: [{
+                    fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+                    data: {
+                        "MostRecent_Searches": {
+                            Group01: [{ "Melchizedek": "1" }, { "x": "1" }],
+                            Group02: [{ "Melchizedekxxx": "3000", "YHWH": "4000" }],
+                            Group03: [{ "Melchizedekyyy": "5000", "YHWH": "6000" }]
+                        },
+                        "MostRecent_Verses": {
+                            Group01: [{ "Gen30:1": "1000" }],
+                            Group02: [{ "Gen3:1": "1000", "Gen4:1": "2000" }],
+                            Group03: [{ "Gen5:1": "1000", "Gen6:1": "2000" }],
+                            "MemoryVerse": [
+                                {
+                                    "Amo1:4": "221105 080029"
+                                }
+                            ],
+                            "RecentTouch": [
+                                {
+                                    "Amo1:4": "221105 080029",
+                                    "Gen1:4": "221105 080020"
+                                }
+                            ]
+                        },
+                    }
+                }],
+            }
+
+            var lis = ""
+            for (key in sample_apiPar) {
+                var sam = ""
+                sample_apiPar[key].forEach(function (obj) {
+                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.ajaxion(${key}, par, (ret)=>{});</button><pre class='outp'></pre><br>`
+                })
+                lis += `<li><h4>${key}</h4>${sam}</li>`
+            }
+            $("#apiIdStr").html(lis)
+
+            $(".run_sam").on("click", function () {
+                var txt = $(this).prev().text().substr(8)
+                var par = {}
+                try {
+                    par = JSON.parse(txt)
+                } catch {
+                    return alert("obj err:" + txt)
+                }
+                var sApiNameID = $(this).attr("apiId")
+                var api = new BsnpRestApi()
+                var _this = this
+                $(_this).next().text('')
+                api.ajaxion(
+                    sApiNameID,
+                    par,
+                    function (ret) {
+                        console.log("ret", ret.out.data)
+                        $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                        if (ret.out.data) {
+                        } else {
+                            alert("load failed. ")
+                        }
+                    })
+            })
+        }
+        function gen_BibleNames() {
+            var trs = ""
+            var ar = Object.keys(CNST.FnameOfBibleObj).concat(["./dat/MostRecentVerses", "./dat/MostRecentSearches"])
+            ar.forEach(function (key, i) {
+                var stp = "<td>read</td><td></td><td>search</td>"
+                if (key[0] === 'e') stp = "<td>read</td><td>write</td><td>search</td>"
+                if (key[0] === '.') stp = "<td>read</td><td>write</td><td></td>"
+                trs += `<tr><td>${i + 1}</td><td>${key}</td>${stp}</tr>`
+            })
+
+            $("#BibleNames").html(`<table border='1'>${trs}</table>`)
+        }
+        function gen_bibOjStdKeys() {
+            var lis = ""
+            for (key in CNST.BiBookName) {
+                lis += `<li>${key}</li>`
+            }
+            $("#bibOjStdKeys").html(lis)
+
+        }
+
+
+        function testuti() {
+            var test = {
+                FetchObjDat: function (datObj, SrcObj) {
+                    function _iterate(obj, srcObj) {
+                        for (var sproperty in obj) {
+                            console.log("sproperty=", sproperty)
+                            if (obj.hasOwnProperty(sproperty)) {
+                                if (srcObj.hasOwnProperty(sproperty)) {
+                                    if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                                        _iterate(obj[sproperty], srcObj[sproperty]);
+                                    } else {
+                                        obj[sproperty] = srcObj[sproperty]
+                                    }
+                                } else {
+                                    delete obj[sproperty]
+                                }
+                            }
+                        }
+                    }
+                    _iterate(datObj, SrcObj)
+                    return datObj
+                },
+                UpdateObjDat: function (datObj, targObj) {
+                    function _iterate(obj, tarObj) {
+                        for (var sproperty in obj) {
+                            console.log("sproperty=", sproperty)
+                            if (obj.hasOwnProperty(sproperty)) {
+                                if (tarObj.hasOwnProperty(sproperty)) {
+                                    if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                                        _iterate(obj[sproperty], tarObj[sproperty]);
+                                    } else {
+                                        tarObj[sproperty] = obj[sproperty]
+                                    }
+                                } else {
+                                    tarObj[sproperty] = obj[sproperty]
+                                }
+                            }
+                        }
+                    }
+                    _iterate(datObj, targObj)
+                    return datObj
+                },
+            }
+
+            var srcObj = {
+                a: {
+                    b: { c: { x: 0 } },
+                },
+                a1: {
+                    b1: { c1: { x1: 1 } },
+                    b1a: { c1a: { x1a: 1 } }
+                },
+                a2: {
+                    b2: { c2: { x2: 2 } },
+                    b2b: { c2b: { x2b: 2 } }
+                },
+                a3: {
+                    u: { v: { w: '11111', x: [1, 2, 3, 4, 5], z: [222, 11] } },
+                    ar: [1111, 22222]
+                }
+
+            }
+            console.log("srcObj:", JSON.stringify(srcObj, null, 4))
+            var out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } } } }
+            test.FetchObjDat(out, srcObj)
+            console.log("out:", out)
+
+            out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } }, ar: [1, 22, 33, 44] } }
+            test.UpdateObjDat(out, srcObj)
+            console.log("srcObj:", srcObj)
+        }
+        testuti()
+
+    </script>
+
+
+
+</HEAD>
+
+<BODY>
+    <ol>
+        <li>
+            <h3>include headers</h3>
+
+
+            <pre>
+        <!-------------------------------------------------------------------------------->
+        &lt;script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+        &lt;script language="javascript" src="../jq/jquery.js"></script>
+    
+        <!------------------------------------api----------------------------------------->
+        &lt;script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+        &lt;script src="../np/js/BsnpRestApi.js"></script>
+        &lt;script src="../np/js/CNST.js"></script>
+        <!-------------------------------------------------------------------------------->
+        </pre>
+        </li>
+        <li>
+            <h3 id="">api server ip for url param</h3>
+            <button id="get_api_svrip_https">get api server ip (https)</button><a>./</a><br>
+            <button id="get_api_svrip_http" href="">get api server ip (http)</button><a>./</a><br><br>
+        </li>
+
+        <li>
+            <h3>Repository</h3>
+            repopath:<input id="repopath" value="https://wdingsoft@bitbucket.org/bsnp21/guest_02.git"></input><br>
+            passcode:<input id="passcode" value="gSzk" val2="TPgFNnz" v3="9v5wGF5eN"
+                onclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
+            ttl<input id="ttl" value="9999"></input>
+            <pre id="usrobj"></pre>
+        </li>
+
+        <li>
+            <h3 id="">signin ip</h3>
+
+            <pre id="api_signin_ip">
+                    var api = new BsnpRestApi()
+                    api.signin(usr, function (ret, err);
+                </pre>
+            <a>add SSID on url param</a><br>
+        </li>
+
+        <li>
+            <h3>sign out</h3>
+            <button id="sign_out">api.ajaxion(ApiUsrReposData_destroy,{},(ret)=>{})</button> <a>...</a>
+        </li>
+        <li>
+            <h3>BsnpRestApi.ajaxion </h3>
+            <ol id="apiIdStr">
+            </ol>
+        </li>
+        <li>
+            <h3>Available fnames or Research.File </h3>
+            <ol id="BibleNames">
+            </ol>
+        </li>
+        <li>
+            <h3>bibOj std keys</h3>
+            <ol id="bibOjStdKeys"></ol>
+        </li>
+    </ol>
+
+</BODY>
+
+</HTML>

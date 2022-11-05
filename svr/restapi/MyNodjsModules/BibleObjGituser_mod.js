@@ -1417,7 +1417,7 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     save_res.desc = "len:" + inp.par.data.length + ",dlt:" + ret.dlt_size
     save_res.dlt = ret.dlt_size
     save_res.len = inp.par.data.length
-    inp.par.data = ""
+    //inp.par.data = ""
     //save_res.ret = ret
     inp.out.save_res = save_res
     return save_res;
