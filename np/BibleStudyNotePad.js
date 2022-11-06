@@ -437,42 +437,49 @@ PopupMenu.prototype.init = function (cbf) {
     $(this.m_id).find("a").bind("click", function () {
         $(_THIS.m_id).hide()
     })
+
     $("#divPopupMenu_CaptionBCV").on("click", function () {
+        //click to add into MemoryVerse list in store and uiTable. set datalist to MemoryVerse.
         var bcv = $(this).attr("SaveToMemoryVerse")
         if (bcv.length > 0) {
             Uti.copy2clipboard(`(${bcv})`, this)
         }
+
         //if (cbf) cbf(bcv)
         if ($(this)[0].classList.contains("divPopupMenu_CaptionBCV_MemoVerse")) {
-            if (!confirm(bcv + " is already in MemoryVerses. \nContinue to update?"))
-                return;
+            //if (!confirm(bcv + " is already in MemoryVerses. \nContinue to update?"))
+            //    return;
         }
-
-
+        $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
 
         //
         var obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
-        if (!confirm(`${bcv} \nwill be saved to MemoryVerse (${Object.keys(obj).length}) in Server.\nSure?`)) return;
-
+        var ary = Object.keys(obj)
+        if (ary.indexOf(bcv) >= 0) {
+            if (!confirm(`'${bcv}' already in MemoryVerse (${Object.keys(obj).length}). \nContinue?`)) return;
+        }
 
         tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
-        obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
-        var inpObj = {}
+        $("#Mr_Input_Datalist").val("MemoryVerse")
+        $("#MemoryVerse_Btn").trigger("click")
 
-
-        MyStorage.Repo_save_data_MostRecentVerses(
-            {
-                "MemoryVerse": obj
-            },
-            function (ret) {
-                Uti.show_save_results(ret, "#StorageRepo_save_res")
-                Uti.Msg("MyStorage.Repo_save_data_MostRecentVerses:", ret)
-                //$("#StorageRepo_save").prop("checked", false)
-
-                $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
-            })
-
-        _THIS.hide()
+        //        obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+        //        var inpObj = {}
+        //
+        //
+        //        MyStorage.Repo_save_data_MostRecentVerses(
+        //            {
+        //                "MemoryVerse": obj
+        //            },
+        //            function (ret) {
+        //                Uti.show_save_results(ret, "#StorageRepo_save_res")
+        //                Uti.Msg("MyStorage.Repo_save_data_MostRecentVerses:", ret)
+        //                //$("#StorageRepo_save").prop("checked", false)
+        //
+        //                $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
+        //            })
+        //
+        //        _THIS.hide()
     })
 
     this.popupMenu_BcvTag = new PopupMenu_BcvTag()
@@ -1779,7 +1786,7 @@ Tab_MostRecentBody.prototype.update_tab = function () {
         })
         tab.find(".MemoTime").bind("click", function () {
             var tm = $(this).text()
-            $("#Tab_MostRecent_BCV_caps").text(tm)
+            //$("#Mr_Input_Datalist").val(tm)
         })
 
         tab.find("th").bind("click", function () {
@@ -1845,13 +1852,13 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
     _THIS.show_all(false)
     _THIS.m_tbodies["RecentTouch"].show(true)
     _THIS.m_tbodies["MemoryVerse"].show(false)
-    $("#Tab_MostRecent_BCV_caps").text("RecentTouch")
+    $("#Mr_Input_Datalist").val("RecentTouch")
 
     $(".docSwitchRecent").on("click", function () {
         _THIS.show_all(false)
 
         var cap = $(this).attr("title")
-        $("#Tab_MostRecent_BCV_caps").text(cap)
+        $("#Mr_Input_Datalist").val(cap)
         _THIS.m_tbodies[cap].show(true)
         $(".ColorRecentMarks").removeClass("ColorRecentMarks")
         $(this).addClass("ColorRecentMarks")
@@ -1871,19 +1878,19 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
         var This = this
         Uti.Msg("#save2Repo")
 
-        var cap2 = $("#Mr_Input_Datalist").val()
+        var skey = $("#Mr_Input_Datalist").val()
 
-        //
+        // 
         var cap = _THIS.getCap()
         var obj = _THIS.m_tbodies[cap].m_MrObjInStore.get_obj()
-        if (!confirm(Object.keys(obj).length + " items will be saved in svr\nAre you sure?")) return;
+        if (!confirm(`${Object.keys(obj).length} ${cap} items will be saved in 'MostRecent_Verses/${skey}'\n-Continue?`)) return;
         var inpkeyObj = { MostRecent_Verses: {} }
-        inpkeyObj.MostRecent_Verses[cap2] = [obj] // must be an array
+        inpkeyObj.MostRecent_Verses[skey] = [obj] // must be an array
 
         MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
                 //add into datalist.
-                $("#input_browsers").prepend(`<option value='${cap2}'></option>`)
+                $("#input_browsers").prepend(`<option value='${skey}'></option>`)
 
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
@@ -1937,7 +1944,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
 Tab_MostRecent_BCV.prototype.getCap = function () {
     var scap = $(this.m_tableID).find(".ColorRecentMarks").attr("title").trim()
-    $("#Tab_MostRecent_BCV_caps").text(scap)
+    //$("#Mr_Input_Datalist").val(scap)
     return scap
 }
 

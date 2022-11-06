@@ -198,7 +198,6 @@ var BibleInputMenuContainer = `
             <td>
                 <div id="Tab_MostRecent_BCV" border="1" style="float:left;">
                     <div>
-                       <div id='Tab_MostRecent_BCV_caps'></div>
                        <input list="input_browsers" name="browser"  id='Mr_Input_Datalist'>
                        <datalist id="input_browsers">
                            <option value="RecentTouch">
@@ -208,10 +207,10 @@ var BibleInputMenuContainer = `
                            <option value="Safari">
                        </datalist>
                        </input>
-                       <a id='clear_Tab_MostRecent_BCV_caps'>x</a>
+                       <a id='clear_Tab_MostRecent_BCV_caps'>X</a>
                        
-                       <button class='docSwitchRecent ColorRecentMarks' title="RecentTouch">T</button>
-                       <button class='docSwitchRecent' title="MemoryVerse">M</button><br>
+                       <button class='docSwitchRecent ColorRecentMarks' title='RecentTouch' id='RecentTouch_Btn'>T</button>
+                       <button class='docSwitchRecent' title="MemoryVerse" id='MemoryVerse_Btn'>M</button><br>
                        
                     </div>
             

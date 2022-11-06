@@ -362,7 +362,7 @@ body {
         min-width: 321px;
     }
     
-    #Tab_MostRecent_BCV_caps, #Mr_Input_Datalist{
+    #Mr_Input_Datalist{
         font-size: small;
         width: 120px;
     }
