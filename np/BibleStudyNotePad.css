@@ -438,7 +438,7 @@ body {
         background-color: #a00000;
     }
 
-    .MemoTime, .MemoIdx{
+    .MemoTime, .MemoIdx, .MemoNum, .MemoVols, .MemoVsn{
         font-size: xx-small;
     }
     .MemoTime{

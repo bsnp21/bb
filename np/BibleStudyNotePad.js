@@ -1615,11 +1615,11 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
             if (key.indexOf("[") < 0) continue;
             var keyary = JSON.parse(key)
             if (keyary.length == 4) {
-                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option' objkey='${key}'>${keyary[0]}</td><td class="MemoNum">${keyary[1]}</td><td>${keyary[2]}</td><td>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
+                trs += `<tr><td class="MemoIdx">${idx--}</td><td class='hilitable' objkey='${key}'>${keyary[0]}</td><td class='MemoNum'>${keyary[1]}</td><td class='MemoVsn'>${keyary[2]}</td><td class='MemoVols'>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
             } else {
                 var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
                 if (mat) {
-                    trs += `<tr><td class="MemoIdx">${idx--}</td><td class='option' objkey='${key}'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
+                    trs += `<tr><td class="MemoIdx">${idx--}</td><td class='hilitable' objkey='${key}'>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
 
                 }
             }
@@ -1629,7 +1629,7 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
 
     //history
     //console.log(ret);
-    $("#Tab_regex_history_search tbody").html(trs).find(".option").bind("click", function () {
+    $("#Tab_regex_history_search tbody").html(trs).find(".hilitable").bind("click", function () {
         $(this).toggleClass("hili");
         var s = $(this).text().trim();
         $("#sinput").val(s);
