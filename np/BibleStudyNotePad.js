@@ -439,7 +439,7 @@ PopupMenu.prototype.init = function (cbf) {
     })
 
     $("#divPopupMenu_CaptionBCV").on("click", function () {
-        //click to add into MemoryVerse list in store and uiTable. set datalist to MemoryVerse.
+        //click to add into MemoryRequired list in store and uiTable. set datalist to MemoryRequired.
         var bcv = $(this).attr("SaveToMemoryVerse")
         if (bcv.length > 0) {
             Uti.copy2clipboard(`(${bcv})`, this)
@@ -453,23 +453,23 @@ PopupMenu.prototype.init = function (cbf) {
         $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
 
         //
-        var obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+        var obj = tab_MostRecent_BCV.m_tbodies.MemoryRequired.m_MrObjInStore.get_obj()
         var ary = Object.keys(obj)
         if (ary.indexOf(bcv) >= 0) {
-            if (!confirm(`'${bcv}' already in MemoryVerse (${Object.keys(obj).length}). \nContinue?`)) return;
+            if (!confirm(`'${bcv}' already in MemoryRequired (${Object.keys(obj).length}). \nContinue?`)) return;
         }
 
-        tab_MostRecent_BCV.m_tbodies.MemoryVerse.addnew2table(bcv)
-        $("#Mr_Input_Datalist").val("MemoryVerse")
+        tab_MostRecent_BCV.m_tbodies.MemoryRequired.addnew2table(bcv)
+        $("#Mr_Input_Datalist").val("MemoryRequired")
         $("#MemoryVerse_Btn").trigger("click")
 
-        //        obj = tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.get_obj()
+        //        obj = tab_MostRecent_BCV.m_tbodies.MemoryRequired.m_MrObjInStore.get_obj()
         //        var inpObj = {}
         //
         //
         //        MyStorage.Repo_save_data_MostRecentVerses(
         //            {
-        //                "MemoryVerse": obj
+        //                "MemoryRequired": obj
         //            },
         //            function (ret) {
         //                Uti.show_save_results(ret, "#StorageRepo_save_res")
@@ -540,7 +540,7 @@ PopupMenu.prototype.popup = function (par) {
     }
     $("#divPopupMenu_CaptionBCV").text(`SaveToMemoryVerse: ${par.m_bcv}`).attr("SaveToMemoryVerse", par.m_bcv)
     if (par.m_bcv) {
-        var stores = MyStorage.CreateMrObj("MemoryVerse")
+        var stores = MyStorage.CreateMrObj("MemoryRequired")
         var ary = Object.keys(stores.get_obj())
         if (ary.indexOf(par.m_bcv) >= 0) {
             $("#divPopupMenu_CaptionBCV").addClass("divPopupMenu_CaptionBCV_MemoVerse")
@@ -1838,14 +1838,14 @@ function Tab_MostRecent_BCV() {
 Tab_MostRecent_BCV.prototype.init_Mrs = function () {
     var _THIS = this
     this.m_tbodies = {
-        MemoryVerse: new Tab_MostRecentBody("MemoryVerse"),  // MemoryRequired
+        MemoryRequired: new Tab_MostRecentBody("MemoryRequired"),  // MemoryRequired
         RecentAccessed: new Tab_MostRecentBody("RecentAccessed"),  // RecentAccessed
     }
 
     //
     _THIS.show_all(false)
     _THIS.m_tbodies["RecentAccessed"].show(true)
-    _THIS.m_tbodies["MemoryVerse"].show(false)
+    _THIS.m_tbodies["MemoryRequired"].show(false)
     $("#Mr_Input_Datalist").val("RecentAccessed")
 
     $(".docSwitchRecent").on("click", function () {
@@ -1860,7 +1860,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
 
     $("#clearUnse").bind("click", function () {
-        var cap = _THIS.getCap() //RecentAccessed or MemoryVerse
+        var cap = _THIS.getCap() //RecentAccessed or MemoryRequired
         _THIS.m_tbodies[cap].clearHistory()
     })
     $("#toggleSel").bind("click", function () {
@@ -1945,7 +1945,7 @@ Tab_MostRecent_BCV.prototype.getCap = function () {
 
 Tab_MostRecent_BCV.prototype.onClickHistoryItem = function (onClickHistoryItm) {
     this.m_tbodies.RecentAccessed.onClickHistoryItem(onClickHistoryItm)
-    this.m_tbodies.MemoryVerse.onClickHistoryItem(onClickHistoryItm)
+    this.m_tbodies.MemoryRequired.onClickHistoryItem(onClickHistoryItm)
 }
 
 Tab_MostRecent_BCV.prototype.clearHistory = function (idtxtout) {
@@ -2404,7 +2404,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
                 /////////////////////////////////////////////////////
                 if ("MostRecent_Verses" in ret.out.data) {
                     var MrKysVerse = Object.keys(ret.out.data.MostRecent_Verses)
-                    tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.MemoryVerse[0])
+                    tab_MostRecent_BCV.m_tbodies.MemoryRequired.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.MemoryRequired[0])
                     tab_MostRecent_BCV.m_tbodies.RecentAccessed.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.RecentAccessed[0])
 
                     var str = ""
@@ -2726,7 +2726,7 @@ OutputBibleTable.prototype.create_trs = function (odat) {
         return { trs: "", size: 0 };
     }
 
-    var stores = MyStorage.CreateMrObj("MemoryVerse")
+    var stores = MyStorage.CreateMrObj("MemoryRequired")
     var obj = stores.get_obj()
     var MemoryVersary = Object.keys(obj)
 

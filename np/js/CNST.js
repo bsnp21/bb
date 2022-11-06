@@ -14,7 +14,7 @@ var BibleInputMenuContainer = `
     <tbody id="divPopupMenu_BcvTag">
         <tr>
             <td>
-                <a id='divPopupMenu_CaptionBCV' title='push to MemoryVerse; save to repository; copy to clickboard.'></a>
+                <a id='divPopupMenu_CaptionBCV' title='push to MemoryRequired; save to repository; copy to clickboard.'></a>
             </td>
         </tr>
         <tr>
@@ -119,7 +119,7 @@ var BibleInputMenuContainer = `
             </td>
         </tr>
     </tbody>
-    <caption><a xid='divPopupMenu_CaptionBCV' title='push to MemoryVerse; save to repository; copy to clickboard.'></a></caption>
+    <caption><a xid='divPopupMenu_CaptionBCV' title='push to MemoryRequired; save to repository; copy to clickboard.'></a></caption>
     </table>
 </div>
 
@@ -201,7 +201,7 @@ var BibleInputMenuContainer = `
                        <input list="input_browsers" name="browser"  id='Mr_Input_Datalist'>
                        <datalist id="input_browsers">
                            <option value="RecentAccessed">
-                           <option value="MemoryVerse">
+                           <option value="MemoryRequired">
                            <option value="Chrome">
                            <option value="Opera">
                            <option value="Safari">
@@ -209,14 +209,14 @@ var BibleInputMenuContainer = `
                        </input>
                        <a id='clear_Tab_MostRecent_BCV_caps'>X</a>
                        
-                       <button class='docSwitchRecent ColorRecentMarks' title='RecentAccessed' id='RecentTouch_Btn'>T</button>
-                       <button class='docSwitchRecent' title="MemoryVerse" id='MemoryVerse_Btn'>M</button><br>
+                       <button class='docSwitchRecent ColorRecentMarks' title='RecentAccessed' id='RecentTouch_Btn'>Rx</button>
+                       <button class='docSwitchRecent' title="MemoryRequired" id='MemoryVerse_Btn'>Mr</button><br>
                        
                     </div>
             
                     <div id='RecentAccessed' class='RecentTable'>
                     </div>
-                    <div id='MemoryVerse' class='RecentTable'>
+                    <div id='MemoryRequired' class='RecentTable'>
                     </div>
                 
                     

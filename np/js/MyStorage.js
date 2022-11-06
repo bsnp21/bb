@@ -310,7 +310,7 @@ var MyStorage = {
 
 
     clear: function () {
-        var Ignory = ["repositories", "MemoryVerse"]
+        var Ignory = ["repositories", "MemoryRequired"]
         Object.keys(localStorage).forEach(function (key) {
             console.log(key)
             if (Ignory.indexOf(key) < 0) {
