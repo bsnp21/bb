@@ -314,7 +314,11 @@ var BibleUti = {
                     var bFound = false
                     for (const [rev, txt] of Object.entries(revObj)) {
                         if (rev === Fname) {
-                            var rep = new RegExp(parsePat.searchPat, parsePat.parm);
+                            try {
+                                var rep = new RegExp(parsePat.searchPat, parsePat.parm);
+                            } catch {
+                                console.error("search_str_in_bcvT err",parsePat.searchPat, parsePat.parm))
+                            }
                             var mat = txt.match(rep);
                             if (mat) {
                                 mat.forEach(function (s, i) {
@@ -335,6 +339,7 @@ var BibleUti = {
 
                                 bcvR[bkc][chp][vrs][rev] = txtFound
                             }
+
                         }
                     }
                     if (bFound) {
