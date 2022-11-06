@@ -1553,8 +1553,10 @@ Tab_DocumentSelected_Search.prototype.init = function () {
 
         MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
             function (ret) {
-                //add into datalist.
-                $("#MrSearchHistoryDatalist").prepend(`<option value='${skey}'></option>`)
+                //add into datalist unique.
+                if ($(`#MrSearchHistoryDatalist option[value='${skey}']`).length === 0) {
+                    $("#MrSearchHistoryDatalist").prepend(`<option value='${skey}'></option>`)
+                }
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
     })
