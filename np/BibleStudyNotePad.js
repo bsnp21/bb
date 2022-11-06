@@ -1419,7 +1419,6 @@ Tab_DocumentsClusterList.prototype.get_selected_seq_fnamesArr = function () {
 
 function Tab_DocumentSelected_Search(tid) {
     //this.m_tbid = tid // "#Tab_VersionNamesOfTheBible" Tab_doc_option_for_search
-    this.cbf_click_doc_to_run_search = null
 
     //this.m_selectedItems_ary = MyStorage.LastSelectedDocsList();//["CUVS"] //default
     this.m_gAppInstancesManager = null;
@@ -1473,9 +1472,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         }
         $("#searchNextresult").text("0/" + nFound)
     })
-    //$("#Btn_InSvr").on("click", function () {
-    //    _THIS.onclick_inSvr_BibleObj_search_str()
-    //})
+
     $("#searchNextresult").on("click", function () {
         $(this).text(".....")
         $("#sinput").val("").focus()
@@ -1662,9 +1659,6 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     document.g_NextIndex = -1
 
 
-
-    //this.cbf_click_doc_to_run_search()
-
     $("#searchNextresult").text("Serach str in server site..")
     var inpobj = g_aim.get_search_inp()
 
@@ -1685,6 +1679,14 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     if (SearchedVolumn.indexOf("Select") >= 0) {
         SearchedVolumn = "all"
     }
+
+    try {
+        var trymat = ("test").match(inpobj.Search.Strn)
+    } catch (err) {
+        alert("Regex Err:\n" + inpobj.Search.Strn)
+        return alert(err)
+    }
+
 
 
     if (volar.length === 0) {
@@ -2275,27 +2277,27 @@ AppInstancesManager.prototype.init = function (cbf) {
 
     //tab_DocumentSelected_Search.init()
     tab_DocumentSelected_Search.m_gAppInstancesManager = this;
-    tab_DocumentSelected_Search.cbf_click_doc_to_run_search = function () {
-        $("#searchNextresult").text("Serach str in server site..")
-        var inpobj = g_aim.get_search_inp()
-        var volar = Object.keys(inpobj.bibOj)
-        if (volar.length === 0) {
-            if (!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)) {
-                return;
-            }
-        }
-        var msg = ` found in '${inpobj.Search.File}' for '${volar.join()}.'`
-        var api = new BsnpRestApi()
-        api.ajaxion(RestApi.ApiBibleObj_search_txt,
-            inpobj,
-            function (ret) {
-                _This.apiCallback_Gen_output_table(ret, function (size) {
-                    $("#searchNextresult").text("0/" + size + msg)
-                    $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")
-                });
-                Uti.Msg(ret.out.result);
-            })
-    }
+    // tab_DocumentSelected_Search.cbf_click_doc_to_run_search = function () {
+    //     $("#searchNextresult").text("Serach str in server site..")
+    //     var inpobj = g_aim.get_search_inp()
+    //     var volar = Object.keys(inpobj.bibOj)
+    //     if (volar.length === 0) {
+    //         if (!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)) {
+    //             return;
+    //         }
+    //     }
+    //     var msg = ` found in '${inpobj.Search.File}' for '${volar.join()}.'`
+    //     var api = new BsnpRestApi()
+    //     api.ajaxion(RestApi.ApiBibleObj_search_txt,
+    //         inpobj,
+    //         function (ret) {
+    //             _This.apiCallback_Gen_output_table(ret, function (size) {
+    //                 $("#searchNextresult").text("0/" + size + msg)
+    //                 $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")
+    //             });
+    //             Uti.Msg(ret.out.result);
+    //         })
+    // }
 
     tab_DocumentSelected_Search.Update_DocSel_Table("#Tab_doc_option_for_search")
 

@@ -1,0 +1,165 @@
+<HTML>
+
+    <HEAD>
+        <TITLE>test</TITLE>
+        <base target="_blank" />
+        <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+        <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+    
+    
+    
+        <!--------->
+        <!----------------------------------------------------------------------------->
+        <!----------------------------------------------------------------------------->
+        <script language="javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+        <script language="javascript" src="../jq/jquery.js"></script>
+    
+        <!----------------------------------------------------------------------------->
+        <!------ api ---->
+        <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+        <script src="../np/js/BsnpRestApi.js"></script>
+        <script src="../np/js/CNST.js"></script>
+        <!----------------------------------------------------------------------------->
+    
+    
+        <style>
+            pre{
+                border: 1px solid black;
+            }
+    
+        </style>
+        <script>
+            var srcObj = {
+                    a: {
+                        b: { c: { x: 0 } },
+                    },
+                    a1: {
+                        b1: { c1: { x1: 1 } },
+                        b1a: { c1a: { x1a: 1 } }
+                    },
+                    a2: {
+                        b2: { c2: { x2: 2 } },
+                        b2b: { c2b: { x2b: 2 } }
+                    },
+                    a3: {
+                        u: { v: { w: '11111', x: [1, 2, 3, 4, 5], z: [222, 11] } },
+                        ar: [1111, 22222],
+                        test: [{ m: "1", n: '2' }]
+                    }
+    
+                }
+    
+    
+    
+            $(function () {
+                $("body").append(`<pre>FetchObjDat=${JSON.stringify(srcObj, null, 4)}</pre>`)
+                testuti()
+            })
+    
+    
+    
+            function testuti() {
+                var test = {
+                    FetchObjDat: function (datObj, SrcObj) {
+                        function _iterate(obj, srcObj) {
+                            for (var sproperty in obj) {
+                                console.log("sproperty=", sproperty)
+                                if (obj.hasOwnProperty(sproperty)) {
+                                    if (srcObj.hasOwnProperty(sproperty)) {
+                                        if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
+                                            _iterate(obj[sproperty], srcObj[sproperty]);
+                                        } else {
+                                            obj[sproperty] = srcObj[sproperty]
+                                        }
+                                    } else {
+                                        delete obj[sproperty]
+                                    }
+                                }
+                            }
+                        }
+                        _iterate(datObj, SrcObj)
+                        return datObj
+                    },
+                    FlushObjDat: function (datObj, targObj) {
+                        function _iterate(carObj, tarObj) {
+                            for (var sproperty in carObj) {
+                                console.log("sproperty=", sproperty)
+                                if (carObj.hasOwnProperty(sproperty)) {
+                                    if (tarObj.hasOwnProperty(sproperty)) {//match keys
+                                        if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
+                                            _iterate(carObj[sproperty], tarObj[sproperty]); //non-arry obj. 
+                                        } else {
+                                            if (null === carObj[sproperty]) { //to delete key in targetObj.
+                                                delete tarObj[sproperty]
+                                            } else {  //flush update target obj.
+                                                tarObj[sproperty] = carObj[sproperty]
+                                            }
+                                        }
+                                    } else {//mismatch keys
+                                        if (null === carObj[sproperty]) {
+                                            //nothing to delete. 
+                                        } else {//add new key to targetObj.
+                                            tarObj[sproperty] = carObj[sproperty]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        _iterate(datObj, targObj)
+                        return datObj
+                    },
+                }
+    
+                var srcObj = {
+                    a: {
+                        b: { c: { x: 0 } },
+                    },
+                    a1: {
+                        b1: { c1: { x1: 1 } },
+                        b1a: { c1a: { x1a: 1 } }
+                    },
+                    a2: {
+                        b2: { c2: { x2: 2 } },
+                        b2b: { c2b: { x2b: 2 } }
+                    },
+                    a3: {
+                        u: { v: { w: '11111', x: [1, 2, 3, 4, 5], z: [222, 11] } },
+                        ar: [1111, 22222],
+                        test: [{ m: "1", n: '2' }]
+                    }
+    
+                }
+                console.log("srcObj:", JSON.stringify(srcObj, null, 4))
+                var out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } } } }
+                test.FetchObjDat(out, srcObj)
+                console.log("out:", out)
+                $("body").append(`<pre>FetchObjDat=${JSON.stringify(srcObj, null, 4)}</pre>`)
+    
+                out = { a1: { b1a: {} }, a2: { b2: {} }, a3: { b3: { c3: { y3: 3 } }, ar: [1, 22, 33, 44] } }
+                test.FlushObjDat(out, srcObj)
+                console.log("srcObj:", srcObj)
+                $("body").append(`<pre>FlushObjDat=${JSON.stringify(srcObj, null, 4)}</pre>`)
+    
+                out = {  a3: {} }
+                test.FlushObjDat(out, srcObj)
+                console.log("srcObj flush:", srcObj)
+                $("body").append(`<pre>FlushObjDat=${JSON.stringify(srcObj, null, 4)}</pre>`)
+    
+                out = {  a3: null }
+                test.FlushObjDat(out, srcObj)
+                console.log("srcObj delete:", srcObj)
+                $("body").append(`<pre>FlushObjDat=${JSON.stringify(srcObj, null, 4)}</pre>`)
+            }
+           
+    
+        </script>
+    
+    
+    
+    </HEAD>
+    
+    <BODY>
+    
+    </BODY>
+    </HTML>
