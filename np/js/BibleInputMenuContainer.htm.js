@@ -243,6 +243,7 @@ var BibleInputMenuContainer = `
                 </div><br>
                 <div style='float:left;display:inline-block'>
                 <a id="REGEXP_AND">AND</a> | 
+                <a id="REGEXP__OR">OR</a> | 
                 <a id="REGEXP_IgnoreCase">IgnoreCase</a> | 
                 <a id="toggle_Case">toggleCase</a>  | 
                 

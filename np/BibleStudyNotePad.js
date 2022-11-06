@@ -1505,6 +1505,21 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         })
         $("#sinput").val(sss)
     })
+    $("#REGEXP__OR").on("click", function () {
+        var s = $("#sinput").val().trim();
+        if (s.length === 0) return alert("empty")
+        MyStorage.MostRecentSearchStrn.addonTop(s)
+        var ar = s.split(" ")
+        if(ar.length<=1) return
+        var sss = ""
+        ar.forEach(function (str) {
+            if (str.length > 0) {
+                sss += `(${str})|`
+            }
+        })
+        sss = sss.replace(/\|$/, "")
+        $("#sinput").val(sss)
+    })
     $("#REGEXP_IgnoreCase").on("click", function () {
         var s = $("#sinput").val().trim();
         if (s.length === 0) return alert("empty")
