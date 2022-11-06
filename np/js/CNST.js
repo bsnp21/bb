@@ -221,8 +221,8 @@ var BibleInputMenuContainer = `
                 
                     
                     <div>
-                    <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'>&empty;</a> 
-                    <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected'>&nbsp; &#8767; &nbsp; </a>
+                    <a id="clearUnse" class="RecentBCVsBtn" title='delete selected items'>&nbsp;&empty;&nbsp;</a> 
+                    <a id="toggleSel" class="RecentBCVsBtn" title='toggle selected and unselected &#8767;'>&nbsp; &excl;* &nbsp; </a>
                     
                     <a id="save2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
                     <a id="load2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
@@ -251,7 +251,7 @@ var BibleInputMenuContainer = `
                 
                 </div>  <br>
                
-                <table border="1" note="frame">
+                <table xborder="1" note="frame">
                 <tr>
                 <td>
                     <table id="Tab_selected_Doc_Search" border='1' style="float:left;">
@@ -278,7 +278,7 @@ var BibleInputMenuContainer = `
                 </td>
                 <td>
                     <div> 
-                        <a id="RemoveSearchStrn">&empty;</a>
+                        <a id="RemoveSearchStrn">&nbsp; &empty; &nbsp;</a>
                         <a id="save_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
                         <a id="load_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
                         <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput' value='MostRecentSearch'>

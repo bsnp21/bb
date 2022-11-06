@@ -1553,7 +1553,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
 
         MyStorage.Repo_save_dat_MostRecentSearches(inpkeyObj,
             function (ret) {
-                //add into datalist unique.
+                //add into datalist uniquely.
                 if ($(`#MrSearchHistoryDatalist option[value='${skey}']`).length === 0) {
                     $("#MrSearchHistoryDatalist").prepend(`<option value='${skey}'></option>`)
                 }
@@ -1883,9 +1883,10 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
         MyStorage.Repo_save_data_MostRecentVerses(inpkeyObj,
             function (ret) {
-                //add into datalist.
-                $("#input_browsers").prepend(`<option value='${skey}'></option>`)
-
+                //add into datalist uniquely.
+                if ($(`#input_browsers option[value='${skey}']`).length === 0) {
+                    $("#input_browsers").prepend(`<option value='${skey}'></option>`)
+                }
                 $(".RestSvrBtn_Running").removeClass("RestSvrBtn_Running")
             })
     })
