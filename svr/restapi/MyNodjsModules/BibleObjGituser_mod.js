@@ -317,7 +317,7 @@ var BibleUti = {
                             try {
                                 var rep = new RegExp(parsePat.searchPat, parsePat.parm);
                             } catch {
-                                console.error("search_str_in_bcvT err",parsePat.searchPat, parsePat.parm))
+                                console.error("search_str_in_bcvT err",parsePat.searchPat, parsePat.parm)
                             }
                             var mat = txt.match(rep);
                             if (mat) {
