@@ -314,6 +314,7 @@ var BibleUti = {
                     var bFound = false
                     for (const [rev, txt] of Object.entries(revObj)) {
                         if (rev === Fname) {
+                            var rep = null
                             try {
                                 var rep = new RegExp(parsePat.searchPat, parsePat.parm);
                             } catch {
