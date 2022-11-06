@@ -1622,7 +1622,7 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
     //console.log(ret);
     $("#Tab_regex_history_search tbody").html(trs).find(".SeaStrPickable").bind("click", function () {
         $(this).toggleClass("hili");
-        var s = $(this).text().trim();
+        var s = $(this).find("td:eq(1)").text().trim();
         $("#sinput").val(s);
     });
     Sort_Table("Tab_regex_history_search")
