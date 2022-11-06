@@ -1838,15 +1838,15 @@ function Tab_MostRecent_BCV() {
 Tab_MostRecent_BCV.prototype.init_Mrs = function () {
     var _THIS = this
     this.m_tbodies = {
-        MemoryVerse: new Tab_MostRecentBody("MemoryVerse"),
-        RecentTouch: new Tab_MostRecentBody("RecentTouch"),
+        MemoryVerse: new Tab_MostRecentBody("MemoryVerse"),  // MemoryRequired
+        RecentAccessed: new Tab_MostRecentBody("RecentAccessed"),  // RecentAccessed
     }
 
     //
     _THIS.show_all(false)
-    _THIS.m_tbodies["RecentTouch"].show(true)
+    _THIS.m_tbodies["RecentAccessed"].show(true)
     _THIS.m_tbodies["MemoryVerse"].show(false)
-    $("#Mr_Input_Datalist").val("RecentTouch")
+    $("#Mr_Input_Datalist").val("RecentAccessed")
 
     $(".docSwitchRecent").on("click", function () {
         _THIS.show_all(false)
@@ -1860,7 +1860,7 @@ Tab_MostRecent_BCV.prototype.init_Mrs = function () {
 
 
     $("#clearUnse").bind("click", function () {
-        var cap = _THIS.getCap() //RecentTouch or MemoryVerse
+        var cap = _THIS.getCap() //RecentAccessed or MemoryVerse
         _THIS.m_tbodies[cap].clearHistory()
     })
     $("#toggleSel").bind("click", function () {
@@ -1944,7 +1944,7 @@ Tab_MostRecent_BCV.prototype.getCap = function () {
 }
 
 Tab_MostRecent_BCV.prototype.onClickHistoryItem = function (onClickHistoryItm) {
-    this.m_tbodies.RecentTouch.onClickHistoryItem(onClickHistoryItm)
+    this.m_tbodies.RecentAccessed.onClickHistoryItem(onClickHistoryItm)
     this.m_tbodies.MemoryVerse.onClickHistoryItem(onClickHistoryItm)
 }
 
@@ -2015,7 +2015,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         //const ip = urlParams.get('ip');
         var htm = ""
         ret.biblical_order_splitted_ary.forEach(function (v, i) {
-            hist.m_tbodies.RecentTouch.addnew2table(v)
+            hist.m_tbodies.RecentAccessed.addnew2table(v)
             var sln = `<a href='#${v}'>${v}</a>`
             htm += `${sln} | `
         })
@@ -2192,7 +2192,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
         //store before clearup
         var ret = showup.get_selected_bcv_parm()
-        if (ret && ret.m_bcv) tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(ret.m_bcv)
+        if (ret && ret.m_bcv) tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(ret.m_bcv)
 
         //clearup
         showup.m_Chp.set_showupVal("")
@@ -2241,7 +2241,7 @@ AppInstancesManager.prototype.init = function (cbf) {
             digi.init_Vrs_digiKeys_by_vol()
 
             var bcv = `${vol}1:1`
-            tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(bcv)
+            tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(bcv)
             //d1.init_Chp_digiKeys_by_vol()
             //d2.disable_all_digiKey(true)
 
@@ -2360,7 +2360,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         par.m_tab_documentsClusterList = tab_documentsClusterList
         par.m_groupsMenuMgr = groupsMenuMgr
         popupMenu.popup(par)
-        tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(par.m_bcv)
+        tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(par.m_bcv)
         $("title").text(par.m_bcv)
 
         showup.update_showup(par.m_bcv)
@@ -2405,7 +2405,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
                 if ("MostRecent_Verses" in ret.out.data) {
                     var MrKysVerse = Object.keys(ret.out.data.MostRecent_Verses)
                     tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.MemoryVerse[0])
-                    tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.RecentTouch[0])
+                    tab_MostRecent_BCV.m_tbodies.RecentAccessed.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.RecentAccessed[0])
 
                     var str = ""
                     MrKysVerse.sort().forEach(function (key) {
@@ -2651,7 +2651,7 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
     $(tbid).find("td").bind("click", function () {
         $(this).toggleClass("hili_obi_td");
         var bcv = $(this).find(".popupclicklabel").attr("title")
-        tab_MostRecent_BCV.m_tbodies.RecentTouch.addnew2table(bcv)
+        tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(bcv)
     });
 }
 OutputBibleTable.prototype.Gen_output_table = function (cbf) {
