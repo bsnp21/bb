@@ -2406,32 +2406,37 @@ AppInstancesManager.prototype.init_load_storage = function () {
             Uti.set_menuContainer_color(ret)
             Uti.Msg("Ready ret.out", ret.out)
             try {
-                var MrKysVerse = Object.keys(ret.out.data.MostRecent_Verses)
-                var MrKysSearc = Object.keys(ret.out.data.MostRecent_Searches)
-                tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.MemoryVerse[0])
-                tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.RecentTouch[0])
+                /////////////////////////////////////////////////////
+                if ("MostRecent_Verses" in ret.out.data) {
+                    var MrKysVerse = Object.keys(ret.out.data.MostRecent_Verses)
+                    tab_MostRecent_BCV.m_tbodies.MemoryVerse.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.MemoryVerse[0])
+                    tab_MostRecent_BCV.m_tbodies.RecentTouch.m_MrObjInStore.set_obj(ret.out.data.MostRecent_Verses.RecentTouch[0])
 
-                var str = ""
-                MrKysVerse.sort().forEach(function (key) {
-                    str += `<option value="${key}"></option>`
-                })
-                $("#input_browsers").html(str)
+                    var str = ""
+                    MrKysVerse.sort().forEach(function (key) {
+                        str += `<option value="${key}"></option>`
+                    })
+                    $("#input_browsers").html(str)
+                }
 
 
-                ///////
-                str = ""
-                MrKysSearc.sort().forEach(function (sky) {
-                    str += `<option value='${sky}'></option>`
-                })
-                $("#MrSearchHistoryDatalist").html(str)
-                //
-                var obj = ret.out.data.MostRecent_Searches["MostRecentSearch"][0] //// must be an array to stop key walk through.
-                if (obj) {
-                    var ar = Object.keys(obj)
-                    //if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
-                    var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
-                    shob.set_obj(obj)
-                    tab_DocumentSelected_Search.gen_search_strn_history()//
+                /////////////////////////////////////////////////////
+                if ("MostRecent_Searches" in ret.out.data) {
+                    var MrKysSearc = Object.keys(ret.out.data.MostRecent_Searches)
+                    var str = ""
+                    MrKysSearc.sort().forEach(function (sky) {
+                        str += `<option value='${sky}'></option>`
+                    })
+                    $("#MrSearchHistoryDatalist").html(str)
+                    //
+                    var obj = ret.out.data.MostRecent_Searches["MostRecentSearch"][0] //// must be an array to stop key walk through.
+                    if (obj) {
+                        var ar = Object.keys(obj)
+                        //if (!confirm(ar.length + " items were loaded from svr.\nUpdate list?")) return;
+                        var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+                        shob.set_obj(obj)
+                        tab_DocumentSelected_Search.gen_search_strn_history()//
+                    }
                 }
 
             } catch {

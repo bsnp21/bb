@@ -272,17 +272,25 @@ var BibleInputMenuContainer = `
                         </tbody>
                     </table>
                 </td>
+                </tr>
+                <tr>
+                <td>
+                </td>
+                <td>
+                    <div> 
+                        <a id="save_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
+                        <a id="load_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
+                        <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput' value='MostRecentSearch'>
+                           <datalist id="MrSearchHistoryDatalist">
+                               <option value="MostRecentSearch">
+                            </datalist>
+                        </input>
+                        <a id='clear_MrSearchHistoryInput'>X</a>
+                    </div>
+                </td>
+                </tr>
                 </table>
-                <div> 
-                <a id="save_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='save to repo'>&#9635;</a>
-                <a id="load_SearchHistory2Repo" class="RecentBCVsBtn RestSvrBtn" xstyle="display: none;" title='load to repo'>&#9842;</a>
-                <input list="MrSearchHistoryDatalist" name="browser"  id='MrSearchHistoryInput' value='MostRecentSearch'>
-                   <datalist id="MrSearchHistoryDatalist">
-                       <option value="MostRecentSearch">
-                    </datalist>
-                </input>
-                <a id='clear_MrSearchHistoryInput'>X</a>
-            </div>
+                
                
                 
            
