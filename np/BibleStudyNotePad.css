@@ -121,7 +121,7 @@ body {
 
    
 
-    .hili, .hili_SearchStrInBibleStart, .hiliRecentBCV {
+    .hili, .hili_SearchStrInBibleStart, .hiliRecentBCV, .hili_SeaStrRaw{
         background-color: red;
     }
     .hili_SearchStrInBibleStopd {

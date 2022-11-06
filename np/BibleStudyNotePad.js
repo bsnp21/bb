@@ -1480,14 +1480,10 @@ Tab_DocumentSelected_Search.prototype.init = function () {
     $("#RemoveSearchStrn").on("click", function () {
         var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
         var obj = shob.get_obj()
-        $("#Tab_regex_history_search").find(".SeaStrPickable").each(function () {
-            if ($(this).hasClass("hili")) {
+        $("#Tab_regex_history_search tbody").find("tr.hili_SeaStrRaw").each(function () {
                 var key = $(this).attr("objkey")
                 delete obj[key]
                 $(this).empty()
-            } else {
-                //ar.push(JSON.stringify([strn, nums, srcs, rabg]))
-            }
         })
         shob.set_obj(obj)
         //MyStorage.MostRecentSearchStrn.set_ary(ar)
@@ -1622,22 +1618,15 @@ Tab_DocumentSelected_Search.prototype.gen_search_strn_history = function () {
             var keyary = JSON.parse(key)
             if (keyary.length == 4) {
                 trs += `<tr class='SeaStrPickable' objkey='${key}'><td class="MemoIdx">${idx--}</td><td>${keyary[0]}</td><td class='MemoNum'>${keyary[1]}</td><td class='MemoVsn'>${keyary[2]}</td><td class='MemoVols'>${keyary[3]}</td><td class="MemoTime">${val}</td></tr>`
-            } else {
-                var mat = obj[key].match(/^(\d{6}\s+\d{6})[\,](.+)/)
-                if (mat) {
-                    trs += `<tr class='SeaStrPickable' objkey='${key}'><td class="MemoIdx">${idx--}</td><td>${key}</td><td class="MemoTime">${mat[1]}</td><td>${mat[2]}</td></tr>`
-
-                }
             }
-
         }
     }
 
     //history
     //console.log(ret);
-    $("#Tab_regex_history_search tbody").html(trs).find(".SeaStrPickable").bind("click", function () {
-        $(this).toggleClass("hili");
-        var s = $(this).find("td:eq(1)").text().trim();
+    $("#Tab_regex_history_search tbody").html(trs).find("td").bind("click", function () {
+        $(this).parent().toggleClass("hili_SeaStrRaw");
+        var s = $(this).text().trim();
         $("#sinput").val(s);
     });
     Sort_Table("Tab_regex_history_search")
