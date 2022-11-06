@@ -40,18 +40,18 @@ var BibleUti = {
     },
 
     FetchObjDat: function (datObj, SrcObj) {
-        function _iterate(obj, srcObj) {
-            for (var sproperty in obj) {
+        function _iterate(carObj, srcObj) {
+            for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
-                if (obj.hasOwnProperty(sproperty)) {
+                if (carObj.hasOwnProperty(sproperty)) {
                     if (srcObj.hasOwnProperty(sproperty)) {
-                        if ("object" === typeof (obj[sproperty]) && !Array.isArray(obj[sproperty]) && Object.keys(obj[sproperty]).length > 0) {
-                            _iterate(obj[sproperty], srcObj[sproperty]);
+                        if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
+                            _iterate(carObj[sproperty], srcObj[sproperty]);
                         } else {
-                            obj[sproperty] = srcObj[sproperty]
+                            carObj[sproperty] = srcObj[sproperty]
                         }
                     } else {
-                        delete obj[sproperty]
+                        delete carObj[sproperty]
                     }
                 }
             }
@@ -85,7 +85,7 @@ var BibleUti = {
             }
         }
         _iterate(datObj, targObj)
-        return datObj
+        return targObj
     },
 
     WorkingRootDir: function (v) {
