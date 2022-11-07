@@ -173,7 +173,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         }
         $(function () {
             init_dat()
-            //init_load()
+            init_load()
             $("#init_load").on("click", function () {
                 $("#outputdat").text("run...")
                 init_load()
@@ -191,7 +191,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 <body onbeforeunload="return 'leave?';">
     
-    <button id="init_load">init_load</button>
+   
     <table border="1">
         <caption id="cap"></caption>
         <thead>
@@ -206,7 +206,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         </tbody>
     </table>
     <pre id="outputdat"></pre>
-    <button id="clear_diary">clear_diary</button>
+    <button id="init_load">init_load</button>
+    <a id="clear_diary">.</a>
     <a contenteditable=""></a>
 </body>
 
