@@ -1086,7 +1086,7 @@ BibleObjGituser.prototype.get_pfxname = function (DocCode) {
                 dest_pfname = this.get_usr_myoj_dir(`/${fnam}`)
             }
             break
-        case ".": //-: ./dat/MostRecentVerses; //not used MostRecentSearches
+        case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
                 var fnam = DocCode.substr(1)
                 dest_pfname = this.get_usr_acct_dir(`${fnam}_json.js`)

@@ -33,18 +33,50 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     <script language="javascript"
         src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
     <script src="./js/BsnpRestConst.js"></script>
+    <script src="./js/BsnpRestApi.js"></script>
+
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
     <script src="./js/MyStorage.js"></script>
 
-    <script src="./js/BsnpRestApi.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
     <!----- Insert this line after script imports -->
     <script>//if (window.module) module = window.module;</script>
     <!-------------------------------------------->
     <style>
-      
+
     </style>
+    <script>
+        var parm = window.location.search
+        if (!parm) { return alert("no search parameters in url.") }
+
+        function gen() {
+            var par = {
+                "fnames": [
+                    "./dat/MostRecentVerses"
+                ],
+                "data": {
+                    "2022": {
+              
+                    }
+                }
+            }
+            var sApiNameID = $(this).attr("apiId")
+            var api = new BsnpRestApi()
+            var _this = this
+            $(_this).next().text('')
+            api.ajaxion(
+                sApiNameID,
+                par,
+                function (ret) {
+                    console.log("ret", ret.out.data)
+                    $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                    if (ret.out.err) {
+                        alert("load failed ret.out.err= " + ret.out.err)
+                    }
+                })
+        }
+    </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">

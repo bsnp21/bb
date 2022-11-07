@@ -90,13 +90,13 @@ var RestApi_uPar_Validate = {
     "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
     "ApiUsrDat_save": function (upar) {
         BsnpRestUti.walk_obj(upar, {
-            fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+            fnames: ["./dat/MostRecentVerses"], //MyBiblicalDiary
             data: ""
         })
     },
     "ApiUsrDat_load": function (upar) {
         BsnpRestUti.walk_obj(upar, {
-            fnames: ["./dat/MostRecentVerses"], //MostRecentSearches
+            fnames: ["./dat/MostRecentVerses"], //MyBiblicalDiary
             data: ""
         })
     },
