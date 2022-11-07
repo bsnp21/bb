@@ -766,7 +766,7 @@ NCache.Init = function () {
                 var res3 = userProject.execSync_cmd_git(`git commit -m "on del in Cache"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.run_proj_destroy()
+                var res5 = userProject.Run_proj_destroy()
             }
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)
@@ -1211,7 +1211,7 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
     this.run_proj_state()
     return inp
 }
-BibleObjGituser.prototype.run_proj_destroy = function () {
+BibleObjGituser.prototype.Run_proj_destroy = function () {
     var inp = this.m_inp
     var proj = inp.usr_proj;
     if (!proj) {

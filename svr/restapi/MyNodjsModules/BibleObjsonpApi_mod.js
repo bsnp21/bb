@@ -543,7 +543,7 @@ var ApiJsonp_BibleObj = {
             if (inp.out.state.bEditable === 1) {
                 if (null === userProject.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                    userProject.run_proj_destroy()
+                    userProject.Run_proj_destroy()
                 } else {
                     inp.out.state.SSID = userProject.session_create()
                 }
@@ -568,7 +568,7 @@ var ApiJsonp_BibleObj = {
                 var res3 = userProject.execSync_cmd_git(`git commit -m "before del. repodesc:${inp.usr.repodesc}"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.run_proj_destroy()
+                var res5 = userProject.Run_proj_destroy()
             }
 
             userProject.run_proj_state()
