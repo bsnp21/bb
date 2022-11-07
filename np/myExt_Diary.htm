@@ -103,6 +103,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 })
         }
         function gen_table(retObj, yyyy) {
+            init_cap(yyyy)
             if (!retObj.hasOwnProperty(yyyy)) {
                 retObj[yyyy] = {}
             }
@@ -178,6 +179,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             })
 
         })
+        function init_cap(yyyy){
+            var str=window.location.search
+            var sea = new URLSearchParams(window.location.search)
+            var usr = sea.get("repo")
+            $("#cap").text(yyyy+": "+usr)
+        }
     </script>
 </head>
 
@@ -188,6 +195,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 
     <table border="1">
+        <caption id="cap"></caption>
         <thead>
             <tr>
                 <th>#</th>

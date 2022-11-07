@@ -2063,6 +2063,20 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         })
     })
 
+    $("#myExt_Diary").on("click", function () {
+        var repo = $("#repopath").val()
+        var mat = repo.match(/.+[\/](\w+)\.git$/)
+        if(mat){
+            //alert(mat[1])
+            $(this).attr("href", `./myExt_Diary.htm${window.location.search}&repo=${mat[1]}`)
+        }else{
+            alert("repousr not found in:" + repo)
+        }
+    })
+    //<a id='myExt_Diary' target='_blank' href="./myExt_Diary.htm${window.location.search+"&repo="}" title='Diary'>Diary</a> | 
+
+                
+
 
     $("#account_updateStatus").on("click", function () {
         MyStorage.Repositories().repos_app_update()
