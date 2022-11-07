@@ -874,6 +874,10 @@ var BibleObjGituser = function (rootDir) {
 
 
 
+BibleObjGituser.prototype.proj_get_usr_aux_ttl = function (inp) {
+    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+    return ttl
+}
 BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
     inp.out.state.ssid_cur = inp.SSID
     if (!inp.SSID || inp.SSID.length === 0) {
@@ -884,17 +888,8 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         //return null
     }
 
-    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+    var ttl = this.proj_get_usr_aux_ttl(inp);// inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
     inp.usr = NCache.Get(inp.SSID, ttl)
-
-    console.log("proj_get_usr_fr_cache_ssid inp.SSID:", inp.SSID)
-    console.log("proj_get_usr_fr_cache_ssid:inp.par.aux.cacheTTL=", ttl)
-    console.log("proj_get_usr_fr_cache_ssid:inp=", inp)
-    if (!inp.usr) {
-        inp.out.state.ssid_cur = "SSID-Timeout"
-        console.log("proj_get_usr_fr_cache_ssid:inp.out.state.ssid_cur=", inp.out.state.ssid_cur)
-        return null
-    }
 
 
     return inp.usr
