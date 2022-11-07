@@ -1416,20 +1416,19 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     var jsfname = this.get_pfxname(doc)
     console.log("jsfname=", jsfname)
     var ret = BibleUti.loadObj_by_fname(jsfname)
-    if (!ret.obj) return console.log("FATAL: loadObj_by_fname failed:=", jsfname)
-    try {
+    if (ret.obj)  {
         BibleUti.FlushObjDat(inp.par.data, ret.obj)
         console.log("ret", ret)
         ret.writeback()
-    } catch (err) {
-        console.log("err", err)
-        inp.out.state.err = err
+    } else  {
+        inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
+        console.log(inp.out.state.err)
     }
 
     //// 
     var save_res = {}
-    save_res.desc = "len:" + inp.par.data.length + ",dlt:" + ret.dlt_size
-    save_res.dlt = ret.dlt_size
+    save_res.desc = "len:" + inp.par.data.length;// + ",dlt:" + ret.dlt_size
+    //save_res.dlt = ret.dlt_size
     save_res.len = inp.par.data.length
     //inp.par.data = ""
     //save_res.ret = ret
