@@ -923,7 +923,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     this.proj_update_cache_ssid_by_inp_aux(inp)
     return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
-BibleObjGituser.prototype._____proj_get_usr_fr_decipher_cuid = function (inp) {
+BibleObjGituser.prototype._____________proj_get_usr_fr_decipher_cuid_______________ = function (inp) {
     console.log("inp.CUID", inp.CUID)
     if (!inp.CUID || inp.CUID.length === 0) return console.log(inp.CUID)
 
@@ -970,7 +970,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     }
     return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
-BibleObjGituser.prototype.parse_inp_usr2proj______________________ = function (inp) {
+BibleObjGituser.prototype._____________parse_inp_usr2proj______________________ = function (inp) {
     if ("object" !== typeof inp.usr || !inp.usr) {
         inp.usr_proj = null
         console.log("inp.usr is null")
