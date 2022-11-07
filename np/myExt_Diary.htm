@@ -20,31 +20,30 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
     <script xxxxxxxsrc="http://localhost:7878/assets/ckeditor/adapters/jq/jquery-2_1_3.min.js"
         note="selfseversite"></script>
-    <!-------------- ckeditor only--------------------->
-    <script src="../assets/ckeditor/ckeditor.js"></script>
-    <script src="../assets/ckeditor/samples/old/sample.js"></script>
-    <link href="../assets/ckeditor/samples/old/sample.css" rel="stylesheet">
 
-
-    <script ___src="http://localhost:7878/assets/ckeditor/ckeditor.js" note="selfseversite"></script>
-    <script ___src="http://localhost:7878/assets/ckeditor/samples/old/sample.js"></script>
     <!-------------------------------------------->
 
-    <script language="javascript"
-        src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
     <script src="./js/BsnpRestConst.js"></script>
     <script src="./js/BsnpRestApi.js"></script>
 
-    <script src="./js/UtiLib.js"></script>
-    <script src="./js/PageUti.js"></script>
+
     <script src="./js/MyStorage.js"></script>
 
-    <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
+
     <!----- Insert this line after script imports -->
     <script>//if (window.module) module = window.module;</script>
     <!-------------------------------------------->
     <style>
+        td[contenteditable='true'] {
+            background-color: aqua;
+        }
 
+        .hili {
+            background-color: red;
+        }
+        .savedok{
+            background-color: lightgreen;
+        }
     </style>
     <script>
         var parm = window.location.search
@@ -52,23 +51,21 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
         function init_dat() {
             $("#gen").on("click", function () {
+                if (!confirm("reset data?")) return
                 var par = {
                     "fnames": [
                         "./dat/MyBiblicalDiary"
                     ],
                     "data": {
-                        "2022": {
-                            "1101": "aapp"
-                        }
+                        "2022": null
                     }
                 }
-                //par.data["2022"]["1108"] = $(this).next().text()
-                var sApiNameID = RestApi.ApiUsrDat_save
+
                 var api = new BsnpRestApi()
                 var _this = this
-                //$(_this).next().text('...')
+
                 api.ajaxion(
-                    sApiNameID,
+                    RestApi.ApiUsrDat_save,
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
@@ -81,65 +78,83 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         }
 
         function init_load() {
-            $("#init_load").on("click", function () {
-                var par = {
-                    "fnames": [
-                        "./dat/MyBiblicalDiary"
-                    ],
-                    "data": {
-                    }
+            var par = {
+                "fnames": [
+                    "./dat/MyBiblicalDiary"
+                ],
+                "data": {
                 }
-                var yyyy = (new Date()).toISOString().substr(0, 4)
-                par.data[yyyy] = {}
+            }
+            var yyyy = (new Date()).toISOString().substr(0, 4)
+            par.data[yyyy] = {}
 
 
-                var api = new BsnpRestApi()
-                api.ajaxion(
-                    RestApi.ApiUsrDat_load,
-                    par,
-                    function (ret) {
-                        console.log("ret", ret.out.data)
-                        gen_table(ret.out.data, yyyy)
-                        $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
-                        if (ret.out.err) {
-                            alert("load failed ret.out.err= " + ret.out.err)
-                        }
-                    })
-            })
+            var api = new BsnpRestApi()
+            api.ajaxion(
+                RestApi.ApiUsrDat_load,
+                par,
+                function (ret) {
+                    console.log("ret", ret.out.data)
+                    gen_table(ret.out.data, yyyy)
+                    $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                    if (ret.out.err) {
+                        alert("load failed ret.out.err= " + ret.out.err)
+                    }
+                })
         }
         function gen_table(retObj, yyyy) {
+            if (!retObj.hasOwnProperty(yyyy)) {
+                retObj[yyyy] = {}
+            }
+            var mmdd = (new Date()).toISOString().replace(/\-/g, "").substr(4, 4)
+            if (!retObj[yyyy].hasOwnProperty(mmdd)) {
+                retObj[yyyy][mmdd] = "-" + mmdd
+            }
             var str = "", i = 0
             for (key in retObj[yyyy]) {
-                str += `<tr><td>${i++}</td><td class='datim' y4='${yyyy}' title='${yyyy}'>${key}</td><td class='edtxt'>${retObj[yyyy][key]}</td></tr>`
+                str += `<tr><td class='idx'>${i++}</td><td class='datime' y4='${yyyy}' title='${yyyy}'>${key}</td><td class='edtxt'>${retObj[yyyy][key]}</td></tr>`
             }
 
             $("#outb").html(str)
             $(".edtxt").on("click", function () {
                 $(this).attr("contenteditable", "true")
             })
-            $(".datim").on("click", function () {
-                var txt = $(this).next().text()
+            $(".datime").on("click", function () {
+                var _THIS = this
+                $(".hili").removeClass("hili")
+                $(this).addClass("hili")
+                var editable = $(this).next().attr("contenteditable")
+                if (editable === "true") {
+                    if (!confirm("save?")) {
+                        $(_THIS).next().attr("contenteditable", null)
+                        return
+                    }
+                } else {
+                    return
+                }
+                $(_THIS).next().attr("contenteditable", null)
+                var txt = $(this).next().html()
                 var mmdd = $(this).text().toString()
                 var yyyy = $(this).attr("y4")
-                $(this).next().attr("contenteditable", null)
-                save_txt(yyyy, mmdd, txt)
+                save_txt(yyyy, mmdd, txt, function (ret) {
+                    $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                    $(_THIS).next().addClass("savedok")
+                    if (ret.out.err) {
+                        alert("load failed ret.out.err= " + ret.out.err)
+                    }
+                })
             })
         }
-        function save_txt(yyyy, mmdd, txt) {
+        function save_txt(yyyy, mmdd, txt, cbf) {
             var par = {
                 "fnames": [
                     "./dat/MyBiblicalDiary"
                 ],
-                "data": {
-                    "2022": {
-                        1106: "exy--pp",
-                        1107: "fadsfasfasf"
-
-                    }
-                }
+                "data": {}
             }
 
-            par.data[yyyy]["" + mmdd] = txt
+            par.data[yyyy] = {}
+            par.data[yyyy][mmdd] = txt
 
             var api = new BsnpRestApi()
             var _this = this
@@ -149,26 +164,34 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 par,
                 function (ret) {
                     console.log("ret", ret.out.data)
-                    $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
-                    if (ret.out.err) {
-                        alert("load failed ret.out.err= " + ret.out.err)
-                    }
+                    if (cbf) cbf(ret)
                 })
         }
         $(function () {
             init_dat()
             init_load()
+            $("#init_load").on("click", function () {
+                init_load()
+            })
+
         })
     </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">
     <button id="gen">init_dat</button>
-    <a contenteditable="">qwqqwqwqw</a>
+    <a contenteditable=""></a>
     <button id="init_load">init_load</button>
 
 
     <table border="1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>md</th>
+                <th>Contents of Diary</th>
+            </tr>
+        </thead>
         <tbody id="outb">
 
         </tbody>
