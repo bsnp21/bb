@@ -949,7 +949,7 @@ BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (inp) {
     return inp
 
 }
-BibleObjGituser.prototype.proj_parse_usr_signin = function (inp) {
+BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     this.m_inp = inp
     if (!inp || !inp.out) {
         console.log("!inp || !inp.out")

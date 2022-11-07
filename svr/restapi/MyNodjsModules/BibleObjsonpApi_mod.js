@@ -510,7 +510,7 @@ var ApiJsonp_BibleObj = {
         }
         var inp = ApiUti.Parse_GET_req_to_inp(req)
         var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
-        var ret = userProject.proj_parse_usr_signin(inp)
+        var ret = userProject.Proj_parse_usr_signin(inp)
         if (ret) {
             userProject.run_proj_setup()
 
@@ -536,8 +536,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
-            var proj = userProject.proj_parse_usr_signin(inp)
-            if (!proj) return console.log("proj_parse_usr_signin failed.")
+            var proj = userProject.Proj_parse_usr_signin(inp)
+            if (!proj) return console.log("Proj_parse_usr_signin failed.")
 
             userProject.run_proj_setup()
             if (inp.out.state.bEditable === 1) {
