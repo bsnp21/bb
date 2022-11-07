@@ -41,7 +41,7 @@ var BibleUti = {
 
     FetchObjDat: function (datObj, SrcObj) {
         function _iterate(carObj, srcObj) {
-            if(!srcObj) return;
+            if (!srcObj) return;
             for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
                 if (carObj.hasOwnProperty(sproperty)) {
@@ -62,7 +62,7 @@ var BibleUti = {
     },
     FlushObjDat: function (datObj, targObj) {
         function _iterate(carObj, tarObj) {
-            if(!tarObj) return;
+            if (!tarObj) return;
             for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
                 if (carObj.hasOwnProperty(sproperty)) {
@@ -320,7 +320,7 @@ var BibleUti = {
                             try {
                                 var rep = new RegExp(parsePat.searchPat, parsePat.parm);
                             } catch {
-                                console.error("search_str_in_bcvT err",parsePat.searchPat, parsePat.parm)
+                                console.error("search_str_in_bcvT err", parsePat.searchPat, parsePat.parm)
                             }
                             var mat = txt.match(rep);
                             if (mat) {
@@ -931,7 +931,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     this.proj_update_cache_ssid_by_inp_aux(inp)
     return this.parse_inp_usr2proj(inp)
 }
-BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (inp) {
+BibleObjGituser.prototype._____proj_get_usr_fr_decipher_cuid = function (inp) {
     console.log("inp.CUID", inp.CUID)
     if (!inp.CUID || inp.CUID.length === 0) return console.log(inp.CUID)
 
@@ -947,8 +947,25 @@ BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (inp) {
     console.log(usrObj)
     inp.usr = usrObj
     return inp
-
 }
+BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (cuid, cipherusrs) {
+    console.log("inp.CUID", cuid)
+    if (!cuid || cuid.length === 0) return console.log(cuid)
+
+    var robj = NCache.myCache.take(cuid) //take: for safety delete immediately after use.
+    if (!robj) return console.log("cache null=" + cuid)
+    console.log(robj)
+
+    console.log(cipherusrs)
+
+    var str = BibleUti.decrypt_txt(cipherusrs, robj.privateKey)
+    var usrObj = JSON.parse(str)
+    console.log("session_decipher_usrs usrObj=")
+    console.log(usrObj)
+    inp.usr = usrObj
+    return usrObj
+}
+
 BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     this.m_inp = inp
     if (!inp || !inp.out) {
@@ -956,7 +973,8 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
         return null
     }
 
-    if (null === this.proj_get_usr_fr_decipher_cuid(inp)) {
+    inp.usr = this.proj_get_usr_fr_decipher_cuid(inp.CUID, inp.cipherusrs)
+    if (!inp.usr) {
         return null
     }
     return this.parse_inp_usr2proj(inp)
@@ -1418,11 +1436,11 @@ BibleObjGituser.prototype.save_userData_frm_client = function (inp) {
     var jsfname = this.get_pfxname(doc)
     console.log("jsfname=", jsfname)
     var ret = BibleUti.loadObj_by_fname(jsfname)
-    if (ret.obj)  {
+    if (ret.obj) {
         BibleUti.FlushObjDat(inp.par.data, ret.obj)
         console.log("ret", ret)
         ret.writeback()
-    } else  {
+    } else {
         inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
         console.log(inp.out.state.err)
     }
