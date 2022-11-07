@@ -6,7 +6,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 <html>
 
 <head>
-    <title>Editing</title>
+    <title>Diary</title>
     <base target="xxx_blank" />
     <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
@@ -48,23 +48,26 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     </style>
     <script>
         var parm = window.location.search
-        if (!parm) { return alert("no search parameters in url.") }
+        if (!parm) {  alert("no search parameters in url.") }
 
         function gen() {
-            var par = {
+            $("#gen").on("click",function(){
+                var par = {
                 "fnames": [
-                    "./dat/MostRecentVerses"
+                    "./dat/MyBiblicalDiary"
                 ],
                 "data": {
                     "2022": {
+                        1106:"exy"
               
                     }
                 }
             }
-            var sApiNameID = $(this).attr("apiId")
+            par.data[2022]["1107"]=$(this).next().text()
+            var sApiNameID = RestApi.ApiUsrDat_save
             var api = new BsnpRestApi()
             var _this = this
-            $(_this).next().text('')
+            //$(_this).next().text('...')
             api.ajaxion(
                 sApiNameID,
                 par,
@@ -75,11 +78,48 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         alert("load failed ret.out.err= " + ret.out.err)
                     }
                 })
+            })
         }
+        function get() {
+            $("#get").on("click",function(){
+                var par = {
+                "fnames": [
+                    "./dat/MyBiblicalDiary"
+                ],
+                "data": {
+                    "2022": {
+                       
+              
+                    }
+                }
+            }
+            
+            var sApiNameID = RestApi.ApiUsrDat_load
+            var api = new BsnpRestApi()
+            var _this = this
+            $(_this).next().text('...')
+            api.ajaxion(
+                sApiNameID,
+                par,
+                function (ret) {
+                    console.log("ret", ret.out.data)
+                    $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                    if (ret.out.err) {
+                        alert("load failed ret.out.err= " + ret.out.err)
+                    }
+                })
+            })
+        }
+        $(function(){
+           gen()
+           get()
+        })
     </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">
+    <button id="gen" >gen</button><pre contenteditable="">qwqqwqwqw</pre>
+    <button id="get" >get</button><pre></pre>
 
 </body>
 
