@@ -4,7 +4,7 @@ const CNST = {
 }
 ///////////////////////////////
 // Steps to add a new book or e_* book.
-// 1. add the idential file name in FnameOfBibleObj in CNST.js. 
+// 1. add the idential file name in FnameOfBibleObj in BsnpRestConst.js. 
 // 2. add the file in github(wdingbox).
 //    a. if the file is a new version of the Bible, e.g. BBE.json.js,
 //       add it in bible_obj_lib/jsdb/jsBibleObj/BBE.json.js 
