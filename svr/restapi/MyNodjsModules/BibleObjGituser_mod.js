@@ -1154,6 +1154,7 @@ BibleObjGituser.prototype.run_makingup_missing_files = function (bCpy) {
     var srcdir = this.get_dir_lib_template()
     var nMissed = 0
     BibleUti.GetFilesAryFromDir(srcdir, true, function (srcfname) {
+        console.log("---get_dir_lib_template:", srcfname)
         var ret = path.parse(srcfname);
         var ext = ret.ext
         var bas = ret.base
