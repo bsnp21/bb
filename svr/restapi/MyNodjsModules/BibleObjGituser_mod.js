@@ -1177,7 +1177,7 @@ BibleObjGituser.prototype.run_makingup_missing_files = function (bCpy) {
     return nMissed
 }
 
-BibleObjGituser.prototype.run_proj_setup = function () {
+BibleObjGituser.prototype.Run_proj_setup = function () {
     console.log("********************************************* run setup 1")
     var inp = this.m_inp
     if (!inp.usr_proj || !inp.out.state) {
