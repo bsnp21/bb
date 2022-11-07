@@ -900,11 +900,7 @@ BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
         return null
     }
 
-    //extra work: update repodesc
-    if ("string" === typeof inp.par.aux.Update_repodesc) {
-        inp.usr.repodesc = inp.par.aux.Update_repodesc
-    }
-    var ttl = inp.par.aux.cacheTTL
+    var ttl = this.proj_get_usr_aux_ttl(inp);//inp.par.aux.cacheTTL
     if (!ttl) {
         return
     }
