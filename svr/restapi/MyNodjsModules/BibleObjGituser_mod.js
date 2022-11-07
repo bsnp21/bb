@@ -40,6 +40,7 @@ var BibleUti = {
     },
 
     FetchObjDat: function (datObj, SrcObj) {
+        if(!SrcObj) return datObj;
         function _iterate(carObj, srcObj) {
             for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
