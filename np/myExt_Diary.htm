@@ -122,6 +122,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             $(".datime").on("click", function () {
                 var _THIS = this
                 $(".hili").removeClass("hili")
+                $("#outputdat").text(".")
+
                 $(this).addClass("hili")
                 var editable = $(this).next().attr("contenteditable")
                 if (editable === "true") {
