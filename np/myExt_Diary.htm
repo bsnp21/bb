@@ -34,15 +34,33 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     <script>//if (window.module) module = window.module;</script>
     <!-------------------------------------------->
     <style>
+        table {
+            margin-bottom: 500px;
+        }
+
+        td {}
+
         td[contenteditable='true'] {
             background-color: aqua;
+            vertical-align: top;
         }
 
         .hili {
-            background-color: red;
+            background-color: coral;
         }
-        .savedok{
+
+        .savedok {
             background-color: lightgreen;
+        }
+
+        .vertxt{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            writing-mode: vertical-lr;
+            min-height: 1em;
+            line-height: 1em;
+            
         }
     </style>
     <script>
@@ -113,7 +131,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             }
             var str = "", i = 0
             for (key in retObj[yyyy]) {
-                str += `<tr><td class='idx'>${i++}</td><td class='datime' y4='${yyyy}' title='${yyyy}'>${key}</td><td class='edtxt'>${retObj[yyyy][key]}</td></tr>`
+                str += `<tr><td class='idx'>${i++}</td><td class='datime' y4='${yyyy}' title='${yyyy}'><a class='vertxt'>${key}</a></td><td class='edtxt'>${retObj[yyyy][key]}</td></tr>`
             }
 
             $("#outb").html(str)
@@ -180,18 +198,18 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             })
 
         })
-        function init_cap(yyyy){
-            var str=window.location.search
+        function init_cap(yyyy) {
+            var str = window.location.search
             var sea = new URLSearchParams(window.location.search)
             var usr = sea.get("repo")
-            $("#cap").text(yyyy+": "+usr)
+            $("#cap").text(yyyy + ": " + usr)
         }
     </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">
-    
-   
+
+
     <table border="1">
         <caption id="cap"></caption>
         <thead>
