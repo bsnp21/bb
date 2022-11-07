@@ -58,7 +58,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     ],
                     "data": {
                         "2022": {
-                            "1101":"aapp"
+                            "1101": "aapp"
                         }
                     }
                 }
@@ -79,7 +79,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     })
             })
         }
-        
+
         function init_load() {
             $("#init_load").on("click", function () {
                 var par = {
@@ -89,19 +89,17 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     "data": {
                     }
                 }
-                var dtm = (new Date()).toISOString().substr(0,4)
-                par.data[dtm] = {}
+                var yyyy = (new Date()).toISOString().substr(0, 4)
+                par.data[yyyy] = {}
 
-                
+
                 var api = new BsnpRestApi()
-                var _this = this
-                 
                 api.ajaxion(
                     RestApi.ApiUsrDat_load,
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
-                        gen_table(ret.out.data["2022"])
+                        gen_table(ret.out.data, yyyy)
                         $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
                         if (ret.out.err) {
                             alert("load failed ret.out.err= " + ret.out.err)
@@ -109,10 +107,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     })
             })
         }
-        function gen_table(retObj) {
+        function gen_table(retObj, yyyy) {
             var str = "", i = 0
-            for (key in retObj) {
-                str += `<tr><td>${i++}</td><td class='datim'>${key}</td><td class='edtxt'>${retObj[key]}</td></tr>`
+            for (key in retObj[yyyy]) {
+                str += `<tr><td>${i++}</td><td class='datim' y4='${yyyy}' title='${yyyy}'>${key}</td><td class='edtxt'>${retObj[yyyy][key]}</td></tr>`
             }
 
             $("#outb").html(str)
@@ -122,8 +120,9 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             $(".datim").on("click", function () {
                 var txt = $(this).next().text()
                 var mmdd = $(this).text().toString()
+                var yyyy = $(this).attr("y4")
                 $(this).next().attr("contenteditable", null)
-                save_txt("2022", mmdd, txt)
+                save_txt(yyyy, mmdd, txt)
             })
         }
         function save_txt(yyyy, mmdd, txt) {
@@ -140,7 +139,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 }
             }
 
-            par.data[yyyy][""+mmdd] = txt
+            par.data[yyyy]["" + mmdd] = txt
 
             var api = new BsnpRestApi()
             var _this = this
@@ -167,7 +166,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     <button id="gen">init_dat</button>
     <a contenteditable="">qwqqwqwqw</a>
     <button id="init_load">init_load</button>
-   
+
 
     <table border="1">
         <tbody id="outb">
