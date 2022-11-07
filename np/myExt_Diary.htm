@@ -57,10 +57,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         "./dat/MyBiblicalDiary"
                     ],
                     "data": {
-                        "2023": {
-                            1106: "exy",
-                            1107: "fadsfasfasf"
-
+                        "2022": {
+                            "1101":"aapp"
                         }
                     }
                 }
@@ -89,7 +87,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         "./dat/MyBiblicalDiary"
                     ],
                     "data": {
-                        "2023": {
+                        "2022": {
 
 
                         }
@@ -105,7 +103,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
-                        gen_table(ret.out.data["2023"])
+                        gen_table(ret.out.data["2022"])
                         $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
                         if (ret.out.err) {
                             alert("load failed ret.out.err= " + ret.out.err)
@@ -127,7 +125,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var txt = $(this).next().text()
                 var mmdd = $(this).text().toString()
                 $(this).next().attr("contenteditable", null)
-                save_txt("2023", mmdd, txt)
+                save_txt("2022", mmdd, txt)
             })
         }
         function save_txt(yyyy, mmdd, txt) {
@@ -136,8 +134,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     "./dat/MyBiblicalDiary"
                 ],
                 "data": {
-                    "2023": {
-                        1106: "exy",
+                    "2022": {
+                        1106: "exy--pp",
                         1107: "fadsfasfasf"
 
                     }
