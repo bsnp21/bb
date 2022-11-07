@@ -917,7 +917,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     }
 
     inp.usr = this.proj_get_usr_fr_cache_ssid(inp)
-    if (null === inp.usr) {
+    if (!inp.usr) {
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
@@ -1004,7 +1004,7 @@ BibleObjGituser.prototype._____________parse_inp_usr2proj______________________ 
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     //this.m_inp = inp
     var usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
-   
+
     BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
 
     if (passcode.trim().length > 0) {
