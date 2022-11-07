@@ -95,8 +95,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 par,
                 function (ret) {
                     console.log("ret", ret.out.data)
-                    gen_table(ret.out.data, yyyy)
                     $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                    gen_table(ret.out.data, yyyy)
                     if (ret.out.err) {
                         alert("load failed ret.out.err= " + ret.out.err)
                     }
@@ -171,6 +171,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             init_dat()
             init_load()
             $("#init_load").on("click", function () {
+                $("#outputdat").text("run...")
                 init_load()
             })
 
@@ -200,3 +201,6 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 </body>
 
 </script>
+<!----
+Jesus did not recommend us to take part in politics. But He did not curse politicians, Through politics, we can know the world, and through it, we can know the sign of the world, the will of God, to testify what Jesus ever said to us, the power of Jesus.--
+-->
