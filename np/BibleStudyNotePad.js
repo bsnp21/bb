@@ -2033,7 +2033,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     });
 
 
-    $("#NewPage").attr("href", window.location.href)
+   
 
 
 
@@ -2057,7 +2057,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         //var d = new Date()
         //$("#repodesc").val(d.toISOString().substr(0, 10) + "," + d.toLocaleTimeString() + ". " + tx)
     })
-    $("#account_helper").on("click", function () {
+    $("#account_reSignIn").on("click", function () {
         Uti.open_child_window("./mySignIn.htm", function (data) {
             MyStorage.Repositories().repos_app_set(data)
         })
