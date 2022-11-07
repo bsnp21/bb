@@ -1010,28 +1010,18 @@ BibleObjGituser.prototype.parse_inp_usr2proj______________________ = function (i
     return inp
 }
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
-    this.m_inp = inp
-    inp.usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
-    if (!inp.usr_proj) {
-        inp.out.desc = "invalid repospath."
-        console.log(inp.out.desc)
-        return null;
-    }
-    BibleUti._deplore_usr_proj_dirs(inp.usr_proj, this.m_sBaseUsrs)
+    //this.m_inp = inp
+    var usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
+   
+    BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
 
     if (passcode.trim().length > 0) {
-        BibleUti._interpret_git_config_Usr_Pwd_Url(inp.usr_proj, passcode)//inp.usr.passcode
+        BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
     }
 
-
-    if (null === BibleUti._check_pub_testing(inp)) {
-        inp.out.desc = "failed pub test."
-        inp.usr_proj = null
-        console.log(inp.out.desc)
-        return null
-    }
     //
-    return inp
+    this.m_inp.usr_proj = usr_proj
+    return this.m_inp
 }
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
