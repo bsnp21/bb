@@ -48,28 +48,109 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
     </style>
     <script>
         var parm = window.location.search
-        if (!parm) {  alert("no search parameters in url.") }
+        if (!parm) { alert("no search parameters in url.") }
 
         function gen() {
-            $("#gen").on("click",function(){
+            $("#gen").on("click", function () {
                 var par = {
+                    "fnames": [
+                        "./dat/MyBiblicalDiary"
+                    ],
+                    "data": {
+                        "2023": {
+                            1106: "exy",
+                            1107: "fadsfasfasf"
+
+                        }
+                    }
+                }
+                //par.data["2022"]["1108"] = $(this).next().text()
+                var sApiNameID = RestApi.ApiUsrDat_save
+                var api = new BsnpRestApi()
+                var _this = this
+                //$(_this).next().text('...')
+                api.ajaxion(
+                    sApiNameID,
+                    par,
+                    function (ret) {
+                        console.log("ret", ret.out.data)
+                        $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                        if (ret.out.err) {
+                            alert("load failed ret.out.err= " + ret.out.err)
+                        }
+                    })
+            })
+        }
+        
+        function get() {
+            $("#get").on("click", function () {
+                var par = {
+                    "fnames": [
+                        "./dat/MyBiblicalDiary"
+                    ],
+                    "data": {
+                        "2023": {
+
+
+                        }
+                    }
+                }
+
+                var sApiNameID = RestApi.ApiUsrDat_load
+                var api = new BsnpRestApi()
+                var _this = this
+                $(_this).next().text('...')
+                api.ajaxion(
+                    sApiNameID,
+                    par,
+                    function (ret) {
+                        console.log("ret", ret.out.data)
+                        gen_table(ret.out.data["2023"])
+                        $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                        if (ret.out.err) {
+                            alert("load failed ret.out.err= " + ret.out.err)
+                        }
+                    })
+            })
+        }
+        function gen_table(retObj) {
+            var str = "", i = 0
+            for (key in retObj) {
+                str += `<tr><td>${i++}</td><td class='datim'>${key}</td><td class='edtxt'>${retObj[key]}</td></tr>`
+            }
+
+            $("#outb").html(str)
+            $(".edtxt").on("click", function () {
+                $(this).attr("contenteditable", "true")
+            })
+            $(".datim").on("click", function () {
+                var txt = $(this).next().text()
+                var mmdd = $(this).text().toString()
+                $(this).next().attr("contenteditable", null)
+                save_txt("2023", mmdd, txt)
+            })
+        }
+        function save_txt(yyyy, mmdd, txt) {
+            var par = {
                 "fnames": [
                     "./dat/MyBiblicalDiary"
                 ],
                 "data": {
-                    "2022": {
-                        1106:"exy"
-              
+                    "2023": {
+                        1106: "exy",
+                        1107: "fadsfasfasf"
+
                     }
                 }
             }
-            par.data[2022]["1107"]=$(this).next().text()
-            var sApiNameID = RestApi.ApiUsrDat_save
+
+            par.data[yyyy][""+mmdd] = txt
+
             var api = new BsnpRestApi()
             var _this = this
             //$(_this).next().text('...')
             api.ajaxion(
-                sApiNameID,
+                RestApi.ApiUsrDat_save,
                 par,
                 function (ret) {
                     console.log("ret", ret.out.data)
@@ -78,49 +159,25 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                         alert("load failed ret.out.err= " + ret.out.err)
                     }
                 })
-            })
         }
-        function get() {
-            $("#get").on("click",function(){
-                var par = {
-                "fnames": [
-                    "./dat/MyBiblicalDiary"
-                ],
-                "data": {
-                    "2022": {
-                       
-              
-                    }
-                }
-            }
-            
-            var sApiNameID = RestApi.ApiUsrDat_load
-            var api = new BsnpRestApi()
-            var _this = this
-            $(_this).next().text('...')
-            api.ajaxion(
-                sApiNameID,
-                par,
-                function (ret) {
-                    console.log("ret", ret.out.data)
-                    $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
-                    if (ret.out.err) {
-                        alert("load failed ret.out.err= " + ret.out.err)
-                    }
-                })
-            })
-        }
-        $(function(){
-           gen()
-           get()
+        $(function () {
+            gen()
+            get()
         })
     </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">
-    <button id="gen" >gen</button><pre contenteditable="">qwqqwqwqw</pre>
-    <button id="get" >get</button><pre></pre>
+    <button id="gen">gen</button>
+    <pre contenteditable="">qwqqwqwqw</pre>
+    <button id="get">get</button>
+    <pre></pre>
 
+    <table border="1">
+        <tbody id="outb">
+
+        </tbody>
+    </table>
 </body>
 
 </script>
