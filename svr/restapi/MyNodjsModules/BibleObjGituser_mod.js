@@ -962,7 +962,6 @@ BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (cuid, cipher
     var usrObj = JSON.parse(str)
     console.log("session_decipher_usrs usrObj=")
     console.log(usrObj)
-    inp.usr = usrObj
     return usrObj
 }
 
