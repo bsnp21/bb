@@ -51,13 +51,23 @@
 
 
         $(function () {
+            function get_test_list(urls) {
+                var str = `<ol>
+                        <li>Add to url param: <a href='?ip=${urls}'>?ip=${urls}</a><br><br></li>
+                        <li>validate: <a href='${urls}'>${urls}</a></li>
+                        <li>validate: <a href='${urls}/get_OTK'>${urls}/get_OTK</a></li>
+                        </ol>
+                        `
+                return str;
+            }
             $("#get_api_svrip_https").on("click", function () {
                 var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
-                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
+                $(this).next().html(get_test_list(urls))
             })
             $("#get_api_svrip_http").on("click", function () {
                 var urls = `http://${config_websvr_data.ip}:${config_websvr_data.http_port}`
-                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
+                //$(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
+                $(this).next().html(get_test_list(urls))
             })
 
             $("#passcode").on("click", function () {
@@ -70,7 +80,7 @@
             })
 
             $("#api_signin_ip").on("click", function () {
-                
+
                 $("#ret_signin").html("")
                 $("#addur_ssid").attr("href", null).text("add SSID on url.")
 
@@ -281,7 +291,7 @@
             <h3>sign out</h3>
             <pre id="sign_out">
                 api.ajaxion('ApiUsrReposData_destroy', {}, (ret)=>{})
-            </pre><a>..</a> 
+            </pre><a>..</a>
         </li>
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
