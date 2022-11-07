@@ -50,7 +50,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         var parm = window.location.search
         if (!parm) { alert("no search parameters in url.") }
 
-        function gen() {
+        function init_dat() {
             $("#gen").on("click", function () {
                 var par = {
                     "fnames": [
@@ -72,7 +72,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
-                        $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                        $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
                         if (ret.out.err) {
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
@@ -80,31 +80,29 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             })
         }
         
-        function get() {
-            $("#get").on("click", function () {
+        function init_load() {
+            $("#init_load").on("click", function () {
                 var par = {
                     "fnames": [
                         "./dat/MyBiblicalDiary"
                     ],
                     "data": {
-                        "2022": {
-
-
-                        }
                     }
                 }
+                var dtm = (new Date()).toISOString().substr(0,4)
+                par.data[dtm] = {}
 
-                var sApiNameID = RestApi.ApiUsrDat_load
+                
                 var api = new BsnpRestApi()
                 var _this = this
-                $(_this).next().text('...')
+                 
                 api.ajaxion(
-                    sApiNameID,
+                    RestApi.ApiUsrDat_load,
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
                         gen_table(ret.out.data["2022"])
-                        $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                        $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
                         if (ret.out.err) {
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
@@ -152,30 +150,31 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 par,
                 function (ret) {
                     console.log("ret", ret.out.data)
-                    $(_this).next().text(`ret = ${JSON.stringify(ret, null, 4)}`)
+                    $("#outputdat").text(`ret = ${JSON.stringify(ret, null, 4)}`)
                     if (ret.out.err) {
                         alert("load failed ret.out.err= " + ret.out.err)
                     }
                 })
         }
         $(function () {
-            gen()
-            get()
+            init_dat()
+            init_load()
         })
     </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">
-    <button id="gen">gen</button>
-    <pre contenteditable="">qwqqwqwqw</pre>
-    <button id="get">get</button>
-    <pre></pre>
+    <button id="gen">init_dat</button>
+    <a contenteditable="">qwqqwqwqw</a>
+    <button id="init_load">init_load</button>
+   
 
     <table border="1">
         <tbody id="outb">
 
         </tbody>
     </table>
+    <pre id="outputdat"></pre>
 </body>
 
 </script>
