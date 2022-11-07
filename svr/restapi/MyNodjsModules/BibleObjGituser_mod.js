@@ -929,7 +929,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
-    return this.parse_inp_usr2proj(inp)
+    return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 BibleObjGituser.prototype._____proj_get_usr_fr_decipher_cuid = function (inp) {
     console.log("inp.CUID", inp.CUID)
@@ -976,9 +976,9 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     if (!inp.usr) {
         return null
     }
-    return this.parse_inp_usr2proj(inp)
+    return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
-BibleObjGituser.prototype.parse_inp_usr2proj = function (inp) {
+BibleObjGituser.prototype.parse_inp_usr2proj______________________ = function (inp) {
     if ("object" !== typeof inp.usr || !inp.usr) {
         inp.usr_proj = null
         console.log("inp.usr is null")
@@ -1009,7 +1009,30 @@ BibleObjGituser.prototype.parse_inp_usr2proj = function (inp) {
     //
     return inp
 }
+BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
+    this.m_inp = inp
+    inp.usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
+    if (!inp.usr_proj) {
+        inp.out.desc = "invalid repospath."
+        console.log(inp.out.desc)
+        return null;
+    }
+    BibleUti._deplore_usr_proj_dirs(inp.usr_proj, this.m_sBaseUsrs)
 
+    if (passcode.trim().length > 0) {
+        BibleUti._interpret_git_config_Usr_Pwd_Url(inp.usr_proj, passcode)//inp.usr.passcode
+    }
+
+
+    if (null === BibleUti._check_pub_testing(inp)) {
+        inp.out.desc = "failed pub test."
+        inp.usr_proj = null
+        console.log(inp.out.desc)
+        return null
+    }
+    //
+    return inp
+}
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
     //jspfn: ../../../../bist/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
