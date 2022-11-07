@@ -40,8 +40,8 @@ var BibleUti = {
     },
 
     FetchObjDat: function (datObj, SrcObj) {
-        if(!SrcObj) return datObj;
         function _iterate(carObj, srcObj) {
+            if(!srcObj) return;
             for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
                 if (carObj.hasOwnProperty(sproperty)) {
@@ -62,6 +62,7 @@ var BibleUti = {
     },
     FlushObjDat: function (datObj, targObj) {
         function _iterate(carObj, tarObj) {
+            if(!tarObj) return;
             for (var sproperty in carObj) {
                 console.log("sproperty=", sproperty)
                 if (carObj.hasOwnProperty(sproperty)) {
