@@ -919,7 +919,7 @@ BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
 
     return inp.usr
 }
-BibleObjGituser.prototype.proj_parse_usr_signed = function (inp) {
+BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     this.m_inp = inp
     if (!inp || !inp.out) {
         return null
