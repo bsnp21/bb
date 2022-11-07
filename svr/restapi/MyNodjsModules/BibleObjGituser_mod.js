@@ -925,7 +925,8 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
         return null
     }
 
-    if (null === this.proj_get_usr_fr_cache_ssid(inp)) {
+    inp.usr = this.proj_get_usr_fr_cache_ssid(inp)
+    if (null === inp.usr) {
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
