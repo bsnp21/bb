@@ -50,7 +50,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         if (!parm) { alert("no search parameters in url.") }
 
         function init_dat() {
-            $("#gen").on("click", function () {
+            $("#clear_diary").on("click", function () {
                 if (!confirm("reset data?")) return
                 var par = {
                     "fnames": [
@@ -190,11 +190,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 </head>
 
 <body onbeforeunload="return 'leave?';">
-    <button id="gen">init_dat</button>
-    <a contenteditable=""></a>
+    
     <button id="init_load">init_load</button>
-
-
     <table border="1">
         <caption id="cap"></caption>
         <thead>
@@ -209,6 +206,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         </tbody>
     </table>
     <pre id="outputdat"></pre>
+    <button id="clear_diary">clear_diary</button>
+    <a contenteditable=""></a>
 </body>
 
 </script>
