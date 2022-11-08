@@ -1212,6 +1212,13 @@ BibleObjGituser.prototype.Run_proj_destroy = function () {
     }
 
     //this.session_destroy()
+    var ret = NCache.myCache.take(this.m_inp.SSID)
+    NCache.myCache.del(this.m_inp.SSID)
+    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
+
+    var ret = NCache.myCache.take(this.m_inp.SSID)
+    NCache.myCache.del(this.m_inp.SSID)
+    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
 
     this.run_proj_state()
     return inp

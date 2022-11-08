@@ -571,7 +571,7 @@ var ApiJsonp_BibleObj = {
                 var res5 = userProject.Run_proj_destroy()
             }
 
-            userProject.run_proj_state()
+            //userProject.run_proj_state()
             userProject.Session_delete()
         })
 
