@@ -626,6 +626,20 @@ var BibleUti = {
 
         //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
     },
+    _parse_inp_usr2proj : function (repopath, passcode) {
+        //this.m_inp = inp
+        var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+    
+        BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
+    
+        if (passcode.trim().length > 0) {
+            BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
+        }
+    
+        //BibleUti._parse_inp_usr2proj
+        //this.m_inp.usr_proj = usr_proj
+        return usr_proj
+    },
 
 
     default_inp_out_obj: function () {
@@ -924,7 +938,8 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
-    return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    return inp.usr_proj;//this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
@@ -954,7 +969,10 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     if (!inp.usr) {
         return null
     }
-    return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    //this.m_inp.usr_proj = usr_proj
+    return inp.usr_proj
+    //return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     //this.m_inp = inp
