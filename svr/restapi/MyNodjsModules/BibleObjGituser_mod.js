@@ -1030,6 +1030,7 @@ BibleObjGituser.prototype.Session_create = function () {
 }
 BibleObjGituser.prototype.Session_delete = function () {
     var ret = NCache.myCache.take(this.m_inp.SSID)
+    NCache.myCache.del(this.m_inp.SSID)
     console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
 }
 
