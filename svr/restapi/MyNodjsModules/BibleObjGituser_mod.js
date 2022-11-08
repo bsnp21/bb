@@ -1403,50 +1403,50 @@ BibleObjGituser.prototype.load_git_config = function () {
     return configurl
 }
 
-BibleObjGituser.prototype.load_turnback_userData = function () {
-    var inp = this.m_inp
-    var doc = inp.par.fnames[0]
+BibleObjGituser.prototype.Load_back_userData = function (par) {
+    //var inp = this.m_inp
+    var doc = par.fnames[0]
     var jsfname = this.get_pfxname(doc)
     var ret = BibleUti.loadObj_by_fname(jsfname)
 
     var retObj = ret.obj  //get obj structure w/ keys.
-    if ("object" === typeof (inp.par.data) && Object.keys(inp.par.data).length > 0) {  // ===undefined, null, or ''. 
+    if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
         try {
-            retObj = JSON.parse(JSON.stringify(inp.par.data));// 
+            retObj = JSON.parse(JSON.stringify(par.data));// 
             BibleUti.FetchObjDat(retObj, ret.obj)
-            console.log("inp.out.data", retObj)
+            console.log("out.data", retObj)
         } catch (err) {
             console.log("err", err)
-            inp.out.state.err = err
+            //inp.out.state.err = err
         }
     }
     return retObj;
 }
-BibleObjGituser.prototype.save_userData_frm_client_________________ = function (inp) {
-    //var inp = this.m_inp
-    var doc = inp.par.fnames[0]
-    var jsfname = this.get_pfxname(doc)
-    console.log("jsfname=", jsfname)
-    var ret = BibleUti.loadObj_by_fname(jsfname)
-    if (ret.obj) {
-        BibleUti.FlushObjDat(inp.par.data, ret.obj)
-        console.log("ret", ret)
-        ret.writeback()
-    } else {
-        inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
-        console.log(inp.out.state.err)
-    }
-
-    //// 
-    var save_res = {}
-    save_res.desc = "len:" + inp.par.data.length;// + ",dlt:" + ret.dlt_size
-    //save_res.dlt = ret.dlt_size
-    save_res.len = inp.par.data.length
-    //inp.par.data = ""
-    //save_res.ret = ret
-    inp.out.save_res = save_res
-    return save_res;
-}
+//BibleObjGituser.prototype.save_userData_frm_client_________________ = function (inp) {
+//    //var inp = this.m_inp
+//    var doc = inp.par.fnames[0]
+//    var jsfname = this.get_pfxname(doc)
+//    console.log("jsfname=", jsfname)
+//    var ret = BibleUti.loadObj_by_fname(jsfname)
+//    if (ret.obj) {
+//        BibleUti.FlushObjDat(inp.par.data, ret.obj)
+//        console.log("ret", ret)
+//        ret.writeback()
+//    } else {
+//        inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
+//        console.log(inp.out.state.err)
+//    }
+//
+//    //// 
+//    var save_res = {}
+//    save_res.desc = "len:" + inp.par.data.length;// + ",dlt:" + ret.dlt_size
+//    //save_res.dlt = ret.dlt_size
+//    save_res.len = inp.par.data.length
+//    //inp.par.data = ""
+//    //save_res.ret = ret
+//    inp.out.save_res = save_res
+//    return save_res;
+//}
 BibleObjGituser.prototype.Save_userData_frm_client = function (par) {
     //var inp = this.m_inp
     var save_res = {desc:"ok"}
