@@ -901,7 +901,7 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         return null
     }
     if (!NCache.myCache.has(inp.SSID)) {
-        inp.out.state.failed_ssid = "expired or not exist."
+        inp.out.state.failed_ssid = "not have."
         console.log("***** proj_get_usr_fr_cache_ssid: could not find key: NCache.myCache.has(inp.SSID)", inp.SSID)
         return null
     }
