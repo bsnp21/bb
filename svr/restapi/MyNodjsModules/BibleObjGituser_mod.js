@@ -626,16 +626,16 @@ var BibleUti = {
 
         //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
     },
-    _parse_inp_usr2proj : function (repopath, passcode) {
+    _parse_inp_usr2proj: function (repopath, passcode) {
         //this.m_inp = inp
         var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
-    
+
         BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
-    
+
         if (passcode.trim().length > 0) {
             BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
         }
-    
+
         //BibleUti._parse_inp_usr2proj
         //this.m_inp.usr_proj = usr_proj
         return usr_proj
@@ -771,7 +771,7 @@ NCache.Init = function () {
         inp.usr = val
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
-        if (inp.usr_proj= BibleUti._parse_inp_usr2proj(val.repopath, val.passcode)) {
+        if (inp.usr_proj = BibleUti._parse_inp_usr2proj(val.repopath, val.passcode)) {
             var userProject = new BibleObjGituser(rootDir)
             userProject.m_inp = inp
             userProject.run_proj_state()
@@ -901,13 +901,17 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
         return null
     }
     if (!NCache.myCache.has(inp.SSID)) {
-        inp.out.state.failed_ssid="expired or not exist."
+        inp.out.state.failed_ssid = "expired or not exist."
         console.log("***** proj_get_usr_fr_cache_ssid: could not find key: NCache.myCache.has(inp.SSID)", inp.SSID)
         return null
     }
 
     var ttl = this.proj_get_usr_aux_ttl(inp);// inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
     inp.usr = NCache.Get(inp.SSID, ttl)
+
+    if (!inp.usr) {
+        inp.out.state.failed_ssid = "expired or not exist."
+    }
 
 
     return inp.usr
@@ -973,7 +977,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
     //this.m_inp.usr_proj = usr_proj
     return inp.usr_proj
-   
+
 }
 // BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
 //     //this.m_inp = inp
@@ -1032,9 +1036,9 @@ BibleObjGituser.prototype.Session_create = function () {
 BibleObjGituser.prototype.Session_delete = function () {
     var ret = NCache.myCache.take(this.m_inp.SSID)
     NCache.myCache.set(this.m_inp.SSID, null)
-    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
+    console.log("Session_delete:", this.m_inp.SSID, this.m_inp.usr, ret)
     ret = NCache.myCache.del(this.m_inp.SSID)
-    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
+    console.log("Session_delete:", this.m_inp.SSID, this.m_inp.usr, ret)
 
     NCache.myCache.set(this.m_inp.SSID, null)
 }
