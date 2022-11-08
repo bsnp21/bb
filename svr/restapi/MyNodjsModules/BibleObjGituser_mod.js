@@ -613,14 +613,14 @@ var BibleUti = {
         return null
     },
 
-    _interpret_git_config_Usr_Pwd_Url: function (usr_proj, passcode) {
-        usr_proj.git_Usr_Pwd_Url = ""
+    _interpret_git_config_Usr_Pwd_Url: function (userproj, passcode) {
+        userproj.git_Usr_Pwd_Url = ""
         if (passcode.trim().length > 0) {
-            if ("github.com" === usr_proj.hostname) {
-                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}.git`
+            if ("github.com" === userproj.hostname) {
+                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
             }
-            if ("bitbucket.org" === usr_proj.hostname) {
-                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.prjbitbk}/${usr_proj.projname}.git`
+            if ("bitbucket.org" === userproj.hostname) {
+                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.prjbitbk}/${userproj.projname}.git`
             }
         }
 
@@ -628,17 +628,17 @@ var BibleUti = {
     },
     _parse_inp_usr2proj: function (repopath, passcode) {
         //this.m_inp = inp
-        var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+        var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
-        BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
+        BibleUti._deplore_usr_proj_dirs(userproj, this.m_sBaseUsrs)
 
         if (passcode.trim().length > 0) {
-            BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
+            BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
         }
 
         //BibleUti._parse_inp_usr2proj
-        //this.m_inp.usr_proj = usr_proj
-        return usr_proj
+        //this.m_inp.userproj = userproj
+        return userproj
     },
 
 
