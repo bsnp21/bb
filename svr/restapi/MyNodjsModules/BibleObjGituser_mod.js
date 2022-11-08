@@ -1025,20 +1025,20 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     //return inp.usr_proj
 
 }
-BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
-    //this.m_inp = inp
-    var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
-
-    BibleUti._deplore_usr_proj_dirs(userproj, this.m_UserProjFileSys.m_sBaseUsrs)
-
-    if (passcode.trim().length > 0) {
-        BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
-    }
-
-    //
-    //
-    return this.m_inp
-}
+//BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
+//    //this.m_inp = inp
+//    var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+//
+//    BibleUti._deplore_usr_proj_dirs(userproj, this.m_UserProjFileSys.m_sBaseUsrs)
+//
+//    if (passcode.trim().length > 0) {
+//        BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
+//    }
+//
+//    //
+//    //
+//    return this.m_inp
+//}
 
 
 
