@@ -924,9 +924,9 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 
-BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (cuid, cipherusrs) {
-    console.log("inp.CUID", cuid)
-    if (!cuid || cuid.length === 0) return console.log(cuid)
+BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
+    if (!cuid || cuid.length === 0 || cipherusrs.length === 0) return null
+    console.log("decipher user based on prev key nached in cuid=", cuid)
 
     var robj = NCache.myCache.take(cuid) //take: for safety delete immediately after use.
     if (!robj) return console.log("cache null=" + cuid)
@@ -940,7 +940,6 @@ BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (cuid, cipher
     console.log(usrObj)
     return usrObj
 }
-
 BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     this.m_inp = inp
     if (!inp || !inp.out) {
@@ -948,13 +947,12 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
         return null
     }
 
-    inp.usr = this.proj_get_usr_fr_decipher_cuid(inp.CUID, inp.cipherusrs)
+    inp.usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
     if (!inp.usr) {
         return null
     }
     return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
-
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     //this.m_inp = inp
     var usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
@@ -969,6 +967,8 @@ BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     this.m_inp.usr_proj = usr_proj
     return this.m_inp
 }
+
+
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
     //jspfn: ../../../../bist/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
