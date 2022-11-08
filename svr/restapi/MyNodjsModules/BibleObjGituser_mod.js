@@ -542,19 +542,19 @@ var BibleUti = {
         }
         return inp
     },
-    _deplore_usr_proj_dirs: function (usr_proj, base_Dir) {
+    _deplore_usr_proj_dirs: function (userproj, base_Dir) {
         //const base_Dir = "bible_study_notes/usrs"
 
 
-        usr_proj.base_Dir = base_Dir
-        usr_proj.user_dir = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}`
-        usr_proj.git_root = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}`
-        usr_proj.acct_dir = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account`
-        usr_proj.dest_myo = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account/myoj`
-        usr_proj.dest_dat = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account/dat`
+        userproj.base_Dir = base_Dir
+        userproj.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
+        userproj.git_root = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
+        userproj.acct_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
+        userproj.dest_myo = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
+        userproj.dest_dat = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
 
 
-        console.log("deplore: usr_proj=", usr_proj)
+        console.log("deplore: userproj=", userproj)
     },
 
     _interpret_repo_url_str: function (proj_url) {
