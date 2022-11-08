@@ -923,23 +923,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     this.proj_update_cache_ssid_by_inp_aux(inp)
     return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
-BibleObjGituser.prototype._____________proj_get_usr_fr_decipher_cuid_______________ = function (inp) {
-    console.log("inp.CUID", inp.CUID)
-    if (!inp.CUID || inp.CUID.length === 0) return console.log(inp.CUID)
 
-    var robj = NCache.myCache.take(inp.CUID) //take: for safety delete immediately after use.
-    if (!robj) return console.log("cache null=" + inp.CUID)
-    console.log(robj)
-
-    console.log(inp.cipherusrs)
-
-    var str = BibleUti.decrypt_txt(inp.cipherusrs, robj.privateKey)
-    var usrObj = JSON.parse(str)
-    console.log("session_decipher_usrs usrObj=")
-    console.log(usrObj)
-    inp.usr = usrObj
-    return inp
-}
 BibleObjGituser.prototype.proj_get_usr_fr_decipher_cuid = function (cuid, cipherusrs) {
     console.log("inp.CUID", cuid)
     if (!cuid || cuid.length === 0) return console.log(cuid)
@@ -970,37 +954,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     }
     return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
-BibleObjGituser.prototype._____________parse_inp_usr2proj______________________ = function (inp) {
-    if ("object" !== typeof inp.usr || !inp.usr) {
-        inp.usr_proj = null
-        console.log("inp.usr is null")
-        return null
-    }
-    if (!this.m_inp) this.m_inp = inp
-    console.log(inp)
 
-    inp.usr_proj = BibleUti._interpret_repo_url(inp.usr.repopath)
-    if (!inp.usr_proj) {
-        inp.out.desc = "invalid repospath."
-        console.log(inp.out.desc)
-        return null;
-    }
-    BibleUti._deplore_usr_proj_dirs(inp.usr_proj, this.m_sBaseUsrs)
-
-    if (inp.usr.passcode.trim().length > 0) {
-        BibleUti._interpret_git_config_Usr_Pwd_Url(inp.usr_proj, inp.usr.passcode)
-    }
-
-
-    if (null === BibleUti._check_pub_testing(inp)) {
-        inp.out.desc = "failed pub test."
-        inp.usr_proj = null
-        console.log(inp.out.desc)
-        return null
-    }
-    //
-    return inp
-}
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     //this.m_inp = inp
     var usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
