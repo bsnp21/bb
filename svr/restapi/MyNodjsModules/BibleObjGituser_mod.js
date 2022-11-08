@@ -1093,13 +1093,7 @@ BibleObjGituser.prototype.get_usr_dat_dir = function (subpath) {
     }
     return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
 }
-//BibleObjGituser.prototype.get_usrdir = function (subpath) {
-//    if (!this.m_inp.usr_proj) return ""
-//    if (!subpath) {
-//        return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}`
-//    }
-//    return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
-//}
+
 
 BibleObjGituser.prototype.get_usr_git_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
