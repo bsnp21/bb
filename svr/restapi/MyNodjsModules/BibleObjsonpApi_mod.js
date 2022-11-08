@@ -458,10 +458,11 @@ var ApiJsonp_BibleObj = {
             if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
 
             //
-            var save_res = userProject.save_userData_frm_client(inp)
+            inp.out.state.save_res = userProject.Save_userData_frm_client(inp.par)
+            
             
             //
-            userProject.git_add_commit_push_Sync(save_res.desc);//after saved
+            userProject.git_add_commit_push_Sync(inp.out.state.save_res.desc);//after saved
         })
     },
     ApiUsrDat_load: async function (req, res) {
