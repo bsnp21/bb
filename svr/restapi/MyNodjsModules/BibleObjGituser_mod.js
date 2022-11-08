@@ -759,7 +759,7 @@ NCache.Init = function () {
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
         var userProject = new BibleObjGituser(rootDir)
-        if (inp.usr_proj = userProject.Gen_usr_proj(val.repopath, val.passcode)) {
+        if (inp.usr_proj = userProject.m_UserProjFileSys.Gen_usr_proj(val.repopath, val.passcode)) {
             userProject.m_inp = inp
             userProject.run_proj_state()
             console.log(inp.out.state)
