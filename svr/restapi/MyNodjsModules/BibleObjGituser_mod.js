@@ -751,6 +751,7 @@ NCache.Init = function () {
 
         var gitdir = Buffer.from(key, 'base64').toString('utf8')
         console.log("on del:* start to del proj_destroy ssid=", key)
+        console.log("on del:* start to del proj_destroy val=", val)
         console.log("on del:* start to del proj_destroy ownr=", gitdir)
         var inp = {}
         inp.usr = val
