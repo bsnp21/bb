@@ -1284,8 +1284,6 @@ BibleObjGituser.prototype.run_proj_state = function (cbf) {
     stat.repo_usage = (totalsize / 1000000).toFixed(2) + "/1000(MB)"
     stat.repo_alertLevel = iAlertLevel
 
-
-    this.m_inp.out.fstat = stat
     if (cbf) cbf()
     return stat
 }
