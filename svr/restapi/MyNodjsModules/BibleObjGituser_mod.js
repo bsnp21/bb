@@ -1078,33 +1078,33 @@ BibleObjGituser.prototype.Session_delete = function () {
 BibleObjGituser.prototype.get_usr_acct_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
     if (!subpath) {
-        return `${this.m_rootDir}${this.m_inp.usr_proj.acct_dir}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.acct_dir}`
     }
-    return `${this.m_rootDir}${this.m_inp.usr_proj.acct_dir}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.acct_dir}${subpath}`
 }
 BibleObjGituser.prototype.get_usr_myoj_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
     if (!subpath) {
-        return `${this.m_rootDir}${this.m_inp.usr_proj.dest_myo}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_myo}`
     }
-    return `${this.m_rootDir}${this.m_inp.usr_proj.dest_myo}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_myo}${subpath}`
 }
 BibleObjGituser.prototype.get_usr_dat_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
     if (!subpath) {
-        return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_dat}`
     }
-    return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
 }
 
 
 BibleObjGituser.prototype.get_usr_git_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
     if (undefined === subpath || null === subpath) {
-        return `${this.m_rootDir}${this.m_inp.usr_proj.git_root}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.git_root}`
     }
     //if (subpath[0] !== "/") subpath = "/" + subpath
-    return `${this.m_rootDir}${this.m_inp.usr_proj.git_root}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.git_root}${subpath}`
 }
 
 BibleObjGituser.prototype.get_DocCode_Fname = function (DocCode) {
@@ -1132,20 +1132,20 @@ BibleObjGituser.prototype.get_pfxname = function (DocCode) {
             }
             break;
         default: //: NIV, CUVS, NIV_Jw  
-            dest_pfname = `${this.m_rootDir}bible_obj_lib/jsdb/jsBibleObj/${DocCode}.json.js`;
+            dest_pfname = `${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/jsBibleObj/${DocCode}.json.js`;
             break;
     }
     return dest_pfname
 }
 BibleObjGituser.prototype.get_userpathfile_from_tempathfile = function (tmpathfile) {
-    //var src = `${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate/myoj/${fnam}`
+    //var src = `${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate/myoj/${fnam}`
     var mat = tmpathfile.match(/[\/]myoj[\/]([\w]+)_json\.js$/) //::/myoj/myNode_json.js
     if (mat) {
         var doc = mat[1];//.replace(/^my/, "e_")  //docname: 
         var gitpfx = this.get_pfxname(doc)
         return gitpfx
     }
-    //var src_dat = `${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate${fnam}_json.js`
+    //var src_dat = `${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate${fnam}_json.js`
     var mat = tmpathfile.match(/[\/]dat[\/]([\w]+)_json\.js$/)
     if (mat) {
         var doc = mat[1]
@@ -1154,7 +1154,7 @@ BibleObjGituser.prototype.get_userpathfile_from_tempathfile = function (tmpathfi
     }
 }
 BibleObjGituser.prototype.get_dir_lib_template = function (subpf) {
-    var pathfile = `${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate`
+    var pathfile = `${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate`
     if (undefined === subpf) {
         return pathfile
     }
@@ -1337,8 +1337,8 @@ BibleObjGituser.prototype.cp_template_to_git = function () {
     #!/bin/sh
     echo 'lll' | sudo -S mkdir -p ${acctDir}
     echo 'lll' | sudo -S chmod -R 777 ${acctDir}
-    # sudo -S cp -aR  ${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate  ${acctDir}/
-    echo 'lll' | sudo -S cp -aR  ${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
+    # sudo -S cp -aR  ${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate  ${acctDir}/
+    echo 'lll' | sudo -S cp -aR  ${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
     echo 'lll' | sudo -S chmod -R 777 ${acctDir}
     #cd -`
 
@@ -1557,7 +1557,7 @@ BibleObjGituser.prototype.git_clone = function () {
         return inp
     }
 
-    var dir = this.m_rootDir
+    var dir = this.m_UserProjFileSys.m_rootDir
     if (!fs.existsSync(dir)) {
         console.log("Fatal Error: not exist dir:", dir)
         return null
@@ -1602,7 +1602,7 @@ BibleObjGituser.prototype.git_clone = function () {
 
     var git_clone_cmd = `
     #!/bin/sh
-    cd ${this.m_rootDir}
+    cd ${this.m_UserProjFileSys.m_rootDir}
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${proj.git_root}
     if [ -f "${proj.git_root}/.git/config" ]; then
         echo "${proj.git_root}/.git/config exists."
