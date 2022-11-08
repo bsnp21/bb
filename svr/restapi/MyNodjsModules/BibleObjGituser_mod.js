@@ -888,7 +888,20 @@ UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
     return ttl
 }
 
+UserProjFileSys.prototype.Gen_usr_proj = function (repopath, passcode) {
+    //this.m_inp = inp //parse_inp_usr2proj
+    var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
+    BibleUti._deplore_usr_proj_dirs(userproj, this.m_sBaseUsrs)
+
+    if (passcode.trim().length > 0) {
+        BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
+    }
+
+    //
+    this.usr_proj = userproj
+    return userproj
+}
 
 
 
@@ -975,7 +988,8 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
     //inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
-    return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    return this.m_UserProjFileSys.Gen_usr_proj(inp.usr.repopath, inp.usr.passcode)
+    //return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
@@ -1005,9 +1019,10 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     if (!inp.usr) {
         return null
     }
-    var usrproj = this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
-    //this.m_inp.usr_proj = usr_proj
-    return inp.usr_proj
+    return this.m_UserProjFileSys.Gen_usr_proj(inp.usr.repopath, inp.usr.passcode)
+    //var usrproj = this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    //
+    //return inp.usr_proj
 
 }
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
@@ -1021,7 +1036,7 @@ BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     }
 
     //
-    this.m_inp.usr_proj = userproj
+    //
     return this.m_inp
 }
 
@@ -1051,8 +1066,8 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 BibleObjGituser.prototype.Session_create = function () {
     var gitdir = this.get_usr_git_dir()
 
-    if (!this.m_inp.usr_proj) return null
-    var ssid = this.m_inp.usr_proj.ownerId
+    if (!this.m_UserProjFileSys.usr_proj) return null
+    var ssid = this.m_UserProjFileSys.usr_proj.ownerId
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
@@ -1076,35 +1091,35 @@ BibleObjGituser.prototype.Session_delete = function () {
 }
 
 BibleObjGituser.prototype.get_usr_acct_dir = function (subpath) {
-    if (!this.m_inp.usr_proj) return ""
+    if (!this.m_UserProjFileSys.usr_proj) return ""
     if (!subpath) {
-        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.acct_dir}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.acct_dir}`
     }
-    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.acct_dir}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.acct_dir}${subpath}`
 }
 BibleObjGituser.prototype.get_usr_myoj_dir = function (subpath) {
-    if (!this.m_inp.usr_proj) return ""
+    if (!this.m_UserProjFileSys.usr_proj) return ""
     if (!subpath) {
-        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_myo}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.dest_myo}`
     }
-    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_myo}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.dest_myo}${subpath}`
 }
 BibleObjGituser.prototype.get_usr_dat_dir = function (subpath) {
-    if (!this.m_inp.usr_proj) return ""
+    if (!this.m_UserProjFileSys.usr_proj) return ""
     if (!subpath) {
-        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_dat}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.dest_dat}`
     }
-    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.dest_dat}${subpath}`
 }
 
 
 BibleObjGituser.prototype.get_usr_git_dir = function (subpath) {
-    if (!this.m_inp.usr_proj) return ""
+    if (!this.m_UserProjFileSys.usr_proj) return ""
     if (undefined === subpath || null === subpath) {
-        return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.git_root}`
+        return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.git_root}`
     }
     //if (subpath[0] !== "/") subpath = "/" + subpath
-    return `${this.m_UserProjFileSys.m_rootDir}${this.m_inp.usr_proj.git_root}${subpath}`
+    return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.git_root}${subpath}`
 }
 
 BibleObjGituser.prototype.get_DocCode_Fname = function (DocCode) {
@@ -1399,19 +1414,19 @@ BibleObjGituser.prototype.load_git_config = function () {
     //if (!this.m_git_config_old || !this.m_git_config_new) {
     var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
     var ipos1 = txt.indexOf(this.m_inp.usr.repopath)
-    var ipos2 = txt.indexOf(this.m_inp.usr_proj.git_Usr_Pwd_Url)
+    var ipos2 = txt.indexOf(this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
 
     console.log("ipos1:", ipos1, this.m_inp.usr.repopath)
-    console.log("ipos2:", ipos2, this.m_inp.usr_proj.git_Usr_Pwd_Url)
+    console.log("ipos2:", ipos2, this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
 
     var configurl = ""
     if (ipos1 > 0) {
         olds = txt
-        news = txt.replace(this.m_inp.usr.repopath, this.m_inp.usr_proj.git_Usr_Pwd_Url)
+        news = txt.replace(this.m_inp.usr.repopath, this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
     }
     if (ipos2 > 0) {
         news = txt
-        olds = txt.replace(this.m_inp.usr_proj.git_Usr_Pwd_Url, this.m_inp.usr.repopath)
+        olds = txt.replace(this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url, this.m_inp.usr.repopath)
 
         console.log("initial git_config_fname not normal:", txt)
     }
@@ -1424,7 +1439,7 @@ BibleObjGituser.prototype.load_git_config = function () {
         var pos1 = txt.indexOf("\n\tfetch = +refs");//("[branch \"master\"]")
         configurl = txt.substring(pos0 + 19, pos1)
     }
-    this.m_inp.usr_proj.configurl = configurl
+    this.m_UserProjFileSys.usr_proj.configurl = configurl
     //}
     return configurl
 }
@@ -1522,8 +1537,8 @@ BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
     } /////////
 
     if (!this.m_inp.usr.repopath) return
-    if (!this.m_inp.usr_proj) return
-    if (!this.m_inp.usr_proj.git_Usr_Pwd_Url) return
+    if (!this.m_UserProjFileSys.usr_proj) return
+    if (!this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url) return
 
     var git_config_fname = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) {
@@ -1539,7 +1554,7 @@ BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
 
     if (bAllowPush) {
         fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
-        console.log("bAllowPush=1:url =", this.m_inp.usr_proj.git_Usr_Pwd_Url)
+        console.log("bAllowPush=1:url =", this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
     } else {
         fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
         console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
