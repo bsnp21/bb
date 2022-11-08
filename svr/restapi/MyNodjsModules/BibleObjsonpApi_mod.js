@@ -515,7 +515,7 @@ var ApiJsonp_BibleObj = {
             userProject.Run_proj_setup()
 
             if (inp.out.state.bEditable === 1) {
-                inp.out.state.SSID = userProject.session_create()
+                inp.out.state.SSID = userProject.Session_create()
             }
         }
 
@@ -545,7 +545,7 @@ var ApiJsonp_BibleObj = {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
                     userProject.Run_proj_destroy()
                 } else {
-                    inp.out.state.SSID = userProject.session_create()
+                    inp.out.state.SSID = userProject.Session_create()
                 }
             }
         })

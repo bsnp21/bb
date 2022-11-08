@@ -991,7 +991,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
     return { repodesc: usrObj.repodesc, pathfile: gitpath }
 }
 
-BibleObjGituser.prototype.session_create = function () {
+BibleObjGituser.prototype.Session_create = function () {
     var gitdir = this.get_usr_git_dir()
 
     if (!this.m_inp.usr_proj) return null
@@ -1003,7 +1003,7 @@ BibleObjGituser.prototype.session_create = function () {
     }
 
     NCache.Set(ssid_b64, this.m_inp.usr, ttl)
-    console.log("session_create:", ssid, ssid_b64, this.m_inp.usr)
+    console.log("Session_create:", ssid, ssid_b64, this.m_inp.usr)
 
     return ssid_b64
 }
