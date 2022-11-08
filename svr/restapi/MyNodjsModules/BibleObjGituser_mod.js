@@ -872,7 +872,7 @@ NCache.Init()
 
 
 
-var UserProjFileSys=function(rootDir){
+var UserProjFileSys = function (rootDir) {
     if (!rootDir.match(/\/$/)) rootDir += "/"
     this.m_rootDir = rootDir
 
@@ -880,6 +880,8 @@ var UserProjFileSys=function(rootDir){
     this.m_sRootNode = WorkingRootNodeName //"bist"
     this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
     this.m_sBaseTemp = `${this.m_sRootNode}/temp`
+
+    this.pathrootdir = rootDir + this.m_sRootNode
 }
 UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
     var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
@@ -901,18 +903,19 @@ UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function (rootDir) {
-    if (!rootDir.match(/\/$/)) rootDir += "/"
-    this.m_rootDir = rootDir
-
-
-    this.m_sRootNode = WorkingRootNodeName //"bist"
-    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
-    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
-
-
-
-    var pathrootdir = rootDir + this.m_sRootNode
-    this.m_SvrUsrsBCV = new SvrUsrsBCV(pathrootdir)
+    //    if (!rootDir.match(/\/$/)) rootDir += "/"
+    //    this.m_rootDir = rootDir
+    //
+    //
+    //    this.m_sRootNode = WorkingRootNodeName //"bist"
+    //    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
+    //    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
+    //
+    //
+    //
+    //    var pathrootdir = rootDir + this.m_sRootNode
+    this.m_UserProjFileSys = new UserProjFileSys(rootDir)
+    this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
 }
 
 
@@ -1062,7 +1065,7 @@ BibleObjGituser.prototype.Session_create = function () {
     return ssid_b64
 }
 BibleObjGituser.prototype.Session_delete = function () {
-    if(!this.m_inp.SSID) return
+    if (!this.m_inp.SSID) return
     var ret = NCache.myCache.take(this.m_inp.SSID)
     //NCache.myCache.set(this.m_inp.SSID, null)
     //console.log("Session_delete:", this.m_inp.SSID, this.m_inp.usr, ret)
@@ -1472,7 +1475,7 @@ BibleObjGituser.prototype.Load_back_userData = function (par) {
 //}
 BibleObjGituser.prototype.Save_userData_frm_client = function (par) {
     //var inp = this.m_inp
-    var save_res = {desc:"ok"}
+    var save_res = { desc: "ok" }
     var doc = par.fnames[0]
     var jsfname = this.get_pfxname(doc)
     console.log("jsfname=", jsfname)
