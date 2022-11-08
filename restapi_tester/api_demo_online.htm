@@ -18,8 +18,10 @@
     <!----------------------------------------------------------------------------->
     <!------ api ---->
     <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+    <script src="https://bsnp21.github.io/home/js/conf_svc_ip_addr.js"></script>
     <script src="https://bsnp21.github.io/bb/np/js/BsnpRestApi.js"></script>
     <script src="https://bsnp21.github.io/bb/np/js/BsnpRestConst.js"></script>
+
     <!----------------------------------------------------------------------------->
 
 
@@ -228,12 +230,26 @@
             return str;
         }
         function gen_url_list() {
-            var urlist = ["http://34.227.20.213:7778", "https://34.227.20.213:7775"]
-            var lis = ""
-            urlist.forEach(function (url) {
-                lis += get_test_list(url)
+            const chunk = (a, n) => [...Array(Math.ceil(a.length / n))].map((_, i) => a.slice(n * i, n + n * i));
+            var chun = chunk(conf_svc_ip_addr, 2)
+            var tita = {
+                "Add to url params:": function (urls) { return `<a href='?ip=${urls}'>?ip=${urls}</a>` },
+                "validatation check ip:": function (urls) { return `<a href='${urls}'>${urls}</a>` },
+                "validatation check otk:": function (urls) { return `<a href='${urls}/get_OTK'>${urls}/get_OTK</a>`; },
+            }
+            var tr = "", idx = 0
+            chun.forEach(function (ar2) {
+                for (str in tita) {
+                    tr += `<tr><td>${idx++}</td><td>${str}</td>`
+                    ar2.forEach(function (ip) {
+                        tr += `<td>${tita[str](ip)}</td>`
+                    })
+                    tr += "</tr>"
+                }
             })
-            $("#urlist").html(lis)
+
+            $("#tbd").html(tr)
+            console.log()
         }
     </script>
 
@@ -271,6 +287,12 @@
             <ol id="urlist">
 
             </ol>
+            <table border="1">
+                <thead>
+                    <tr><th>#</th><th>Desc</th><th>HTTP</th><th>HTTPS</th></tr>
+                </thead>
+                <tbody id="tbd"></tbody>
+            </table>
         </li>
 
 
