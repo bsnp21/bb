@@ -51,24 +51,6 @@
 
 
         $(function () {
-            function get_test_list(urls) {
-                var str = `<ol>
-                        <li>Add to url param: <a href='?ip=${urls}'>?ip=${urls}</a><br><br></li>
-                        <li>validate: <a href='${urls}'>${urls}</a></li>
-                        <li>validate: <a href='${urls}/get_OTK'>${urls}/get_OTK</a></li>
-                        </ol>
-                        `
-                return str;
-            }
-            $("#get_api_svrip_https").on("click", function () {
-                var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
-                $(this).next().html(get_test_list(urls))
-            })
-            $("#get_api_svrip_http").on("click", function () {
-                var urls = `http://${config_websvr_data.ip}:${config_websvr_data.http_port}`
-                //$(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
-                $(this).next().html(get_test_list(urls))
-            })
 
             $("#passcode").on("click", function () {
                 var usr = {}
@@ -122,6 +104,7 @@
                 })
             })
 
+            gen_url_list();
             gen_api_sam()
 
 
@@ -235,6 +218,23 @@
         }
 
 
+        function get_test_list(urls) {
+            var str = `<ol>
+                        <li>Add to url params: <a href='?ip=${urls}'>?ip=${urls}</a><br></li>
+                        <li>validatation check: <a href='${urls}'>${urls}</a></li>
+                        <li>validatation check: <a href='${urls}/get_OTK'>${urls}/get_OTK</a></li>
+                        </ol><br>
+                        `
+            return str;
+        }
+        function gen_url_list() {
+            var urlist = ["http://34.227.20.213:7778", "https://34.227.20.213:7775"]
+            var lis = ""
+            urlist.forEach(function (url) {
+                lis += get_test_list(url)
+            })
+            $("#urlist").html(lis)
+        }
     </script>
 
 
@@ -260,11 +260,20 @@
         <!-------------------------------------------------------------------------------->
         </pre>
         </li>
+
+
+
+
+
+
         <li>
             <h3 id="">api server ip for url param</h3>
-            <button id="get_api_svrip_https">get api server ip (https)</button><a>./</a><br>
-            <button id="get_api_svrip_http" href="">get api server ip (http)</button><a>./</a><br><br>
+            <ol id="urlist">
+
+            </ol>
         </li>
+
+
 
         <li>
             <h3>Repository</h3>
