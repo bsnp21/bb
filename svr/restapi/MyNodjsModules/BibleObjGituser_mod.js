@@ -559,6 +559,7 @@ var BibleUti = {
 
     _interpret_repo_url: function (proj_url) {
         if (!proj_url) return null
+        console.log("proj_url=",proj_url)
         if (proj_url.indexOf("github.com/") > 0) {
             return this._interpret_repo_url_github(proj_url)
 
