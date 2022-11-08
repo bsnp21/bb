@@ -871,6 +871,33 @@ NCache.Init()
 
 
 
+
+var UserProjFileSys=function(rootDir){
+    if (!rootDir.match(/\/$/)) rootDir += "/"
+    this.m_rootDir = rootDir
+
+
+    this.m_sRootNode = WorkingRootNodeName //"bist"
+    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
+    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
+}
+UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
+    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+    return ttl
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function (rootDir) {
@@ -882,9 +909,10 @@ var BibleObjGituser = function (rootDir) {
     this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
     this.m_sBaseTemp = `${this.m_sRootNode}/temp`
 
+
+
     var pathrootdir = rootDir + this.m_sRootNode
     this.m_SvrUsrsBCV = new SvrUsrsBCV(pathrootdir)
-
 }
 
 
@@ -1064,13 +1092,13 @@ BibleObjGituser.prototype.get_usr_dat_dir = function (subpath) {
     }
     return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
 }
-BibleObjGituser.prototype.get_usrdir = function (subpath) {
-    if (!this.m_inp.usr_proj) return ""
-    if (!subpath) {
-        return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}`
-    }
-    return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
-}
+//BibleObjGituser.prototype.get_usrdir = function (subpath) {
+//    if (!this.m_inp.usr_proj) return ""
+//    if (!subpath) {
+//        return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}`
+//    }
+//    return `${this.m_rootDir}${this.m_inp.usr_proj.dest_dat}${subpath}`
+//}
 
 BibleObjGituser.prototype.get_usr_git_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
