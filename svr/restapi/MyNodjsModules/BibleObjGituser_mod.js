@@ -903,17 +903,7 @@ UserProjFileSys.prototype.Gen_usr_proj = function (repopath, passcode) {
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function (rootDir) {
-    //    if (!rootDir.match(/\/$/)) rootDir += "/"
-    //    this.m_rootDir = rootDir
-    //
-    //
-    //    this.m_sRootNode = WorkingRootNodeName //"bist"
-    //    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
-    //    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
-    //
-    //
-    //
-    //    var pathrootdir = rootDir + this.m_sRootNode
+   
     this.m_UserProjFileSys = new UserProjFileSys(rootDir)
     this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
 }
