@@ -1002,7 +1002,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     if (!inp.usr) {
         return null
     }
-    var usrproj = this._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    var usrproj = this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
     //this.m_inp.usr_proj = usr_proj
     return inp.usr_proj
 
