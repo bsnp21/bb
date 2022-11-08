@@ -823,11 +823,11 @@ NCache.Init = function () {
 
     NCache.myCache.on("del", function (key, val) {
         _destroy_git_proj(key, val)
-        _MaxForgivenTimes(key, val)
+        //_MaxForgivenTimes(key, val)
     });
     NCache.myCache.on("expired", function (key, val) {
         //console.log(`on expired:key=${key}, \n-val=${JSON.stringify(val)}`)
-        _MaxForgivenTimes(key, val)
+        //_MaxForgivenTimes(key, val)
     })
 }
 NCache.Set = function (key, val, ttl) {
@@ -1034,6 +1034,8 @@ BibleObjGituser.prototype.Session_delete = function () {
     console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
     ret = NCache.myCache.del(this.m_inp.SSID)
     console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
+
+    NCache.myCache.set(this.m_inp.SSID, null)
 }
 
 BibleObjGituser.prototype.get_usr_acct_dir = function (subpath) {
@@ -1213,18 +1215,9 @@ BibleObjGituser.prototype.Run_proj_destroy = function () {
         inp.out.desc += "destroyed git dir: " + gitdir
     }
 
-    //this.session_destroy()
-    var ret = NCache.myCache.take(this.m_inp.SSID)
-    NCache.myCache.del(this.m_inp.SSID)
-    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
-
-    NCache.myCache.set(this.m_inp.SSID, null)
-
-    var ret = NCache.myCache.take(this.m_inp.SSID)
-    NCache.myCache.del(this.m_inp.SSID)
-    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr, ret)
-
     this.run_proj_state()
+
+    this.Session_delete()
     return inp
 }
 BibleObjGituser.prototype.run_proj_state = function (cbf) {
