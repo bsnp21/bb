@@ -1062,6 +1062,7 @@ BibleObjGituser.prototype.Session_create = function () {
     return ssid_b64
 }
 BibleObjGituser.prototype.Session_delete = function () {
+    if(!this.m_inp.SSID) return
     var ret = NCache.myCache.take(this.m_inp.SSID)
     //NCache.myCache.set(this.m_inp.SSID, null)
     //console.log("Session_delete:", this.m_inp.SSID, this.m_inp.usr, ret)
