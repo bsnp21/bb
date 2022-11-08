@@ -542,19 +542,19 @@ var BibleUti = {
         }
         return inp
     },
-    _deplore_usr_proj_dirs: function (userproj, base_Dir) {
+    _deplore_usr_proj_dirs: function (usr_proj, base_Dir) {
         //const base_Dir = "bible_study_notes/usrs"
 
 
-        userproj.base_Dir = base_Dir
-        userproj.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
-        userproj.git_root = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
-        userproj.acct_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
-        userproj.dest_myo = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
-        userproj.dest_dat = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
+        usr_proj.base_Dir = base_Dir
+        usr_proj.user_dir = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}`
+        usr_proj.git_root = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}`
+        usr_proj.acct_dir = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account`
+        usr_proj.dest_myo = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account/myoj`
+        usr_proj.dest_dat = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account/dat`
 
 
-        console.log("deplore: userproj=", userproj)
+        console.log("deplore: usr_proj=", usr_proj)
     },
 
     _interpret_repo_url_str: function (proj_url) {
@@ -613,14 +613,14 @@ var BibleUti = {
         return null
     },
 
-    _interpret_git_config_Usr_Pwd_Url: function (userproj, passcode) {
-        userproj.git_Usr_Pwd_Url = ""
+    _interpret_git_config_Usr_Pwd_Url: function (usr_proj, passcode) {
+        usr_proj.git_Usr_Pwd_Url = ""
         if (passcode.trim().length > 0) {
-            if ("github.com" === userproj.hostname) {
-                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
+            if ("github.com" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}.git`
             }
-            if ("bitbucket.org" === userproj.hostname) {
-                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.prjbitbk}/${userproj.projname}.git`
+            if ("bitbucket.org" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.prjbitbk}/${usr_proj.projname}.git`
             }
         }
 
@@ -628,17 +628,17 @@ var BibleUti = {
     },
     _parse_inp_usr2proj: function (repopath, passcode) {
         //this.m_inp = inp
-        var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+        var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
-        BibleUti._deplore_usr_proj_dirs(userproj, this.m_UserProjFileSys.m_sBaseUsrs)
+        BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
 
         if (passcode.trim().length > 0) {
-            BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
+            BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
         }
 
         //BibleUti._parse_inp_usr2proj
-        //this.m_inp.userproj = userproj
-        return userproj
+        //this.m_inp.usr_proj = usr_proj
+        return usr_proj
     },
 
 
@@ -880,12 +880,10 @@ var UserProjFileSys=function(rootDir){
     this.m_sRootNode = WorkingRootNodeName //"bist"
     this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
     this.m_sBaseTemp = `${this.m_sRootNode}/temp`
-
-    this.pathrootdir = rootDir + this.m_sRootNode
 }
-UserProjFileSys.prototype.Get_parse_inp_usr2proj = function (repopath, passcode) {
-    this.usr_proj = BibleUti._parse_inp_usr2proj(repopath, passcode)
-    return this.usr_proj
+UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
+    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+    return ttl
 }
 
 
@@ -903,8 +901,18 @@ UserProjFileSys.prototype.Get_parse_inp_usr2proj = function (repopath, passcode)
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function (rootDir) {
-    this.m_UserProjFileSys = new UserProjFileSys(rootDir)
-    this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
+    if (!rootDir.match(/\/$/)) rootDir += "/"
+    this.m_rootDir = rootDir
+
+
+    this.m_sRootNode = WorkingRootNodeName //"bist"
+    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
+    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
+
+
+
+    var pathrootdir = rootDir + this.m_sRootNode
+    this.m_SvrUsrsBCV = new SvrUsrsBCV(pathrootdir)
 }
 
 
@@ -999,7 +1007,20 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     return inp.usr_proj
 
 }
-
+// BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
+//     //this.m_inp = inp
+//     var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+// 
+//     BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
+// 
+//     if (passcode.trim().length > 0) {
+//         BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
+//     }
+// 
+//     //
+//     this.m_inp.usr_proj = usr_proj
+//     return this.m_inp
+// }
 
 
 
@@ -1747,4 +1768,3 @@ module.exports = {
     NCache: NCache,
     BibleObjGituser: BibleObjGituser
 }
-
