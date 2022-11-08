@@ -573,6 +573,8 @@ var ApiJsonp_BibleObj = {
 
             //userProject.run_proj_state()
             userProject.Session_delete()
+            userProject.Session_delete()
+            userProject.Session_delete()
         })
 
         // var sret = JSON.stringify(inp, null, 4)
