@@ -626,20 +626,7 @@ var BibleUti = {
 
         //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
     },
-//   _parse_inp_usr2proj: function (repopath, passcode) {
-//       //this.m_inp = inp
-//       var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
-//
-//       BibleUti._deplore_usr_proj_dirs(userproj, this.m_sBaseUsrs)
-//
-//       if (passcode.trim().length > 0) {
-//           BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
-//       }
-//
-//       //BibleUti._parse_inp_usr2proj
-//       //this.m_inp.userproj = userproj
-//       return userproj
-//   },
+
 
 
     default_inp_out_obj: function () {
@@ -771,8 +758,8 @@ NCache.Init = function () {
         inp.usr = val
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
-        if (inp.usr_proj = BibleUti._parse_inp_usr2proj(val.repopath, val.passcode)) {
-            var userProject = new BibleObjGituser(rootDir)
+        var userProject = new BibleObjGituser(rootDir)
+        if (inp.usr_proj = userProject.Gen_usr_proj(val.repopath, val.passcode)) {
             userProject.m_inp = inp
             userProject.run_proj_state()
             console.log(inp.out.state)
@@ -987,9 +974,8 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
-    //inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+   
     return this.m_UserProjFileSys.Gen_usr_proj(inp.usr.repopath, inp.usr.passcode)
-    //return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
@@ -1020,25 +1006,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
         return null
     }
     return this.m_UserProjFileSys.Gen_usr_proj(inp.usr.repopath, inp.usr.passcode)
-    //var usrproj = this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
-    //
-    //return inp.usr_proj
-
 }
-//BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
-//    //this.m_inp = inp
-//    var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
-//
-//    BibleUti._deplore_usr_proj_dirs(userproj, this.m_UserProjFileSys.m_sBaseUsrs)
-//
-//    if (passcode.trim().length > 0) {
-//        BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
-//    }
-//
-//    //
-//    //
-//    return this.m_inp
-//}
 
 
 
