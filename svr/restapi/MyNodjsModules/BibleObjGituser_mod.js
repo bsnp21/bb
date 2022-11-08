@@ -1028,6 +1028,10 @@ BibleObjGituser.prototype.Session_create = function () {
 
     return ssid_b64
 }
+BibleObjGituser.prototype.Session_delete = function () {
+    NCache.del(this.m_inp.SSID)
+    console.log("Session_delete:", this.m_inp.SSID,  this.m_inp.usr)
+}
 
 BibleObjGituser.prototype.get_usr_acct_dir = function (subpath) {
     if (!this.m_inp.usr_proj) return ""
