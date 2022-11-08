@@ -559,7 +559,7 @@ var BibleUti = {
 
     _interpret_repo_url_str: function (proj_url) {
         if (!proj_url) return null
-        console.log("proj_url=",proj_url)
+        console.log("proj_url=", proj_url)
         if (proj_url.indexOf("github.com/") > 0) {
             return this._interpret_repo_url_github(proj_url)
 
@@ -758,6 +758,7 @@ NCache.Init = function () {
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
         var userProject = new BibleObjGituser(rootDir)
+        userProject.m_inp = inp
         if (userProject.parse_inp_usr2proj(val.repopath, val.passcode)) {
             userProject.run_proj_state()
             console.log(inp.out.state)
