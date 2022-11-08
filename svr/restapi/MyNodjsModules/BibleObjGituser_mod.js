@@ -630,7 +630,7 @@ var BibleUti = {
         //this.m_inp = inp
         var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
-        BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
+        BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_UserProjFileSys.m_sBaseUsrs)
 
         if (passcode.trim().length > 0) {
             BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
@@ -880,8 +880,10 @@ var UserProjFileSys=function(rootDir){
     this.m_sRootNode = WorkingRootNodeName //"bist"
     this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
     this.m_sBaseTemp = `${this.m_sRootNode}/temp`
+
+    this.pathrootdir = rootDir + this.m_sRootNode
 }
-UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
+UserProjFileSys.prototype.get_root_for_SvrUsrsBCV = function (inp) {
     var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
     return ttl
 }
@@ -901,18 +903,8 @@ UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function (rootDir) {
-    if (!rootDir.match(/\/$/)) rootDir += "/"
-    this.m_rootDir = rootDir
-
-
-    this.m_sRootNode = WorkingRootNodeName //"bist"
-    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
-    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
-
-
-
-    var pathrootdir = rootDir + this.m_sRootNode
-    this.m_SvrUsrsBCV = new SvrUsrsBCV(pathrootdir)
+    this.m_UserProjFileSys = new UserProjFileSys(rootDir)
+    this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
 }
 
 
