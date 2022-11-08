@@ -542,19 +542,19 @@ var BibleUti = {
         }
         return inp
     },
-    _deplore_usr_proj_dirs: function (userproj, base_Dir) {
+    _deplore_usr_proj_dirs: function (usr_proj, base_Dir) {
         //const base_Dir = "bible_study_notes/usrs"
 
 
-        userproj.base_Dir = base_Dir
-        userproj.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
-        userproj.git_root = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
-        userproj.acct_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
-        userproj.dest_myo = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
-        userproj.dest_dat = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
+        usr_proj.base_Dir = base_Dir
+        usr_proj.user_dir = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}`
+        usr_proj.git_root = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}`
+        usr_proj.acct_dir = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account`
+        usr_proj.dest_myo = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account/myoj`
+        usr_proj.dest_dat = `${base_Dir}/${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}/account/dat`
 
 
-        console.log("deplore: userproj=", userproj)
+        console.log("deplore: usr_proj=", usr_proj)
     },
 
     _interpret_repo_url_str: function (proj_url) {
@@ -613,32 +613,32 @@ var BibleUti = {
         return null
     },
 
-    _interpret_git_config_Usr_Pwd_Url: function (userproj, passcode) {
-        userproj.git_Usr_Pwd_Url = ""
+    _interpret_git_config_Usr_Pwd_Url: function (usr_proj, passcode) {
+        usr_proj.git_Usr_Pwd_Url = ""
         if (passcode.trim().length > 0) {
-            if ("github.com" === userproj.hostname) {
-                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
+            if ("github.com" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.username}/${usr_proj.projname}.git`
             }
-            if ("bitbucket.org" === userproj.hostname) {
-                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.prjbitbk}/${userproj.projname}.git`
+            if ("bitbucket.org" === usr_proj.hostname) {
+                usr_proj.git_Usr_Pwd_Url = `https://${usr_proj.username}:${passcode}@${usr_proj.hostname}/${usr_proj.prjbitbk}/${usr_proj.projname}.git`
             }
         }
 
         //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
     },
-    _parse_inp_usr2proj: function (repopath, passcode, m_sBaseUsrs) {
+    _parse_inp_usr2proj: function (repopath, passcode) {
         //this.m_inp = inp
-        var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+        var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
-        BibleUti._deplore_usr_proj_dirs(userproj, m_sBaseUsrs)
+        BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
 
         if (passcode.trim().length > 0) {
-            BibleUti._interpret_git_config_Usr_Pwd_Url(userproj, passcode)//inp.usr.passcode
+            BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
         }
 
         //BibleUti._parse_inp_usr2proj
-        //this.m_inp.userproj = userproj
-        return userproj
+        //this.m_inp.usr_proj = usr_proj
+        return usr_proj
     },
 
 
@@ -971,8 +971,8 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
-    inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
-    return inp.usr_proj;//this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    //inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    return this.parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
@@ -1002,25 +1002,25 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     if (!inp.usr) {
         return null
     }
-    inp.usr_proj = BibleUti._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
+    var usrproj = this._parse_inp_usr2proj(inp.usr.repopath, inp.usr.passcode)
     //this.m_inp.usr_proj = usr_proj
     return inp.usr_proj
 
 }
-// BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
-//     //this.m_inp = inp
-//     var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
-// 
-//     BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
-// 
-//     if (passcode.trim().length > 0) {
-//         BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
-//     }
-// 
-//     //
-//     this.m_inp.usr_proj = usr_proj
-//     return this.m_inp
-// }
+BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
+    //this.m_inp = inp
+    var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+
+    BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
+
+    if (passcode.trim().length > 0) {
+        BibleUti._interpret_git_config_Usr_Pwd_Url(usr_proj, passcode)//inp.usr.passcode
+    }
+
+    //
+    this.m_inp.usr_proj = usr_proj
+    return this.m_inp
+}
 
 
 
