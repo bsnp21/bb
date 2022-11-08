@@ -543,8 +543,8 @@ var BibleUti = {
         return inp
     },
     _deplore_usr_proj_dirs: function (userproj, base_Dir) {
+        if(!userproj) return
         //const base_Dir = "bible_study_notes/usrs"
-
 
         userproj.base_Dir = base_Dir
         userproj.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
