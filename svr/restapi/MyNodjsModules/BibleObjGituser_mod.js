@@ -1214,7 +1214,6 @@ BibleObjGituser.prototype.Run_proj_destroy = function () {
     var proj_destroy = `
       sudo -S rm -rf ${gitdir}
     `
-
     if (fs.existsSync(`${gitdir}`)) {
         inp.out.exec_git_cmd_result = BibleUti.execSync_Cmd(proj_destroy).toString()
         inp.out.desc += "destroyed git dir: " + gitdir
@@ -1286,6 +1285,7 @@ BibleObjGituser.prototype.run_proj_state = function (cbf) {
     stat.repo_alertLevel = iAlertLevel
 
 
+    this.m_inp.out.fstat = stat
     if (cbf) cbf()
     return stat
 }
