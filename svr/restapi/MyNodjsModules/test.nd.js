@@ -6,7 +6,7 @@ var path = require('path');
 
 var temp = {
 
-    _interpret_repo_url: function (proj_url) {
+    _interpret_repo_url_str: function (proj_url) {
         if (!proj_url) return null
         if (proj_url.indexOf("github.com/") > 0) {
             return this._interpret_repo_url_github(proj_url)
@@ -76,13 +76,13 @@ var temp = {
     }
 }
 
-var ret = temp._interpret_repo_url("https://github.com/wdingbox/Bible_obj_weid.git")
+var ret = temp._interpret_repo_url_str("https://github.com/wdingbox/Bible_obj_weid.git")
 temp._interpret_git_config_Usr_Pwd_Url(ret, "passcode")
 console.log(ret)
 
 
 console.log("bitbucket")
-var ret = temp._interpret_repo_url("https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git")
+var ret = temp._interpret_repo_url_str("https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git")
 
 temp._interpret_git_config_Usr_Pwd_Url(ret, "passcode")
 console.log(ret)

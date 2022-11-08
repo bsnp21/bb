@@ -557,7 +557,7 @@ var BibleUti = {
         console.log("deplore: usr_proj=", usr_proj)
     },
 
-    _interpret_repo_url: function (proj_url) {
+    _interpret_repo_url_str: function (proj_url) {
         if (!proj_url) return null
         console.log("proj_url=",proj_url)
         if (proj_url.indexOf("github.com/") > 0) {
@@ -956,7 +956,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
 }
 BibleObjGituser.prototype.parse_inp_usr2proj = function (repopath, passcode) {
     //this.m_inp = inp
-    var usr_proj = BibleUti._interpret_repo_url(repopath)//inp.usr.repopath
+    var usr_proj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
     BibleUti._deplore_usr_proj_dirs(usr_proj, this.m_sBaseUsrs)
 
