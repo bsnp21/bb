@@ -248,7 +248,9 @@
                 }
             })
 
-            $("#tbd").html(tr)
+            $("#tbd").html(tr).find("td").on("click",function(){
+                $(this).toggleClass("hili")
+            })
             console.log()
         }
     </script>
