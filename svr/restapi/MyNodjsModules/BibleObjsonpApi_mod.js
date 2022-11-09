@@ -259,14 +259,14 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-            var stat = userProject.Run_proj_setup()
-            if (!stat || stat.out.state.bEditable !== 1) {
-                console.log("proj_setup failed.", stat)
+            inp.out.state = userProject.Run_proj_setup()
+            if (!inp.out.state || inp.out.state.bEditable !== 1) {
+                console.log("proj_setup failed.", inp.out.state)
                 return inp;
             }
 
 
-            if (!stat.out.state || stat.out.state.bMyojDir <= 0) {
+            if (!inp.out.state || inp.out.state.bMyojDir <= 0) {
                 console.log("-----:bMyojDir<=0. dir not exist")
             } else {
                 console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
