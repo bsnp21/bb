@@ -1200,7 +1200,7 @@ UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
 BibleObjGituser.prototype.Run_proj_setup = function () {
     console.log("********************************************* run setup 1")
     var inp = this.m_inp
-    if (!this.usr_proj || !inp.out.state) {
+    if (!this.m_UserProjFileSys.usr_proj || !inp.out.state) {
         inp.out.desc += ", failed inp.usr parse"
         console.log("failed git setup", inp.out.desc)
         return null
