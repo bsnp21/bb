@@ -537,9 +537,9 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
-            console.log(inp, "Proj_parse_usr_signin.start*************")
+            console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
             var proj = userProject.Proj_parse_usr_signin(inp)
-            if (!proj) return console.log(inp, "Proj_parse_usr_signin sign in failed.")
+            if (!proj) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
             inp.out.state = userProject.m_UserProjFileSys.Run_proj_setup()
             inp.out.state.SSID = null;
