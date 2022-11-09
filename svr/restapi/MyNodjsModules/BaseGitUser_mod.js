@@ -656,6 +656,7 @@ var BibleUti = {
 
 
 var BaseGitUser = function () {
+    this.m_dlog=[]
 }
 BaseGitUser.prototype.absRootWorkingDir = function (app) {
     var pwd = __dirname
@@ -994,7 +995,7 @@ BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
 
 
 BaseGitUser.prototype.Run_proj_setup = function () {
-    console.log("********************************************* run setup 1")
+    console.log("********************************************* Run_proj_setup  1")
 
     var dir = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(dir)) {
