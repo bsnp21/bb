@@ -79,6 +79,7 @@
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
 
+                    $("#ret_signin").html(`ret = ${JSON.stringify(rob, null, 4)}`)
                     if (err) {
                         console.log(rob, ur)
                         alert("sorry, sign in failed.")
@@ -86,7 +87,7 @@
                         var ur = `${api.urlRedirectParam()}`
                         //alert("ok=\n" + ur)
                         $("#addur_ssid").attr("href", `${ur}`).text(ur);
-                        $("#ret_signin").html(`ret = ${JSON.stringify(rob, null, 4)}`)
+                        
                         console.log(rob, ur)
 
                     }

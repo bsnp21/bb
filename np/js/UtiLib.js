@@ -86,9 +86,10 @@ var Uti = {
     set_menuContainer_color: function (ret) {
         $("#menuContainer, #passcode, #repopath").removeClass("menuContainer_red").removeClass("menuContainer_yellow").removeClass("menuContainer_green")
         if (ret.out.state) {
-            if (ret.out.state.bEditable <= 0) {
+            if (!ret.out.state.bEditable ) {
                 $("#menuContainer, #repopath").addClass("menuContainer_red")
                 alert("Config tag | Repository Invalid. \n- Editing will not work. \n- Try to go home to login again.")
+                console.log(ret)
             } else {
                 if (ret.out.state.bRepositable <= 0) {
                     $("#menuContainer, #passcode").addClass("menuContainer_yellow")
