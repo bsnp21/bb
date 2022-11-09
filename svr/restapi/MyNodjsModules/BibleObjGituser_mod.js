@@ -1561,6 +1561,7 @@ BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
 
     if (!this.m_git_config_old || !this.m_git_config_new) {
         this.load_git_config()
+        console.log("========")
     }
 
     if (bAllowPush) {
