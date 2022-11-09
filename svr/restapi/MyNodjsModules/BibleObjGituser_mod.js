@@ -900,6 +900,59 @@ var BibleObjGituser = function () {
     this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
 }
 
+
+
+
+BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
+    console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
+
+    if (!cuid || cuid.length === 0 || cipherusrs.length === 0) return null
+    console.log("decipher user based on prev key nached in cuid=", cuid)
+
+    var robj = NCache.myCache.take(cuid) //take: for safety delete immediately after use.
+    if (!robj) return console.log("cache null=" + cuid)
+    console.log(robj)
+
+    console.log(cipherusrs)
+
+    var str = BibleUti.decrypt_txt(cipherusrs, robj.privateKey)
+    var usrObj = JSON.parse(str)
+    console.log("session_decipher_usrs usrObj=")
+    console.log(usrObj)
+    return usrObj
+}
+BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
+    console.log("========Proj_parse_usr_signin")
+    this.m_inp = inp
+    if (!inp || !inp.out) {
+        console.log("!inp || !inp.out")
+        return null
+    }
+
+    inp.usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
+    if (!inp.usr) {
+        console.log("*****failed: sdfadfasjiasf")
+        return null
+    }
+    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+}
+
+BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
+    this.m_inp = inp
+    if (!inp || !inp.out) {
+        return null
+    }
+
+    inp.usr = this.proj_get_usr_fr_cache_ssid(inp)
+    if (!inp.usr) {
+        console.log("*****failed sdfadfas")
+        return null
+    }
+    this.proj_update_cache_ssid_by_inp_aux(inp)
+
+    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+}
+
 BibleObjGituser.prototype.proj_get_usr_aux_ttl = function (inp) {
     var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
     return ttl
@@ -941,56 +994,6 @@ BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
 
     return inp.usr
 }
-BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
-    this.m_inp = inp
-    if (!inp || !inp.out) {
-        return null
-    }
-
-    inp.usr = this.proj_get_usr_fr_cache_ssid(inp)
-    if (!inp.usr) {
-        console.log("*****failed sdfadfas")
-        return null
-    }
-    this.proj_update_cache_ssid_by_inp_aux(inp)
-
-    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
-}
-
-BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
-    console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
-
-    if (!cuid || cuid.length === 0 || cipherusrs.length === 0) return null
-    console.log("decipher user based on prev key nached in cuid=", cuid)
-
-    var robj = NCache.myCache.take(cuid) //take: for safety delete immediately after use.
-    if (!robj) return console.log("cache null=" + cuid)
-    console.log(robj)
-
-    console.log(cipherusrs)
-
-    var str = BibleUti.decrypt_txt(cipherusrs, robj.privateKey)
-    var usrObj = JSON.parse(str)
-    console.log("session_decipher_usrs usrObj=")
-    console.log(usrObj)
-    return usrObj
-}
-BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
-    console.log("========Proj_parse_usr_signin")
-    this.m_inp = inp
-    if (!inp || !inp.out) {
-        console.log("!inp || !inp.out")
-        return null
-    }
-
-    inp.usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
-    if (!inp.usr) {
-        console.log("*****failed: sdfadfasjiasf")
-        return null
-    }
-    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
-}
-
 
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
@@ -1013,6 +1016,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
     console.log("usrObj", usrObj)
     return { repodesc: usrObj.repodesc, pathfile: gitpath }
 }
+
 
 BibleObjGituser.prototype.Session_create = function () {
     var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
