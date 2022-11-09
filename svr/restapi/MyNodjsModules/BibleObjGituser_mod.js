@@ -1200,14 +1200,14 @@ UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
 
 UserProjFileSys.prototype.Run_proj_setup = function () {
     console.log("********************************************* run setup 1")
-    var inp = this.m_inp
-    if (!this.m_UserProjFileSys.usr_proj || !inp.out.state) {
+    var inp = {out:{state:{}}};//this.m_inp
+    if (!this.usr_proj || !inp.out.state) {
         inp.out.desc += ", failed inp.usr parse"
         console.log("failed git setup", inp.out.desc)
         return null
     }
 
-    var dir = this.m_UserProjFileSys.get_usr_git_dir("/.git/config")
+    var dir = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(dir)) {
         this.git_clone() //always sucess even passwd is wrong.
     } else {
@@ -1220,15 +1220,15 @@ UserProjFileSys.prototype.Run_proj_setup = function () {
 
 
     if (fs.existsSync(dir)) {
-        this.m_UserProjFileSys.run_makingup_missing_files(true)
+        this.run_makingup_missing_files(true)
     }
 
-    var dir = this.m_UserProjFileSys.get_usr_acct_dir()
+    var dir = this.get_usr_acct_dir()
     if (fs.existsSync(dir)) {
         BibleUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
 
-    var ret = this.m_UserProjFileSys.run_proj_state()
+    var ret = this.run_proj_state()
 
     console.log("Run_proj_setup ---------- rgfd")
     return ret
