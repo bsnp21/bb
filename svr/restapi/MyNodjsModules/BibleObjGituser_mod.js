@@ -876,6 +876,7 @@ UserProjFileSys.prototype.Gen_usr_proj = function (repopath, passcode) {
     this.usr_acct={repopath:repopath, passcode:passcode}
     //this.m_inp = inp //parse_inp_usr2proj
     var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
+    if(!userproj) return null
 
     BibleUti._deplore_usr_proj_dirs(userproj, this.m_sBaseUsrs)
 
