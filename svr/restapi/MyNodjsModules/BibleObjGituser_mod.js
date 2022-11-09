@@ -1550,7 +1550,7 @@ BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
     if (!this.m_UserProjFileSys.usr_proj) return
     if (!this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url) return
 
-    var git_config_fname = this.get_usr_git_dir("/.git/config")
+    var git_config_fname = this.m_UserProjFileSys.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) {
         console.log(".git/config not exist:", git_config_fname)
         return
@@ -1662,7 +1662,7 @@ UserProjFileSys.prototype.git_status = async function (_sb) {
 BibleObjGituser.prototype.git_add_commit_push_Sync = function (msg) {
     var _THIS = this
     var inp = this.m_inp
-    var gitdir = this.get_usr_git_dir()
+    var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists.");
     }
@@ -1738,7 +1738,7 @@ BibleObjGituser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
-    var dir = this.get_usr_git_dir()
+    var dir = this.m_UserProjFileSys.get_usr_git_dir()
 
     this.git_config_allow_push(true)
     var logname = "test.log"
