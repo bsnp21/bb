@@ -1718,15 +1718,15 @@ UserProjFileSys.prototype.git_add_commit_push_Sync = function (msg) {
 }
 
 BibleObjGituser.prototype.git_pull = function (cbf) {
-    this.git_config_allow_push(true)
+    this.m_UserProjFileSys.git_config_allow_push(true)
     this.m_inp.out.git_pull_res = this.m_UserProjFileSys.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
-    this.git_config_allow_push(false)
+    this.m_UserProjFileSys.git_config_allow_push(false)
     //var mat = this.m_inp.out.git_pull_res.stderr.match(/(fatal)|(fail)|(error)/g)
     return this.m_inp.out.git_pull_res
 }
 
 BibleObjGituser.prototype.git_push = async function () {
-    this.git_config_allow_push(true)
+    this.m_UserProjFileSys.git_config_allow_push(true)
     var ret = this.m_inp.out.git_push_res = this.m_UserProjFileSys.execSync_cmd_git("git push").toString()
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
@@ -1734,7 +1734,7 @@ BibleObjGituser.prototype.git_push = async function () {
             ret = null
         }
     }
-    this.git_config_allow_push(false)
+    this.m_UserProjFileSys.git_config_allow_push(false)
     return ret
 }
 BibleObjGituser.prototype.git_push_test = function () {
@@ -1743,7 +1743,7 @@ BibleObjGituser.prototype.git_push_test = function () {
 
     var dir = this.m_UserProjFileSys.get_usr_git_dir()
 
-    this.git_config_allow_push(true)
+    this.m_UserProjFileSys.git_config_allow_push(true)
     var logname = "test.log"
     var cmd = `
     cd ${dir}
@@ -1759,7 +1759,7 @@ BibleObjGituser.prototype.git_push_test = function () {
             ret = null
         }
     }
-    this.git_config_allow_push(false)
+    this.m_UserProjFileSys.git_config_allow_push(false)
     return ret
 }
 UserProjFileSys.prototype.execSync_cmd_git = function (gitcmd) {
