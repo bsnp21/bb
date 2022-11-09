@@ -920,14 +920,7 @@ UserProjFileSys.prototype.get_usr_git_dir = function (subpath) {
     return `${this.m_rootDir}${this.usr_proj.git_root}${subpath}`
 }
 
-//BibleObjGituser.prototype.get_usr_git_dir = function (subpath) {
-//    if (!this.m_UserProjFileSys.usr_proj) return ""
-//    if (undefined === subpath || null === subpath) {
-//        return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.git_root}`
-//    }
-//    //if (subpath[0] !== "/") subpath = "/" + subpath
-//    return `${this.m_UserProjFileSys.m_rootDir}${this.m_UserProjFileSys.usr_proj.git_root}${subpath}`
-//}
+
 
 UserProjFileSys.prototype.get_DocCode_Fname = function (DocCode) {
     if (!DocCode.match(/^e_/)) return "" //:like, e_Note
