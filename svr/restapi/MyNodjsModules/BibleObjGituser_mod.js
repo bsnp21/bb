@@ -1006,6 +1006,11 @@ UserProjFileSys.prototype.get_dir_lib_template = function (subpf) {
 
 
 
+
+
+
+
+
 UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
 
     var _THIS = this
@@ -1331,6 +1336,8 @@ UserProjFileSys.prototype.Save_userData_frm_client = function (par) {
     //inp.out.save_res = save_res
     return save_res;
 }
+
+
 UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
     { /****.git/config
         [core]
