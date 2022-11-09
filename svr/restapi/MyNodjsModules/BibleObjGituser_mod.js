@@ -1756,7 +1756,7 @@ UserProjFileSys.prototype.git_push_test = function () {
     echo lll | sudo -S  git commit -m 'test.log'
     echo lll | sudo -S  git push
     `
-    var ret = this.m_inp.out.git_push_res = this.m_UserProjFileSys.execSync_cmd_git(cmd).toString()
+    var ret = this.m_UserProjFileSys.execSync_cmd_git(cmd).toString()
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
         if (ret.match(/failed/i)) {
