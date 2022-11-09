@@ -1487,7 +1487,7 @@ UserProjFileSys.prototype.git_status = async function (_sb) {
 UserProjFileSys.prototype.git_add_commit_push_Sync = function (msg) {
     var _THIS = this
     var inp = {};//this.m_inp
-    var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
+    var gitdir = this.get_usr_git_dir()
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists.");
     }
