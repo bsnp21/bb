@@ -1525,7 +1525,7 @@ BibleObjGituser.prototype.Save_userData_frm_client = function (par) {
     //inp.out.save_res = save_res
     return save_res;
 }
-BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
+UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
     { /****.git/config
         [core]
                 repositoryformatversion = 0
@@ -1547,8 +1547,8 @@ BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
     } /////////
 
     if (!this.m_inp.usr.repopath) return
-    if (!this.m_UserProjFileSys.usr_proj) return
-    if (!this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url) return
+    if (!this.usr_proj) return
+    if (!this.usr_proj.git_Usr_Pwd_Url) return
 
     var git_config_fname = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) {
@@ -1559,30 +1559,30 @@ BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
 
 
     if (!this.m_git_config_old || !this.m_git_config_new) {
-        this.m_UserProjFileSys.load_git_config()
+        this.load_git_config()
     }
 
     if (bAllowPush) {
         fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
-        console.log("bAllowPush=1:url =", this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
+        console.log("bAllowPush=1:url =", this.usr_proj.git_Usr_Pwd_Url)
     } else {
         fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
         console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
     }
 }
 
-BibleObjGituser.prototype.git_clone = function () {
+UserProjFileSys.prototype.git_clone = function () {
     //var password = "lll" //dev mac
     var _THIS = this
     var inp = this.m_inp
-    var proj = this.m_UserProjFileSys.usr_proj;
+    var proj = this.usr_proj;
     if (!proj) {
         inp.out.desc += ", failed inp.usr parse"
         console.log("failed-git-parse", inp.out.desc)
         return inp
     }
 
-    var dir = this.m_UserProjFileSys.m_rootDir
+    var dir = this.m_rootDir
     if (!fs.existsSync(dir)) {
         console.log("Fatal Error: not exist dir:", dir)
         return null
@@ -1598,7 +1598,7 @@ BibleObjGituser.prototype.git_clone = function () {
     }
 
 
-    var clone_https = this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url
+    var clone_https = this.usr_proj.git_Usr_Pwd_Url
     if (clone_https.length === 0) {
         clone_https = inp.usr.repopath
     }
@@ -1610,7 +1610,7 @@ BibleObjGituser.prototype.git_clone = function () {
     console.log("to clone: ", clone_https)
 
     //console.log("proj", proj)
-    var dir = this.m_UserProjFileSys.usr_proj.user_dir
+    var dir = this.usr_proj.user_dir
     if (!fs.existsSync(dir)) {
         var ret = BibleUti.execSync_Cmd(`echo 'lll'| sudo -S mkdir -p ${dir}`).toString()
     }
@@ -1627,7 +1627,7 @@ BibleObjGituser.prototype.git_clone = function () {
 
     var git_clone_cmd = `
     #!/bin/sh
-    cd ${this.m_UserProjFileSys.m_rootDir}
+    cd ${this.m_rootDir}
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${proj.git_root}
     if [ -f "${proj.git_root}/.git/config" ]; then
         echo "${proj.git_root}/.git/config exists."
@@ -1642,7 +1642,7 @@ BibleObjGituser.prototype.git_clone = function () {
     console.log("ret", ret)
     return inp
 }
-BibleObjGituser.prototype.git_status = async function (_sb) {
+UserProjFileSys.prototype.git_status = async function (_sb) {
     var inp = this.m_inp
     if (!inp.out.state) return console.log("*** Fatal Error: inp.out.state = null")
 
@@ -1659,7 +1659,7 @@ BibleObjGituser.prototype.git_status = async function (_sb) {
     }
 }
 
-BibleObjGituser.prototype.git_add_commit_push_Sync = function (msg) {
+UserProjFileSys.prototype.git_add_commit_push_Sync = function (msg) {
     var _THIS = this
     var inp = this.m_inp
     var gitdir = this.get_usr_git_dir()
@@ -1714,7 +1714,7 @@ BibleObjGituser.prototype.git_add_commit_push_Sync = function (msg) {
     }, 10000)
 }
 
-BibleObjGituser.prototype.git_pull = function (cbf) {
+UserProjFileSys.prototype.git_pull = function (cbf) {
     this.git_config_allow_push(true)
     this.m_inp.out.git_pull_res = this.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
     this.git_config_allow_push(false)
@@ -1722,7 +1722,7 @@ BibleObjGituser.prototype.git_pull = function (cbf) {
     return this.m_inp.out.git_pull_res
 }
 
-BibleObjGituser.prototype.git_push = async function () {
+UserProjFileSys.prototype.git_push = async function () {
     this.git_config_allow_push(true)
     var ret = this.m_inp.out.git_push_res = this.execSync_cmd_git("git push").toString()
     if (null !== ret) {
@@ -1734,7 +1734,7 @@ BibleObjGituser.prototype.git_push = async function () {
     this.git_config_allow_push(false)
     return ret
 }
-BibleObjGituser.prototype.git_push_test = function () {
+UserProjFileSys.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
@@ -1759,7 +1759,7 @@ BibleObjGituser.prototype.git_push_test = function () {
     this.git_config_allow_push(false)
     return ret
 }
-BibleObjGituser.prototype.execSync_cmd_git = function (gitcmd) {
+UserProjFileSys.prototype.execSync_cmd_git = function (gitcmd) {
     var _THIS = this
     var inp = this.m_inp
 
