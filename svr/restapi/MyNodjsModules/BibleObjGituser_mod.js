@@ -876,6 +876,7 @@ UserProjFileSys.prototype.proj_get_usr_aux_ttl = function (inp) {
 }
 
 UserProjFileSys.prototype.Gen_usr_proj = function (repopath, passcode) {
+    this.usr_acct={repopath:repopath, passcode:passcode}
     //this.m_inp = inp //parse_inp_usr2proj
     var userproj = BibleUti._interpret_repo_url_str(repopath)//inp.usr.repopath
 
@@ -1227,7 +1228,7 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
         BibleUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
 
-    this.run_proj_state()
+    this.m_UserProjFileSys.run_proj_state()
     return inp
 }
 
@@ -1257,7 +1258,7 @@ UserProjFileSys.prototype.Run_proj_destroy = function () {
     this.Session_delete()
     return inp
 }
-BibleObjGituser.prototype.run_proj_state = function (cbf) {
+UserProjFileSys.prototype.run_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
     var stat = {};//this.m_inp.out.state
     //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
@@ -1400,25 +1401,25 @@ UserProjFileSys.prototype.chmod_R_ = function (mode, dir) {
     return inp.out.change_perm
 }
 
-BibleObjGituser.prototype.load_git_config = function () {
-    var git_config_fname = this.m_UserProjFileSys.get_usr_git_dir("/.git/config")
+UserProjFileSys.prototype.load_git_config = function () {
+    var git_config_fname = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) return ""
     //if (!this.m_git_config_old || !this.m_git_config_new) {
     var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
-    var ipos1 = txt.indexOf(this.m_inp.usr.repopath)
-    var ipos2 = txt.indexOf(this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
+    var ipos1 = txt.indexOf(this.usr_acct.repopath)
+    var ipos2 = txt.indexOf(this.usr_proj.git_Usr_Pwd_Url)
 
-    console.log("ipos1:", ipos1, this.m_inp.usr.repopath)
-    console.log("ipos2:", ipos2, this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
+    console.log("ipos1:", ipos1, this.usr_acct.repopath)
+    console.log("ipos2:", ipos2, this.usr_proj.git_Usr_Pwd_Url)
 
     var configurl = ""
     if (ipos1 > 0) {
         olds = txt
-        news = txt.replace(this.m_inp.usr.repopath, this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
+        news = txt.replace(this.usr_acct.repopath, this.usr_proj.git_Usr_Pwd_Url)
     }
     if (ipos2 > 0) {
         news = txt
-        olds = txt.replace(this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url, this.m_inp.usr.repopath)
+        olds = txt.replace(this.usr_proj.git_Usr_Pwd_Url, this.usr_acct.repopath)
 
         console.log("initial git_config_fname not normal:", txt)
     }
@@ -1431,9 +1432,9 @@ BibleObjGituser.prototype.load_git_config = function () {
         var pos1 = txt.indexOf("\n\tfetch = +refs");//("[branch \"master\"]")
         configurl = txt.substring(pos0 + 19, pos1)
     }
-    this.m_UserProjFileSys.usr_proj.configurl = configurl
+    this.usr_proj.configurl = configurl
     //}
-    console.log("load_git_config__end.configurl=", this.m_UserProjFileSys.usr_proj)
+    console.log("load_git_config__end.configurl=", this.usr_proj)
     return configurl
 }
 
