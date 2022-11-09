@@ -483,7 +483,7 @@ var ApiJsonp_BibleObj = {
                     })
                 }
 
-                inp.out.data = userProject.Load_back_userData(inp.par)
+                inp.out.data = userProject.m_UserProjFileSys.Load_back_userData(inp.par)
                 if (!inp.out.state) inp.out.state.bEditable = 1
             }
         })
