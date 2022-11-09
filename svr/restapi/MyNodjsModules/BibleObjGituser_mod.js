@@ -897,8 +897,7 @@ UserProjFileSys.prototype.absRootWorkingDir = function (app) {
 
 UserProjFileSys.prototype.Gen_usr_proj = function (repopath, passcode) {
     var gitusr = new BaseGitUser()
-    gitusr.set_gitusr(repopath, passcode)
-    gitusr._deplore_usr_proj_dirs(this.m_sBaseUsrs)
+    gitusr.Set_Gitusr(repopath, passcode)
 
     this.usr_acct = { repopath: repopath, passcode: passcode }
     //this.m_inp = inp //parse_inp_usr2proj
