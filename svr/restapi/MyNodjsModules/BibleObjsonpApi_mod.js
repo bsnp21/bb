@@ -476,7 +476,7 @@ var ApiJsonp_BibleObj = {
 
                 userProject.m_UserProjFileSys.Run_proj_setup()
 
-                var retp = userProject.run_proj_state()
+                var retp = userProject.m_UserProjFileSys.run_proj_state()
                 if (0) {
                     await userProject.m_UserProjFileSys.git_pull(function (bSuccess) {
 
