@@ -1414,7 +1414,7 @@ BibleObjGituser.prototype.load_git_config = function () {
     var configurl = ""
     if (ipos1 > 0) {
         olds = txt
-        news = txt.replace(this.m_inp.usr.repopath, this.usr_proj.git_Usr_Pwd_Url)
+        news = txt.replace(this.m_inp.usr.repopath, this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
     }
     if (ipos2 > 0) {
         news = txt
