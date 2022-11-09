@@ -1229,6 +1229,8 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
     }
 
     this.m_UserProjFileSys.run_proj_state()
+
+    console.log("Run_proj_setup ---------- rgfd")
     return inp
 }
 
