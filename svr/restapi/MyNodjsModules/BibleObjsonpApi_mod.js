@@ -249,7 +249,7 @@ var ApiJsonp_BibleObj = {
             inp.out.data = BibleUti.search_str_in_bcvT(bcvT, inp.par.Search.File, inp.par.Search.Strn);
 
             inp.out.desc += ":success."
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
         })
     },
 
@@ -296,7 +296,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.data = bcvT
                 //console.log(bcvT)
             }
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
         })
     },
 
@@ -385,7 +385,7 @@ var ApiJsonp_BibleObj = {
             //var docname = userProject.get_DocCode_Fname(doc)
             var docpathfilname = userProject.get_pfxname(doc)
             var outfil = userProject.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
-            //var docpathfilname = userProject.get_usr_myoj_dir("/" + docname)
+            
 
             //////----
             function __load_to_obj(outObj, jsfname, owner, shareID, inpObj,) {
@@ -544,7 +544,7 @@ var ApiJsonp_BibleObj = {
             if (inp.out.state.bEditable === 1) {
                 if (null === userProject.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                    userProject.Run_proj_destroy()
+                    userProject.m_UserProjFileSys.Run_proj_destroy()
                 } else {
                     inp.out.state.SSID = userProject.Session_create()
                 }
@@ -559,7 +559,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
             if (0 === inp.out.state.bRepositable) {
                 //case push failed. Don't delete
                 console.log("git dir not exit.")
@@ -569,7 +569,7 @@ var ApiJsonp_BibleObj = {
                 var res3 = userProject.execSync_cmd_git(`git commit -m "before del. repodesc:${inp.usr.repodesc}"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.Run_proj_destroy()
+                var res5 = userProject.m_UserProjFileSys.Run_proj_destroy()
             }
 
             //userProject.run_proj_state()
@@ -593,13 +593,13 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            var ret = userProject.run_proj_state()
+            var ret = userProject.m_UserProjFileSys.run_proj_state()
             var res2 = userProject.execSync_cmd_git("git status -sb")
             if (res2 && res2.stdout) {
                 inp.out.state.git_status_sb = res2.stdout
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
             }
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
         })
 
 
@@ -629,7 +629,7 @@ var ApiJsonp_BibleObj = {
             var res3 = userProject.execSync_cmd_git(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
             var res4 = userProject.git_push()
 
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
         })
         //var sret = JSON.stringify(inp, null, 4)
         //var sid = ""
@@ -650,7 +650,7 @@ var ApiJsonp_BibleObj = {
 
             userProject.Run_proj_setup()
             userProject.git_pull();
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
 
         })
         //var sret = JSON.stringify(inp, null, 4)
@@ -669,10 +669,10 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            var ret = userProject.run_proj_state()
+            var ret = userProject.m_UserProjFileSys.run_proj_state()
             var rso = userProject.execSync_cmd_git()
             console.log("\n\n*cmd-res", rso)
-            userProject.run_proj_state()
+            userProject.m_UserProjFileSys.run_proj_state()
         })
 
         // var sret = JSON.stringify(inp, null, 4)
