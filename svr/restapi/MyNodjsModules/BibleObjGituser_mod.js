@@ -1730,7 +1730,7 @@ UserProjFileSys.prototype.git_pull = function (cbf) {
 }
 
 UserProjFileSys.prototype.git_push = async function () {
-    this.m_UserProjFileSys.git_config_allow_push(true)
+    this.git_config_allow_push(true)
     var ret = this.m_inp.out.git_push_res = this.m_UserProjFileSys.execSync_cmd_git("git push").toString()
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
@@ -1738,16 +1738,16 @@ UserProjFileSys.prototype.git_push = async function () {
             ret = null
         }
     }
-    this.m_UserProjFileSys.git_config_allow_push(false)
+    this.git_config_allow_push(false)
     return ret
 }
 UserProjFileSys.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
-    var dir = this.m_UserProjFileSys.get_usr_git_dir()
+    var dir = this.get_usr_git_dir()
 
-    this.m_UserProjFileSys.git_config_allow_push(true)
+    this.git_config_allow_push(true)
     var logname = "test.log"
     var cmd = `
     cd ${dir}
@@ -1763,7 +1763,7 @@ UserProjFileSys.prototype.git_push_test = function () {
             ret = null
         }
     }
-    this.m_UserProjFileSys.git_config_allow_push(false)
+    this.git_config_allow_push(false)
     return ret
 }
 UserProjFileSys.prototype.execSync_cmd_git = function (gitcmd) {
