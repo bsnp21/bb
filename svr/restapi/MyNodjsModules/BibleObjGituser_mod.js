@@ -1525,7 +1525,7 @@ BibleObjGituser.prototype.Save_userData_frm_client = function (par) {
     //inp.out.save_res = save_res
     return save_res;
 }
-UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
+BibleObjGituser.prototype.git_config_allow_push = function (bAllowPush) {
     { /****.git/config
         [core]
                 repositoryformatversion = 0
@@ -1547,8 +1547,8 @@ UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
     } /////////
 
     //if (!this.m_inp.usr.repopath) return
-    if (!this.usr_proj) return
-    if (!this.usr_proj.git_Usr_Pwd_Url) return
+    if (!this.m_UserProjFileSys.usr_proj) return
+    if (!this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url) return
 
     var git_config_fname = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) {
@@ -1564,7 +1564,7 @@ UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
 
     if (bAllowPush) {
         fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
-        console.log("bAllowPush=1:url =", this.usr_proj.git_Usr_Pwd_Url)
+        console.log("bAllowPush=1:url =", this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
     } else {
         fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
         //console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
@@ -1659,7 +1659,7 @@ UserProjFileSys.prototype.git_status = async function (_sb) {
     }
 }
 
-UserProjFileSys.prototype.git_add_commit_push_Sync = function (msg) {
+BibleObjGituser.prototype.git_add_commit_push_Sync = function (msg) {
     var _THIS = this
     var inp = this.m_inp
     var gitdir = this.get_usr_git_dir()
