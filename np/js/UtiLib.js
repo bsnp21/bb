@@ -84,9 +84,10 @@ var Uti = {
         $("#txtarea").show().val(results);
     },
     set_menuContainer_color: function (ret) {
+        console.log("set_menuContainer_color", ret)
         $("#menuContainer, #passcode, #repopath").removeClass("menuContainer_red").removeClass("menuContainer_yellow").removeClass("menuContainer_green")
         if (ret.out.state) {
-            if (!ret.out.state.bEditable ) {
+            if (1!=ret.out.state.bEditable ) {
                 $("#menuContainer, #repopath").addClass("menuContainer_red")
                 alert("Config tag | Repository Invalid. \n- Editing will not work. \n- Try to go home to login again.")
                 console.log(ret)
