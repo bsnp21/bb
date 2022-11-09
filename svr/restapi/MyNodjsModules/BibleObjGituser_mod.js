@@ -1072,7 +1072,7 @@ UserProjFileSys.prototype.Run_proj_destroy = function () {
 }
 UserProjFileSys.prototype.run_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
-    var stat = {};//this.m_inp.out.state
+    var stat = {bRepositable:0};//this.m_inp.out.state
     //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
 
 
