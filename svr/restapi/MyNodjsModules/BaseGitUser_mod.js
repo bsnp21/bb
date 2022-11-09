@@ -47,6 +47,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
         prev = wd
     })
     console.log(rootdir, "  <=== svr rootdir")
+    
     return rootdir
 }
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
@@ -132,6 +133,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
     var absRootPath = this.absRootWorkingDir()
+    this.m_rootDir = absRootPath //remove alter
     var projDirs = {}
 
     projDirs.root_abs = `${absRootPath}`
