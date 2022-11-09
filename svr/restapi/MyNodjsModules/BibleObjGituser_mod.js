@@ -1017,8 +1017,8 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 BibleObjGituser.prototype.Session_create = function () {
     var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
 
-    if (!this.m_UserProjFileSys.usr_proj) return null
-    var ssid = this.m_UserProjFileSys.usr_proj.ownerId
+    
+    var ssid = this.m_UserProjFileSys.m_gitinf.ownerId //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
