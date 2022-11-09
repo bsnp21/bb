@@ -454,8 +454,8 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            var stat = userProject.m_UserProjFileSys.Run_proj_setup()
-            if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
+            inp.out.state = userProject.m_UserProjFileSys.Run_proj_setup()
+            if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
 
             //
             inp.out.state.save_res = userProject.m_UserProjFileSys.Save_userData_frm_client(inp.par)
