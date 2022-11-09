@@ -1248,7 +1248,7 @@ UserProjFileSys.prototype.load_git_config = function () {
     }
     this.usr_proj.configurl = configurl
     //}
-    console.log("load_git_config__end.configurl=", this.usr_proj)
+    //console.log("load_git_config__end.configurl=", this.usr_proj)
     return configurl
 }
 
