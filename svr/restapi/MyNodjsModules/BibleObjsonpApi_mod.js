@@ -551,6 +551,7 @@ var ApiJsonp_BibleObj = {
                 } else {
                     console.log("Session_create .!!!!!")
                     inp.out.state.SSID = userProject.Session_create()
+                    console.log("Session_create .!!!!==", inp.out.state.SSID)
                 }
             }
         })
