@@ -565,8 +565,8 @@ var ApiJsonp_BibleObj = {
                 console.log("git dir not exit.")
 
             } else {
-                var res2 = userProject.execSync_cmd_git("git add *")
-                var res3 = userProject.execSync_cmd_git(`git commit -m "before del. repodesc:${inp.usr.repodesc}"`)
+                var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git add *")
+                var res3 = userProject.m_UserProjFileSys.execSync_cmd_git(`git commit -m "before del. repodesc:${inp.usr.repodesc}"`)
                 var res4 = userProject.git_push()
 
                 var res5 = userProject.m_UserProjFileSys.Run_proj_destroy()
@@ -625,8 +625,8 @@ var ApiJsonp_BibleObj = {
             userProject.Run_proj_setup()
             //await userProject.git_add_commit_push("push hard.", "");//real push hard.
 
-            var res2 = userProject.execSync_cmd_git("git add *")
-            var res3 = userProject.execSync_cmd_git(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
+            var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git add *")
+            var res3 = userProject.m_UserProjFileSys.execSync_cmd_git(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
             var res4 = userProject.git_push()
 
             userProject.m_UserProjFileSys.run_proj_state()
