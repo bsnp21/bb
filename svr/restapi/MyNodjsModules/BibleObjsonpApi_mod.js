@@ -458,7 +458,7 @@ var ApiJsonp_BibleObj = {
             if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
 
             //
-            inp.out.state.save_res = userProject.Save_userData_frm_client(inp.par)
+            inp.out.state.save_res = userProject.m_UserProjFileSys.Save_userData_frm_client(inp.par)
             
             
             //
@@ -567,7 +567,7 @@ var ApiJsonp_BibleObj = {
             } else {
                 var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git add *")
                 var res3 = userProject.m_UserProjFileSys.execSync_cmd_git(`git commit -m "before del. repodesc:${inp.usr.repodesc}"`)
-                var res4 = userProject.git_push()
+                var res4 = userProject.m_UserProjFileSys.git_push()
 
                 var res5 = userProject.m_UserProjFileSys.Run_proj_destroy()
             }
@@ -627,7 +627,7 @@ var ApiJsonp_BibleObj = {
 
             var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git add *")
             var res3 = userProject.m_UserProjFileSys.execSync_cmd_git(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
-            var res4 = userProject.git_push()
+            var res4 = userProject.m_UserProjFileSys.git_push()
 
             userProject.m_UserProjFileSys.run_proj_state()
         })

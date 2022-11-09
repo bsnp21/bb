@@ -1504,7 +1504,7 @@ BibleObjGituser.prototype.Load_back_userData = function (par) {
 //    inp.out.save_res = save_res
 //    return save_res;
 //}
-BibleObjGituser.prototype.Save_userData_frm_client = function (par) {
+UserProjFileSys.prototype.Save_userData_frm_client = function (par) {
     //var inp = this.m_inp
     var save_res = { desc: "ok" }
     var doc = par.fnames[0]
@@ -1729,7 +1729,7 @@ UserProjFileSys.prototype.git_pull = function (cbf) {
     return ret
 }
 
-BibleObjGituser.prototype.git_push = async function () {
+UserProjFileSys.prototype.git_push = async function () {
     this.m_UserProjFileSys.git_config_allow_push(true)
     var ret = this.m_inp.out.git_push_res = this.m_UserProjFileSys.execSync_cmd_git("git push").toString()
     if (null !== ret) {
@@ -1741,7 +1741,7 @@ BibleObjGituser.prototype.git_push = async function () {
     this.m_UserProjFileSys.git_config_allow_push(false)
     return ret
 }
-BibleObjGituser.prototype.git_push_test = function () {
+UserProjFileSys.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
