@@ -1237,7 +1237,7 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
 
 
 UserProjFileSys.prototype.Run_proj_destroy = function () {
-    var inp = this.m_inp
+    var inp = {out:{}};//this.m_inp
     var proj = this.usr_proj;
     if (!proj) {
         console.log("failed git setup", inp)
