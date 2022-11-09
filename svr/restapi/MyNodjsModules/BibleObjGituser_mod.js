@@ -1258,7 +1258,7 @@ UserProjFileSys.prototype.Run_proj_destroy = function () {
     return inp
 }
 UserProjFileSys.prototype.run_proj_state = function (cbf) {
-    if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
+    //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
     var stat = this.m_inp.out.state
     //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
 
@@ -1280,7 +1280,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
 
     /////// git status
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
-    this.m_inp.out.state.bRepositable = 0
+    //this.m_inp.out.state.bRepositable = 0
     if (configtxt.length > 0) {
         //if clone with password ok, it would ok for pull/push 
         stat.bRepositable = 1
@@ -1322,7 +1322,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
 }
 
 UserProjFileSys.prototype.cp_template_to_git = function () {
-    var inp = this.m_inp
+    var inp = {out:{}};//this.m_inp
     var proj = this.usr_proj;
     if (!proj) {
         inp.out.desc += ", failed inp.usr parse"
@@ -1360,7 +1360,7 @@ UserProjFileSys.prototype.cp_template_to_git = function () {
 }
 UserProjFileSys.prototype.chmod_R_777_acct = function (spath) {
     // mode : "777" 
-    var inp = this.m_inp
+    var inp = {out:{}};//this.m_inp
     var proj = this.usr_proj;
     if (!proj) {
         inp.out.desc += ", failed inp.usr parse"
@@ -1381,7 +1381,7 @@ UserProjFileSys.prototype.chmod_R_777_acct = function (spath) {
 }
 UserProjFileSys.prototype.chmod_R_ = function (mode, dir) {
     // mode : "777" 
-    var inp = this.m_inp
+    var inp = {out:{}}//this.m_inp
     var proj = this.usr_proj;
     if (!proj) {
         inp.out.desc += ", failed inp.usr parse"
