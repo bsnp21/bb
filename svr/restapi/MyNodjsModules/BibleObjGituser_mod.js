@@ -1505,7 +1505,7 @@ UserProjFileSys.prototype.git_add_commit_push_Sync = function (msg) {
     echo '=>git add *'
     echo 'lll'|  sudo -S git add *
     echo '=>git commit'
-    echo 'lll'|  sudo -S git commit -m "Sync:${msg}. repodesc:${inp.usr.repodesc}"
+    echo 'lll'|  sudo -S git commit -m "Sync:${msg}. repodesc:${this.usr_acct.repodesc}"
     echo '=>git push'
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     echo '=>git status'
