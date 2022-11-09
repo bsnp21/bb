@@ -92,13 +92,6 @@ var BibleUti = {
         return targObj
     },
 
-    // WorkingRootDir: function (v) {
-    //     if (undefined === v) {
-    //         return BibleUti.m_rootDir
-    //     } else {
-    //         BibleUti.m_rootDir = v
-    //     }
-    // },
 
 
     GetFilesAryFromDir: function (startPath, deep, cb) {//startPath, filter
@@ -745,7 +738,7 @@ NCache.Init = function () {
     function _destroy_git_proj(key, val) {
         console.log(`\n\n\n\n\n\n\n\n\n\non del, NCache.m_checkperiod=${NCache.m_checkperiod},m_TTL=${NCache.m_TTL}, m_MFT=${NCache.m_MFT}`)
         // ... do something ...
-        //var rootDir = BibleUti.WorkingRootDir();// + WorkingRootNodeName
+        //
         console.log(`on del:key=${key}, \n-val=${JSON.stringify(val)} `)
 
         if (!val) return console.log("on del: val is null")
