@@ -230,7 +230,7 @@ var ApiJsonp_BibleObj = {
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-            var stat = userProject.Run_proj_setup()
+            var stat = userProject.m_UserProjFileSys.Run_proj_setup()
             var TbcvObj = {};
             if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
@@ -259,7 +259,7 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-            inp.out.state = userProject.Run_proj_setup()
+            inp.out.state = userProject.m_UserProjFileSys.Run_proj_setup()
             if (!inp.out.state || inp.out.state.bEditable !== 1) {
                 console.log("proj_setup failed.", inp.out.state)
                 return inp;
@@ -311,7 +311,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            var stat = userProject.Run_proj_setup()
+            var stat = userProject.m_UserProjFileSys.Run_proj_setup()
             if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
 
 
@@ -454,7 +454,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            var stat = userProject.Run_proj_setup()
+            var stat = userProject.m_UserProjFileSys.Run_proj_setup()
             if (!stat || stat.out.state.bEditable !== 1) return console.log("proj_setup failed.", stat)
 
             //
@@ -474,11 +474,11 @@ var ApiJsonp_BibleObj = {
 
             if (proj) {
 
-                userProject.Run_proj_setup()
+                userProject.m_UserProjFileSys.Run_proj_setup()
 
                 var retp = userProject.run_proj_state()
                 if (0) {
-                    await userProject.git_pull(function (bSuccess) {
+                    await userProject.m_UserProjFileSys.git_pull(function (bSuccess) {
 
                     })
                 }
@@ -513,7 +513,7 @@ var ApiJsonp_BibleObj = {
         var userProject = new BibleObjGituser(BibleObjJsonpApi.m_rootDir)
         var ret = userProject.Proj_parse_usr_signin(inp)
         if (ret) {
-            userProject.Run_proj_setup()
+            userProject.m_UserProjFileSys.Run_proj_setup()
 
             if (inp.out.state.bEditable === 1) {
                 inp.out.state.SSID = userProject.Session_create()
@@ -540,7 +540,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_signin(inp)
             if (!proj) return console.log("Proj_parse_usr_signin failed.")
 
-            inp.out.state = userProject.Run_proj_setup()
+            inp.out.state = userProject.m_UserProjFileSys.Run_proj_setup()
             if (inp.out.state.bEditable === 1) {
                 if (null === userProject.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
@@ -622,7 +622,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            userProject.Run_proj_setup()
+            userProject.m_UserProjFileSys.Run_proj_setup()
             //await userProject.git_add_commit_push("push hard.", "");//real push hard.
 
             var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git add *")
@@ -648,8 +648,8 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            userProject.Run_proj_setup()
-            userProject.git_pull();
+            userProject.m_UserProjFileSys.Run_proj_setup()
+            userProject.m_UserProjFileSys.git_pull();
             userProject.m_UserProjFileSys.run_proj_state()
 
         })

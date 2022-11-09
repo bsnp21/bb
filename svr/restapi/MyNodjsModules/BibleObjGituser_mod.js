@@ -1198,7 +1198,7 @@ UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
     return nMissed
 }
 
-BibleObjGituser.prototype.Run_proj_setup = function () {
+UserProjFileSys.prototype.Run_proj_setup = function () {
     console.log("********************************************* run setup 1")
     var inp = this.m_inp
     if (!this.m_UserProjFileSys.usr_proj || !inp.out.state) {
@@ -1721,12 +1721,12 @@ UserProjFileSys.prototype.git_add_commit_push_Sync = function (msg) {
     }, 10000)
 }
 
-BibleObjGituser.prototype.git_pull = function (cbf) {
-    this.m_UserProjFileSys.git_config_allow_push(true)
-    this.m_inp.out.git_pull_res = this.m_UserProjFileSys.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
-    this.m_UserProjFileSys.git_config_allow_push(false)
+UserProjFileSys.prototype.git_pull = function (cbf) {
+    this.git_config_allow_push(true)
+    var ret = this.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
+    this.git_config_allow_push(false)
     //var mat = this.m_inp.out.git_pull_res.stderr.match(/(fatal)|(fail)|(error)/g)
-    return this.m_inp.out.git_pull_res
+    return ret
 }
 
 BibleObjGituser.prototype.git_push = async function () {
