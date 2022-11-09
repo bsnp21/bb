@@ -865,15 +865,33 @@ NCache.Init()
 //////////////////////////////////////////
 
 var UserProjFileSys = function (rootDir) {
+
+    rootDir = this.absRootWorkingDir()
     if (!rootDir.match(/\/$/)) rootDir += "/"
     this.m_rootDir = rootDir
 
 
-    this.m_sRootNode = WorkingRootNodeName //"bist"
-    this.m_sBaseUsrs = `${this.m_sRootNode}/usrs`
-    this.m_sBaseTemp = `${this.m_sRootNode}/temp`
+    this.m_sBaseNode = WorkingRootNodeName //"bist"
+    this.m_sBaseUsrs = `${this.m_sBaseNode}/usrs`
+    this.m_sBaseTemp = `${this.m_sBaseNode}/temp`
 
-    this.pathrootdir = rootDir + this.m_sRootNode
+    this.pathrootdir = rootDir + this.m_sBaseNode
+}
+UserProjFileSys.prototype.absRootWorkingDir = function (app) {
+    var pwd = __dirname
+    console.log("__dirname=", pwd)
+
+    var wd = "", rootdir = "", prev = ""
+    pwd.split("/").forEach(function (nodname) {
+        wd += nodname + "/"
+        console.log(wd)
+        if (fs.existsSync(`${wd}/.git`)) {
+            rootdir = prev
+        }
+        prev = wd
+    })
+    console.log(rootdir, "  <=== svr rootdir")
+    return rootdir
 }
 
 

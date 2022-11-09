@@ -18,7 +18,7 @@ const NodeCache = require("node-cache");
 
 const WorkingRootNodeName = "bist"
 
-
+const WorkingBaseNodeName = "bist"
 
 
 
@@ -113,14 +113,14 @@ BaseGitUser.prototype._deplore_usr_proj_dirs = function (base_Dir) {
     console.log("m_gitinf", this.m_gitinf)
     var projDirs = {}
 
-    projDirs.base_Dir = base_Dir
-    projDirs.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
-    projDirs.git_root = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
-    projDirs.acct_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
-    projDirs.dest_myo = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
-    projDirs.dest_dat = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
+    projDirs.base_Dir = `${WorkingBaseNodeName}`
+    projDirs.user_dir = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}`
+    projDirs.git_root = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
+    projDirs.acct_dir = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
+    projDirs.dest_myo = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
+    projDirs.dest_dat = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
 
-    this.m_proj = projDirs
+    this.m_projDirs = projDirs
     console.log("compose: projDirs=", projDirs)
 }
 
@@ -131,5 +131,6 @@ BaseGitUser.prototype._deplore_usr_proj_dirs = function (base_Dir) {
 
 module.exports = {
     BaseGitUser: BaseGitUser,
-    WorkingRootNodeName:WorkingRootNodeName
+    WorkingRootNodeName:WorkingRootNodeName,
+
 }
