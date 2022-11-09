@@ -540,7 +540,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_signin(inp)
             if (!proj) return console.log("Proj_parse_usr_signin failed.")
 
-            userProject.Run_proj_setup()
+            inp.out.state = userProject.Run_proj_setup()
             if (inp.out.state.bEditable === 1) {
                 if (null === userProject.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0

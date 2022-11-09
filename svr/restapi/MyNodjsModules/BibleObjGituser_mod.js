@@ -1228,10 +1228,10 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
         BibleUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
 
-    this.m_UserProjFileSys.run_proj_state()
+    var ret = this.m_UserProjFileSys.run_proj_state()
 
     console.log("Run_proj_setup ---------- rgfd")
-    return inp
+    return ret
 }
 
 
