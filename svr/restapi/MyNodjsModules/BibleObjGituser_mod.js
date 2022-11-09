@@ -1433,7 +1433,7 @@ BibleObjGituser.prototype.load_git_config = function () {
     }
     this.m_UserProjFileSys.usr_proj.configurl = configurl
     //}
-    console.log("load_git_config__end")
+    console.log("load_git_config__end", configurl)
     return configurl
 }
 
