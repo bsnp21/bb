@@ -949,6 +949,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
 
     inp.usr = this.proj_get_usr_fr_cache_ssid(inp)
     if (!inp.usr) {
+        console.log("*****failed sdfadfas")
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
@@ -957,7 +958,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
-    console.log("decipher user based on prev key nached in cuid=", cuid)
+    console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
 
     if (!cuid || cuid.length === 0 || cipherusrs.length === 0) return null
     console.log("decipher user based on prev key nached in cuid=", cuid)
@@ -975,6 +976,7 @@ BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, 
     return usrObj
 }
 BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
+    console.log("========Proj_parse_usr_signin")
     this.m_inp = inp
     if (!inp || !inp.out) {
         console.log("!inp || !inp.out")
@@ -983,6 +985,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
 
     inp.usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
     if (!inp.usr) {
+        console.log("*****failed sdfadfas-asf")
         return null
     }
     return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
