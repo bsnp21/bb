@@ -1279,6 +1279,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
     stat.missedFiles = this.run_makingup_missing_files(false)
     var configtxt = this.load_git_config()
 
+    console.log("run_proj_state ----------")
     /////// git status
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
     //this.m_inp.out.state.bRepositable = 0
@@ -1295,7 +1296,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
         var ret = path.parse(fname);
         var ext = ret.ext
         var nam = ret.base.replace(/_json\.js$/, "")
-        //console.log("ret:",ret)
+        console.log("ret:",ret)
         var sta = fs.statSync(fname)
         var fMB = (sta.size / 1000000).toFixed(2)
         totalsize += sta.size
@@ -1318,6 +1319,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
     stat.repo_usage = (totalsize / 1000000).toFixed(2) + "/1000(MB)"
     stat.repo_alertLevel = iAlertLevel
 
+    console.log("run_proj_state ----------end")
     if (cbf) cbf()
     return stat
 }
