@@ -1264,19 +1264,19 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
     //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
 
 
-    var dir = this.m_UserProjFileSys.get_usr_myoj_dir()
+    var dir = this.get_usr_myoj_dir()
     stat.bMyojDir = (fs.existsSync(dir)) ? 1 : 0
 
-    var dir = this.m_UserProjFileSys.get_usr_dat_dir()
+    var dir = this.get_usr_dat_dir()
     stat.bDatDir = (fs.existsSync(dir)) ? 1 : 0
 
-    var dir = this.m_UserProjFileSys.get_usr_git_dir("/.git/config")
+    var dir = this.get_usr_git_dir("/.git/config")
     stat.bGitDir = (fs.existsSync(dir)) ? 1 : 0
 
     stat.bEditable = (1 === stat.bMyojDir && 1 === stat.bDatDir && 1 === stat.bGitDir) ? 1 : 0
     //stat.bRepositable = stat.bGitDir
 
-    stat.missedFiles = this.m_UserProjFileSys.run_makingup_missing_files(false)
+    stat.missedFiles = this.run_makingup_missing_files(false)
     var configtxt = this.load_git_config()
 
     /////// git status
@@ -1287,7 +1287,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
         stat.bRepositable = 1
     }
 
-    var accdir = this.m_UserProjFileSys.get_usr_acct_dir()
+    var accdir = this.get_usr_acct_dir()
     var fstat = {}
     var totalsize = 0
     var iAlertLevel = 0
