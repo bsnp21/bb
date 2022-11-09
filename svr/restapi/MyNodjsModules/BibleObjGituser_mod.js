@@ -1210,7 +1210,7 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
     if (!fs.existsSync(dir)) {
         this.git_clone() //always sucess even passwd is wrong.
     } else {
-        this.git_pull()
+        this.m_UserProjFileSys.git_pull()
     }
 
     if (!fs.existsSync(dir)) {
