@@ -859,6 +859,10 @@ NCache.Init()
 
 
 
+
+
+
+
 var UserProjFileSys = function (rootDir) {
     if (!rootDir.match(/\/$/)) rootDir += "/"
     this.m_rootDir = rootDir
@@ -1012,13 +1016,7 @@ UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
 
 UserProjFileSys.prototype.Run_proj_setup = function () {
     console.log("********************************************* run setup 1")
-    var inp = {out:{state:{}}};//this.m_inp
-    if (!this.usr_proj || !inp.out.state) {
-        inp.out.desc += ", failed inp.usr parse"
-        console.log("failed git setup", inp.out.desc)
-        return null
-    }
-
+   
     var dir = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(dir)) {
         this.git_clone() //always sucess even passwd is wrong.
@@ -1093,7 +1091,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
     stat.missedFiles = this.run_makingup_missing_files(false)
     var configtxt = this.load_git_config()
 
-    console.log("run_proj_state ----------")
+    //console.log("run_proj_state ----------")
     /////// git status
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
     //this.m_inp.out.state.bRepositable = 0
@@ -1110,7 +1108,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
         var ret = path.parse(fname);
         var ext = ret.ext
         var nam = ret.base.replace(/_json\.js$/, "")
-        console.log("ret:",ret)
+        //console.log("ret:",ret)
         var sta = fs.statSync(fname)
         var fMB = (sta.size / 1000000).toFixed(2)
         totalsize += sta.size
@@ -1133,7 +1131,7 @@ UserProjFileSys.prototype.run_proj_state = function (cbf) {
     stat.repo_usage = (totalsize / 1000000).toFixed(2) + "/1000(MB)"
     stat.repo_alertLevel = iAlertLevel
 
-    console.log("run_proj_state ----------end")
+    //console.log("run_proj_state ----------end")
     if (cbf) cbf()
     return stat
 }
@@ -1264,14 +1262,6 @@ UserProjFileSys.prototype.load_git_config = function () {
 
 
 
-
-
-
-
-
-
-
-
 UserProjFileSys.prototype.Load_back_userData = function (par) {
     //var inp = this.m_inp
     var doc = par.fnames[0]
@@ -1291,31 +1281,7 @@ UserProjFileSys.prototype.Load_back_userData = function (par) {
     }
     return retObj;
 }
-//BibleObjGituser.prototype.save_userData_frm_client_________________ = function (inp) {
-//    //var inp = this.m_inp
-//    var doc = inp.par.fnames[0]
-//    var jsfname = this.get_pfxname(doc)
-//    console.log("jsfname=", jsfname)
-//    var ret = BibleUti.loadObj_by_fname(jsfname)
-//    if (ret.obj) {
-//        BibleUti.FlushObjDat(inp.par.data, ret.obj)
-//        console.log("ret", ret)
-//        ret.writeback()
-//    } else {
-//        inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
-//        console.log(inp.out.state.err)
-//    }
-//
-//    //// 
-//    var save_res = {}
-//    save_res.desc = "len:" + inp.par.data.length;// + ",dlt:" + ret.dlt_size
-//    //save_res.dlt = ret.dlt_size
-//    save_res.len = inp.par.data.length
-//    //inp.par.data = ""
-//    //save_res.ret = ret
-//    inp.out.save_res = save_res
-//    return save_res;
-//}
+
 UserProjFileSys.prototype.Save_userData_frm_client = function (par) {
     //var inp = this.m_inp
     var save_res = { desc: "ok" }
@@ -1419,7 +1385,7 @@ UserProjFileSys.prototype.git_clone = function () {
 
     var clone_https = this.usr_proj.git_Usr_Pwd_Url
     if (clone_https.length === 0) {
-        clone_https = inp.usr.repopath
+        clone_https = this.usr_acct.repopath
     }
     if (clone_https.length === 0) {
         inp.out.git_clone_res.desc += ",no url."
@@ -1462,7 +1428,7 @@ UserProjFileSys.prototype.git_clone = function () {
     return inp
 }
 UserProjFileSys.prototype.git_status = async function (_sb) {
-    var inp = this.m_inp
+    var inp = {out:{}}
     if (!inp.out.state) return console.log("*** Fatal Error: inp.out.state = null")
 
     if (undefined === _sb) _sb = ""
