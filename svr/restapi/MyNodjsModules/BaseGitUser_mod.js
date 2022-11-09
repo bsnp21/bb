@@ -671,7 +671,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
         prev = wd
     })
     console.log(rootdir, "  <=== svr rootdir")
-    
+
     return rootdir
 }
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
@@ -777,7 +777,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
 }
 
 BaseGitUser.prototype.get_usr_dat_dir = function (subpath) {
-    return (!subpath)? this.m_projDirs.dest_dat:`${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/,"")}`
+    return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
     if (!this.usr_proj) return ""
     if (!subpath) {
         return `${this.m_rootDir}${this.usr_proj.dest_dat}`
@@ -785,7 +785,7 @@ BaseGitUser.prototype.get_usr_dat_dir = function (subpath) {
     return `${this.m_rootDir}${this.usr_proj.dest_dat}${subpath}`
 }
 BaseGitUser.prototype.get_usr_acct_dir = function (subpath) {
-    return (!subpath)? this.m_projDirs.acct_dir:`${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/,"")}`
+    return (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
     if (!this.usr_proj) return ""
     if (!subpath) {
         return `${this.m_rootDir}${this.usr_proj.acct_dir}`
@@ -793,7 +793,7 @@ BaseGitUser.prototype.get_usr_acct_dir = function (subpath) {
     return `${this.m_rootDir}${this.usr_proj.acct_dir}${subpath}`
 }
 BaseGitUser.prototype.get_usr_myoj_dir = function (subpath) {
-    return (!subpath)? this.m_projDirs.dest_myo:`${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/,"")}`
+    return (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
     if (!this.usr_proj) return ""
     if (!subpath) {
         return `${this.m_rootDir}${this.usr_proj.dest_myo}`
@@ -802,7 +802,7 @@ BaseGitUser.prototype.get_usr_myoj_dir = function (subpath) {
 }
 
 BaseGitUser.prototype.get_usr_git_dir = function (subpath) {
-    return (!subpath)? this.m_projDirs.git_root:`${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/,"")}`
+    return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
     if (!this.usr_proj) return ""
     if (undefined === subpath || null === subpath) {
         return `${this.m_rootDir}${this.usr_proj.git_root}`
@@ -811,7 +811,7 @@ BaseGitUser.prototype.get_usr_git_dir = function (subpath) {
     return `${this.m_rootDir}${this.usr_proj.git_root}${subpath}`
 }
 BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
-    return (!subpath)? this.m_projDirs.std_bible_obj_lib_template:`${this.m_projDirs.std_bible_obj_lib_template}/${subpath.replace(/^[\/]/,"")}`
+    return (!subpath) ? this.m_projDirs.std_bible_obj_lib_template : `${this.m_projDirs.std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
     var pathfile = `${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate`
     if (undefined === subpf) {
         return pathfile
@@ -1026,7 +1026,7 @@ BaseGitUser.prototype.Run_proj_setup = function () {
 
 BaseGitUser.prototype.Run_proj_destroy = function () {
     var inp = { out: {} };//this.m_inp
-  
+
     var gitdir = this.get_usr_git_dir()
     //var password = "lll" //dev mac
     var proj_destroy = `
@@ -1046,7 +1046,7 @@ BaseGitUser.prototype.Run_proj_destroy = function () {
 
 
 BaseGitUser.prototype.cp_template_to_git = function () {
-    var inp = { out: {desc:""} };//this.m_inp
+    var inp = { out: { desc: "" } };//this.m_inp
     inp.out.desc += ",clone."
 
     var gitdir = this.get_usr_myoj_dir()
@@ -1055,7 +1055,7 @@ BaseGitUser.prototype.cp_template_to_git = function () {
         return inp
     }
 
-  
+
     //var password = "lll" //dev mac
     var acctDir = this.get_usr_acct_dir()
     var cp_template_cmd = `
@@ -1083,7 +1083,7 @@ BaseGitUser.prototype.cp_template_to_git = function () {
 BaseGitUser.prototype.chmod_R_777_acct = function (spath) {
     // mode : "777" 
     var inp = { out: {} };//this.m_inp
-    
+
     var dir = this.get_usr_acct_dir(spath)
     console.log("perm:", dir)
     if (!fs.existsSync(dir)) {
@@ -1099,8 +1099,8 @@ BaseGitUser.prototype.chmod_R_777_acct = function (spath) {
 BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
     // mode : "777" 
     var inp = { out: {} }//this.m_inp
-    
-    
+
+
     console.log("perm:", dir)
     if (!fs.existsSync(dir)) {
         return inp
@@ -1428,6 +1428,7 @@ BaseGitUser.prototype.git_push_test = function () {
     console.log("tm=", tm)
 
     var dir = this.get_usr_git_dir()
+    
 
     this.git_config_allow_push(true)
     var logname = "test.log"
@@ -1442,6 +1443,10 @@ BaseGitUser.prototype.git_push_test = function () {
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
         if (ret.match(/failed/i)) {
+            if (!fs.existsSync(dir)) {
+                console.log("*********** get_usr_git_dir not exist.", dir)
+                return null
+            }
             ret = null
         }
     }
@@ -1478,6 +1483,6 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
 
 module.exports = {
     BaseGitUser: BaseGitUser,
-    WorkingRootNodeName:WorkingRootNodeName,
+    WorkingRootNodeName: WorkingRootNodeName,
 
 }
