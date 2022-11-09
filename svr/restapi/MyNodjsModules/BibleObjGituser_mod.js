@@ -990,7 +990,7 @@ UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
     var srcdir = this.get_dir_lib_template()
     var nMissed = 0
     BibleUti.GetFilesAryFromDir(srcdir, true, function (srcfname) {
-        console.log("---get_dir_lib_template:", srcfname)
+        //console.log("---get_dir_lib_template:", srcfname)
         var ret = path.parse(srcfname);
         var ext = ret.ext
         var bas = ret.base
@@ -998,8 +998,8 @@ UserProjFileSys.prototype.run_makingup_missing_files = function (bCpy) {
         var gitpfx = _THIS.get_userpathfile_from_tempathfile(srcfname)
         if (!fs.existsSync(gitpfx)) {
             nMissed++
-            console.log("-src:", srcfname)
-            console.log("-des:", gitpfx)
+            console.log("-src:makeup", srcfname)
+            console.log("-des:makeup", gitpfx)
             const { COPYFILE_EXCL } = fs.constants;
             if (bCpy) {
                 var pet = path.parse(gitpfx);
