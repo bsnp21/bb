@@ -1581,7 +1581,7 @@ UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
 UserProjFileSys.prototype.git_clone = function () {
     //var password = "lll" //dev mac
     var _THIS = this
-    var inp = this.m_inp
+    var inp = {out:{}};//this.m_inp
     var proj = this.usr_proj;
     if (!proj) {
         inp.out.desc += ", failed inp.usr parse"
