@@ -496,19 +496,19 @@ BaseGitUser.prototype.load_git_config = function () {
     //if (!this.m_git_config_old || !this.m_git_config_new) {
     var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
     var ipos1 = txt.indexOf(this.usr_acct.repopath)
-    var ipos2 = txt.indexOf(this.usr_proj.git_Usr_Pwd_Url)
+    var ipos2 = txt.indexOf(this.git_Usr_Pwd_Url)//usr_proj
 
     console.log("ipos1:", ipos1, this.usr_acct.repopath)
-    console.log("ipos2:", ipos2, this.usr_proj.git_Usr_Pwd_Url)
+    console.log("ipos2:", ipos2, this.git_Usr_Pwd_Url)//usr_proj
 
     var configurl = ""
     if (ipos1 > 0) {
         olds = txt
-        news = txt.replace(this.usr_acct.repopath, this.usr_proj.git_Usr_Pwd_Url)
+        news = txt.replace(this.usr_acct.repopath, this.git_Usr_Pwd_Url)//usr_proj
     }
     if (ipos2 > 0) {
         news = txt
-        olds = txt.replace(this.usr_proj.git_Usr_Pwd_Url, this.usr_acct.repopath)
+        olds = txt.replace(this.git_Usr_Pwd_Url, this.usr_acct.repopath)//usr_proj
 
         console.log("initial git_config_fname not normal:", txt)
     }
@@ -521,7 +521,7 @@ BaseGitUser.prototype.load_git_config = function () {
         var pos1 = txt.indexOf("\n\tfetch = +refs");//("[branch \"master\"]")
         configurl = txt.substring(pos0 + 19, pos1)
     }
-    this.usr_proj.configurl = configurl
+    this.configurl = configurl //usr_proj
     //}
     //console.log("load_git_config__end.configurl=", this.usr_proj)
     return configurl
@@ -608,8 +608,8 @@ BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
     } /////////
 
     //if (!this.m_inp.usr.repopath) return
-    if (!this.usr_proj) return
-    if (!this.usr_proj.git_Usr_Pwd_Url) return
+    //if (!this.usr_proj) return
+    if (!this.git_Usr_Pwd_Url) return //usr_proj
 
     var git_config_fname = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) {
@@ -626,7 +626,7 @@ BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
 
     if (bAllowPush) {
         fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
-        console.log("bAllowPush=1:url =", this.usr_proj.git_Usr_Pwd_Url)
+        console.log("bAllowPush=1:url =", this.git_Usr_Pwd_Url)//usr_proj
     } else {
         fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
         //console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
@@ -673,7 +673,7 @@ BaseGitUser.prototype.git_clone = function () {
     console.log("to clone: ", clone_https)
 
     //console.log("proj", proj)
-    var dir = this.usr_proj.user_dir
+    var dir = this.m_projDirs.user_dir //usr_proj
     if (!fs.existsSync(dir)) {
         var ret = BibleUti.execSync_Cmd(`echo 'lll'| sudo -S mkdir -p ${dir}`).toString()
     }
