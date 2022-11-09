@@ -764,7 +764,7 @@ NCache.Init = function () {
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
         var userProject = new BibleObjGituser(rootDir)
-        if (inp.usr_proj = userProject.m_UserProjFileSys.Gen_usr_proj(val.repopath, val.passcode)) {
+        if (inp.usr_proj = userProject.m_UserProjFileSys.Set_Gitusr(val.repopath, val.passcode)) {
             userProject.m_inp = inp
             userProject.m_UserProjFileSys.run_proj_state()
             console.log(inp.out.state)
@@ -953,7 +953,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
 
-    return this.m_UserProjFileSys.Gen_usr_proj(inp.usr.repopath, inp.usr.passcode)
+    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
@@ -983,7 +983,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     if (!inp.usr) {
         return null
     }
-    return this.m_UserProjFileSys.Gen_usr_proj(inp.usr.repopath, inp.usr.passcode)
+    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
 }
 
 
