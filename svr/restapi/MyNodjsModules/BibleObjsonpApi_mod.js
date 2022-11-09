@@ -230,7 +230,7 @@ var ApiJsonp_BibleObj = {
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-            inp.out.state =  = userProject.m_UserProjFileSys.Deploy_proj()
+            inp.out.state =  userProject.m_UserProjFileSys.Deploy_proj()
             var TbcvObj = {};
             if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
