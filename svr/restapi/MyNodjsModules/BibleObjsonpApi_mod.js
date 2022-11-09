@@ -135,37 +135,11 @@ var ApiUti = {
 
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
-    },
-    //find_workDir: function () {
-    //    var pwd = __dirname
-    //    console.log("__dirname=", pwd)
-//
-    //    var wd = "", rootdir = "", prev = ""
-    //    pwd.split("/").forEach(function (nodname) {
-    //        wd += nodname + "/"
-    //        console.log(wd)
-    //        if (fs.existsSync(`${wd}/.git`)) {
-    //            rootdir = prev
-    //        }
-    //        prev = wd
-    //    })
-    //    console.log(rootdir, "  <=== svr rootdir")
-    //    return rootdir
-    //}
+    }
+
 }
 
 
-//  var inp_struct_base = {
-//      par: {
-//          Search: { File: "searchInFileName", Strn: "searchStrn" },   //for strSearch in one Bible.
-//      }
-//  }
-//  var inp_struct_base = {
-//      par: {
-//          fnames: [],                             /user pathfile name. './Dat/fname'
-//          data: "" // for user stringified obj data holder for read or data for write into fnames[0]
-//      }
-//  }
 var inp_struct_base = {
     usr: {
         repopath: "",
@@ -538,7 +512,7 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGituser()
-            console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
+            //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
             var proj = userProject.Proj_parse_usr_signin(inp)
             if (!proj) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
@@ -547,7 +521,7 @@ var ApiJsonp_BibleObj = {
             if (inp.out.state.bEditable) {
                 if (null === userProject.m_UserProjFileSys.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                    console.log("git_push_test failed.!!!!!")
+                    //console.log("git_push_test failed.!!!!!")
                     inp.out.state.FailedTest = "git_push_test failed.!!!!!."
                     userProject.m_UserProjFileSys.Destroy_proj()
                 } else {
@@ -733,9 +707,6 @@ var BibleObjJsonpApi = {
         // Pass to next layer of middleware
     },
     init: function (app) {
-        //var woringDir = ApiUti.find_workDir()
-        //BibleObjJsonpApi.m_rootDir = woringDir
-        //BibleUti.WorkingRootDir(woringDir)
         //
         Object.keys(ApiJsonp_BibleObj).forEach(function (sapi) {
             console.log("api:", sapi)
