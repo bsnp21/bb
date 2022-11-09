@@ -22,6 +22,630 @@ const WorkingBaseNodeName = "bist"
 
 
 
+//const WorkingRootNodeName = "bist"
+var BibleUti = {
+
+    GetEmptyObj: function (obj) {
+        function _iterate(obj, shellOfObj) {
+            for (var sproperty in obj) {
+                if (obj.hasOwnProperty(sproperty)) {
+                    var tps = typeof obj[sproperty]
+                    var bary = Array.isArray(obj[sproperty])
+                    if (tps === "object" && !bary) {
+                        shellOfObj[sproperty] = {}
+                        _iterate(obj[sproperty], shellOfObj[sproperty]);
+                    } else {
+                        shellOfObj[sproperty] = 0
+                    }
+                }
+            }
+        }
+        var structObj = {}
+        _iterate(obj, structObj)
+        return structObj
+    },
+
+    FetchObjDat: function (datObj, SrcObj) {
+        function _iterate(carObj, srcObj) {
+            if (!srcObj) return;
+            for (var sproperty in carObj) {
+                console.log("sproperty=", sproperty)
+                if (carObj.hasOwnProperty(sproperty)) {
+                    if (srcObj.hasOwnProperty(sproperty)) {
+                        if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
+                            _iterate(carObj[sproperty], srcObj[sproperty]);
+                        } else {
+                            carObj[sproperty] = srcObj[sproperty]
+                        }
+                    } else {
+                        delete carObj[sproperty]
+                    }
+                }
+            }
+        }
+        _iterate(datObj, SrcObj)
+        return datObj
+    },
+    FlushObjDat: function (datObj, targObj) {
+        function _iterate(carObj, tarObj) {
+            if (!tarObj) return;
+            for (var sproperty in carObj) {
+                console.log("sproperty=", sproperty)
+                if (carObj.hasOwnProperty(sproperty)) {
+                    if (tarObj.hasOwnProperty(sproperty)) {//match keys
+                        if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
+                            _iterate(carObj[sproperty], tarObj[sproperty]); //non-arry obj. 
+                        } else {
+                            if (null === carObj[sproperty]) { //to delete key in targetObj.
+                                delete tarObj[sproperty]
+                            } else {  //flush update target obj.
+                                tarObj[sproperty] = carObj[sproperty]
+                            }
+                        }
+                    } else {//mismatch keys
+                        if (null === carObj[sproperty]) {
+                            //nothing to delete. 
+                        } else {//add new key to targetObj.
+                            tarObj[sproperty] = carObj[sproperty]
+                        }
+                    }
+                }
+            }
+        }
+        _iterate(datObj, targObj)
+        return targObj
+    },
+
+    WorkingRootDir: function (v) {
+        if (undefined === v) {
+            return BibleUti.m_rootDir
+        } else {
+            BibleUti.m_rootDir = v
+        }
+    },
+
+
+    GetFilesAryFromDir: function (startPath, deep, cb) {//startPath, filter
+        function recursiveDir(startPath, deep, outFilesArr) {
+            var files = fs.readdirSync(startPath);
+            for (var i = 0; i < files.length; i++) {
+                var filename = path.join(startPath, files[i]);
+                //console.log(filename);
+                var stat = fs.lstatSync(filename);
+                if (stat.isDirectory()) {
+                    if (deep) {
+                        recursiveDir(filename, deep, outFilesArr); //recurse
+                    }
+                    continue;
+                }/////////////////////////
+                else if (cb) {
+                    //console.log("file:",filename)
+                    if (!cb(filename)) continue
+                }
+                outFilesArr.push(filename);
+            };
+        };/////////////////////////////////////
+
+        if (!fs.existsSync(startPath)) return []
+        var outFilesArr = [];
+        recursiveDir(startPath, deep, outFilesArr);
+        return outFilesArr;
+    },
+    access_dir: function (http, dir) {
+        function writebin(pathfile, contentType, res) {
+            var content = fs.readFileSync(pathfile)
+            //console.log("read:", pathfile)
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.write(content, 'binary')
+            res.end()
+        }
+        function writetxt(pathfile, contentType, res) {
+            var content = fs.readFileSync(pathfile, "utf8")
+            //console.log("read:", pathfile)
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.write(content, 'utf-8')
+            res.end()
+        }
+        // ./assets/ckeditor/ckeditor.js"
+        // var dir = "./assets/ckeditor/"
+        console.log("lib svr:", dir)
+        var ftypes = {
+            '.ico': 'image/x-icon',
+            '.html': 'text/html',
+            '.htm': 'text/html',
+            '.js': 'text/javascript',
+            '.json': 'application/json',
+            '.css': 'text/css',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.wav': 'audio/wav',
+            '.mp3': 'audio/mpeg',
+            '.svg': 'image/svg+xml',
+            '.pdf': 'application/pdf',
+            '.doc': 'application/msword',
+            '.eot': 'appliaction/vnd.ms-fontobject',
+            '.ttf': 'aplication/font-sfnt'
+        }
+        var binaries = [".png", ".jpg", ".wav", ".mp3", ".svg", ".pdf", ".eot"]
+        BibleUti.GetFilesAryFromDir(dir, true, function (fname) {
+            var ret = path.parse(fname);
+            var ext = ret.ext
+            //console.log("ret:",ret)
+            if (ftypes[ext]) {
+                console.log("base:", ret.base)
+                console.log("api:", fname)
+                http.use("/" + fname, async (req, res) => {
+                    console.log('[post] resp write :', req.body, fname)
+                    if (binaries.indexOf(ext) >= 0) {
+                        writebin(fname, ftypes[ext], res)
+                    } else {
+                        writetxt(fname, ftypes[ext], res)
+                    }
+                })
+                return true
+            }
+        });
+    },
+    GetFileStat: function (fnm) {
+        if (fs.existsSync(fnm)) {
+            const stats = fs.statSync(fnm);
+            return stats;//.size; //mtime modifited
+        }
+        return { size: -1, mtime: 0 };
+    },
+    exec_Cmd: function (command) {
+        return new Promise((resolve, reject) => {
+            try {
+                //command = "ls"
+                //console.log('exec_Cmd:', command)
+                exec(command, (err, stdout, stderr) => {
+                    console.log('-exec_Cmd errorr:', err)
+                    console.log('-exec_Cmd stderr:', stderr)
+                    console.log('-exec_Cmd stdout:', stdout)
+
+                    // the *entire* stdout and stderr (buffered)
+                    //resolve(stdout);
+                    resolve({
+                        stdout: stdout,
+                        stderr: stderr,
+                        err: err
+                    })
+
+                });
+            } catch (err) {
+                console.log(err)
+                reject(err);
+            }
+        })
+    },
+    execSync_Cmd: function (command) {
+        try {
+            //command = "ls"
+            console.log('execSync Cmd:', command)
+            var ret = execSync(command).toString();
+            console.log(ret)
+        } catch (error) {
+            console.log("error:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
+            console.log("error:", error.message); // Holds the message you typically want.
+            console.log("error:", error.stderr);  // Holds the stderr output. Use `.toString()`.
+            console.log("error:", error.stdout);  // Holds the stdout output. Use `.toString()`.
+            return error.message
+        }
+        return ret;
+    },
+
+
+
+
+
+
+
+
+    copy_biobj: function (BibleObj, oj) {
+        //console.log("copy_biobj oj", JSON.stringify(oj, null, 4))
+        if (!oj || Object.keys(oj).length === 0) return BibleObj
+        var retOb = {}
+        for (const [bkc, chpObj] of Object.entries(oj)) {
+            if (!chpObj || Object.keys(chpObj).length === 0) {
+                retOb[bkc] = BibleObj[bkc] //copy whole book
+                continue
+            }
+            retOb[bkc] = {}
+            for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                //console.log("bc", bkc, chp)
+                if (!vrsObj || Object.keys(vrsObj).length === 0) {
+                    if (BibleObj[bkc]) retOb[bkc][chp] = BibleObj[bkc][chp]  //copyy whole chapter
+                    continue
+                }
+                retOb[bkc][chp] = {}
+                for (const [vrs, txt] of Object.entries(vrsObj)) {
+                    //console.log(`${key}: ${value}`);
+                    if (BibleObj[bkc] && BibleObj[bkc][chp]) retOb[bkc][chp][vrs] = BibleObj[bkc][chp][vrs]
+                }
+            }
+        }
+        return retOb
+    },
+    convert_Tbcv_2_bcvT: function (rbcv, bcvRobj) {
+        if (null === bcvRobj) bcvRobj = {}
+        for (const [rev, revObj] of Object.entries(rbcv)) {
+            for (const [vol, chpObj] of Object.entries(revObj)) {
+                if (!bcvRobj[vol]) bcvRobj[vol] = {}
+                if (!chpObj) continue
+                for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                    if (!bcvRobj[vol][chp]) bcvRobj[vol][chp] = {}
+                    if (!vrsObj) continue
+                    for (const [vrs, txt] of Object.entries(vrsObj)) {
+                        if (!bcvRobj[vol][chp][vrs]) bcvRobj[vol][chp][vrs] = {}
+                        bcvRobj[vol][chp][vrs][rev] = txt
+                    };
+                };
+            };
+        };
+        return bcvRobj;
+    },
+
+    search_str_in_bcvT: function (bcvR, Fname, searchStrn) {
+        function _parse_global_parm(searchPat) {
+            var arsrmat = searchPat.match(/^\/(.*)\/([a-z]*)$/)
+            var exparm = "g"
+            if (arsrmat && arsrmat.length === 3) {
+                console.log(arsrmat)
+                searchPat = arsrmat[1]
+                exparm += arsrmat[2]
+            }
+            return { searchPat: searchPat, parm: exparm };
+        }
+        var parsePat = _parse_global_parm(searchStrn)
+        console.log("searchStrn=", searchStrn)
+        function _parse_AND(searchPat) {
+            var andary = []
+            var andmat = searchPat.match(/[\(][\?][\=][\.][\*]([^\)]+)[\)]/g)   //(?=.*Sarai)(?=.*Abram)
+            if (andmat) {
+                console.log(andmat)
+                andmat.forEach(function (fand) {
+                    var cors = fand.match(/(?:[\(][\?][\=][\.][\*])([^\)]+)([\)])/)
+                    if (cors.length === 3) andary.push(cors[1])
+                    console.log("cors", cors)
+                })
+            }
+            return andary;
+        }
+        var andary = _parse_AND(searchStrn)
+        console.log("andary:", andary)
+
+
+        var retOb = {}
+        for (const [bkc, chpObj] of Object.entries(bcvR)) {
+            for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                for (const [vrs, revObj] of Object.entries(vrsObj)) {
+                    var bFound = false
+                    for (const [rev, txt] of Object.entries(revObj)) {
+                        if (rev === Fname) {
+                            var rep = null
+                            try {
+                                var rep = new RegExp(parsePat.searchPat, parsePat.parm);
+                            } catch {
+                                console.error("search_str_in_bcvT err", parsePat.searchPat, parsePat.parm)
+                            }
+                            var mat = txt.match(rep);
+                            if (mat) {
+                                mat.forEach(function (s, i) {
+                                    //if (s.length > 0) console.log(i, s)
+                                })
+                                bFound = true
+                                var txtFound = txt
+
+                                if (andary.length === 0) {
+                                    var repex = new RegExp(mat[0], parsePat.parm)
+                                    txtFound = txt.replace(repex, "<font class='matInSvr'>" + mat[0] + "</font>");
+                                } else {
+                                    andary.forEach(function (strkey) {
+                                        var repex = new RegExp(strkey, parsePat.parm)
+                                        txtFound = txtFound.replace(repex, "<font class='matInSvr'>" + strkey + "</font>");
+                                    })
+                                }
+
+                                bcvR[bkc][chp][vrs][rev] = txtFound
+                            }
+
+                        }
+                    }
+                    if (bFound) {
+                        for (const [rev, txt] of Object.entries(revObj)) {
+                            if (!retOb[bkc]) retOb[bkc] = {}
+                            if (!retOb[bkc][chp]) retOb[bkc][chp] = {};//BibleObj[bkc][chp]
+                            if (!retOb[bkc][chp][vrs]) retOb[bkc][chp][vrs] = {};//BibleObj[bkc][chp]
+                            retOb[bkc][chp][vrs][rev] = txt
+                        }
+                    }
+                }
+            }
+        }
+        return retOb
+    },
+    search_str_in_bibObj__not_used: function (bibObj, searchStrn) {
+        var retOb = {}
+        for (const [bkc, chpObj] of Object.entries(bibObj)) {
+            for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                for (const [vrs, txt] of Object.entries(vrsObj)) {
+                    var rep = new RegExp(searchStrn, "g");
+                    var mat = txt.match(rep);
+                    if (mat) {
+                        var txtFound = txt.replace(mat[0], "<font class='matInSvr'>" + mat[0] + "</font>");
+
+                        if (!retOb[bkc]) retOb[bkc] = {}
+                        if (!retOb[bkc][chp]) retOb[bkc][chp] = {};//BibleObj[bkc][chp]
+                        if (!retOb[bkc][chp][vrs]) retOb[bkc][chp][vrs] = {};//BibleObj[bkc][chp]
+                        retOb[bkc][chp][vrs][rev] = txtFound
+                    }
+                }
+            }
+        }
+        return retOb
+    },
+    bcv_parser: function (sbcv, txt) {
+        sbcv = sbcv.replace(/\s/g, "");
+        if (sbcv.length === 0) return alert("please select an item first.");
+        var ret = { vol: "", chp: "", vrs: "" };
+        var mat = sbcv.match(/^(\w{3})\s{,+}(\d+)\s{,+}[\:]\s{,+}(\d+)\s{,+}$/);
+        var mat = sbcv.match(/^(\w{3})\s+(\d+)\s+[\:]\s+(\d+)\s+$/);
+        var mat = sbcv.match(/^(\w{3})(\d+)\:(\d+)$/);
+        if (mat) {
+            ret.vol = mat[1].trim();
+            ret.chp = "" + parseInt(mat[2]);
+            ret.vrs = "" + parseInt(mat[3]);
+        } else {
+            alert("sbcv=" + sbcv + "," + JSON.stringify(ret));
+        }
+        ret.chp3 = ret.chp.padStart(3, "0");
+        ret._vol = "_" + ret.vol;
+
+        ret.std_bcv = `${ret.vol}${ret.chp}:${ret.vrs}`
+
+        var pad3 = {}
+        pad3.chp = ret.chp.padStart(3, "0");
+        pad3.vrs = ret.vrs.padStart(3, "0");
+        pad3.bcv = `${ret.vol}${pad3.chp}:${pad3.vrs}`
+        ret.pad3 = pad3
+
+        var obj = {}
+        obj[ret.vol] = {}
+        obj[ret.vol][ret.chp] = {}
+        obj[ret.vol][ret.chp][ret.vrs] = txt
+        ret.bcvObj = obj
+
+        ///////validation for std bcv.
+        // if (undefined === _Max_struct[ret.vol]) {
+        //     ret.err = `bkc not exist: ${ret.vol}`
+        // } else if (undefined === _Max_struct[ret.vol][ret.chp]) {
+        //     ret.err = `chp not exist: ${ret.chp}`
+        // } else if (undefined === _Max_struct[ret.vol][ret.chp][ret.vrs]) {
+        //     ret.err = `vrs not exist: ${ret.vrs}`
+        // } else {
+        //     ret.err = ""
+        // }
+
+        return ret;
+    },
+
+
+    loadObj_by_fname: function (jsfnm) {
+        var ret = { obj: null, fname: jsfnm, fsize: -1, header: "", err: "" };
+
+        if (!fs.existsSync(jsfnm)) {
+            console.log("f not exit:", jsfnm)
+            return ret;
+        }
+        ret.stat = BibleUti.GetFileStat(jsfnm)
+        ret.fsize = ret.stat.size;
+        if (ret.fsize > 0) {
+            var t = fs.readFileSync(jsfnm, "utf8");
+            var i = t.indexOf("{");
+            if (i > 0) {
+                ret.header = t.substr(0, i);
+                var s = t.substr(i);
+                try {
+                    ret.obj = JSON.parse(s);
+                } catch (e) {
+                    ret.err = e;
+                }
+
+            }
+        }
+
+        ret.writeback = function () {
+            var s2 = JSON.stringify(this.obj, null, 4);
+            BibleUti.execSync_Cmd(`echo 'lll'| sudo -S chmod -R 777 ${this.fname}`)
+            fs.writeFileSync(this.fname, this.header + s2);
+            ret.dlt_size = ret.header.length + s2.length - ret.fsize
+        }
+        return ret;
+    },
+    inpObj_to_karyObj: function (inpObj) {
+        var keyObj = { kary: [] }
+        for (const [bkc, chpObj] of Object.entries(inpObj)) {
+            keyObj.bkc = bkc
+            keyObj.kary.push(bkc)
+            for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                keyObj.chp = chp
+                keyObj.kary.push(chp)
+                for (const [vrs, txt] of Object.entries(vrsObj)) {
+                    keyObj.vrs = vrs
+                    keyObj.txt = txt
+                    keyObj.kary.push(vrs)
+                    keyObj.kary.push(txt)
+                }
+            }
+        }
+        return keyObj;
+    },
+
+    ____________Write2vrs_txt_by_inpObj__________: function (jsfname, doc, inpObj, bWrite) {
+        var out = {}
+        var bib = BibleUti.loadObj_by_fname(jsfname);
+        out.m_fname = bib.fname
+
+        if (bib.fsize > 0) {
+            console.log("fsize:", bib.fsize)
+            for (const [bkc, chpObj] of Object.entries(inpObj)) {
+                console.log("chpObj", chpObj)
+                for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                    console.log("vrsObj", vrsObj)
+                    for (const [vrs, txt] of Object.entries(vrsObj)) {
+                        var readtxt = bib.obj[bkc][chp][vrs]
+                        out.data = { dbcv: `${doc}~${bkc}${chp}:${vrs}`, txt: readtxt }
+                        console.log("origtxt", readtxt)
+
+                        if (bWrite) {
+                            console.log("newtxt", txt)
+                            bib.obj[bkc][chp][vrs] = txt
+                            bib.writeback();
+                            out.desc += ":Write-success"
+                        } else {
+                            out.desc += ":Read-success"
+                        }
+                    }
+                }
+            }
+        }
+        return out
+    },
+
+
+
+    decrypt_txt: function (toDecrypt, privateKey) {
+        //const absolutePath = path.resolve(relativeOrAbsolutePathtoPrivateKey)
+        //const privateKey = fs.readFileSync(absolutePath, 'utf8')
+        const buffer = Buffer.from(toDecrypt, 'base64')
+        const decrypted = crypto.privateDecrypt(
+            {
+                key: privateKey.toString(),
+                passphrase: '',
+                padding: crypto.constants.RSA_PKCS1_PADDING
+            },
+            buffer,
+        )
+        return decrypted.toString('utf8')
+    },
+
+
+    _check_pub_testing: function (inp) {
+        if (inp.usr.passcode.length === 0) {
+            return null
+        }
+        ////SpecialTestRule: repopath must be same as password.
+        inp.usr.repopath = inp.usr.repopath.trim()
+        const PUB_TEST = "pub_test", MYPASSWORD = "3edcFDSA"
+        if (this.m_UserProjFileSys.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_UserProjFileSys.usr_proj.projname.indexOf("Guest")) {
+            if (this.m_UserProjFileSys.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
+                console.log("This is for pub_test only but discord to the rule.")
+                return null
+            } else {
+                console.log("This is for pub_test only: sucessfully pass the rule.")
+                inp.usr.passcode = MYPASSWORD
+            }
+        }
+        return inp
+    },
+    _deplore_usr_proj_dirs: function (userproj, base_Dir) {
+        if (!userproj) return
+        //const base_Dir = "bible_study_notes/usrs"
+
+
+
+
+        userproj.base_Dir = base_Dir
+        userproj.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
+        userproj.git_root = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
+        userproj.acct_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
+        userproj.dest_myo = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
+        userproj.dest_dat = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
+
+
+        console.log("deplore: userproj=", userproj)
+    },
+
+    _interpret_repo_url_str: function (proj_url) {
+        if (!proj_url) return null
+        console.log("proj_url=", proj_url)
+        if (proj_url.indexOf("github.com/") > 0) {
+            return this._interpret_repo_url_github(proj_url)
+
+        }
+        if (proj_url.indexOf("bitbucket.org/") > 0) {
+            return this._interpret_repo_url_bitbucket(proj_url)
+        }
+        console.log(" ***** fatal err: git repository path not recognized..")
+        return null
+    },
+    _interpret_repo_url_github: function (proj_url) {
+        if (!proj_url) return null
+        //https://github.com/wdingbox/Bible_obj_weid.git
+        var reg = new RegExp(/^https\:\/\/github\.com\/(\w+)\/(\w+)(\.git)$/)
+        const hostname = "github.com"
+
+        var mat = proj_url.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
+        if (mat && mat.length === 4) {
+            console.log("mat:", mat)
+            //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
+            var username = mat[2]
+            var projname = mat[3]
+
+
+            var owner = `_${hostname}_${username}_${projname}`
+            var ownerId = `${hostname}/${username}/${projname}`
+            return { hostname: hostname, username: username, projname: projname, ownerId: ownerId, ownerstr: owner }
+        }
+        return null
+    },
+    _interpret_repo_url_bitbucket: function (proj_url) {
+        if (!proj_url) return null
+        //proj_url = https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git
+        //proj_url = https://wdingsoft:3edcfdsa@bitbucket.org/bsnp21/pub_wd01.git
+        var reg = new RegExp(/^https\:\/\/github\.com\/(\w+)\/(\w+)(\.git)$/)
+        const hostname = "bitbucket.org"
+
+        var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
+        if (mat) {
+            console.log("mat:", mat)
+            //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
+            var username = mat[1]
+            var prjbitbk = mat[3]
+            var projname = mat[4]
+
+
+            var owner = `_${hostname}_${username}_${projname}`
+            var ownerId = `${hostname}/${username}/${projname}`
+            return { hostname: hostname, username: username, projname: projname, prjbitbk: prjbitbk, ownerId: ownerId, ownerstr: owner }
+        }
+        return null
+    },
+
+    _interpret_git_config_Usr_Pwd_Url: function (userproj, passcode) {
+        userproj.git_Usr_Pwd_Url = ""
+        if (passcode.trim().length > 0) {
+            if ("github.com" === userproj.hostname) {
+                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
+            }
+            if ("bitbucket.org" === userproj.hostname) {
+                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.prjbitbk}/${userproj.projname}.git`
+            }
+        }
+
+        //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
+    },
+
+
+
+    default_inp_out_obj: function () {
+        return {
+            data: null, desc: "", err: null,
+            state: { bGitDir: -1, bMyojDir: -1, bDatDir: -1, bEditable: -1, bRepositable: -1 }
+        }
+    },
+    //// BibleUti /////
+}
 
 
 
