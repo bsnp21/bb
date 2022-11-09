@@ -54,6 +54,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
     this.m_projDirs = this._prepare_proj_dirs()
+    return this;
 }
 BaseGitUser.prototype._interpret_repo_url_str = function (proj_url) {
     if (!proj_url) return null
