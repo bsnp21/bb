@@ -917,7 +917,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
     }
 
     if (!fs.existsSync(dir)) {
-        return null
+        return {"NotFound:":dir}
     }
 
 

@@ -385,7 +385,7 @@ var ApiJsonp_BibleObj = {
             //var docname = userProject.get_DocCode_Fname(doc)
             var docpathfilname = userProject.m_UserProjFileSys.get_pfxname(doc)
             var outfil = userProject.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
-            
+
 
             //////----
             function __load_to_obj(outObj, jsfname, owner, shareID, inpObj,) {
@@ -459,8 +459,8 @@ var ApiJsonp_BibleObj = {
 
             //
             inp.out.state.save_res = userProject.m_UserProjFileSys.Save_userData_frm_client(inp.par)
-            
-            
+
+
             //
             userProject.m_UserProjFileSys.git_add_commit_push_Sync(inp.out.state.save_res.desc);//after saved
         })
@@ -542,23 +542,21 @@ var ApiJsonp_BibleObj = {
             if (!proj) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
             inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
-            if (inp.out.state ) {
-                inp.out.state.SSID = null;
-                if( inp.out.state.bEditable === 1){
-                    if (null === userProject.m_UserProjFileSys.git_push_test()) {
-                        //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                        console.log("git_push_test failed.!!!!!")
-                        inp.out.state.failed="git_push_test failed.!!!!!."
-                        userProject.m_UserProjFileSys.Destroy_proj()
-                    } else {
-                        inp.out.state.SSID = userProject.Session_create()
-                        console.log("Session_create ==", inp.out.state.SSID)
-                    }
-                }else{
-                    inp.out.state.failed="not editable."
+            inp.out.state.SSID = null;
+            if (inp.out.state.bEditable === 1) {
+                if (null === userProject.m_UserProjFileSys.git_push_test()) {
+                    //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
+                    console.log("git_push_test failed.!!!!!")
+                    inp.out.state.failed = "git_push_test failed.!!!!!."
+                    userProject.m_UserProjFileSys.Destroy_proj()
+                } else {
+                    inp.out.state.SSID = userProject.Session_create()
+                    console.log("Session_create ==", inp.out.state.SSID)
                 }
-               
+            } else {
+                inp.out.state.failed = "not editable."
             }
+
         })
     },
 
