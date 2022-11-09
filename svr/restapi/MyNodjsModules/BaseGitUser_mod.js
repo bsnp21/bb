@@ -193,7 +193,15 @@ BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
 }
 
 
-///
+
+
+
+
+
+
+
+
+///bible doc applied. 
 
 BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
     if (!DocCode.match(/^e_/)) return "" //:like, e_Note
