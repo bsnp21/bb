@@ -84,6 +84,7 @@ var MyStorage = {
                 data: keyObj
             },
             function (ret) {
+                console.log("ApiUsrDat_load ret", ret)
                 if (cbf) cbf(ret)
             })
     },
@@ -98,6 +99,7 @@ var MyStorage = {
                 data: keyObj
             },
             function (ret) {
+                console.log("Repo_load_dat_MostRecentSearches ret", ret)
                 if (cbf) cbf(ret)
             })
     },
