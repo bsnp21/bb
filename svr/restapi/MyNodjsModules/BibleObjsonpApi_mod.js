@@ -549,6 +549,7 @@ var ApiJsonp_BibleObj = {
                     console.log("git_push_test failed.!!!!!")
                     userProject.m_UserProjFileSys.Run_proj_destroy()
                 } else {
+                    console.log("Session_create .!!!!!")
                     inp.out.state.SSID = userProject.Session_create()
                 }
             }
