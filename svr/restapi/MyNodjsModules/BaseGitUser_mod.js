@@ -592,7 +592,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
     this.m_projDirs = this._prepare_proj_dirs()
-    return this;
+    return (this.m_gitinf && this.m_projDirs);
 }
 BaseGitUser.prototype._interpret_repo_url_str = function (proj_url) {
     if (!proj_url) return null
@@ -651,6 +651,7 @@ BaseGitUser.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 
 }
 BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
+    if(!this.m_gitinf) return ""
     var userproj = this.m_gitinf
     var passcode = this.usr_acct.passcode
     if (passcode.trim().length > 0) {
@@ -664,7 +665,7 @@ BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
     return ""
 }
 BaseGitUser.prototype._prepare_proj_dirs = function () {
-
+    if(!this.m_gitinf) return null
     //const WorkingBaseNodeName = "bist"
     const NodeUsrs = "usrs" //keep same as old. 
     var userproj = this.m_gitinf
