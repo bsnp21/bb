@@ -92,13 +92,13 @@ var BibleUti = {
         return targObj
     },
 
-    WorkingRootDir: function (v) {
-        if (undefined === v) {
-            return BibleUti.m_rootDir
-        } else {
-            BibleUti.m_rootDir = v
-        }
-    },
+    // WorkingRootDir: function (v) {
+    //     if (undefined === v) {
+    //         return BibleUti.m_rootDir
+    //     } else {
+    //         BibleUti.m_rootDir = v
+    //     }
+    // },
 
 
     GetFilesAryFromDir: function (startPath, deep, cb) {//startPath, filter

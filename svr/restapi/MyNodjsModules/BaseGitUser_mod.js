@@ -671,10 +671,9 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
     var absRootPath = this.absRootWorkingDir()
-    this.m_rootDir = absRootPath //remove alter
+    
     var projDirs = {}
-
-    projDirs.root_abs = `${absRootPath}`
+    projDirs.root_sys = `${absRootPath}`
     projDirs.base_Dir = `${absRootPath}${WorkingBaseNodeName}`
     projDirs.user_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`
     projDirs.git_root = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
@@ -692,45 +691,24 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
 
 BaseGitUser.prototype.get_usr_dat_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
-    if (!this.usr_proj) return ""
-    if (!subpath) {
-        return `${this.m_rootDir}${this.usr_proj.dest_dat}`
-    }
-    return `${this.m_rootDir}${this.usr_proj.dest_dat}${subpath}`
+    
 }
 BaseGitUser.prototype.get_usr_acct_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
-    if (!this.usr_proj) return ""
-    if (!subpath) {
-        return `${this.m_rootDir}${this.usr_proj.acct_dir}`
-    }
-    return `${this.m_rootDir}${this.usr_proj.acct_dir}${subpath}`
+ 
 }
 BaseGitUser.prototype.get_usr_myoj_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
-    if (!this.usr_proj) return ""
-    if (!subpath) {
-        return `${this.m_rootDir}${this.usr_proj.dest_myo}`
-    }
-    return `${this.m_rootDir}${this.usr_proj.dest_myo}${subpath}`
+   
 }
 
 BaseGitUser.prototype.get_usr_git_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
-    if (!this.usr_proj) return ""
-    if (undefined === subpath || null === subpath) {
-        return `${this.m_rootDir}${this.usr_proj.git_root}`
-    }
-    //if (subpath[0] !== "/") subpath = "/" + subpath
-    return `${this.m_rootDir}${this.usr_proj.git_root}${subpath}`
+   
 }
 BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
     return (!subpath) ? this.m_projDirs.std_bible_obj_lib_template : `${this.m_projDirs.std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
-    var pathfile = `${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate`
-    if (undefined === subpf) {
-        return pathfile
-    }
-    return pathfile + subpf
+   
 }
 
 
@@ -771,20 +749,20 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
             }
             break;
         default: //: NIV, CUVS, NIV_Jw  
-            dest_pfname = `${this.m_rootDir}bible_obj_lib/jsdb/jsBibleObj/${DocCode}.json.js`;
+            dest_pfname = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj/${DocCode}.json.js`;
             break;
     }
     return dest_pfname
 }
 BaseGitUser.prototype.get_userpathfile_from_tempathfile = function (tmpathfile) {
-    //var src = `${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate/myoj/${fnam}`
+     
     var mat = tmpathfile.match(/[\/]myoj[\/]([\w]+)_json\.js$/) //::/myoj/myNode_json.js
     if (mat) {
         var doc = mat[1];//.replace(/^my/, "e_")  //docname: 
         var gitpfx = this.get_pfxname(doc)
         return gitpfx
     }
-    //var src_dat = `${this.m_UserProjFileSys.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate${fnam}_json.js`
+     
     var mat = tmpathfile.match(/[\/]dat[\/]([\w]+)_json\.js$/)
     if (mat) {
         var doc = mat[1]
@@ -976,8 +954,8 @@ BaseGitUser.prototype.cp_template_to_git = function () {
     #!/bin/sh
     echo 'lll' | sudo -S mkdir -p ${acctDir}
     echo 'lll' | sudo -S chmod -R 777 ${acctDir}
-    # sudo -S cp -aR  ${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate  ${acctDir}/
-    echo 'lll' | sudo -S cp -aR  ${this.m_rootDir}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
+    # sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate  ${acctDir}/
+    echo 'lll' | sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
     echo 'lll' | sudo -S chmod -R 777 ${acctDir}
     #cd -`
 
@@ -1183,7 +1161,7 @@ BaseGitUser.prototype.git_clone = function () {
         return inp
     }
 
-    var dir = this.m_rootDir
+    var dir = this.m_projDirs.root_sys
     if (!fs.existsSync(dir)) {
         console.log("Fatal Error: not exist dir:", dir)
         return null
@@ -1228,7 +1206,7 @@ BaseGitUser.prototype.git_clone = function () {
 
     var git_clone_cmd = `
     #!/bin/sh
-    cd ${this.m_rootDir}
+    cd ${this.m_projDirs.root_sys}
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${proj.git_root}
     if [ -f "${proj.git_root}/.git/config" ]; then
         echo "${proj.git_root}/.git/config exists."
