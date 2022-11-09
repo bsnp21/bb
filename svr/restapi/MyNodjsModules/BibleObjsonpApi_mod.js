@@ -230,7 +230,7 @@ var ApiJsonp_BibleObj = {
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-            var stat = userProject.m_UserProjFileSys.Deploy_proj()
+            inp.out.state =  = userProject.m_UserProjFileSys.Deploy_proj()
             var TbcvObj = {};
             if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
@@ -474,7 +474,7 @@ var ApiJsonp_BibleObj = {
 
             if (proj) {
 
-                userProject.m_UserProjFileSys.Deploy_proj()
+                inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
 
                 var retp = userProject.m_UserProjFileSys.run_proj_state()
                 if (0) {
@@ -628,7 +628,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            userProject.m_UserProjFileSys.Deploy_proj()
+            inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
             //await userProject.git_add_commit_push("push hard.", "");//real push hard.
 
             var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git add *")
@@ -654,7 +654,7 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
-            userProject.m_UserProjFileSys.Deploy_proj()
+            inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
             userProject.m_UserProjFileSys.git_pull();
             userProject.m_UserProjFileSys.run_proj_state()
 
