@@ -354,7 +354,7 @@ var ApiJsonp_BibleObj = {
             save_res.desc = `${tagName} saved.`
             inp.out.save_res = save_res
 
-            userProject.git_add_commit_push_Sync(save_res.desc);//after saved
+            userProject.m_UserProjFileSys.git_add_commit_push_Sync(save_res.desc);//after saved
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
@@ -462,7 +462,7 @@ var ApiJsonp_BibleObj = {
             
             
             //
-            userProject.git_add_commit_push_Sync(inp.out.state.save_res.desc);//after saved
+            userProject.m_UserProjFileSys.git_add_commit_push_Sync(inp.out.state.save_res.desc);//after saved
         })
     },
     ApiUsrDat_load: async function (req, res) {
