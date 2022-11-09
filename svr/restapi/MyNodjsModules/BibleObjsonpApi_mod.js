@@ -548,6 +548,7 @@ var ApiJsonp_BibleObj = {
                     if (null === userProject.m_UserProjFileSys.git_push_test()) {
                         //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
                         console.log("git_push_test failed.!!!!!")
+                        inp.out.state.failed="git_push_test failed.!!!!!."
                         userProject.m_UserProjFileSys.Destroy_proj()
                     } else {
                         inp.out.state.SSID = userProject.Session_create()
