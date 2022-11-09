@@ -1040,7 +1040,7 @@ UserProjFileSys.prototype.Run_proj_setup = function () {
 
     var ret = this.run_proj_state()
 
-    console.log("Run_proj_setup ---------- rgfd")
+    //console.log("Run_proj_setup ---------- rgfd")
     return ret
 }
 
