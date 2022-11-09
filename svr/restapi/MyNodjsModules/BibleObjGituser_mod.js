@@ -1041,7 +1041,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 }
 
 BibleObjGituser.prototype.Session_create = function () {
-    var gitdir = this.get_usr_git_dir()
+    var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
 
     if (!this.m_UserProjFileSys.usr_proj) return null
     var ssid = this.m_UserProjFileSys.usr_proj.ownerId
@@ -1206,7 +1206,7 @@ BibleObjGituser.prototype.Run_proj_setup = function () {
         return null
     }
 
-    var dir = this.get_usr_git_dir("/.git/config")
+    var dir = this.m_UserProjFileSys.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(dir)) {
         this.git_clone() //always sucess even passwd is wrong.
     } else {
