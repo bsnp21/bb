@@ -1441,7 +1441,7 @@ BaseGitUser.prototype.git_push_test = function () {
     `
     var ret = this.execSync_cmd_git(cmd).toString()
     if (null !== ret) {
-        console.log("\n*** test git push:", ret)
+        console.log("\n*** test git push:", dir, ret)
         if (ret.match(/failed/i)) {
             if (!fs.existsSync(dir)) {
                 console.log("*********** get_usr_git_dir not exist.", dir)
