@@ -1546,7 +1546,7 @@ UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
         //https://github.com/wdingbox:passcode@/bible_obj_weid.git
     } /////////
 
-    if (!this.m_inp.usr.repopath) return
+    //if (!this.m_inp.usr.repopath) return
     if (!this.usr_proj) return
     if (!this.usr_proj.git_Usr_Pwd_Url) return
 
@@ -1567,7 +1567,7 @@ UserProjFileSys.prototype.git_config_allow_push = function (bAllowPush) {
         console.log("bAllowPush=1:url =", this.usr_proj.git_Usr_Pwd_Url)
     } else {
         fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
-        console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
+        //console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
     }
 }
 
