@@ -1257,7 +1257,7 @@ UserProjFileSys.prototype.Run_proj_destroy = function () {
 
     this.run_proj_state()
 
-    this.Session_delete()
+    //this.Session_delete()
     return inp
 }
 UserProjFileSys.prototype.run_proj_state = function (cbf) {
