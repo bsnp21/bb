@@ -23,7 +23,7 @@ const WorkingBaseNodeName = "bist"
 
 
 //const WorkingRootNodeName = "bist"
-var BibleUti = {
+var BaseGUti = {
 
     GetEmptyObj: function (obj) {
         function _iterate(obj, shellOfObj) {
@@ -96,14 +96,7 @@ var BibleUti = {
         return targObj
     },
 
-    WorkingRootDir: function (v) {
-        if (undefined === v) {
-            return BibleUti.m_rootDir
-        } else {
-            BibleUti.m_rootDir = v
-        }
-    },
-
+  
 
     GetFilesAryFromDir: function (startPath, deep, cb) {//startPath, filter
         function recursiveDir(startPath, deep, outFilesArr) {
@@ -167,7 +160,7 @@ var BibleUti = {
             '.ttf': 'aplication/font-sfnt'
         }
         var binaries = [".png", ".jpg", ".wav", ".mp3", ".svg", ".pdf", ".eot"]
-        BibleUti.GetFilesAryFromDir(dir, true, function (fname) {
+        BaseGUti.GetFilesAryFromDir(dir, true, function (fname) {
             var ret = path.parse(fname);
             var ext = ret.ext
             //console.log("ret:",ret)
@@ -437,7 +430,7 @@ var BibleUti = {
             console.log("f not exit:", jsfnm)
             return ret;
         }
-        ret.stat = BibleUti.GetFileStat(jsfnm)
+        ret.stat = BaseGUti.GetFileStat(jsfnm)
         ret.fsize = ret.stat.size;
         if (ret.fsize > 0) {
             var t = fs.readFileSync(jsfnm, "utf8");
@@ -456,7 +449,7 @@ var BibleUti = {
 
         ret.writeback = function () {
             var s2 = JSON.stringify(this.obj, null, 4);
-            BibleUti.execSync_Cmd(`echo 'lll'| sudo -S chmod -R 777 ${this.fname}`)
+            BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S chmod -R 777 ${this.fname}`)
             fs.writeFileSync(this.fname, this.header + s2);
             ret.dlt_size = ret.header.length + s2.length - ret.fsize
         }
@@ -483,7 +476,7 @@ var BibleUti = {
 
     ____________Write2vrs_txt_by_inpObj__________: function (jsfname, doc, inpObj, bWrite) {
         var out = {}
-        var bib = BibleUti.loadObj_by_fname(jsfname);
+        var bib = BaseGUti.loadObj_by_fname(jsfname);
         out.m_fname = bib.fname
 
         if (bib.fsize > 0) {
@@ -548,93 +541,12 @@ var BibleUti = {
         }
         return inp
     },
-    _deplore_usr_proj_dirs: function (userproj, base_Dir) {
-        if (!userproj) return
-        //const base_Dir = "bible_study_notes/usrs"
 
 
 
 
-        userproj.base_Dir = base_Dir
-        userproj.user_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}`
-        userproj.git_root = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
-        userproj.acct_dir = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
-        userproj.dest_myo = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
-        userproj.dest_dat = `${base_Dir}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
-
-
-        console.log("deplore: userproj=", userproj)
-    },
-
-    _interpret_repo_url_str: function (proj_url) {
-        if (!proj_url) return null
-        console.log("proj_url=", proj_url)
-        if (proj_url.indexOf("github.com/") > 0) {
-            return this._interpret_repo_url_github(proj_url)
-
-        }
-        if (proj_url.indexOf("bitbucket.org/") > 0) {
-            return this._interpret_repo_url_bitbucket(proj_url)
-        }
-        console.log(" ***** fatal err: git repository path not recognized..")
-        return null
-    },
-    _interpret_repo_url_github: function (proj_url) {
-        if (!proj_url) return null
-        //https://github.com/wdingbox/Bible_obj_weid.git
-        var reg = new RegExp(/^https\:\/\/github\.com\/(\w+)\/(\w+)(\.git)$/)
-        const hostname = "github.com"
-
-        var mat = proj_url.match(/^https\:\/\/github\.com[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
-        if (mat && mat.length === 4) {
-            console.log("mat:", mat)
-            //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
-            var username = mat[2]
-            var projname = mat[3]
-
-
-            var owner = `_${hostname}_${username}_${projname}`
-            var ownerId = `${hostname}/${username}/${projname}`
-            return { hostname: hostname, username: username, projname: projname, ownerId: ownerId, ownerstr: owner }
-        }
-        return null
-    },
-    _interpret_repo_url_bitbucket: function (proj_url) {
-        if (!proj_url) return null
-        //proj_url = https://wdingsoft@bitbucket.org/bsnp21/pub_wd01.git
-        //proj_url = https://wdingsoft:3edcfdsa@bitbucket.org/bsnp21/pub_wd01.git
-        var reg = new RegExp(/^https\:\/\/github\.com\/(\w+)\/(\w+)(\.git)$/)
-        const hostname = "bitbucket.org"
-
-        var mat = proj_url.match(/^https\:\/\/([^\@]+)[\@]bitbucket[\.]org[\/](([^\/]*)[\/]([^\.]*))[\.]git$/)
-        if (mat) {
-            console.log("mat:", mat)
-            //return { format: 2, desc: "full_path", full_path: mat[0], user_repo: mat[1], user: mat[2], repo: mat[3] }
-            var username = mat[1]
-            var prjbitbk = mat[3]
-            var projname = mat[4]
-
-
-            var owner = `_${hostname}_${username}_${projname}`
-            var ownerId = `${hostname}/${username}/${projname}`
-            return { hostname: hostname, username: username, projname: projname, prjbitbk: prjbitbk, ownerId: ownerId, ownerstr: owner }
-        }
-        return null
-    },
-
-    _interpret_git_config_Usr_Pwd_Url: function (userproj, passcode) {
-        userproj.git_Usr_Pwd_Url = ""
-        if (passcode.trim().length > 0) {
-            if ("github.com" === userproj.hostname) {
-                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
-            }
-            if ("bitbucket.org" === userproj.hostname) {
-                userproj.git_Usr_Pwd_Url = `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.prjbitbk}/${userproj.projname}.git`
-            }
-        }
-
-        //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
-    },
+    
+ 
 
 
 
@@ -644,7 +556,7 @@ var BibleUti = {
             state: { bGitDir: -1, bMyojDir: -1, bDatDir: -1, bEditable: -1, bRepositable: -1 }
         }
     },
-    //// BibleUti /////
+    //// BaseGUti /////
 }
 
 
@@ -927,7 +839,7 @@ BaseGitUser.prototype.run_proj_state = function (cbf) {
     var fstat = {}
     var totalsize = 0
     var iAlertLevel = 0
-    BibleUti.GetFilesAryFromDir(accdir, true, function (fname) {
+    BaseGUti.GetFilesAryFromDir(accdir, true, function (fname) {
         var ret = path.parse(fname);
         var ext = ret.ext
         var nam = ret.base.replace(/_json\.js$/, "")
@@ -968,7 +880,7 @@ BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
     var _THIS = this
     var srcdir = this.get_dir_lib_template()
     var nMissed = 0
-    BibleUti.GetFilesAryFromDir(srcdir, true, function (srcfname) {
+    BaseGUti.GetFilesAryFromDir(srcdir, true, function (srcfname) {
         //console.log("---get_dir_lib_template:", srcfname)
         var ret = path.parse(srcfname);
         var ext = ret.ext
@@ -983,9 +895,9 @@ BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
             if (bCpy) {
                 var pet = path.parse(gitpfx);
                 if (!fs.existsSync(pet.dir)) {
-                    var ret = BibleUti.execSync_Cmd(`echo 'lll' | sudo -S mkdir -p  ${pet.dir}`)
+                    var ret = BaseGUti.execSync_Cmd(`echo 'lll' | sudo -S mkdir -p  ${pet.dir}`)
                 }
-                BibleUti.execSync_Cmd(`echo 'lll' | sudo -S chmod 777 ${pet.dir}`)
+                BaseGUti.execSync_Cmd(`echo 'lll' | sudo -S chmod 777 ${pet.dir}`)
                 fs.copyFileSync(srcfname, gitpfx, COPYFILE_EXCL) //failed if des exists.
             }
         }
@@ -1015,7 +927,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
     var dir = this.get_usr_acct_dir()
     if (fs.existsSync(dir)) {
-        BibleUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
+        BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
 
     var ret = this.run_proj_state()
@@ -1034,7 +946,7 @@ BaseGitUser.prototype.Destroy_proj = function () {
       sudo -S rm -rf ${gitdir}
     `
     if (fs.existsSync(`${gitdir}`)) {
-        inp.out.exec_git_cmd_result = BibleUti.execSync_Cmd(proj_destroy).toString()
+        inp.out.exec_git_cmd_result = BaseGUti.execSync_Cmd(proj_destroy).toString()
         inp.out.desc += "destroyed git dir: " + gitdir
     }
 
@@ -1070,7 +982,7 @@ BaseGitUser.prototype.cp_template_to_git = function () {
 
     inp.out.cp_template_cmd = cp_template_cmd
     console.log("cp_template_cmd", cp_template_cmd)
-    inp.out.cp_template_cmd_result = BibleUti.execSync_Cmd(cp_template_cmd).toString()
+    inp.out.cp_template_cmd_result = BaseGUti.execSync_Cmd(cp_template_cmd).toString()
 
     if (!fs.existsSync(`${gitdir}`)) {
         inp.out.desc += ", cp failed: "
@@ -1093,7 +1005,7 @@ BaseGitUser.prototype.chmod_R_777_acct = function (spath) {
     //var password = "lll"
     var change_perm_cmd = `echo 'lll'|  sudo -S chmod -R 777 ${dir}`
 
-    inp.out.change_perm = BibleUti.execSync_Cmd(change_perm_cmd).toString()
+    inp.out.change_perm = BaseGUti.execSync_Cmd(change_perm_cmd).toString()
 
     return inp.out.change_perm
 }
@@ -1109,7 +1021,7 @@ BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
     //var password = "lll"
     var change_perm_cmd = ` sudo -S chmod -R ${mode} ${dir}`
 
-    inp.out.change_perm = BibleUti.execSync_Cmd(change_perm_cmd).toString()
+    inp.out.change_perm = BaseGUti.execSync_Cmd(change_perm_cmd).toString()
 
     return inp.out.change_perm
 }
@@ -1161,13 +1073,13 @@ BaseGitUser.prototype.Load_back_userData = function (par) {
     //var inp = this.m_inp
     var doc = par.fnames[0]
     var jsfname = this.get_pfxname(doc)
-    var ret = BibleUti.loadObj_by_fname(jsfname)
+    var ret = BaseGUti.loadObj_by_fname(jsfname)
 
     var retObj = ret.obj  //get obj structure w/ keys.
     if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
         try {
             retObj = JSON.parse(JSON.stringify(par.data));// 
-            BibleUti.FetchObjDat(retObj, ret.obj)
+            BaseGUti.FetchObjDat(retObj, ret.obj)
             console.log("out.data", retObj)
         } catch (err) {
             console.log("err", err)
@@ -1185,9 +1097,9 @@ BaseGitUser.prototype.Save_userData_frm_client = function (par) {
     var doc = par.fnames[0]
     var jsfname = this.get_pfxname(doc)
     console.log("jsfname=", jsfname)
-    var ret = BibleUti.loadObj_by_fname(jsfname)
+    var ret = BaseGUti.loadObj_by_fname(jsfname)
     if (ret.obj) {
-        BibleUti.FlushObjDat(par.data, ret.obj)
+        BaseGUti.FlushObjDat(par.data, ret.obj)
         console.log("ret", ret)
         ret.writeback()
     } else {
@@ -1300,15 +1212,15 @@ BaseGitUser.prototype.git_clone = function () {
     //console.log("proj", proj)
     var dir = this.m_projDirs.user_dir //usr_proj
     if (!fs.existsSync(dir)) {
-        var ret = BibleUti.execSync_Cmd(`echo 'lll'| sudo -S mkdir -p ${dir}`).toString()
+        var ret = BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S mkdir -p ${dir}`).toString()
     }
-    var ret = BibleUti.execSync_Cmd(`echo 'lll'|  sudo -S chmod -R 777 ${dir}`).toString()
+    var ret = BaseGUti.execSync_Cmd(`echo 'lll'|  sudo -S chmod -R 777 ${dir}`).toString()
 
     gitdir = this.get_usr_git_dir()
     if (fs.existsSync(gitdir)) {
         inp.out.git_clone_res.desc += "|git folder exit but no .git"
         inp.out.git_clone_res.bExist = true
-        var ret = BibleUti.execSync_Cmd(`echo 'lll'|  sudo -S rm -rf ${gitdir}`).toString()
+        var ret = BaseGUti.execSync_Cmd(`echo 'lll'|  sudo -S rm -rf ${gitdir}`).toString()
         console.log(ret)
     }
 
@@ -1326,7 +1238,7 @@ BaseGitUser.prototype.git_clone = function () {
     `
     console.log("git_clone_cmd...")
     inp.out.git_clone_res.git_clone_cmd = git_clone_cmd
-    var ret = BibleUti.execSync_Cmd(git_clone_cmd).toString()
+    var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
     console.log("ret", ret)
     return inp
 }
@@ -1344,7 +1256,7 @@ BaseGitUser.prototype.git_status = async function (_sb) {
         git status ${_sb}
         #git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.`
 
-        inp.out.git_status_res = BibleUti.exec_Cmd(git_status_cmd).toString()
+        inp.out.git_status_res = BaseGUti.exec_Cmd(git_status_cmd).toString()
     }
 }
 
@@ -1470,7 +1382,7 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
      echo lll |sudo -S ${gitcmd}
     `
     console.log("\n----git_cmd start:>", scmd)
-    var res = BibleUti.execSync_Cmd(scmd)
+    var res = BaseGUti.execSync_Cmd(scmd)
     console.log("\n----git_cmd end.")
 
     return res
