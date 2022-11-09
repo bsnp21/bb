@@ -542,17 +542,21 @@ var ApiJsonp_BibleObj = {
             if (!proj) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
             inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
-            inp.out.state.SSID = null;
-            if (inp.out.state && inp.out.state.bEditable === 1) {
-                if (null === userProject.m_UserProjFileSys.git_push_test()) {
-                    //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                    console.log("git_push_test failed.!!!!!")
-                    userProject.m_UserProjFileSys.Destroy_proj()
-                } else {
-                    console.log("Session_create .!!!!!")
-                    inp.out.state.SSID = userProject.Session_create()
-                    console.log("Session_create ==", inp.out.state.SSID)
+            if (inp.out.state ) {
+                inp.out.state.SSID = null;
+                if( inp.out.state.bEditable === 1){
+                    if (null === userProject.m_UserProjFileSys.git_push_test()) {
+                        //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
+                        console.log("git_push_test failed.!!!!!")
+                        userProject.m_UserProjFileSys.Destroy_proj()
+                    } else {
+                        inp.out.state.SSID = userProject.Session_create()
+                        console.log("Session_create ==", inp.out.state.SSID)
+                    }
+                }else{
+                    inp.out.state.failed="not editable."
                 }
+               
             }
         })
     },
