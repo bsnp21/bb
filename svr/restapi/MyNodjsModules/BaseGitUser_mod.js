@@ -110,6 +110,7 @@ BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
 BaseGitUser.prototype._deplore_usr_proj_dirs = function (base_Dir) {
 
     var userproj = this.m_gitinf
+    console.log("m_gitinf", this.m_gitinf)
     var projDirs = {}
 
     projDirs.base_Dir = base_Dir
