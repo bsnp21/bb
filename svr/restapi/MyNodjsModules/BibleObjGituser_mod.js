@@ -1400,16 +1400,16 @@ UserProjFileSys.prototype.chmod_R_ = function (mode, dir) {
     return inp.out.change_perm
 }
 
-UserProjFileSys.prototype.load_git_config = function () {
-    var git_config_fname = this.get_usr_git_dir("/.git/config")
+BibleObjGituser.prototype.load_git_config = function () {
+    var git_config_fname = this.m_UserProjFileSys.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(git_config_fname)) return ""
     //if (!this.m_git_config_old || !this.m_git_config_new) {
     var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
     var ipos1 = txt.indexOf(this.m_inp.usr.repopath)
-    var ipos2 = txt.indexOf(this.usr_proj.git_Usr_Pwd_Url)
+    var ipos2 = txt.indexOf(this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
 
     console.log("ipos1:", ipos1, this.m_inp.usr.repopath)
-    console.log("ipos2:", ipos2, this.usr_proj.git_Usr_Pwd_Url)
+    console.log("ipos2:", ipos2, this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url)
 
     var configurl = ""
     if (ipos1 > 0) {
@@ -1418,7 +1418,7 @@ UserProjFileSys.prototype.load_git_config = function () {
     }
     if (ipos2 > 0) {
         news = txt
-        olds = txt.replace(this.usr_proj.git_Usr_Pwd_Url, this.m_inp.usr.repopath)
+        olds = txt.replace(this.m_UserProjFileSys.usr_proj.git_Usr_Pwd_Url, this.m_inp.usr.repopath)
 
         console.log("initial git_config_fname not normal:", txt)
     }
@@ -1431,7 +1431,7 @@ UserProjFileSys.prototype.load_git_config = function () {
         var pos1 = txt.indexOf("\n\tfetch = +refs");//("[branch \"master\"]")
         configurl = txt.substring(pos0 + 19, pos1)
     }
-    this.usr_proj.configurl = configurl
+    this.m_UserProjFileSys.usr_proj.configurl = configurl
     //}
     return configurl
 }
