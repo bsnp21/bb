@@ -877,7 +877,6 @@ Gitusr.prototype._interpret_repo_url_str = function (proj_url) {
     }
     console.log(" ***** fatal err: git repository path not recognized..")
     return null
-
 }
 Gitusr.prototype._interpret_repo_url_github = function (proj_url) {
     if (!proj_url) return null
@@ -923,7 +922,7 @@ Gitusr.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 
 }
 Gitusr.prototype._interpret_git_config_Usr_Pwd_Url = function () {
-    var userproj = this.m_proj
+    var userproj = this.m_gitinf
     var passcode = this.usr_acct.passcode
     if (passcode.trim().length > 0) {
         if ("github.com" === userproj.hostname) {
@@ -951,6 +950,7 @@ Gitusr.prototype._deplore_usr_proj_dirs = function (base_Dir) {
     console.log("deplore: userproj=", userproj)
 }
 
+//////////////////////////////////////////
 
 var UserProjFileSys = function (rootDir) {
     if (!rootDir.match(/\/$/)) rootDir += "/"
