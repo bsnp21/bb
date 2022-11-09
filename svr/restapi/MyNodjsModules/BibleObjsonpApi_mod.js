@@ -136,22 +136,22 @@ var ApiUti = {
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
     },
-    find_workDir: function () {
-        var pwd = __dirname
-        console.log("__dirname=", pwd)
-
-        var wd = "", rootdir = "", prev = ""
-        pwd.split("/").forEach(function (nodname) {
-            wd += nodname + "/"
-            console.log(wd)
-            if (fs.existsSync(`${wd}/.git`)) {
-                rootdir = prev
-            }
-            prev = wd
-        })
-        console.log(rootdir, "  <=== svr rootdir")
-        return rootdir
-    }
+    //find_workDir: function () {
+    //    var pwd = __dirname
+    //    console.log("__dirname=", pwd)
+//
+    //    var wd = "", rootdir = "", prev = ""
+    //    pwd.split("/").forEach(function (nodname) {
+    //        wd += nodname + "/"
+    //        console.log(wd)
+    //        if (fs.existsSync(`${wd}/.git`)) {
+    //            rootdir = prev
+    //        }
+    //        prev = wd
+    //    })
+    //    console.log(rootdir, "  <=== svr rootdir")
+    //    return rootdir
+    //}
 }
 
 
@@ -733,8 +733,8 @@ var BibleObjJsonpApi = {
         // Pass to next layer of middleware
     },
     init: function (app) {
-        var woringDir = ApiUti.find_workDir()
-        BibleObjJsonpApi.m_rootDir = woringDir
+        //var woringDir = ApiUti.find_workDir()
+        //BibleObjJsonpApi.m_rootDir = woringDir
         //BibleUti.WorkingRootDir(woringDir)
         //
         Object.keys(ApiJsonp_BibleObj).forEach(function (sapi) {
