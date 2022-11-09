@@ -33,6 +33,22 @@ const WorkingBaseNodeName = "bist"
 
 var BaseGitUser = function () {
 }
+BaseGitUser.prototype.absRootWorkingDir = function (app) {
+    var pwd = __dirname
+    console.log("__dirname=", pwd)
+
+    var wd = "", rootdir = "", prev = ""
+    pwd.split("/").forEach(function (nodname) {
+        wd += nodname + "/"
+        console.log(wd)
+        if (fs.existsSync(`${wd}/.git`)) {
+            rootdir = prev
+        }
+        prev = wd
+    })
+    console.log(rootdir, "  <=== svr rootdir")
+    return rootdir
+}
 BaseGitUser.prototype.set_gitusr = function (repopath, passcode) {
     this.usr_acct = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
@@ -107,21 +123,23 @@ BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
     }
     return ""
 }
-BaseGitUser.prototype._deplore_usr_proj_dirs = function (base_Dir) {
+BaseGitUser.prototype._deplore_usr_proj_dirs = function () {
 
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
+    var absRootPath = this.absRootWorkingDir()
     var projDirs = {}
 
-    projDirs.base_Dir = `${WorkingBaseNodeName}`
-    projDirs.user_dir = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}`
-    projDirs.git_root = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
-    projDirs.acct_dir = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
-    projDirs.dest_myo = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
-    projDirs.dest_dat = `${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
+    projDirs.root_abs = `${absRootPath}`
+    projDirs.base_Dir = `${absRootPath}${WorkingBaseNodeName}`
+    projDirs.user_dir = `${absRootPath}${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}`
+    projDirs.git_root = `${absRootPath}${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}`
+    projDirs.acct_dir = `${absRootPath}${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`
+    projDirs.dest_myo = `${absRootPath}${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`
+    projDirs.dest_dat = `${absRootPath}${WorkingBaseNodeName}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`
 
     this.m_projDirs = projDirs
-    console.log("compose: projDirs=", projDirs)
+    console.log("sys-composite projDirs =", projDirs)
 }
 
 //////////////////////////////////////////
