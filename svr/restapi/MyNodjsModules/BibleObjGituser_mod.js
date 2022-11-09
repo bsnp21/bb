@@ -878,7 +878,8 @@ var UserProjFileSys = function (rootDir) {
 
 
 UserProjFileSys.prototype.Gen_usr_proj = function (repopath, passcode) {
-    var gitusr = new BaseGitUser(repopath, passcode)
+    var gitusr = new BaseGitUser()
+    gitusr.set_gitusr(repopath, passcode)
     gitusr._deplore_usr_proj_dirs(this.m_sBaseUsrs)
 
     this.usr_acct = { repopath: repopath, passcode: passcode }
