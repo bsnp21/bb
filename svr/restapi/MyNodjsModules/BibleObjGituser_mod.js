@@ -1714,7 +1714,7 @@ BibleObjGituser.prototype.git_add_commit_push_Sync = function (msg) {
     }, 10000)
 }
 
-UserProjFileSys.prototype.git_pull = function (cbf) {
+BibleObjGituser.prototype.git_pull = function (cbf) {
     this.git_config_allow_push(true)
     this.m_inp.out.git_pull_res = this.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
     this.git_config_allow_push(false)
@@ -1722,7 +1722,7 @@ UserProjFileSys.prototype.git_pull = function (cbf) {
     return this.m_inp.out.git_pull_res
 }
 
-UserProjFileSys.prototype.git_push = async function () {
+BibleObjGituser.prototype.git_push = async function () {
     this.git_config_allow_push(true)
     var ret = this.m_inp.out.git_push_res = this.execSync_cmd_git("git push").toString()
     if (null !== ret) {
@@ -1734,7 +1734,7 @@ UserProjFileSys.prototype.git_push = async function () {
     this.git_config_allow_push(false)
     return ret
 }
-UserProjFileSys.prototype.git_push_test = function () {
+BibleObjGituser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
