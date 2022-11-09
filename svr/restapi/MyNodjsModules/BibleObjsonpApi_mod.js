@@ -594,7 +594,7 @@ var ApiJsonp_BibleObj = {
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
             var ret = userProject.m_UserProjFileSys.run_proj_state()
-            var res2 = userProject.execSync_cmd_git("git status -sb")
+            var res2 = userProject.m_UserProjFileSys.execSync_cmd_git("git status -sb")
             if (res2 && res2.stdout) {
                 inp.out.state.git_status_sb = res2.stdout
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
@@ -670,7 +670,7 @@ var ApiJsonp_BibleObj = {
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
             var ret = userProject.m_UserProjFileSys.run_proj_state()
-            var rso = userProject.execSync_cmd_git()
+            var rso = userProject.m_UserProjFileSys.execSync_cmd_git()
             console.log("\n\n*cmd-res", rso)
             userProject.m_UserProjFileSys.run_proj_state()
         })
