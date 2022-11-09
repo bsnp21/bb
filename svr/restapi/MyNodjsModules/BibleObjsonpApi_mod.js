@@ -542,7 +542,7 @@ var ApiJsonp_BibleObj = {
 
             inp.out.state = userProject.m_UserProjFileSys.Run_proj_setup()
             if (inp.out.state.bEditable === 1) {
-                if (null === userProject.git_push_test()) {
+                if (null === userProject.m_UserProjFileSys.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
                     userProject.m_UserProjFileSys.Run_proj_destroy()
                 } else {
