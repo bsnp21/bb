@@ -543,7 +543,7 @@ var ApiJsonp_BibleObj = {
 
             inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
             inp.out.state.SSID = null;
-            if (inp.out.state.bEditable === 1) {
+            if (inp.out.state.bEditable) {
                 if (null === userProject.m_UserProjFileSys.git_push_test()) {
                     //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
                     console.log("git_push_test failed.!!!!!")
@@ -553,7 +553,7 @@ var ApiJsonp_BibleObj = {
                     inp.out.state.SSID = userProject.Session_create()
                     console.log("Session_create ==", inp.out.state.SSID)
                 }
-            }  
+            }
 
         })
     },
