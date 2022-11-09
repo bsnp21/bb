@@ -806,7 +806,7 @@ BaseGitUser.prototype.get_userpathfile_from_tempathfile = function (tmpathfile) 
 
 
 
-BaseGitUser.prototype.run_proj_state = function (cbf) {
+BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
     var stat = { bRepositable: 0 };//this.m_inp.out.state
     //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
@@ -827,7 +827,7 @@ BaseGitUser.prototype.run_proj_state = function (cbf) {
     stat.missedFiles = this.run_makingup_missing_files(false)
     var configtxt = this.load_git_config()
 
-    //console.log("run_proj_state ----------")
+    //console.log("Check_proj_state ----------")
     /////// git status
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
     //this.m_inp.out.state.bRepositable = 0
@@ -867,7 +867,7 @@ BaseGitUser.prototype.run_proj_state = function (cbf) {
     stat.repo_usage = (totalsize / 1000000).toFixed(2) + "/1000(MB)"
     stat.repo_alertLevel = iAlertLevel
 
-    //console.log("run_proj_state ----------end")
+    //console.log("Check_proj_state ----------end")
     if (cbf) cbf()
     return stat
 }
@@ -931,7 +931,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
         BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
 
-    var ret = this.run_proj_state()
+    var ret = this.Check_proj_state()
 
     //console.log("Deploy_proj ---------- rgfd")
     return ret
@@ -951,7 +951,7 @@ BaseGitUser.prototype.Destroy_proj = function () {
         inp.out.desc += "destroyed git dir: " + gitdir
     }
 
-    this.run_proj_state()
+    this.Check_proj_state()
 
     //this.Session_delete()
     return inp

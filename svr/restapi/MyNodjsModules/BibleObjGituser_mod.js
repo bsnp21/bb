@@ -745,14 +745,14 @@ NCache.Init = function () {
     function _destroy_git_proj(key, val) {
         console.log(`\n\n\n\n\n\n\n\n\n\non del, NCache.m_checkperiod=${NCache.m_checkperiod},m_TTL=${NCache.m_TTL}, m_MFT=${NCache.m_MFT}`)
         // ... do something ...
-        var rootDir = BibleUti.WorkingRootDir();// + WorkingRootNodeName
-        console.log(`on del:key=${key}, \n-val=${JSON.stringify(val)}, \n-rootDir=${rootDir}`)
+        //var rootDir = BibleUti.WorkingRootDir();// + WorkingRootNodeName
+        console.log(`on del:key=${key}, \n-val=${JSON.stringify(val)} `)
 
-        if (!val) return console.log("on del: !val")
+        if (!val) return console.log("on del: val is null")
         if ("object" !== typeof (val)) return console.log("on del: val not valid inp.usr obj")
-        if (!val.repopath) return console.log("on del: val invalid. inp.usr.repopath null")
+        if (!val.repopath) return console.log("on del: val invalide gituser. inp.usr.repopath null")
 
-        if (!fs.existsSync(rootDir)) return console.log(`not existsSync(${rootDir}).`)
+        //if (!fs.existsSync(rootDir)) return console.log(`not existsSync(${rootDir}).`)
         //if (!fs.existsSync(key)) return console.log(`not existsSync(${key}).`)
 
         var gitdir = Buffer.from(key, 'base64').toString('utf8')
@@ -763,10 +763,10 @@ NCache.Init = function () {
         inp.usr = val
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
-        var userProject = new BibleObjGituser(rootDir)
-        if (inp.usr_proj = userProject.m_UserProjFileSys.Set_Gitusr(val.repopath, val.passcode)) {
+        var userProject = new BibleObjGituser()
+        if (inp.gitusr = userProject.m_UserProjFileSys.Set_Gitusr(val.repopath, val.passcode)) {
             userProject.m_inp = inp
-            userProject.m_UserProjFileSys.run_proj_state()
+            userProject.m_UserProjFileSys.Check_proj_state()
             console.log(inp.out.state)
             if (1 === inp.out.state.bRepositable) {
                 //
@@ -894,9 +894,9 @@ NCache.Init()
 
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
-var BibleObjGituser = function (rootDir) {
+var BibleObjGituser = function () {
 
-    this.m_UserProjFileSys = new BaseGitUser(rootDir)
+    this.m_UserProjFileSys = new BaseGitUser()
     this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
 }
 
