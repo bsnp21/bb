@@ -775,7 +775,7 @@ NCache.Init = function () {
                 var res3 = userProject.execSync_cmd_git(`git commit -m "on del in Cache"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.m_UserProjFileSys.Run_proj_destroy()
+                var res5 = userProject.m_UserProjFileSys.Destroy_proj()
             }
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)
@@ -985,7 +985,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
 
     inp.usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
     if (!inp.usr) {
-        console.log("*****failed sdfadfas-asf")
+        console.log("*****failed: sdfadfasjiasf")
         return null
     }
     return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)

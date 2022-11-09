@@ -994,8 +994,8 @@ BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
 }
 
 
-BaseGitUser.prototype.Run_proj_setup = function () {
-    console.log("********************************************* Run_proj_setup  1")
+BaseGitUser.prototype.Deploy_proj = function () {
+    console.log("********************************************* Deploy_proj  1")
 
     var dir = this.get_usr_git_dir("/.git/config")
     if (!fs.existsSync(dir)) {
@@ -1020,12 +1020,12 @@ BaseGitUser.prototype.Run_proj_setup = function () {
 
     var ret = this.run_proj_state()
 
-    //console.log("Run_proj_setup ---------- rgfd")
+    //console.log("Deploy_proj ---------- rgfd")
     return ret
 }
 
 
-BaseGitUser.prototype.Run_proj_destroy = function () {
+BaseGitUser.prototype.Destroy_proj = function () {
     var inp = { out: {} };//this.m_inp
 
     var gitdir = this.get_usr_git_dir()
