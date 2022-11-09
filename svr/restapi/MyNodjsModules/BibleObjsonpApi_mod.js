@@ -235,7 +235,7 @@ var ApiJsonp_BibleObj = {
             if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
                     var trn = inp.par.fnames[i];
-                    var jsfname = userProject.get_pfxname(trn)
+                    var jsfname = userProject.m_UserProjFileSys.get_pfxname(trn)
                     console.log("jsfname:", jsfname)
                     var bib = BibleUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) continue
@@ -276,7 +276,7 @@ var ApiJsonp_BibleObj = {
                     console.log("inp.par.fnames:", inp.par.fnames)
                     for (var i = 0; i < inp.par.fnames.length; i++) {
                         var trn = inp.par.fnames[i];
-                        var jsfname = userProject.get_pfxname(trn)
+                        var jsfname = userProject.m_UserProjFileSys.get_pfxname(trn)
                         console.log("load:", jsfname)
                         var bib = BibleUti.loadObj_by_fname(jsfname);
                         if (!bib.obj) {
@@ -318,7 +318,7 @@ var ApiJsonp_BibleObj = {
 
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
-            var jsfname = userProject.get_pfxname(doc)
+            var jsfname = userProject.m_UserProjFileSys.get_pfxname(doc)
             var bio = BibleUti.loadObj_by_fname(jsfname);
             if (!bio.obj) {
                 save_res.desc = `load(${doc},${jsfname})=null`
@@ -383,7 +383,7 @@ var ApiJsonp_BibleObj = {
 
             var doc = inp.par.fnames[0]
             //var docname = userProject.get_DocCode_Fname(doc)
-            var docpathfilname = userProject.get_pfxname(doc)
+            var docpathfilname = userProject.m_UserProjFileSys.get_pfxname(doc)
             var outfil = userProject.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
             
 
