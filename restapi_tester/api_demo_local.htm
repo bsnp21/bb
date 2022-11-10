@@ -39,7 +39,7 @@
         }
 
         pre[contenteditable] {
-            background-color:lightsalmon;
+            background-color: lightsalmon;
         }
 
         pre.outp {
@@ -63,7 +63,7 @@
             })
 
             $("#api_signin_ip").on("click", function () {
-                
+
                 $("#ret_signin").html("")
                 $("#addur_ssid").attr("href", null).text("add SSID on url.")
 
@@ -86,7 +86,7 @@
                         var ur = `${api.urlRedirectParam()}`
                         //alert("ok=\n" + ur)
                         $("#addur_ssid").attr("href", `${ur}`).text(ur);
-                        
+
                         console.log(rob, ur)
 
                     }
@@ -132,6 +132,12 @@
                         data: {
                             "MostRecent_Searches": { MostRecentSearch: '', Group01: '' },
                             "MostRecent_Verses": {},
+                        }
+                    },
+                    {
+                        fnames: ["./dat/MyBiblicalDiary"], //MyBiblicalDiary
+                        data: {
+                            "2020": {},
                         }
                     }
                 ],
@@ -247,7 +253,7 @@
                 }
             })
 
-            $("#tbd").html(tr).find("td").on("click",function(){
+            $("#tbd").html(tr).find("td").on("click", function () {
                 $(this).toggleClass("hili")
             })
             console.log()
@@ -290,7 +296,12 @@
             </ol>
             <table border="1">
                 <thead>
-                    <tr><th>#</th><th>Desc</th><th>HTTP</th><th>HTTPS</th></tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Desc</th>
+                        <th>HTTP</th>
+                        <th>HTTPS</th>
+                    </tr>
                 </thead>
                 <tbody id="tbd"></tbody>
             </table>
@@ -323,7 +334,7 @@
             <h3>Sign out</h3>
             <pre id="sign_out">
                 api.ApiUsrReposData_destroy({}, (ret)=>{})
-            </pre><a>..</a> 
+            </pre><a>..</a>
         </li>
         <li>
             <h3>BsnpRestApi.ajaxion </h3>
