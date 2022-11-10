@@ -39,7 +39,7 @@
         }
 
         pre[contenteditable] {
-            background-color: lightblue;
+            background-color:lightsalmon;
         }
 
         pre.outp {
@@ -74,7 +74,7 @@
                 usr.ttl = $("#ttl").val()
 
                 var api = new BsnpRestApi()
-                api.signin(usr, function (rob, err) {
+                api.ApiUsrReposData_signin(usr, function (rob, err) {
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
 
@@ -108,7 +108,6 @@
 
             gen_url_list();
             gen_api_sam()
-
 
             gen_BibleNames()
             gen_bibOjStdKeys()
@@ -168,7 +167,7 @@
             for (key in sample_apiPar) {
                 var sam = ""
                 sample_apiPar[key].forEach(function (obj) {
-                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.ajaxion('${key}', par, (ret)=>{});</button><pre class='outp'></pre><br>`
+                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.${key}(par, (ret)=>{});</button><pre class='outp'></pre><br>`
                 })
                 lis += `<li><h4>RestApi.${key}</h4>${sam}</li>`
             }
@@ -186,8 +185,8 @@
                 var api = new BsnpRestApi()
                 var _this = this
                 $(_this).next().text('')
-                api.ajaxion(
-                    sApiNameID,
+                api[sApiNameID](
+
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
@@ -313,7 +312,7 @@
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()
-                    api.signin(usr, function (ret, err);
+                    api.ApiUsrReposData_signin(usr, function (ret, err){});
                 </pre>
             <a id="addur_ssid">add SSID on url param</a>
             <pre class="outp" id="ret_signin"></pre>
@@ -323,7 +322,7 @@
         <li>
             <h3>Sign out</h3>
             <pre id="sign_out">
-                api.ajaxion('ApiUsrReposData_destroy', {}, (ret)=>{})
+                api.ApiUsrReposData_destroy({}, (ret)=>{})
             </pre><a>..</a> 
         </li>
         <li>

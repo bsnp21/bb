@@ -75,6 +75,7 @@ var BsnpRestUti = {
             alert("Api uPar missed key: " + prop)
         })
     },
+
     Init_RestApiStrn: function (uPar_Validate, RestApi) {
         for (var property in uPar_Validate) {
             RestApi[property] = property
@@ -82,9 +83,9 @@ var BsnpRestUti = {
     }
 }
 var RestApi_uPar_Validate = {
-    "Get_OTK": function (upar) {},
+    "Get_OTK": function (upar) { },
     "Jsonpster": "Jsonpster",
-    "ApiUsrReposData_signin": "ApiUsrReposData_signin",
+    "ApiUsrReposData_signin": function (usr) { },
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
     "ApiBibleObj_write_Usr_BkcChpVrs_txt": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], inpObj: {} }) },
@@ -100,7 +101,7 @@ var RestApi_uPar_Validate = {
             data: ""
         })
     },
-    "ApiUsrReposData_destroy": function(){},
+    "ApiUsrReposData_destroy": function () { },
     "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
@@ -220,3 +221,86 @@ BsnpRestApi["prototype"]["ajaxion"] = function (sapi, par, cbf) {
 
 
 
+
+
+var sample_apiPar = {
+    ApiUsrReposData_signin: [{ repopath: "", passcode: "", ttl: 9999 }],
+    ApiUsrReposData_destroy: [{}],
+    ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
+    ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
+    ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
+    ApiUsrDat_load: [
+        {
+            fnames: ["./dat/MostRecentVerses"], //MyBiblicalDiary
+            data: {
+                "MostRecent_Searches": {},
+                "MostRecent_Verses": {},
+            }
+        },
+        {
+            fnames: ["./dat/MostRecentVerses"], //MyBiblicalDiary
+            data: {
+                "MostRecent_Searches": { MostRecentSearch: '', Group01: '' },
+                "MostRecent_Verses": {},
+            }
+        }
+    ],
+    ApiUsrDat_save: [{
+        fnames: ["./dat/MostRecentVerses"], //MyBiblicalDiary
+        data: {
+            "MostRecent_Searches": {
+                Group01: [{ "Melchizedek": "1" }, { "x": "1" }],
+                Group02: [{ "Melchizedekxxx": "3000", "YHWH": "4000" }],
+                Group03: [{ "Melchizedekyyy": "5000", "YHWH": "6000" }]
+            },
+            "MostRecent_Verses": {
+                Group01: [{ "Gen30:1": "1000" }],
+                Group02: [{ "Gen3:1": "1000", "Gen4:1": "2000" }],
+                Group03: [{ "Gen5:1": "1000", "Gen6:1": "2000" }],
+                "MemoryVerse": [
+                    {
+                        "Amo1:4": "221105 080029"
+                    }
+                ],
+                "RecentTouch": [
+                    {
+                        "Amo1:4": "221105 080029",
+                        "Gen1:4": "221105 080020"
+                    }
+                ]
+            },
+        }
+    }],
+}
+
+for (var property in sample_apiPar) {
+    //RestApi[property] = property
+    if ("ApiUsrReposData_signin" === property) {
+        BsnpRestApi.prototype["ApiUsrReposData_signin"] = function (usr, cbf) { // usr = {repopath:"", passcode:"", ttl:9999}
+            if (!usr.repopath || !usr.passcode || !usr.ttl) return alert("usr dat err:" + JSON.stringify(usr))
+            var _this = this
+            BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
+                var inp = _this._get_encrypt_usr_inp(otk, usr)
+                BsnpRestUti.ajax_post(`${_this.svrurl}/ApiUsrReposData_signin`, inp, function (ret) {
+                    if (ret.out.state.SSID) {
+                        _this.SSID = ret.out.state.SSID //for urlRedirectParam
+                    }
+                    cbf(ret, !_this.SSID)
+                })
+            })
+        }
+    } else {
+        BsnpRestApi["prototype"][property] = function (par, cbf) {
+            console.log("BsnpRestApi input par:", par)
+            var inp = { SSID: this.SSID }
+            if (!inp.SSID) return alert("missing SSID.")
+            inp.api = property
+            inp.par = par
+
+            RestApi_uPar_Validate[property](par)
+
+            BsnpRestUti.ajax_post(`${this.svrurl}/${property}`, inp, cbf)
+        }
+    }
+
+}
