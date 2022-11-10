@@ -118,7 +118,7 @@
 
         function gen_api_sam() {
             var sample_apiPar = {
-                ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } }],
+                ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
                 ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
                 ApiUsrDat_load: [
@@ -286,7 +286,7 @@
 
 
         <li>
-            <h3 id="">api server ip for url param</h3>
+            <h3 id="">Select api IP addr for url param</h3>
             <ol id="urlist">
 
             </ol>
@@ -305,12 +305,12 @@
             repopath:<input id="repopath" value="https://wdingsoft@bitbucket.org/bsnp21/guest_02.git"></input><br>
             passcode:<input id="passcode" value="gSzk" val2="TPgFNnz" v3="9v5wGF5eN"
                 onclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
-            ttl<input id="ttl" value="9999"></input>
+            <a onclick="$(this).next().val(1)">TTL:</a> <input id="ttl" value="9999"></input>
             <pre id="usrobj"></pre>
         </li>
 
         <li>
-            <h3 id="">signin ip</h3>
+            <h3 id="">Signin</h3>
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()
@@ -322,7 +322,7 @@
         </li>
 
         <li>
-            <h3>sign out</h3>
+            <h3>Sign out</h3>
             <pre id="sign_out">
                 api.ajaxion('ApiUsrReposData_destroy', {}, (ret)=>{})
             </pre><a>..</a>

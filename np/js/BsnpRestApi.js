@@ -84,10 +84,10 @@ var BsnpRestUti = {
 var RestApi_uPar_Validate = {
     "Get_OTK": function (upar) {},
     "Jsonpster": "Jsonpster",
+    "UsrReposPost_Signin": "UsrReposPost_Signin",
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
     "ApiBibleObj_write_Usr_BkcChpVrs_txt": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], inpObj: {} }) },
-    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
     "ApiUsrDat_save": function (upar) {
         BsnpRestUti.walk_obj(upar, {
             fnames: ["./dat/MostRecentVerses"], //MyBiblicalDiary
@@ -100,13 +100,13 @@ var RestApi_uPar_Validate = {
             data: ""
         })
     },
-    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
-    "UsrReposPost_Signin": "UsrReposPost_Signin",
     "ApiUsrReposData_destroy": function(){},
+    "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
     "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
     "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
+    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
     "test_https_work": "test_https_work"
 }
 
@@ -206,7 +206,7 @@ BsnpRestApi.prototype._get_encrypt_usr_inp = function (otk, usr) {
 BsnpRestApi.prototype.redirect_page = function (surl) {
 
 }
-BsnpRestApi.prototype.ajaxion = function (sapi, par, cbf) {
+BsnpRestApi["prototype"]["ajaxion"] = function (sapi, par, cbf) {
     console.log("BsnpRestApi input par:", par)
     var inp = { SSID: this.SSID }
     if (!inp.SSID) return alert("missing SSID.")
