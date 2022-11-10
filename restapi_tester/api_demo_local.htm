@@ -18,6 +18,7 @@
     <!----------------------------------------------------------------------------->
     <!------ api ---->
     <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+    <script src="https://bsnp21.github.io/home/js/conf_svc_ip_addr.js"></script>
     <script src="../np/js/BsnpRestApi.js"></script>
     <script src="../np/js/BsnpRestConst.js"></script>
     <!----------------------------------------------------------------------------->
@@ -51,14 +52,6 @@
 
 
         $(function () {
-            $("#get_api_svrip_https").on("click", function () {
-                var urls = `https://${config_websvr_data.ip}:${config_websvr_data.https_port}`
-                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
-            })
-            $("#get_api_svrip_http").on("click", function () {
-                var urls = `http://${config_websvr_data.ip}:${config_websvr_data.http_port}`
-                $(this).next().text(`?ip=${urls}`).attr("href", `?ip=${urls}`)
-            })
 
             $("#passcode").on("click", function () {
                 var usr = {}
@@ -85,6 +78,7 @@
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
 
+                    $("#ret_signin").html(`ret = ${JSON.stringify(rob, null, 4)}`)
                     if (err) {
                         console.log(rob, ur)
                         alert("sorry, sign in failed.")
@@ -92,7 +86,7 @@
                         var ur = `${api.urlRedirectParam()}`
                         //alert("ok=\n" + ur)
                         $("#addur_ssid").attr("href", `${ur}`).text(ur);
-                        $("#ret_signin").html(`ret = ${JSON.stringify(rob, null, 4)}`)
+                        
                         console.log(rob, ur)
 
                     }
@@ -112,6 +106,7 @@
                 })
             })
 
+            gen_url_list();
             gen_api_sam()
 
 
@@ -122,7 +117,7 @@
 
         function gen_api_sam() {
             var sample_apiPar = {
-                ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS'], bibOj: { Gen: { 1: { 1: '' } } } }],
+                ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
                 ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
                 ApiUsrDat_load: [
@@ -225,7 +220,39 @@
         }
 
 
+        function get_test_list(urls) {
+            var str = `<ol>
+                        <li>Add to url params: <a href='?ip=${urls}'>?ip=${urls}</a><br></li>
+                        <li>validatation check: <a href='${urls}'>${urls}</a></li>
+                        <li>validatation check: <a href='${urls}/get_OTK'>${urls}/get_OTK</a></li>
+                        </ol><br>
+                        `
+            return str;
+        }
+        function gen_url_list() {
+            const chunk = (a, n) => [...Array(Math.ceil(a.length / n))].map((_, i) => a.slice(n * i, n + n * i));
+            var chun = chunk(conf_svc_ip_addr, 2)
+            var tita = {
+                "Add to url params:": function (urls) { return `<a href='?ip=${urls}'>?ip=${urls}</a>` },
+                "validatation check ip:": function (urls) { return `<a href='${urls}'>${urls}</a>` },
+                "validatation check otk:": function (urls) { return `<a href='${urls}/get_OTK'>${urls}/get_OTK</a>`; },
+            }
+            var tr = "", idx = 0
+            chun.forEach(function (ar2) {
+                for (str in tita) {
+                    tr += `<tr><td>${idx++}</td><td>${str}</td>`
+                    ar2.forEach(function (ip) {
+                        tr += `<td>${tita[str](ip)}</td>`
+                    })
+                    tr += "</tr>"
+                }
+            })
 
+            $("#tbd").html(tr).find("td").on("click",function(){
+                $(this).toggleClass("hili")
+            })
+            console.log()
+        }
     </script>
 
 
@@ -251,23 +278,38 @@
         <!-------------------------------------------------------------------------------->
         </pre>
         </li>
+
+
+
+
+
+
         <li>
-            <h3 id="">api server ip for url param</h3>
-            <button id="get_api_svrip_https">get api server ip (https)</button><a>./</a><br>
-            <button id="get_api_svrip_http" href="">get api server ip (http)</button><a>./</a><br><br>
+            <h3 id="">Select api IP addr for url param</h3>
+            <ol id="urlist">
+
+            </ol>
+            <table border="1">
+                <thead>
+                    <tr><th>#</th><th>Desc</th><th>HTTP</th><th>HTTPS</th></tr>
+                </thead>
+                <tbody id="tbd"></tbody>
+            </table>
         </li>
+
+
 
         <li>
             <h3>Repository</h3>
             repopath:<input id="repopath" value="https://wdingsoft@bitbucket.org/bsnp21/guest_02.git"></input><br>
             passcode:<input id="passcode" value="gSzk" val2="TPgFNnz" v3="9v5wGF5eN"
                 onclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
-            ttl<input id="ttl" value="9999"></input>
+            <a onclick="$(this).next().val(1)">TTL:</a> <input id="ttl" value="9999"></input>
             <pre id="usrobj"></pre>
         </li>
 
         <li>
-            <h3 id="">signin ip</h3>
+            <h3 id="">Signin</h3>
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()
@@ -279,7 +321,7 @@
         </li>
 
         <li>
-            <h3>sign out</h3>
+            <h3>Sign out</h3>
             <pre id="sign_out">
                 api.ajaxion('ApiUsrReposData_destroy', {}, (ret)=>{})
             </pre><a>..</a> 
