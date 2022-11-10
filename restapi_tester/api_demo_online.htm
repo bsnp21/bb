@@ -40,7 +40,7 @@
         }
 
         pre[contenteditable] {
-            background-color: lightblue;
+            background-color: lightgreen;
         }
 
         pre.outp {
@@ -75,7 +75,7 @@
                 usr.ttl = $("#ttl").val()
 
                 var api = new BsnpRestApi()
-                api.signin(usr, function (rob, err) {
+                api.ApiUsrReposData_signin(usr, function (rob, err) {
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
 
@@ -110,7 +110,6 @@
             gen_url_list();
             gen_api_sam()
 
-
             gen_BibleNames()
             gen_bibOjStdKeys()
         })
@@ -134,6 +133,12 @@
                         data: {
                             "MostRecent_Searches": { MostRecentSearch: '', Group01: '' },
                             "MostRecent_Verses": {},
+                        }
+                    },
+                    {
+                        fnames: ["./dat/MyBiblicalDiary"], //MyBiblicalDiary
+                        data: {
+                            "2020": {},
                         }
                     }
                 ],
@@ -162,14 +167,23 @@
                             ]
                         },
                     }
-                }],
+                },
+                {
+                    fnames: ["./dat/MyBiblicalDiary"], //MyBiblicalDiary
+                    data: {
+                       "2020":{
+                        "0101":"new year eve"
+                       }
+                    }
+                },
+            ],
             }
 
             var lis = ""
             for (key in sample_apiPar) {
                 var sam = ""
                 sample_apiPar[key].forEach(function (obj) {
-                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.ajaxion('${key}', par, (ret)=>{});</button><pre class='outp'></pre><br>`
+                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.${key}(par, (ret)=>{});</button><pre class='outp'></pre>`
                 })
                 lis += `<li><h4>RestApi.${key}</h4>${sam}</li>`
             }
@@ -187,8 +201,8 @@
                 var api = new BsnpRestApi()
                 var _this = this
                 $(_this).next().text('')
-                api.ajaxion(
-                    sApiNameID,
+                api[sApiNameID](
+
                     par,
                     function (ret) {
                         console.log("ret", ret.out.data)
@@ -197,6 +211,10 @@
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
                     })
+            })
+            //$("pre[contenteditable='true']").slideToggle()
+            $("pre[contenteditable='true']").prev().on("click",function(){
+                $(this).next().slideToggle()
             })
         }
         function gen_BibleNames() {
@@ -249,7 +267,7 @@
                 }
             })
 
-            $("#tbd").html(tr).find("td").on("click",function(){
+            $("#tbd").html(tr).find("td").on("click", function () {
                 $(this).toggleClass("hili")
             })
             console.log()
@@ -292,7 +310,12 @@
             </ol>
             <table border="1">
                 <thead>
-                    <tr><th>#</th><th>Desc</th><th>HTTP</th><th>HTTPS</th></tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Desc</th>
+                        <th>HTTP</th>
+                        <th>HTTPS</th>
+                    </tr>
                 </thead>
                 <tbody id="tbd"></tbody>
             </table>
@@ -314,7 +337,7 @@
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()
-                    api.signin(usr, function (ret, err);
+                    api.ApiUsrReposData_signin(usr, function (ret, err){});
                 </pre>
             <a id="addur_ssid">add SSID on url param</a>
             <pre class="outp" id="ret_signin"></pre>
@@ -324,7 +347,7 @@
         <li>
             <h3>Sign out</h3>
             <pre id="sign_out">
-                api.ajaxion('ApiUsrReposData_destroy', {}, (ret)=>{})
+                api.ApiUsrReposData_destroy({}, (ret)=>{})
             </pre><a>..</a>
         </li>
         <li>

@@ -39,7 +39,7 @@
         }
 
         pre[contenteditable] {
-            background-color: lightsalmon;
+            background-color: lightgreen;
         }
 
         pre.outp {
@@ -166,14 +166,23 @@
                             ]
                         },
                     }
-                }],
+                },
+                {
+                    fnames: ["./dat/MyBiblicalDiary"], //MyBiblicalDiary
+                    data: {
+                       "2020":{
+                        "0101":"new year eve"
+                       }
+                    }
+                },
+            ],
             }
 
             var lis = ""
             for (key in sample_apiPar) {
                 var sam = ""
                 sample_apiPar[key].forEach(function (obj) {
-                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.${key}(par, (ret)=>{});</button><pre class='outp'></pre><br>`
+                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.${key}(par, (ret)=>{});</button><pre class='outp'></pre>`
                 })
                 lis += `<li><h4>RestApi.${key}</h4>${sam}</li>`
             }
@@ -201,6 +210,10 @@
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
                     })
+            })
+            //$("pre[contenteditable='true']").slideToggle()
+            $("pre[contenteditable='true']").prev().on("click",function(){
+                $(this).next().slideToggle()
             })
         }
         function gen_BibleNames() {
