@@ -84,7 +84,7 @@ var BsnpRestUti = {
 var RestApi_uPar_Validate = {
     "Get_OTK": function (upar) {},
     "Jsonpster": "Jsonpster",
-    "UsrReposPost_Signin": "UsrReposPost_Signin",
+    "ApiUsrReposData_signin": "ApiUsrReposData_signin",
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
     "ApiBibleObj_write_Usr_BkcChpVrs_txt": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], inpObj: {} }) },
@@ -178,7 +178,7 @@ BsnpRestApi.prototype.signin = function (usr, cbf) { // usr = {repopath:"", pass
     var _this = this
     BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
         var inp = _this._get_encrypt_usr_inp(otk, usr)
-        BsnpRestUti.ajax_post(`${_this.svrurl}/UsrReposPost_Signin`, inp, function (ret) {
+        BsnpRestUti.ajax_post(`${_this.svrurl}/ApiUsrReposData_signin`, inp, function (ret) {
             if (ret.out.state.SSID) {
                 _this.SSID = ret.out.state.SSID //for urlRedirectParam
             }

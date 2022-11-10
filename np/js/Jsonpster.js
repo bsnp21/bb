@@ -22,7 +22,7 @@ onSignin : function(){
     this.inp.cipherusrs = encrypt.encrypt(usrs);
     this.inp.usr = null
 
-    this.api = "UsrReposPost_Signin"
+    this.api = "ApiUsrReposData_signin"
 
     console.log(this.inp.cipherusrs.length)
     console.log(this.inp)

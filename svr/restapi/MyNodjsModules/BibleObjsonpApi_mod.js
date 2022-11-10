@@ -504,8 +504,8 @@ var ApiJsonp_BibleObj = {
         res.write(`Jsonpster.Response(${sret},${sid});`);
         res.end();
     },
-    UsrReposPost_Signin: function (req, res) {
-        console.log("UsrReposPost_Signin")
+    ApiUsrReposData_signin: function (req, res) {
+        console.log("ApiUsrReposData_signin")
         if (!req || !res) {
             return inp_struct_account_setup
         }
