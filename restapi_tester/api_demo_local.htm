@@ -19,15 +19,17 @@
     <!------ api ---->
     <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
     <script src="https://bsnp21.github.io/home/js/conf_svc_ip_addr.js"></script>
+    <script src="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
     <script src="../np/js/BsnpRestApi.js"></script>
     <script src="../np/js/BsnpRestConst.js"></script>
     <!----------------------------------------------------------------------------->
 
 
     <style>
-        body{
-            background-color:aqua;
+        body {
+            background-color: aqua;
         }
+
         input {
             width: 500px;
         }
@@ -173,12 +175,12 @@
                 {
                     fnames: ["./dat/MyBiblicalDiary"], //MyBiblicalDiary
                     data: {
-                       "2020":{
-                        "0101":"new year eve"
-                       }
+                        "2020": {
+                            "0101": "new year eve"
+                        }
                     }
                 },
-            ],
+                ],
             }
 
             var lis = ""
@@ -215,7 +217,7 @@
                     })
             })
             //$("pre[contenteditable='true']").slideToggle()
-            $("pre[contenteditable='true']").prev().on("click",function(){
+            $("pre[contenteditable='true']").prev().on("click", function () {
                 $(this).next().slideToggle()
             })
         }
@@ -278,6 +280,78 @@
 
 
 
+
+
+    <script>
+        function gen_host() {
+            // href="http://34.227.20.213/wdaws/bb/np/mySignIn.htm?ip=http://34.227.20.213:7778"
+            ///href="http://34.227.20.213/wdaws/bb/np/mySignIn.htm?ip=http://34.227.20.213:7778&rep=https://wdingsoft@bitbucket.org/bsnp21/guest_01.git&pat=&opt="
+            // hostipaddress list.
+            // svr ip list (including githut.io)
+            // svr port https or http. 
+            var Hostary = ["https://bsnp21.github.io/bb/np/mySignIn.htm"];
+            Object.keys(BsnpSvc_IP_Info.ip).forEach(function (ip) {
+                Hostary.push(`http://${ip}/wdaws/bb/np/mySignIn.htm`)
+            })
+            console.log(Hostary)
+            var str = ""
+            Hostary.forEach(function (key, i) {
+                str += `<tr><td class='host'>${key}</td></tr>`
+            })
+            $("#hostaddr").html(str)
+            $(".host").on("click",function(){
+                $(".host.hili").removeClass("hili")
+                $(this).addClass("hili")
+                gen_link()
+            })
+        }
+        function gen_svc(){
+            var protocal = $(".protocal.hili").text().trim()
+            var str = ""
+            Object.keys(BsnpSvc_IP_Info.ip).forEach(function (ip) {
+                var par = `?ip=${protocal}://${ip}:${BsnpSvc_IP_Info[protocal]}`
+                str += `<tr><td class='svc'>${par}</td></tr>`
+            })
+            $("#svcaddr").html(str)
+            $(".svc").on("click",function(){
+                $(".svc.hili").removeClass("hili")
+                $(this).addClass("hili")
+                gen_link()
+            })
+        }
+        function gen_sam_usr(){
+            var pwd = ["gSzk","TPg","FNnz9v","5wGF","5eN"].join("")
+            var str="<tr><td class='sam hili'>&n=p</td></tr>"
+            for(var i=1;i<=2;i++){
+                var par = `&rep=https://wdingsoft@bitbucket.org/bsnp21/guest_0${i}.git&pat=${pwd}`
+                str+=`<tr><td class='sam'>${par}</td></tr>`
+            }
+            $("#sam").html(str)
+            $(".sam").on("click",function(){
+                $(".sam.hili").removeClass("hili")
+                $(this).addClass("hili")
+                gen_link()
+            })
+            
+        }
+        function gen_link(){
+            var str=$(".host.hili").text()
+            str+=$(".svc.hili").text()
+            str+=$(".sam.hili").text()
+            $("#linkstr").attr("href", str).text(str)
+        }
+        $(function () {
+            gen_host()
+            gen_svc()
+            gen_sam_usr()
+            $(".protocal").on("click",function(){
+                $(".protocal.hili").removeClass("hili")
+                $(this).addClass("hili")
+                gen_svc()
+            })
+            
+        })
+    </script>
 </HEAD>
 
 <BODY>
@@ -307,6 +381,36 @@
 
         <li>
             <h3 id="">Select api IP addr for url param</h3>
+
+            <table note="frame">
+                <tr>
+                    <td>
+                        <table border="1">
+                            <caption>Host Signin</caption>
+                            <tbody id="hostaddr"></tbody>
+                        </table>
+                    </td>
+                  
+                    <td>
+                        <table border="1">
+                            <caption> Svc:<button class="protocal hili">http</button>
+                                <button class="protocal">https</button></caption>
+                            <tbody id="svcaddr"></tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table border="1">
+                            <caption>Sample</caption>
+                            <tbody id="sam"></tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td colspan="3"><a id="linkstr"></a></td></tr>
+            </table>
+            <table>
+
+            </table>
+
             <pre>
                 &lt;script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
             </pre>
