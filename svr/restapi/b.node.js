@@ -108,13 +108,14 @@ app.get("/", (req, res) => {
 
     var obj = { samp: 'ffa' };
 
-    var s = (new Date()).toISOString() + "<br>\r\n"
-    s += JSON.stringify(res.req.headers) + "<br>\r\n";
-    var cmd = `echo 'lll'| sudo -S node a.node.js &`
-    //s += MASTER_SVR.execSync_Cmd(cmd)
-    s += MASTER_SVR.exec_Cmd(cmd)
+    var dt = (new Date()).toISOString() 
+    var inf = JSON.stringify(res.req.headers) + "<br>\r\n";
+    //var cmd = `echo 'lll'| sudo -S node a.node.js &`
+    var cmd = `echo 'lll'| sudo -S ls -al`
+    //var s = MASTER_SVR.execSync_Cmd(cmd)
+    var ret = MASTER_SVR.exec_Cmd(cmd)
 
-    res.send(`${cmd} <br>\n${s}`);
+    res.send(`${dt}<br>\r\n${cmd} <br>\r\n${ret}<br>\r\n${inf}`);
 });
 //
 /////////////////////////////////////////////////// 
