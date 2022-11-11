@@ -66,16 +66,17 @@ var MASTER_SVR = {
 
                     // the *entire* stdout and stderr (buffered)
                     //resolve(stdout);
-                    resolve({
+                    var ret = {
                         stdout: stdout,
                         stderr: stderr,
                         err: err
-                    })
+                    }
+                    resolve(JSON.stringify(ret,null,4))
 
                 });
             } catch (err) {
                 console.log(err)
-                reject(err);
+                reject(JSON.stringify(err));
             }
         })
     },
