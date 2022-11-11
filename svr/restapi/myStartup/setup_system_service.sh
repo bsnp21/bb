@@ -13,3 +13,5 @@ sudo chmod 777 /etc/systemd/system/bsnp_a_node.service
 
 
 ls -al /etc/systemd/system
+
+ps aux|grep a.node
