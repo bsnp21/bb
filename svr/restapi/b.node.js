@@ -117,7 +117,7 @@ app.get("/", (req, res) => {
     //var ret = MASTER_SVR.execSync_Cmd(cmd)
     var ret = MASTER_SVR.exec_Cmd(cmd)
 
-    res.send(`${dt}<br>\r\n${cmd} <br>\r\n${ret}<br>\r\n${inf}`);
+    res.send(`${dt}<br>\r\n${cmd} <br>\r\n${JSON.stringify(ret,null,4)}<br>\r\n${inf}`);
 });
 //
 /////////////////////////////////////////////////// 
