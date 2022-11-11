@@ -71,12 +71,13 @@ var MASTER_SVR = {
                         stderr: stderr,
                         err: err
                     }
-                    resolve(JSON.stringify(ret,null,4))
+                    JSON.stringify(ret,null,4)
+                    resolve("okkk")
 
                 });
             } catch (err) {
-                console.log(err)
-                reject(JSON.stringify(err));
+                console.log(JSON.stringify(err))
+                reject("errs");
             }
         })
     },
