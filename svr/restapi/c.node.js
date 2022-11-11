@@ -71,8 +71,8 @@ var MASTER_SVR = {
                         stderr: stderr,
                         err: err
                     }
-                    JSON.stringify(ret, null, 4)
-                    resolve("okkk")
+                    var res = JSON.stringify(ret, null, 4)
+                    resolve(ret)
 
                 });
             } catch (err) {
@@ -81,8 +81,85 @@ var MASTER_SVR = {
             }
         })
     },
+    usage: function () {
+        var cmds = ["exec", "sync"]
+        var ar = [
+            "pwd",
+            "ps aux | grep a.node.js",
+            "node a.node.js",
+            "dig +short myip.opendns.com @resolver1.opendns.com",
+            "ls -al",
+            "ls -al ../",
+            "ls -al ../../",
+            "ls -al ../../",
+        ]
+        var str = `Usage:<br>exec: async cmd. <br>sync: for execSync.<br> e.g.:<br><table border='1'><tr><th>Async</th><th>Sync</th></tr>`
+        ar.forEach(function (cmd) {
+            str += "<tr>"
+            cmds.forEach(function (par) {
+                str += `<td><a href='./?${par}=${cmd}'>./?${par}=${cmd}</a>`
+            })
+            str += "</tr>"
+        })
+        str += "</table>"
+        return str
+    },
+    run_cmd: function (req, res) {
+
+        var obj = { samp: 'ffa' };
+
+        var dt = (new Date()).toISOString() + "\r\n"
+        dt += req.method + "\r\n"
+        var reqs = "req.query=" + JSON.stringify(req.query, "<br>", 1);
+        var cmd = `echo 'lll'| sudo -S node a.node.js &`
+        var cmd = `echo 'lll'| sudo -S ls -al`
+        var ret = ""
+        if ("exec" in req.query) {
+            cmd = req.query["exec"]
+            ret = MASTER_SVR.exec_Cmd(cmd).then(
+                function (re) {
+                    re.stdout = re.stdout.replace(/(\n)/g, "<br>") + MASTER_SVR.ps_aux_grep_node(cmd, re.stdout)
+                    var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${JSON.stringify(re, null, 4)}</pre>`
+                    res.send(str);
+                },
+                function (er) {
+                    res.send(er);
+                })
+        }
+        else if ("sync" in req.query) {
+            cmd = req.query["sync"]
+            ret = MASTER_SVR.execSync_Cmd(cmd)
+            ret += MASTER_SVR.ps_aux_grep_node(cmd, ret)
+            var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${ret}</pre>`
+            res.send(str);
+        }
+        else {
+            res.send(MASTER_SVR.usage());
+        }
+    },
+    ps_aux_grep_node: function (cmd, ret) {
+        if (cmd.indexOf("ps aux") < 0) return ""
+        var ar = ret.split("\n")
+        console.log(ar)
+        var pid = ""
+        for (var i = 0; i < ar.length; i++) {
+            if (ar[i].indexOf("node a.node.js") >= 0) {
+                var ar2 = ar[i].split(/\t|\s/g)
+                var mat = ar[i].match(/[^\s.]+\s+(\d+)/)
+                console.log(mat)
+                if(mat){
+                    pid = mat[1]
+                    console.log(pid)
+                    return `<br><a href='./?sync=kill ${pid}'>./?sync=kill ${pid}</a>`
+                }
+            }
+        }
+        return ""
+    }
 
 }
+MASTER_SVR.execSync_Cmd("pwd")
+MASTER_SVR.execSync_Cmd("dig +short myip.opendns.com @resolver1.opendns.com")
 
 
 
@@ -108,28 +185,10 @@ app.get("/", (req, res) => {
     console.log("res.req.headers", JSON.stringify(res.req.headers, "<br>", 4));
     //res.send("<script>alert(\'ss\');</script>");'
 
-
-    var obj = { samp: 'ffa' };
-
-    var dt = (new Date()).toISOString() + "\r\n"
-    dt += req.method + "\r\n" + req.message
-    var reqs = "req.query=" + JSON.stringify(req.query, "<br>", 1);
-    var cmd = `echo 'lll'| sudo -S node a.node.js &`
-    var cmd = `echo 'lll'| sudo -S ls -al`
-    var ret = ""
-    if ("cmd" in req.query) {
-        cmd = req.query["cmd"]
-        ret = MASTER_SVR.exec_Cmd(cmd)
-    }
-    if ("sync" in req.query) {
-        cmd = req.query["sync"]
-        ret = MASTER_SVR.execSync_Cmd(cmd)
-    }
+    //res.write("root ok");
+    MASTER_SVR.run_cmd(req, res)
     //ret = JSON.stringify(ret, null, 4)
-    
-    var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${ret}</pre>`
-
-    res.send(str);
+    //res.send(str);
 });
 //
 /////////////////////////////////////////////////// 
