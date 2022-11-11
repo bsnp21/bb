@@ -111,7 +111,8 @@ app.get("/", (req, res) => {
     var obj = { samp: 'ffa' };
 
     var dt = (new Date()).toISOString()
-    var reqs = "<br>\r\n<br>\r\n<br>\r\n" + JSON.stringify(req) + "<br>\r\n";
+    var reqs = "<br>\r\n<br>\r\n<br>\r\n" + JSON.stringify(req.query) + "<br>\r\n";
+    reqs+=req.method+"<br>\r\n"+req.message
     var cmd = `echo 'lll'| sudo -S node a.node.js &`
     var cmd = `echo 'lll'| sudo -S ls -al`
     //var ret = MASTER_SVR.execSync_Cmd(cmd)
