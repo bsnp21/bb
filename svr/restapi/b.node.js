@@ -38,17 +38,19 @@ var MASTER_SVR = {
     https_port: 54321,
 
     execSync_Cmd: function (command) {
+        var ret = ""
         try {
             //command = "ls"
             console.log('execSync Cmd:', command)
-            var ret = execSync(command).toString();
+            ret = execSync(command).toString();
             console.log(ret)
         } catch (error) {
+            ret += JSON.stringify(error, null, 4)
             console.log("error:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
             console.log("error:", error.message); // Holds the message you typically want.
             console.log("error:", error.stderr);  // Holds the stderr output. Use `.toString()`.
             console.log("error:", error.stdout);  // Holds the stdout output. Use `.toString()`.
-            return error.message
+            //return error.message
         }
         return ret;
     },
@@ -78,28 +80,27 @@ app.get("/", (req, res) => {
     console.log("res.req.headers.host=", res.req.headers.host);
     //res.send("<script>alert(\'ss\');</script>");'
 
-    
 
     var obj = { samp: 'ffa' };
-    var s = JSON.stringify(res.req.headers);
 
-    var cmd = `echo 'lll'| sudo -S node a.node.js`
-    s+=MASTER_SVR.execSync_Cmd(cmd)
+    var s = (new Date()).toISOString() + "<br>\r\n"
+    s += JSON.stringify(res.req.headers) + "<br>\r\n";
+    var cmd = `echo 'lll'| sudo -S node a.node.js &`
+    s += MASTER_SVR.execSync_Cmd(cmd)
 
     res.send(`${cmd} <br>\n${s}`);
 });
+//
+/////////////////////////////////////////////////// 
+
 
 app.listen(MASTER_SVR.http_port, () => {
     console.log("* -http svr is listerning on port: " + MASTER_SVR.http_port);
     //hbrq.get_VocabHebrewBufObj();
 });
 console.log("http svr port:", MASTER_SVR.http_port);
-//
+
 ////////////////////////////////////////////////
-
-
-
-
 
 if (MASTER_SVR.https_port === MASTER_SVR.http_port) {
     console.log(`\n- https diabled: MASTER_SVR.https_port === MASTER_SVR.https_port === ${MASTER_SVR.http_port} .`)
