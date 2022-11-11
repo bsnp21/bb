@@ -33,7 +33,8 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 var MASTER_SVR = {
 
-    http_port: 543210,
+    //be >= 0 and < 65536
+    http_port: 55555,
     https_port: 54321,
 
     execSync_Cmd: function (command) {
