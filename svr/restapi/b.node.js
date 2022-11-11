@@ -114,8 +114,8 @@ app.get("/", (req, res) => {
     var inf = "<br>\r\n<br>\r\n<br>\r\n" + JSON.stringify(res.req.headers) + "<br>\r\n";
     var cmd = `echo 'lll'| sudo -S node a.node.js &`
     //var cmd = `echo 'lll'| sudo -S ls -al`
-    var ret = MASTER_SVR.execSync_Cmd(cmd)
-    //var ret = MASTER_SVR.exec_Cmd(cmd)
+    //var ret = MASTER_SVR.execSync_Cmd(cmd)
+    var ret = MASTER_SVR.exec_Cmd(cmd)
 
     res.send(`${dt}<br>\r\n${cmd} <br>\r\n${ret}<br>\r\n${inf}`);
 });
