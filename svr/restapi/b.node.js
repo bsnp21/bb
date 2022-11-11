@@ -54,6 +54,31 @@ var MASTER_SVR = {
         }
         return ret;
     },
+    exec_Cmd: function (command) {
+        return new Promise((resolve, reject) => {
+            try {
+                //command = "ls"
+                //console.log('exec_Cmd:', command)
+                exec(command, (err, stdout, stderr) => {
+                    console.log('-exec_Cmd errorr:', err)
+                    console.log('-exec_Cmd stderr:', stderr)
+                    console.log('-exec_Cmd stdout:', stdout)
+
+                    // the *entire* stdout and stderr (buffered)
+                    //resolve(stdout);
+                    resolve({
+                        stdout: stdout,
+                        stderr: stderr,
+                        err: err
+                    })
+
+                });
+            } catch (err) {
+                console.log(err)
+                reject(err);
+            }
+        })
+    },
 
 }
 
@@ -86,7 +111,8 @@ app.get("/", (req, res) => {
     var s = (new Date()).toISOString() + "<br>\r\n"
     s += JSON.stringify(res.req.headers) + "<br>\r\n";
     var cmd = `echo 'lll'| sudo -S node a.node.js &`
-    s += MASTER_SVR.execSync_Cmd(cmd)
+    //s += MASTER_SVR.execSync_Cmd(cmd)
+    s += MASTER_SVR.exec_Cmd(cmd)
 
     res.send(`${cmd} <br>\n${s}`);
 });
