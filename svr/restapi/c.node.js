@@ -34,8 +34,8 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 var MASTER_SVR = {
 
     //be >= 0 and < 65536
-    http_port: 55555,
-    https_port: 54321,
+    http_port: 55000,
+    https_port: 55007,
 
     execSync_Cmd: function (command) {
         var ret = ""
@@ -111,9 +111,9 @@ app.get("/", (req, res) => {
 
     var obj = { samp: 'ffa' };
 
-    var dt = (new Date()).toISOString()
-    var reqs = JSON.stringify(req.query) + "<br>\r\n";
-    reqs += req.method + "<br>\r\n" + req.message
+    var dt = (new Date()).toISOString() + "\r\n"
+    dt += req.method + "\r\n" + req.message
+    var reqs = "req.query=" + JSON.stringify(req.query, "<br>", 1);
     var cmd = `echo 'lll'| sudo -S node a.node.js &`
     var cmd = `echo 'lll'| sudo -S ls -al`
     var ret = ""
@@ -121,11 +121,13 @@ app.get("/", (req, res) => {
         cmd = req.query["cmd"]
         ret = MASTER_SVR.exec_Cmd(cmd)
     }
-    if("sync" in req.query){
-        cmd = req.query["cmd"]
+    if ("sync" in req.query) {
+        cmd = req.query["sync"]
         ret = MASTER_SVR.execSync_Cmd(cmd)
     }
-    var str = `<pre>${dt}<br>\r\n${cmd} <br>\r\n${JSON.stringify(ret, null, 4)}<br>\r\nreq=<br>\r\n${reqs}</pre>`
+    //ret = JSON.stringify(ret, null, 4)
+    
+    var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${ret}</pre>`
 
     res.send(str);
 });
