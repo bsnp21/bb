@@ -122,9 +122,10 @@ app.get("/", (req, res) => {
         ret = MASTER_SVR.exec_Cmd(cmd)
     }
     if("sync" in req.query){
+        cmd = req.query["cmd"]
         ret = MASTER_SVR.execSync_Cmd(cmd)
     }
-    var str = `${dt}<br>\r\n${cmd} <br>\r\n${JSON.stringify(ret, "<br>", 4)}<br>\r\nreq=<br>\r\n${reqs}`
+    var str = `<pre>${dt}<br>\r\n${cmd} <br>\r\n${JSON.stringify(ret, null, 4)}<br>\r\nreq=<br>\r\n${reqs}</pre>`
 
     res.send(str);
 });
