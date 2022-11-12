@@ -108,7 +108,6 @@ if (MASTER_SVR.https.port === MASTER_SVR.http.port) {
       cert: fs.readFileSync(`${workdir}/config/ssl_https/certificate.crt`),
       ca_bundle: fs.readFileSync(`${workdir}/config/ssl_https/ca_bundle.crt`),
   };
-  };
   https_svr = https.createServer(options, app).listen(MASTER_SVR.https.port, async function () {
     console.log(`* Https svr is listerning on port: ${MASTER_SVR.https.port}\n-----------\n`);
   });
