@@ -111,7 +111,7 @@
                 })
             })
 
-            gen_url_list();
+           
             gen_api_sam()
 
             gen_BibleNames()
@@ -252,30 +252,7 @@
                         `
             return str;
         }
-        function gen_url_list() {
-            const chunk = (a, n) => [...Array(Math.ceil(a.length / n))].map((_, i) => a.slice(n * i, n + n * i));
-            var chun = chunk(conf_svc_ip_addr, 2)
-            var tita = {
-                "Add to url params:": function (urls) { return `<a href='?ip=${urls}'>?ip=${urls}</a>` },
-                "validatation check ip:": function (urls) { return `<a href='${urls}'>${urls}</a>` },
-                "validatation check otk:": function (urls) { return `<a href='${urls}/get_OTK'>${urls}/get_OTK</a>`; },
-            }
-            var tr = "", idx = 0
-            chun.forEach(function (ar2) {
-                for (str in tita) {
-                    tr += `<tr><td>${idx++}</td><td>${str}</td>`
-                    ar2.forEach(function (ip) {
-                        tr += `<td>${tita[str](ip)}</td>`
-                    })
-                    tr += "</tr>"
-                }
-            })
 
-            $("#tbd").html(tr).find("td").on("click", function () {
-                $(this).toggleClass("hili")
-            })
-            console.log()
-        }
     </script>
 
 
@@ -299,13 +276,13 @@
                 str += `<tr><td>${i}</td><td class='host'>${key}</td></tr>`
             })
             $("#hostaddr").html(str)
-            $(".host").on("click",function(){
+            $(".host").on("click", function () {
                 $(".host.hili").removeClass("hili")
                 $(this).addClass("hili")
                 gen_link()
             })
         }
-        function gen_svc(){
+        function gen_svc() {
             var protocal = $(".protocal.hili").text().trim()
             var str = ""
             Object.keys(BsnpSvc_IP_Info.ip).forEach(function (ip) {
@@ -313,50 +290,69 @@
                 str += `<tr><td class='svc' ip='${ip}'>${par}</td></tr>`
             })
             $("#svcaddr").html(str)
-            $(".svc").on("click",function(){
+            $(".svc").on("click", function () {
                 $(".svc.hili").removeClass("hili")
                 $(this).addClass("hili")
                 gen_link()
-                var ip=$(this).attr("ip")
+                var ip = $(this).attr("ip")
                 var protocal = $(".protocal.hili").text().trim()
-                var pp={http:55555,https:54321}
+                var pp = { http: 55555, https: 54321 }
                 var ur = `${protocal}://${ip}:${pp[protocal]}`
-                $("#svdtrigger").attr("href", ur).text(ur)
+                //$("#svdtrigger").attr("href", ur).text(ur)
+                gen_tester()
 
             })
         }
-        function gen_sam_usr(){
-            var pwd = ["gSzk","TPg","FNnz9v","5wGF","5eN"].join("")
-            var str="<tr><td>0</td><td class='sam hili'></td></tr>"
-            for(var i=1;i<=2;i++){
+        function gen_sam_usr() {
+            var pwd = ["gSzk", "TPg", "FNnz9v", "5wGF", "5eN"].join("")
+            var str = "<tr><td>0</td><td class='sam hili'></td></tr>"
+            for (var i = 1; i <= 2; i++) {
                 var par = `&rep=https://wdingsoft@bitbucket.org/bsnp21/guest_0${i}.git&pat=${pwd}`
-                str+=`<tr><td>${i}</td><td class='sam'>${par}</td></tr>`
+                str += `<tr><td>${i}</td><td class='sam'>${par}</td></tr>`
             }
             $("#sam").html(str)
-            $(".sam").on("click",function(){
+            $(".sam").on("click", function () {
                 $(".sam.hili").removeClass("hili")
                 $(this).addClass("hili")
                 gen_link()
             })
             
         }
-        function gen_link(){
-            var str=$(".host.hili").text()
-            str+=$(".svc.hili").text()
-            str+=$(".sam.hili").text()
+        function gen_link() {
+            var str = $(".host.hili").text()
+            str += $(".svc.hili").text()
+            str += $(".sam.hili").text()
             $("#linkstr").attr("href", str).text(str)
+        }
+        function gen_tester_table() {
+            var apiar = [["", "/get_OTK"], [""]]
+            var protocal = $(".protocal.hili").text()
+            var str = `<table border='1'><caption>${protocal} Test</caption>`, idx = 0
+            Object.keys(BsnpSvc_IP_Info.ip).forEach(function (ip) {
+                var portar = BsnpSvc_IP_Info[protocal].forEach(function (port, i) {
+                    var ur = `${protocal}://${ip}:${port}`
+                    apiar[i].forEach(function (api) {
+                        ur += api
+                        str += `<tr><td>${idx++}</td><td><a href='${ur}'>${ur}</a></td></tr>`
+                    })
+                })
+
+            })
+            str += "</table>"
+            $("#svdtrigger").html(str)
         }
         $(function () {
             gen_host()
             gen_svc()
             gen_sam_usr()
-            $(".protocal").on("click",function(){
+            $(".protocal").on("click", function () {
                 $(".protocal.hili").removeClass("hili")
                 $(this).addClass("hili")
                 gen_svc()
-
-               
+                gen_link()
+                gen_tester_table()
             })
+            $("#BsnpSvc_IP_Info_id").append("BsnpSvc_IP_Info="+JSON.stringify(BsnpSvc_IP_Info, null, 4))
             
         })
     </script>
@@ -390,6 +386,10 @@
         <li>
             <h3 id="">Select api IP addr for url param</h3>
 
+            <pre id="BsnpSvc_IP_Info_id">
+                &lt;script src="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
+            </pre>
+          
             <table note="frame">
                 <tr>
                     <td>
@@ -401,11 +401,13 @@
                   
                     <td>
                         <table border="1">
-                            <caption> <a id="svdtrigger">Svc</a><br>
+                            <caption> <a>Svc IP param</a><br>
                                 <button class="protocal hili">http</button>
-                                <button class="protocal">https</button></caption>
+                                <button class="protocal">https</button>
+                            </caption>
                             <tbody id="svcaddr"></tbody>
                         </table>
+
                     </td>
                     <td>
                         <table border="1">
@@ -414,29 +416,20 @@
                         </table>
                     </td>
                 </tr>
-                <tr><td colspan="3"><a id="linkstr"></a></td></tr>
-            </table>
-            <table>
 
-            </table>
-
-            <pre>
-                &lt;script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
-            </pre>
-            <ol id="urlist">
-
-            </ol>
-            <table border="1">
-                <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Desc</th>
-                        <th>HTTP</th>
-                        <th>HTTPS</th>
+                    <td colspan="3">
+                        <a id="linkstr"></a>
+                        <a id="svdtrigger">Svc</a>
+
+                    </td>
                     </tr>
-                </thead>
-                <tbody id="tbd"></tbody>
             </table>
+        
+
+           
+            
+            
         </li>
 
 
