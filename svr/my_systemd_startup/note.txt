@@ -47,3 +47,13 @@ systemctl daemon-reload
 systemctl reset-failed
 
 
+=====
+sudo crontab -l
+@reboot sleep 300 && node /var/www/html/wdaws/bb/svr/restapi/a.node.js
+*/5 * * * * /path/to/job -with args
+@reboot sleep 300 && node /var/www/html/wdaws/bb/svr/restapi/a.node.js
+@reboot sleep 300 && node /var/www/html/wdaws/bb/svr/restapi/a.node.js
+
+
+
+
