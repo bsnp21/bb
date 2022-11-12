@@ -33,3 +33,9 @@ sudo systemctl enable bsnp_a_node
 Created symlink /etc/systemd/system/multi-user.target.wants/bsnp_a_node.service → /var/www/html/wdaws/bb/svr/restapi/myStartup/bsnp_a_node.service.
 
 
+
+
+
+https://nodesource.com/blog/running-your-node-js-app-with-systemd-part-1/
+
+

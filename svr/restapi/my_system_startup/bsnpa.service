@@ -1,0 +1,28 @@
+[Unit]
+Description=Weid-service: bsnp service startup script
+After=network.target
+# After=systemd-user-sessions.service
+# After=network-online.target
+
+[Service]
+Environment=NODE_PORT=7778
+User=ubuntu
+Type=simple
+PIDFile=/tmp/a.node.pid
+SuccessExitStatus=143
+WorkingDirectory=/var/www/html/wdaws/bb/svr/restapi/
+
+ExecStart=/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js
+#ExecStop=/var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh stop
+Restart=on-failure
+
+# ExecReload=/home/transang/startup.sh reload
+# ExecStop=/home/transang/startup.sh stop
+# TimeoutSec=30
+# Restart=on-failure
+# RestartSec=30
+# StartLimitInterval=350
+# StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target
