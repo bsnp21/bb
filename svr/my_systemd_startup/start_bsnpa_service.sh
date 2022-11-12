@@ -10,6 +10,6 @@ sudo systemctl enable bsnpa
 sudo systemctl start bsnpa
 sudo systemctl daemon-reload
 
-journalctl -u bsnpc
+journalctl -u bsnpa
 
 ps aux|grep a.node

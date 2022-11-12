@@ -11,6 +11,6 @@ sudo systemctl stop bsnpa
 sudo systemctl disable bsnpa
 sudo systemctl daemon-reload
 
-journalctl -u bsnpc
+journalctl -u bsnpa
 
 ps aux|grep a.node

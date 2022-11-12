@@ -14,9 +14,7 @@ sudo chmod 777 /etc/systemd/system/bsnpc.service
 
 ls -al /etc/systemd/system
 
-sudo systemctl enable bsnpa
-sudo systemctl start bsnpa
-sudo systemctl daemon-reload
+
 
 
 ps aux|grep a.node
