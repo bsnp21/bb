@@ -1,5 +1,5 @@
 [Unit]
-Description=My custom startup script
+Description=Weid: bsnp a node startup script
 After=network.target
 # After=systemd-user-sessions.service
 # After=network-online.target
