@@ -7,6 +7,30 @@ sudo rm /etc/rc6.d/_startup_a_node.sh
 sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc6.d/_startup_a_node.sh
 sudo chmod 777 /etc/rc6.d/_startup_a_node.sh
 
+sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc5.d/_startup_a_node.sh
+sudo chmod 777 /etc/rc5.d/_startup_a_node.sh
+
+
+sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc4.d/_startup_a_node.sh
+sudo chmod 777 /etc/rc4.d/_startup_a_node.sh
+
+
+sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc3.d/_startup_a_node.sh
+sudo chmod 777 /etc/rc3.d/_startup_a_node.sh
+
+
+sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc2.d/_startup_a_node.sh
+sudo chmod 777 /etc/rc2.d/_startup_a_node.sh
+
+
+sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc1.d/_startup_a_node.sh
+sudo chmod 777 /etc/rc1.d/_startup_a_node.sh
+
+sudo ln -sf /var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh /etc/rc0.d/_startup_a_node.sh
+sudo chmod 777 /etc/rc0.d/_startup_a_node.sh
+
+
+
 ## check
 ls -l /etc/rc6.d/
 

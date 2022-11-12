@@ -29,3 +29,7 @@ WantedBy=multi-user.target
 
 https://linuxopsys.com/topics/enable-disable-services-ubuntu-systemd
 
+sudo systemctl enable bsnp_a_node
+Created symlink /etc/systemd/system/multi-user.target.wants/bsnp_a_node.service → /var/www/html/wdaws/bb/svr/restapi/myStartup/bsnp_a_node.service.
+
+
