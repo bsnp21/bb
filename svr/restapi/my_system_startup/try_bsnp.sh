@@ -4,11 +4,11 @@
 
 
 
-sudo systemctl enable bsnp
-sudo systemctl start bsnp
+sudo systemctl enable bsnpa
+sudo systemctl start bsnpa
 
 
-journalctl  -u bsnp
-systemctl status bsnp.service 
+journalctl  -u bsnpa
+systemctl status bsnpa.service 
 
 # exit 0. should be correct.
