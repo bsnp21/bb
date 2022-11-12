@@ -102,7 +102,9 @@ var MASTER_SVR = {
             })
             str += "</tr>"
         })
-        str += "</table>"
+        str += "</table><br>\r\n"
+        str+=""
+
         return str
     },
     run_cmd: function (req, res) {
