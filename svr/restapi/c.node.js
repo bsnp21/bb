@@ -209,12 +209,13 @@ if (MASTER_SVR.https_port === MASTER_SVR.http_port) {
     console.log(`\n- https diabled: MASTER_SVR.https_port === MASTER_SVR.https_port === ${MASTER_SVR.http_port} .`)
 } else {
     //How to Fix the NET::ERR_CERT_AUTHORITY_INVALID Error
+    var workdir="/var/www/html/wdaws/bb/svr/restapi"
     const options = {
         //key: fs.readFileSync('./config/https_credentials/key.pem'),
         //cert: fs.readFileSync('./config/https_credentials/cert.pem')
-        key: fs.readFileSync('./config/ssl_https/private.key'),
-        cert: fs.readFileSync('./config/ssl_https/certificate.crt'),
-        ca_bundle: fs.readFileSync('./config/ssl_https/ca_bundle.crt'),
+        key: fs.readFileSync(`${workdir}/config/ssl_https/private.key`),
+        cert: fs.readFileSync(`${workdir}/config/ssl_https/certificate.crt`),
+        ca_bundle: fs.readFileSync(`${workdir}/config/ssl_https/ca_bundle.crt`),
     };
     https_svr = https.createServer(options, app).listen(MASTER_SVR.https_port, async function () {
         console.log(`* Https svr is listerning on port: ${MASTER_SVR.https_port}\n-----------\n`);
