@@ -106,7 +106,8 @@ var MASTER_SVR = {
             str += "</tr>"
         })
         str += "</table><br>\r\n"
-        str += `<a href="https://${MASTER_SVR.get_ip()}:${MASTER_SVR.https_port}">https://:${MASTER_SVR.https_port}</a>`
+        var str2 = `https://${MASTER_SVR.get_ip()}:${MASTER_SVR.https_port}`
+        str += `<a href="${str2}">${str2}</a>`
 
         return str
     },
