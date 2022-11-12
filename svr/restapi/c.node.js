@@ -82,6 +82,9 @@ var MASTER_SVR = {
             }
         })
     },
+    get_ip:function(){
+        return  MASTER_SVR.execSync_Cmd("dig +short myip.opendns.com @resolver1.opendns.com")
+    },
     usage: function () {
         var cmds = ["exec", "sync"]
         var ar = [
@@ -103,7 +106,7 @@ var MASTER_SVR = {
             str += "</tr>"
         })
         str += "</table><br>\r\n"
-        str+=""
+        str += `<a href="https://${MASTER_SVR.get_ip()}:${MASTER_SVR.https}">https://:${MASTER_SVR.https}</a>`
 
         return str
     },
@@ -164,7 +167,8 @@ var MASTER_SVR = {
 console.log("pid=", process.pid)
 MASTER_SVR.execSync_Cmd(`echo ${process.pid} >/tmp/c.node.pid`)
 MASTER_SVR.execSync_Cmd("pwd")
-MASTER_SVR.execSync_Cmd("dig +short myip.opendns.com @resolver1.opendns.com")
+var retip = MASTER_SVR.execSync_Cmd("dig +short myip.opendns.com @resolver1.opendns.com")
+console.log(retip)
 
 
 
@@ -211,7 +215,8 @@ if (MASTER_SVR.https_port === MASTER_SVR.http_port) {
     console.log(`\n- https diabled: MASTER_SVR.https_port === MASTER_SVR.https_port === ${MASTER_SVR.http_port} .`)
 } else {
     //How to Fix the NET::ERR_CERT_AUTHORITY_INVALID Error
-    var workdir="/var/www/html/wdaws/bb/svr/restapi"
+    var workdir = "/var/www/html/wdaws/bb/svr/restapi"
+    if(!fs.existsSync(workdir)) workdir="."
     const options = {
         //key: fs.readFileSync('./config/https_credentials/key.pem'),
         //cert: fs.readFileSync('./config/https_credentials/cert.pem')
