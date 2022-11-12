@@ -159,7 +159,7 @@ var MASTER_SVR = {
                 if (mat) {
                     pid = mat[1]
                     console.log(pid)
-                    ret += `<br><a href='./?sync=kill ${pid}'>./?sync=kill ${pid}</a>${ar[i]}<br>`
+                    ret += `<br><a href='./?sync=kill ${pid}'>./?sync=kill ${pid}</a><br>${ar[i]}<br>`
                 }
             //}
         }
