@@ -91,11 +91,13 @@ var MASTER_SVR = {
             "pwd",
             "ps aux | grep a.node.js",
             "node a.node.js",
-            "dig +short myip.opendns.com @resolver1.opendns.com",
+            "node a.node.js &",
+            "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
             "ls -al",
             "ls -al ../",
             "ls -al ../../",
             "ls -al ../../",
+            "dig +short myip.opendns.com @resolver1.opendns.com",
         ]
         var str = `Usage:<br>exec: async cmd. <br>sync: for execSync.<br> e.g.:<br><table border='1'><tr><th>Async</th><th>Sync</th></tr>`
         ar.forEach(function (cmd) {
@@ -120,7 +122,7 @@ var MASTER_SVR = {
         var dt = (new Date()).toISOString() + "\r\n"
         dt += req.method + "\r\n"
         var reqs = "req.query=" + JSON.stringify(req.query, "<br>", 1);
-        var cmd = `echo 'lll'| sudo -S node a.node.js &`
+        var cmd = `echo 'lll'| sudo -S node a.node.js &`,
         var cmd = `echo 'lll'| sudo -S ls -al`
         var ret = ""
         if ("exec" in req.query) {
