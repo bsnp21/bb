@@ -129,8 +129,9 @@ var MASTER_SVR = {
             cmd = req.query["exec"]
             ret = MASTER_SVR.exec_Cmd(cmd).then(
                 function (re) {
+                    var killers = MASTER_SVR.ps_aux_grep_node(cmd, re.stdout)
                     re.stdout = re.stdout.replace(/(\n)/g, "<br>") 
-                    var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${JSON.stringify(re, null, 4)}<hr/>${MASTER_SVR.ps_aux_grep_node(cmd, re.stdout)}</pre>`
+                    var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${JSON.stringify(re, null, 4)}<hr/>${killers}</pre>`
                     res.send(str);
                 },
                 function (er) {
