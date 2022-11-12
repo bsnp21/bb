@@ -141,20 +141,20 @@ var MASTER_SVR = {
         if (cmd.indexOf("ps aux") < 0) return ""
         var ar = ret.split("\n")
         console.log(ar)
-        var pid = ""
+        var pid = "", ret = ""
         for (var i = 0; i < ar.length; i++) {
             if (ar[i].indexOf("node a.node.js") >= 0) {
                 var ar2 = ar[i].split(/\t|\s/g)
                 var mat = ar[i].match(/[^\s.]+\s+(\d+)/)
                 console.log(mat)
-                if(mat){
+                if (mat) {
                     pid = mat[1]
                     console.log(pid)
-                    return `<br><a href='./?sync=kill ${pid}'>./?sync=kill ${pid}</a>`
+                    ret += `<br><a href='./?sync=kill ${pid}'>./?sync=kill ${pid}</a><br>`
                 }
             }
         }
-        return ""
+        return ret
     }
 
 }
