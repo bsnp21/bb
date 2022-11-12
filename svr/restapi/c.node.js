@@ -12,6 +12,8 @@ var bodyParser = require('body-parser');
 var url = require('url');
 var cors = require('cors');
 
+
+var process = require('process'); //but it gave error.
 const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 
@@ -30,12 +32,11 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 
 
-
 var MASTER_SVR = {
 
     //be >= 0 and < 65536
     http_port: 55000,
-    https_port: 55007,
+    https_port: 55005,
 
     execSync_Cmd: function (command) {
         var ret = ""
@@ -158,6 +159,8 @@ var MASTER_SVR = {
     }
 
 }
+console.log("pid=", process.pid)
+MASTER_SVR.execSync_Cmd(`echo ${process.pid} >/tmp/c.node.pid`)
 MASTER_SVR.execSync_Cmd("pwd")
 MASTER_SVR.execSync_Cmd("dig +short myip.opendns.com @resolver1.opendns.com")
 
