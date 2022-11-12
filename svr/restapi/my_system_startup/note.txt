@@ -39,3 +39,11 @@ Created symlink /etc/systemd/system/multi-user.target.wants/bsnp_a_node.service 
 https://nodesource.com/blog/running-your-node-js-app-with-systemd-part-1/
 
 
+
+how to clean up.
+systemctl stop [servicename]
+chkconfig [servicename] off OR for newer systems systemctl disable [servicename]
+systemctl daemon-reload
+systemctl reset-failed
+
+
