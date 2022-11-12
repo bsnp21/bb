@@ -159,7 +159,8 @@ var MASTER_SVR = {
                 if (mat) {
                     pid = mat[1]
                     console.log(pid)
-                    ret += `<br><a href='./?sync=sudo -S kill ${pid}'>./?sync=sudo -S kill ${pid}</a><br>${ar[i]}<br>`
+                    var scmd = `./?sync=sudo -S kill ${pid}`
+                    ret += `<br>${ar[i]}<br><a href='${scmd}'>${scmd}</a><br>`
                 }
             //}
         }
