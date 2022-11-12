@@ -122,7 +122,7 @@ var MASTER_SVR = {
         var dt = (new Date()).toISOString() + "\r\n"
         dt += req.method + "\r\n"
         var reqs = "req.query=" + JSON.stringify(req.query, "<br>", 1);
-        var cmd = `echo 'lll'| sudo -S node a.node.js &`,
+        var cmd = `echo 'lll'| sudo -S node a.node.js &`
         var cmd = `echo 'lll'| sudo -S ls -al`
         var ret = ""
         if ("exec" in req.query) {
