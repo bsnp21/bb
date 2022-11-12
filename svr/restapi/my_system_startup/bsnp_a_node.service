@@ -1,13 +1,13 @@
 [Unit]
 Description=My custom startup script
-# After=network.target
+After=network.target
 # After=systemd-user-sessions.service
 # After=network-online.target
 
 [Service]
-# User=spark
+User=ubuntu
 # Type=simple
-# PIDFile=/run/my-service.pid
+PIDFile=/tmp/a.node.pid
 
 ExecStart=/var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh start
 ExecStop=/var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh stop
