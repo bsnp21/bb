@@ -154,17 +154,14 @@ var MASTER_SVR = {
         console.log(ar)
         var pid = "", ret = ""
         for (var i = 0; i < ar.length; i++) {
-            //if (ar[i].indexOf("node a.node.js") >= 0) {
-               // var ar2 = ar[i].split(/\t|\s/g)
-                var mat = ar[i].match(/[^\s.]+\s+(\d+)/)
-                console.log(mat)
-                if (mat) {
-                    pid = mat[1]
-                    console.log(pid)
-                    var scmd = `./?sync=sudo -S kill ${pid}`
-                    ret += `<br>${ar[i]}<br><a href='${scmd}'>${scmd}</a><br>`
-                }
-            //}
+            var mat = ar[i].match(/[^\s.]+\s+(\d+)/)
+            console.log(mat)
+            if (mat) {
+                pid = mat[1]
+                console.log(pid)
+                var scmd = `./?sync=sudo -S kill ${pid}`
+                ret += `<br>${ar[i]}<br><a href='${scmd}'>${scmd}</a><br>`
+            }
         }
         return ret
     }
