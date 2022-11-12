@@ -89,7 +89,7 @@ var MASTER_SVR = {
         var cmds = ["exec", "sync"]
         var ar = [
             "pwd",
-            "ps aux | grep a.node.js",
+            "ps aux | grep .node.",
             "node a.node.js",
             "node a.node.js &",
             "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
