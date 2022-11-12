@@ -8,6 +8,8 @@ After=network.target
 User=ubuntu
 # Type=simple
 PIDFile=/tmp/a.node.pid
+SuccessExitStatus=143
+WorkingDirectory=/var/www/html/wdaws/bb/svr/restapi/
 
 ExecStart=/var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh start
 ExecStop=/var/www/html/wdaws/bb/svr/restapi/_startup_a_node.sh stop

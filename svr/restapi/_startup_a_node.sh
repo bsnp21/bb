@@ -1,6 +1,6 @@
-
+#!/bin/bash
 
 cd /var/www/html/wdaws/bb/svr/restapi/
-sudo node a.node.js &
+sudo -S node a.node.js &
 exit 0
 
