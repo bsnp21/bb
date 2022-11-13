@@ -17,4 +17,4 @@ ls -al /etc/systemd/system
 
 
 
-ps aux|grep a.node
+ps aux|grep c.node
