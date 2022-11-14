@@ -32,7 +32,7 @@ var storage = {
         var str = localStorage.getItem("notes")
         $("#outx").val(str)
         if (!str) return
-        uuti.render2ui(str)
+        return uuti.render2ui(str)
     },
 
     input_save: function () {
@@ -88,6 +88,7 @@ var uuti = {
         for (let [sdate, txt] of Object.entries(obj)) {
             $(`#${sdate}`).html(txt)
         }
+        return obj
     },
     Txa2uiCompare: function (str) {
         var uiObj = uuti.export_notes()
@@ -137,6 +138,44 @@ var uuti = {
         w = (w >= 500) ? 300 : 510, h = (h >= 500) ? 50 : 510
         $("#outx").css({ width: w, height: h })
     },
+
+
+    svrApi: {
+
+        getY4: function (y4mmdd) {
+            return y4mmdd.substr(0, 4)
+        },
+        getMMDD: function (y4mmdd) {
+            return y4mmdd.substr(4)
+        },
+
+        MyBiblicalDiary_save: function (y4, mmdd, txt, cbf) {
+            var par = {
+                "fnames": [
+                    "./dat/MyBiblicalDiary"
+                ],
+                "data": {
+                }
+            }
+            par.data[y4] = {}
+            par.data[y4][mmdd] = txt
+            var api = new BsnpRestApi()
+            api.ApiUsrDat_save(par, cbf)
+        },
+        MyBiblicalDiary_load: function (y4, mmdd, cbf) {
+            var par = {
+                "fnames": [
+                    "./dat/MyBiblicalDiary"
+                ],
+                "data": {
+                }
+            }
+            par.data[y4] = {}
+            par.data[y4][mmdd] = ""
+            var api = new BsnpRestApi()
+            api.ApiUsrDat_load(par, cbf)
+        }
+    }
 
 
 }
@@ -217,7 +256,7 @@ var calendar3yr = {
         }, 500)
     },
     post_gen: function () {
-        storage.load2ui()
+        var storageObj = storage.load2ui()
 
         $(".notes").on("keyup", function () {
             storage.save_notes()
@@ -279,31 +318,35 @@ var calendar3yr = {
 
         $("#LoadTxt").on("click", function (e) {
             e.stopImmediatePropagation()
+            $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
             var tx = $("#editxt").html()
             var y4md = $(".hili_notes").attr("y4md")
-            var y4 = svrApi.getY4(y4md)
-            var mmdd = svrApi.getMMDD(y4md)
+            var y4 = uuti.svrApi.getY4(y4md)
+            var mmdd = uuti.svrApi.getMMDD(y4md)
             console.log(id, ":", y4md, tx)
-            svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
+            uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
-                $("#editxt").html(ret.out.data[y4][mmdd])
+                $("#editxt").html(ret.out.data[y4][mmdd]).addClass("afterload")
             })
         })
         $("#SaveTxt").on("click", function (e) {
             e.stopImmediatePropagation()
+            $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
             var tx = $("#editxt").html()
             var y4md = $(".hili_notes").attr("y4md")
             console.log(id, ":", y4md, tx)
-            svrApi.MyBiblicalDiary_save(svrApi.getY4(y4md), svrApi.getMMDD(y4md), tx, function (ret) {
+            uuti.svrApi.MyBiblicalDiary_save(uuti.svrApi.getY4(y4md), uuti.svrApi.getMMDD(y4md), tx, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
+                $("#editxt").addClass("afterload")
             })
         })
         ///////////////////////////////
         //$("#editorboard").hide()
         function on_editorboard_hide(e) {
             console.log("on_editorboard_hide-------")
+            $(".afterload").removeClass("afterload")
             //alert("saves")
         }
         function on_editorboard_show(e) {
@@ -324,7 +367,7 @@ var calendar3yr = {
             $(`#${id}`).html(htms)
             storage.save_notes()
         })
-        $("#editxt").on("blur", function () {
+        $("#editxt_______").on("blur", function () {
             var htms = $(this).html()
             var id = $("#edishowdate").text()
             $(`#${id}`).html(htms)
@@ -363,40 +406,4 @@ var calendar3yr = {
     }
 }
 
-var svrApi = {
-
-    getY4: function (y4mmdd) {
-        return y4mmdd.substr(0, 4)
-    },
-    getMMDD: function (y4mmdd) {
-        return y4mmdd.substr(4)
-    },
-
-    MyBiblicalDiary_save: function (y4, mmdd, txt, cbf) {
-        var par = {
-            "fnames": [
-                "./dat/MyBiblicalDiary"
-            ],
-            "data": {
-            }
-        }
-        par.data[y4] = {}
-        par.data[y4][mmdd] = txt
-        var api = new BsnpRestApi()
-        api.ApiUsrDat_save(par, cbf)
-    },
-    MyBiblicalDiary_load: function (y4, mmdd, cbf) {
-        var par = {
-            "fnames": [
-                "./dat/MyBiblicalDiary"
-            ],
-            "data": {
-            }
-        }
-        par.data[y4] = {}
-        par.data[y4][mmdd] = ""
-        var api = new BsnpRestApi()
-        api.ApiUsrDat_load(par, cbf)
-    }
-}
 //{"22_09_02":"Seattle: arrived<div><br><div><br></div></div>","22_09_03":"hiking","22_09_04":"Moderna:Safeway<div>VitaminB</div><div>RoomTemp=90</div>","22_09_05":"Reaction: less food, more sleep","22_09_06":"normal<div>痰 phlegm/sputum/Spittle </div>","22_09_07":"throat sounds but no pain or uncomfort<div>hiking 3 hrs</div>","22_09_08":"hiking 3hr<div>RoomTemp=97</div>","22_09_09":"Timberlake Park, 5 hrs 5 mi.","22_09_10":"Golden Beach; Botanical Garden.&nbsp;","22_09_11":"crossroad church:Heb10:25","22_09_27":"flight 2 atlanta","22_11_09":"yty<div>af-op</div>"}
