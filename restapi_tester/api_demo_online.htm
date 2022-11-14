@@ -17,12 +17,12 @@
 
     <!----------------------------------------------------------------------------->
     <!------ api ---->
-    <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
-    <script src="https://bsnp21.github.io/home/js/conf_svc_ip_addr.js"></script>
+  
     <script src="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
-    <script src="https://bsnp21.github.io/bb/np/js/BsnpRestApi.js"></script>
-    <script src="https://bsnp21.github.io/bb/np/js/BsnpRestConst.js"></script>
-
+    <script src="https://bsnp21.github.io/home/js/test_bsnp_ip_availability.js"></script>
+    <script src="./js/test_bsnp_ip_availability.js"></script>
+    <script src="../np/js/BsnpRestApi.js"></script>
+    <script src="../np/js/BsnpRestConst.js"></script>
     <!----------------------------------------------------------------------------->
 
 
@@ -118,7 +118,7 @@
             gen_BibleNames()
             gen_bibOjStdKeys()
 
-            gen_avai_sel()
+            //gen_avai_sel()
         })
 
 
@@ -397,18 +397,21 @@
             <a href="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js">&lt;script
                 src='https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js'&gt;</a>
 
-            <table note="frame">
+                <table id="test_ip_availability" note="frame for gen_avai_sel">
                 <tr>
                     <td>
                         <table border="1">
-                            <caption>Host Signin</caption>
+                                <caption id="host_cap">Host Signin<br>
+                                    <button class="protocal hili">http</button>
+                                    <button class="protocal">https</button>
+                                </caption>
                             <tbody id="hostaddr"></tbody>
                         </table>
                     </td>
 
                     <td>
                         <table border="1">
-                            <caption> <a>Svc IP param</a><br>
+                                <caption id="svr_cap"> <a>Svc IP param</a><br>
                                 <button class="protocal hili">http</button>
                                 <button class="protocal">https</button>
                             </caption>
@@ -418,7 +421,7 @@
                     </td>
                     <td>
                         <table border="1">
-                            <caption>Sample</caption>
+                                <caption></caption>
                             <tbody id="sam"></tbody>
                         </table>
                     </td>
@@ -427,7 +430,6 @@
                 <tr>
                     <td colspan="3">
                         <a id="linkstr"></a>
-                        <a id="svdtrigger">Svc</a>
 
                     </td>
                 </tr>
