@@ -327,16 +327,21 @@ var calendar3yr = {
             console.log(id, ":", y4md, tx)
             uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
-                var loadedtxt = ret.out.data[y4][mmdd].trim()
-                if (tx != loadedtxt ) {
-                    //if( tx.indexOf(loadedtxt) >= 0)  if(!confirm("current tx contains loadeded txt. Force to load?")){return};
-                    //if( loadedtxt.indexOf(tx) >= 0) return alert("loadedtxt tx contains current txt.")
-                    if (!confirm(`loaded txt (${loadedtxt.length}) differ to current txt (${tx.length}). \n Continue to load?`)) return;
-                    if (confirm("OK: merge two text.\nCancel: load svr data only.")) {
-                        loadedtxt += "<br>----merge----</br>" + tx
+                //$("#editxt").addClass("afterload")
+                if(ret.out.data[y4][mmdd] && "string" === typeof ret.out.data[y4][mmdd] && ret.out.data[y4][mmdd].trim().length>0){
+                    var loadedtxt = ret.out.data[y4][mmdd].trim()
+                    if (tx != loadedtxt ) {
+                        //if( tx.indexOf(loadedtxt) >= 0)  if(!confirm("current tx contains loadeded txt. Force to load?")){return};
+                        //if( loadedtxt.indexOf(tx) >= 0) return alert("loadedtxt tx contains current txt.")
+                        if (!confirm(`loaded txt (${loadedtxt.length}) differ to current txt (${tx.length}). \n Continue to load?`)) return;
+                        if (confirm("OK: merge two text.\nCancel: load svr data only.")) {
+                            loadedtxt += "<div class='mergedtxt'>" + tx +"</div>"
+                        }
                     }
+                    $("#editxt").html(loadedtxt).addClass("afterload")
+                }else{
+                    alert("loaded empty.")
                 }
-                $("#editxt").html(loadedtxt).addClass("afterload")
             })
         })
         $("#SaveTxt").on("click", function (e) {
