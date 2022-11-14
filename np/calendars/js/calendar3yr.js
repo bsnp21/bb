@@ -388,6 +388,10 @@ var calendar3yr = {
             evt.stopImmediatePropagation()
             return false
         })
+        $("#ord_lst").on("click",function(e){
+            $('#editxt').focus().append('<ol><li></li></ol>');
+            e.stopImmediatePropagation()
+        })
 
         var eid = "#tab1"
         var rect = $(eid)[0].getBoundingClientRect();

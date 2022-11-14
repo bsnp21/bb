@@ -43,8 +43,6 @@
                 calendar3yr.gen_tbody("#tab1", 0)
                 calendar3yr.gen_tbody("#tab2", 1).slideUp()
                 calendar3yr.end()
-
-
             }
 
 
@@ -68,6 +66,11 @@
             })
 
             storage.input_load()
+
+            $("#ord_lst").on("click",function(e){
+                e.stopImmediatePropagation()
+                $('#editxt').append('<ol><li></li></ol>');
+            })
         });//
 
 
@@ -131,6 +134,7 @@
         <lable>Date: 20</lable><a id="edishowdate"></a>
         <button id="LoadTxt">Load</button> 
         <button id="SaveTxt">Save</button>
+        <button id="ord_lst">ol</button>
         <div id="editxt" contenteditable>
 
         </div>
