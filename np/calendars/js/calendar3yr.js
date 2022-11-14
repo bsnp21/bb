@@ -185,7 +185,7 @@ var uuti = {
 var calendar3yr = {
     gen_tbody: function (eid, inext) {
         var today = new Date()
-        var todayID = today.toLocal_YY_MM_DD()
+        var todayID = today.toLocalY4MMDD();//toLocal_YY_MM_DD()
 
         //var yr = prompt("enter year xxxx", );
         var yr = today.getUTCFullYear()
@@ -200,7 +200,7 @@ var calendar3yr = {
             var iyear = sdat.getUTCFullYear()
             var imont = 1 + sdat.getMonth()
             var idate = sdat.getDate()
-            var sdateID = sdat.toLocal_YY_MM_DD()
+            var sdateID = sdat.toLocalY4MMDD();// toLocal_YY_MM_DD()
             var contenteditable = ""
             if (sdateID < todayID) contenteditable = ""
 
@@ -320,14 +320,23 @@ var calendar3yr = {
             e.stopImmediatePropagation()
             $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
-            var tx = $("#editxt").html()
+            var tx = $("#editxt").html().trim()
             var y4md = $(".hili_notes").attr("y4md")
             var y4 = uuti.svrApi.getY4(y4md)
             var mmdd = uuti.svrApi.getMMDD(y4md)
             console.log(id, ":", y4md, tx)
             uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
-                $("#editxt").html(ret.out.data[y4][mmdd]).addClass("afterload")
+                var loadedtxt = ret.out.data[y4][mmdd].trim()
+                if (tx != loadedtxt ) {
+                    //if( tx.indexOf(loadedtxt) >= 0)  if(!confirm("current tx contains loadeded txt. Force to load?")){return};
+                    //if( loadedtxt.indexOf(tx) >= 0) return alert("loadedtxt tx contains current txt.")
+                    if (!confirm(`loaded txt (${loadedtxt.length}) differ to current txt (${tx.length}). \n Continue to load?`)) return;
+                    if (confirm("OK: merge two text.\nCancel: load svr data only.")) {
+                        loadedtxt += "<br>----merge----</br>" + tx
+                    }
+                }
+                $("#editxt").html(loadedtxt).addClass("afterload")
             })
         })
         $("#SaveTxt").on("click", function (e) {
@@ -386,7 +395,7 @@ var calendar3yr = {
         $("#editorboard").css({
             "left": 30 + rect.left,
             "top": 1000,
-            "width": width - 100
+            "width___x": width - 100
         })
         $("#editorboard").on("click", function () {
             $(this).hide("slow", on_editorboard_hide)

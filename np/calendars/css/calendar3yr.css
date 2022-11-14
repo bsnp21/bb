@@ -233,7 +233,7 @@ div.notes {
 
     background-color: yellow;
     display: none;
-    white-space: nowrap;
+    xxxxwhite-space: nowrap; /*inherited by editxt*/
 
     
     height: 230px;
