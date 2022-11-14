@@ -109,7 +109,8 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             //<a id="calenderpage" href="https://bsnp21.github.io/tools/calendars/calendar3yr.htm">calendar</a>
 
             var api = new BsnpRestApi()
-            $("#calenderpage").attr("href", `https://bsnp21.github.io/tools/calendars/calendar3yr.htm${api.urlRedirectParam()}`)
+            var old_href=$("#calenderpage").attr("href")
+            $("#calenderpage").attr("href", `${old_href}${api.urlRedirectParam()}`)
             api.ajaxion(
                 RestApi.ApiUsrDat_load,
                 par,
@@ -211,7 +212,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 <body onbeforeunload="return 'leave?';">
 
-    <a id="calenderpage" href="https://bsnp21.github.io/tools/calendars/calendar3yr.htm">calendar</a>
+    <a id="calenderpage" href="./calendars/calendar3yr.htm">calendar</a>
 
     <table border="1">
         <caption id="cap"></caption>

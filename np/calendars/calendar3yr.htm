@@ -1,0 +1,346 @@
+<html>
+
+<head>
+    <title onclick="alert();">Calendar</title>
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+    <base target="_blank" />
+
+    <script src="./jq/jquery.js" xxxsrc="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="./js/calendar3yr.js"></script>
+    <link rel="stylesheet" href="./css/calendar3yr.css" class="">
+    <link>
+    <!------->
+    <script src="https://bsnp21.github.io/bb/np/js/BsnpRestApi.js"></script>
+    <script src="https://bsnp21.github.io/bb/np/js/BsnpRestConst.js"></script>
+
+
+
+
+
+    <style type="text/css">
+        body{
+            background-color:wheat;
+        }
+
+    </style>
+    <script>
+
+
+
+
+        //https://shapeshed.com/html5-speech-recognition-api/
+        var recognition = new webkitSpeechRecognition();
+        recognition.onresult = function (event) {
+            console.log(event)
+        }
+        //recognition.start();
+    </script>
+    <script>
+        $(function () {
+            {
+                calendar3yr.gen_tbody("#tab0", -1).slideUp()
+                calendar3yr.gen_tbody("#tab1", 0)
+                calendar3yr.gen_tbody("#tab2", 1).slideUp()
+                calendar3yr.end()
+
+
+            }
+
+
+            $("#menuPanelToggler").on("click", function () {
+                $("#_MenuPanel").slideToggle()
+            })
+            $("#_MenuPanel").slideToggle()
+
+            $("#info").on("click", function () {
+                uuti.format_obj_txa()
+            })
+
+            $("#emailto").on("click", function () {
+                var smail = $("#email_addr").val()
+                var sbody = JSON.stringify(uuti.export_notes())
+                var str = `mailto:${smail}?subject=https://bsnp21.github.io/tools/calendars/calendar3yr.htm&body=${encodeURIComponent(sbody)}`
+                $(this).attr("href", str)
+
+                storage.input_save()
+
+            })
+
+            storage.input_load()
+        });//
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <table border="0" id="tab0">
+        <caption>Calendar</caption>
+        <thead>
+            <tr>
+                <th idx>#</th>
+                <th title="year">Sun</th>
+                <th title="month">Mon</th>
+                <th title="date">Tus</th>
+                <th title="week">Wed</th>
+                <th title="ometer">Thu</th>
+                <th title="vh">Fri</th>
+                <th title="miliage">Sat</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table border="0" id="tab1">
+        <caption>Calendar</caption>
+        <thead>
+            <tr>
+                <th idx>#</th>
+                <th title="year">Sun</th>
+                <th title="month">Mon</th>
+                <th title="date">Tus</th>
+                <th title="week">Wed</th>
+                <th title="ometer">Thu</th>
+                <th title="vh">Fri</th>
+                <th title="miliage">Sat</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table border="1" id="tab2">
+        <caption>Calendar</caption>
+        <thead>
+            <tr>
+                <th idx>#</th>
+                <th title="year">Sun</th>
+                <th title="month">Mon</th>
+                <th title="date">Tus</th>
+                <th title="week">Wed</th>
+                <th title="ometer">Thu</th>
+                <th title="vh">Fri</th>
+                <th title="miliage">Sat</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <!-------------------------->
+
+    <div id="editorboard">
+        <lable>Date: 20</lable><a id="edishowdate"></a> <button id="LoadTxt">Load</button> <button
+            id="SaveTxt">Save</button>
+        <div id="editxt" contenteditable>
+
+        </div>
+    </div>
+
+    <!------------------------------>
+    <!------------------------------>
+    <button id="ScrollToToday"> &nabla; </button><br />
+    <!--------------MENU------------>
+    <button id="menuPanelToggler">=</button><br />
+    <div id="_MenuPanel">
+        <form>
+            <a id="emailto"
+                href="mailto:wdingsoft@gmail.com?cc=someoneelse@theirsite.com, another@thatsite.com, me@mysite.com&bcc=lastperson@theirsite.com&subject=Big%20News&body=Body-goes-here">EmailTo:</a>
+            <input id="email_addr" type="text" x-webkit-speech="true"></input><br>
+            <a href="">Diary</a>
+        </form>
+
+        <button onclick="uuti.import_Notes();">import</button>
+        <button onclick="uuti.Txa2uiCompare();">Txa2uiCompare</button> <a id="info" class="row">...</a><br>
+        <div id="cmp"></div>
+
+        <textarea id="outx" value='1'></textarea><br>
+        <button onclick="uuti.Clear();">Clear</button>
+        <button onclick="storage.save_notes()">Save</button><br>
+
+        <button onclick="uuti.increase_width(10);">+</button>
+        <button onclick="uuti.increase_width(-10);">-</button><br>
+    </div>
+    <!-------------------------->
+    <!-------------------------->
+
+    <p>
+        &nbsp;</p>
+        <pre id="dbug"></pre>
+</body>
+
+</html>
+
+<script>
+    //https://www.infoplease.com/calendars/holidays/jewish-holidays
+    //NOTE: All Hebrew holidays begin at sundown on the evening before the date given.
+
+    var Festival_Website = {
+        "Purim": "https://www.infoplease.com/culture-entertainment/holidays/what-purim",
+        "Passover": "https://www.infoplease.com/encyclopedia/religion/judaism/info/passover",
+        "Shavuot": "https://www.infoplease.com/encyclopedia/religion/judaism/info/shavuot",
+        "RoshHashaah": "https://www.infoplease.com/culture-entertainment/holidays/rosh-hashanah-jewish-new-year",
+        "YomKippur": "https://www.infoplease.com/culture-entertainment/holidays/what-yom-kippur",
+        "Sukkot": "https://www.infoplease.com/encyclopedia/religion/judaism/info/tabernacles-feast-of",
+        "ShemiiAtzeret": "https://www.infoplease.com/dictionary/shemini-atzereth"
+    }
+    var Jewish_Festival_Dates = {
+        "10_02_28": "Purim",
+        "10_03_30": "Passover",
+        "10_05_19": "Shavuot",
+        "10_09_9": "RoshHashaah",
+        "10_09_18": "YomKippur",
+        "10_09_23": "Sukkot",
+        "10_09_30": "ShemiiAtzeret",
+        "11_03_20": "Purim",
+        "11_04_19": "Passover",
+        "11_06_8": "Shavuot",
+        "11_09_29": "RoshHashaah",
+        "11_10_8": "YomKippur",
+        "11_10_13": "Sukkot",
+        "11_10_20": "ShemiiAtzeret",
+        "12_03_8": "Purim",
+        "12_04_7": "Passover",
+        "12_05_27": "Shavuot",
+        "12_09_17": "RoshHashaah",
+        "12_09_26": "YomKippur",
+        "12_10_1": "Sukkot",
+        "12_10_8": "ShemiiAtzeret",
+        "13_02_24": "Purim",
+        "13_03_26": "Passover",
+        "13_05_15": "Shavuot",
+        "13_09_5": "RoshHashaah",
+        "13_09_14": "YomKippur",
+        "13_09_19": "Sukkot",
+        "13_09_26": "ShemiiAtzeret",
+        "14_03_16": "Purim",
+        "14_04_15": "Passover",
+        "14_06_4": "Shavuot",
+        "14_09_25": "RoshHashaah",
+        "14_10_4": "YomKippur",
+        "14_10_9": "Sukkot",
+        "14_10_16": "ShemiiAtzeret",
+        "15_03_5": "Purim",
+        "15_04_4": "Passover",
+        "15_05_24": "Shavuot",
+        "15_09_14": "RoshHashaah",
+        "15_09_23": "YomKippur",
+        "15_09_28": "Sukkot",
+        "15_10_5": "ShemiiAtzeret",
+        "16_03_24": "Purim",
+        "16_04_23": "Passover",
+        "16_06_12": "Shavuot",
+        "16_10_3": "RoshHashaah",
+        "16_10_12": "YomKippur",
+        "16_10_17": "Sukkot",
+        "16_10_24": "ShemiiAtzeret",
+        "17_03_12": "Purim",
+        "17_04_11": "Passover",
+        "17_05_31": "Shavuot",
+        "17_09_21": "RoshHashaah",
+        "17_09_30": "YomKippur",
+        "17_10_5": "Sukkot",
+        "17_10_12": "ShemiiAtzeret",
+        "18_03_1": "Purim",
+        "18_03_31": "Passover",
+        "18_05_20": "Shavuot",
+        "18_09_10": "RoshHashaah",
+        "18_09_19": "YomKippur",
+        "18_09_24": "Sukkot",
+        "18_10_1": "ShemiiAtzeret",
+        "19_03_21": "Purim",
+        "19_04_20": "Passover",
+        "19_06_9": "Shavuot",
+        "19_09_30": "RoshHashaah",
+        "19_10_9": "YomKippur",
+        "19_10_14": "Sukkot",
+        "19_10_21": "ShemiiAtzeret",
+        "20_03_10": "Purim",
+        "20_04_9": "Passover",
+        "20_05_29": "Shavuot",
+        "20_09_19": "RoshHashaah",
+        "20_09_28": "YomKippur",
+        "20_10_3": "Sukkot",
+        "20_10_10": "ShemiiAtzeret",
+        "21_02_26": "Purim",
+        "21_03_28": "Passover",
+        "21_05_17": "Shavuot",
+        "21_09_7": "RoshHashaah",
+        "21_09_16": "YomKippur",
+        "21_09_21": "Sukkot",
+        "21_09_28": "ShemiiAtzeret",
+        "22_03_17": "Purim",
+        "22_04_16": "Passover",
+        "22_06_5": "Shavuot",
+        "22_09_26": "RoshHashaah",
+        "22_10_5": "YomKippur",
+        "22_10_10": "Sukkot",
+        "22_10_17": "ShemiiAtzeret",
+        "23_03_7": "Purim",
+        "23_04_6": "Passover",
+        "23_05_26": "Shavuot",
+        "23_09_16": "RoshHashaah",
+        "23_09_25": "YomKippur",
+        "23_09_30": "Sukkot",
+        "23_10_7": "ShemiiAtzeret",
+        "24_03_24": "Purim",
+        "24_04_23": "Passover",
+        "24_06_12": "Shavuot",
+        "24_10_3": "RoshHashaah",
+        "24_10_12": "YomKippur",
+        "24_10_17": "Sukkot",
+        "24_10_24": "ShemiiAtzeret",
+        "25_03_14": "Purim",
+        "25_04_13": "Passover",
+        "25_06_2": "Shavuot",
+        "25_09_23": "RoshHashaah",
+        "25_10_2": "YomKippur",
+        "25_10_7": "Sukkot",
+        "25_10_14": "ShemiiAtzeret",
+        "26_03_3": "Purim",
+        "26_04_2": "Passover",
+        "26_05_22": "Shavuot",
+        "26_09_12": "RoshHashaah",
+        "26_09_21": "YomKippur",
+        "26_09_26": "Sukkot",
+        "26_10_3": "ShemiiAtzeret",
+        "27_03_23": "Purim",
+        "27_04_22": "Passover",
+        "27_06_11": "Shavuot",
+        "27_10_2": "RoshHashaah",
+        "27_10_11": "YomKippur",
+        "27_10_16": "Sukkot",
+        "27_10_23": "ShemiiAtzeret",
+        "28_03_12": "Purim",
+        "28_04_11": "Passover",
+        "28_05_31": "Shavuot",
+        "28_09_21": "RoshHashaah",
+        "28_09_30": "YomKippur",
+        "28_10_5": "Sukkot",
+        "28_10_12": "ShemiiAtzeret",
+        "29_03_1": "Purim",
+        "29_03_31": "Passover",
+        "29_05_20": "Shavuot",
+        "29_09_10": "RoshHashaah",
+        "29_09_19": "YomKippur",
+        "29_09_24": "Sukkot",
+        "29_10_1": "ShemiiAtzeret",
+        "30_03_19": "Purim",
+        "30_04_18": "Passover",
+        "30_06_7": "Shavuot",
+        "30_09_28": "RoshHashaah",
+        "30_10_7": "YomKippur",
+        "30_10_12": "Sukkot",
+        "30_10_19": "ShemiiAtzeret"
+    }//Jewish_Festival_Dates
+
+
+
+    var ReservedDays = {
+
+    }
+    for (let [sdate, desc] of Object.entries(Jewish_Festival_Dates)) {
+        if (!ReservedDays[sdate]) ReservedDays[sdate] = []
+        ReservedDays[sdate].push(desc)
+    }
+
+
+</script>

@@ -1,0 +1,301 @@
+body {
+    font-family: 'Times New Roman';
+
+
+}
+
+#_MenuPanel {
+    position: fixed;
+    background-color: lightgray;
+    right: 10px;
+    top: 100px;
+}
+
+#ScrollToToday {
+    position: fixed;
+    top: 1px;
+    right: 1px;
+    padding: 10px;
+    margin: 10px;
+}
+
+#menuPanelToggler {
+    position: fixed;
+    top: 45px;
+    right: 1px;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+.hili_td {
+    border: 2px solid yellow;
+}
+
+.hili_day {
+    border: 2px solid green;
+}
+
+.leftbox {
+    background-color: #ff0000;
+}
+
+
+
+.hebrew {
+    FONT-SIZE: 23px;
+    COLOR: #001320;
+    LINE-HEIGHT: 33px;
+    font-family: Ezra SIL, SBL Hebrew, Palatino Linotype, Palatino, Century Schoolbook L, Times New Roman, Cardo, Arial, Helvetica, Sans-serif;
+    TEXT-DECORATION: none;
+}
+
+
+
+
+
+
+
+
+table {
+    table-layout: fixed;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table caption {
+    margin-top: 20px;
+}
+
+#tab0 {
+    margin-top: 150px;
+    border-collapse: collapse;
+}
+
+#tab2 {
+    margin-bottom: 100px;
+    border: 1px solid grey;
+}
+
+thead,
+th {
+    background-color: #999999;
+}
+
+
+
+td {
+    width: 60px;
+    vertical-align: top
+}
+
+.thidx {
+    font-size: small;
+}
+
+
+.month1 {
+    background-color: #E6E6E6;
+}
+
+.month2 {
+    background-color: #98BAE7;
+}
+
+.month3 {
+    background-color: #B8E4F0;
+}
+
+.month4 {
+    background-color: rgb(223, 240, 128);
+}
+
+.month5 {
+    background-color: #CCFFBD;
+}
+
+.month6 {
+    background-color: rgb(132, 240, 128);
+}
+
+.month7 {
+    background-color: rgb(188, 240, 128);
+
+}
+
+.month8 {
+    background-color: #FFD384;
+}
+
+.month9 {
+    background-color: #FFAEC0;
+}
+
+.month10 {
+    background-color: rgb(233, 220, 47);
+}
+
+.month11 {
+    background-color: #BECA5C;
+}
+
+.month12 {
+    background-color: #C996CC;
+}
+
+.month_mark {
+    padding-left: 2px;
+    padding-right: 1px;
+    font-weight: lighter;
+}
+
+
+
+div.notes {
+    margin-left: 1px;
+    display: block;
+    color: blue;
+
+    font-size: small;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    height: 50px;
+}
+
+.notes:focus {
+    background-color: yellow;
+}
+
+.notes ol,
+.notes ul {
+    margin-left: -25px;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.notes ul li {
+    margin-left: -2px;
+    padding-left: -200px;
+}
+
+
+.sday {
+    font-size: xx-large;
+    display: inline;
+    float: left;
+}
+
+.sday[iweek='0'],
+.sday[iweek='6'] {
+    color: red;
+}
+
+.sday[iweek='3'] {
+    color: rgb(89, 89, 247);
+}
+
+.today {
+    border: 5px solid cyan;
+    animation: blinkingBackground 3s infinite;
+}
+
+@keyframes blinkingBackground {
+    20% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.hili_notes {
+    background-color: yellow;
+}
+
+
+#editorboard {
+
+    background-color: yellow;
+    display: none;
+    white-space: nowrap;
+
+    height: 200px;
+    padding: 20px 20px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    overflow: scroll;
+    font-size: large;
+}
+
+#editxt {
+    background-color: lightyellow;
+
+    white-space: nowrap;
+
+
+    padding: 3px;
+
+    width: 100%;
+
+    overflow: scroll;
+    font-size: large;
+}
+
+#editxt div {
+    border: 1px dotted gray;
+    padding: 10px 0px 10px 0px;
+}
+
+#outx {
+    overflow: scroll;
+    white-space: pre;
+}
+
+
+/**********/
+
+.cmp div {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+div.cmpitm {
+    width: 100%;
+}
+
+div.Hili_cmp {
+    background-color: lightgreen;
+}
+
+.ReservedDay {
+    font-size: xx-small;
+    border: 0;
+    margin: 0;
+    padding: 0 0 0 1px;
+}
+
+.ReservedDesc {
+    font-size: xx-small;
+    border: 0;
+    margin: 0;
+    padding: 0 0 0 1px;
+    background-color: cyan;
+}
