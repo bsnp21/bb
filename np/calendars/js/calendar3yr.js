@@ -441,7 +441,8 @@ var calendar3yr = {
         })
 
         var api = new BsnpRestApi()
-        $("#UserInfo").text(api.urlParams.get("repo"))
+        $("#menuPanelToggler").text(api.urlParams.get("repo"))
+        $("#DiarySite").attr("href", `../myExt_Diary.htm${window.location.search}`)
         storage.input_load()
     },
     post_gen: function () {
