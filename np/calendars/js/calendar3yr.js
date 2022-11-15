@@ -29,7 +29,7 @@ var storage = {
     },
     load2ui: function () {
         var str = localStorage.getItem("notes")
-         
+
         if (!str) return
         return uuti.render2ui(str)
     },
@@ -169,8 +169,11 @@ var uuti = {
                 "data": {
                 }
             }
+
             par.data[y4] = {}
-            par.data[y4][mmdd] = ""
+            if (mmdd.length === 4) {
+                par.data[y4][mmdd] = ""
+            }
             var api = new BsnpRestApi()
             api.ApiUsrDat_load(par, cbf)
         }
@@ -194,6 +197,7 @@ var calendar3yr = {
     gen_tbody: function (eid, inext) {
         var today = new Date()
         var todayID = today.toLocalY4MMDD();//toLocal_YY_MM_DD()
+        $("#ScrollToToday").text(todayID)
 
         //var yr = prompt("enter year xxxx", );
         var yr = today.getUTCFullYear()
@@ -228,7 +232,7 @@ var calendar3yr = {
             if (weekidx === 0) continue;
             idaycounter++
 
-            trs += `<td class='month${imont}'><div class='sday' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID} class='noteTag' ${contenteditable}></div></td>`;
+            trs += `<td class='month${imont}'><div class='dayNum' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div class='noteTag' id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID} ${contenteditable}></div></td>`;
 
             if (6 === iweek) {
                 trs += "</tr>";
@@ -237,7 +241,26 @@ var calendar3yr = {
         //$("#year").html(yr)
         $(`${eid} caption`).text(yr);
         $(`${eid} caption`).on("click", function () {
-            $(this).parent().find("tbody").slideToggle()
+            var s = $(this).parent().find("tbody").slideToggle("slow", "", function (e) {
+                alert(e)
+            })
+            console.log(s)
+            $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
+            $(this).addClass("hili_run_start")
+            var _THIS = this
+            var y4 = $(this).text().trim()
+            uuti.svrApi.MyBiblicalDiary_load(y4, "", function (ret) {
+                $(_THIS).addClass("hili_run_stop").removeClass("hili_run_start")
+                var yobj = ret.out.data[y4]
+                if (yobj && "object" === typeof (yobj)) {
+                    for ([mmdd, txt] in Object.entries(yobj)) {
+                        $(`#${mmdd}`).html(txt)
+                    }
+                } else {
+                    alert("loaded err.")
+                }
+                $(this).addClass("hili")
+            })
         })
         $(`${eid} tbody`).html(trs)
             .find("td").on("click", function () {
@@ -247,11 +270,11 @@ var calendar3yr = {
 
 
 
-        if (inext != 0) return $(`${eid} tbody`)
+        //if (inext != 0) return $(`${eid} tbody`)
 
 
         $(`#${todayID}`).each(function () {
-            $(this).parent().find(".sday").addClass("today");
+            $(this).parent().find(".dayNum").addClass("todayNum");
             //$(this)[0].scrollIntoView() //run in post_gen
         })
 
@@ -310,9 +333,11 @@ var calendar3yr = {
                 .focus()
 
         })
-        $(".sday").on("click", function () {
+        $(".dayNum").on("click", function () {
             $(this).toggleClass("hili_day")
         })
+
+
     },
 
     gen_evt_edit: function () {
@@ -330,18 +355,18 @@ var calendar3yr = {
             uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
                 //$("#editxt").addClass("afterload")
-                if(ret.out.data[y4][mmdd] && "string" === typeof ret.out.data[y4][mmdd] && ret.out.data[y4][mmdd].trim().length>0){
+                if (ret.out.data[y4][mmdd] && "string" === typeof ret.out.data[y4][mmdd] && ret.out.data[y4][mmdd].trim().length > 0) {
                     var loadedtxt = ret.out.data[y4][mmdd].trim()
-                    if (tx != loadedtxt ) {
+                    if (tx != loadedtxt) {
                         //if( tx.indexOf(loadedtxt) >= 0)  if(!confirm("current tx contains loadeded txt. Force to load?")){return};
                         //if( loadedtxt.indexOf(tx) >= 0) return alert("loadedtxt tx contains current txt.")
                         if (!confirm(`loaded txt (${loadedtxt.length}) differ to current txt (${tx.length}). \n Continue to load?`)) return;
                         if (confirm("OK: merge two text.\nCancel: load svr data only.")) {
-                            loadedtxt += "<div class='mergedtxt'>" + tx +"</div>"
+                            loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
                         }
                     }
                     $("#editxt").html(loadedtxt).addClass("afterload")
-                }else{
+                } else {
                     alert("loaded empty.")
                 }
             })
@@ -358,7 +383,7 @@ var calendar3yr = {
                 $("#editxt").addClass("afterload")
             })
         })
-        $("#ord_lst").on("click",function(e){
+        $("#ord_lst").on("click", function (e) {
             e.stopImmediatePropagation()
             $('#editxt').append('<ol><li></li></ol>');
         })
@@ -390,12 +415,12 @@ var calendar3yr = {
 
         $("#outx").on("keyup", function () {
             var htms = $(this).val()
-             $("#editxt").html(htms)
+            $("#editxt").html(htms)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
             return false
         })
-         
+
     },
     gen_evt_others: function () {
         var eid = "#tab1"
@@ -415,10 +440,10 @@ var calendar3yr = {
 
 
         $("#ScrollToToday").on("click", function () {
-            $(".today")[0].scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+            $(".todayNum")[0].scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
         })
         setTimeout(function () {
-            $(".today")[0].scrollIntoView()
+            $(".todayNum")[0].scrollIntoView()
         }, 500)
 
 
