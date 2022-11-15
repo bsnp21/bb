@@ -123,13 +123,13 @@ td {
 
 }
 .month_mark {
+    font-size:x-small;
+
     padding-left: 2px;
     padding-right: 2px;
     font-weight: lighter;
 
-    width:5px;
-    height: 80px;
-    margin-right: 3px;
+   
 }
 
 
