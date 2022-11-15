@@ -53,14 +53,14 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             background-color: lightgreen;
         }
 
-        .vertxt{
+        .vertxt {
             display: flex;
             justify-content: center;
             align-items: center;
             writing-mode: vertical-lr;
             min-height: 1em;
             line-height: 1em;
-            
+
         }
     </style>
     <script>
@@ -107,10 +107,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             par.data[yyyy] = {}
 
             //<a id="calenderpage" href="https://bsnp21.github.io/tools/calendars/calendar3yr.htm">calendar</a>
+            var old_href = $("#calenderpage").attr("href")
+            $("#calenderpage").attr("href", `${old_href}${window.location.search}`)
 
             var api = new BsnpRestApi()
-            var old_href=$("#calenderpage").attr("href")
-            $("#calenderpage").attr("href", `${old_href}${api.urlRedirectParam()}`)
             api.ajaxion(
                 RestApi.ApiUsrDat_load,
                 par,
