@@ -2,6 +2,7 @@ body {
     font-family: 'Times New Roman';
 
 
+    background-color: darkolivegreen;
 }
 
 #_MenuPanel {
@@ -17,6 +18,7 @@ body {
     right: 1px;
     padding: 10px;
     margin: 10px;
+    opacity: 0.8;
 }
 
 #menuPanelToggler {
@@ -25,6 +27,7 @@ body {
     right: 1px;
     padding: 10px;
     margin: 10px;
+    opacity: 0.8;
 }
 
 
@@ -85,9 +88,12 @@ table caption {
     border: 1px solid grey;
 }
 
-thead,
+thead{
+    background-color: #999999;
+}
 th {
     background-color: #999999;
+    border-color:  #999999;;
 }
 
 
@@ -98,7 +104,17 @@ td {
 }
 
 .thidx {
-    font-size: small;
+    font-size:xx-small;
+    background-color: white;
+}
+.vertxt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    writing-mode: vertical-lr;
+    min-height: 1em;
+    line-height: 1em;
+
 }
 
 

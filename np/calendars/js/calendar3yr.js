@@ -16,7 +16,21 @@ Date.prototype.toLocal_YY_MM_DD = function () {
     return syear + "_" + smonth + "_" + sdate;
 }
 
-
+var MonthName = [
+    "",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]
 
 
 var storage = {
@@ -227,7 +241,7 @@ var calendar3yr = {
 
 
             if (0 === iweek) {
-                trs += `<tr><th class='thidx'>${++weekidx}<br><a class='month${imont} month_mark'>${imont}</a></th>`;
+                trs += `<tr><th class='month${imont}'><a  class='thidx vertxt'>${++weekidx}</a>&nbsp;<a class='vertxt month${imont} month_mark'>${MonthName[imont]}</a></th>`;
             }
             if (weekidx === 0) continue;
             idaycounter++
@@ -241,25 +255,25 @@ var calendar3yr = {
         //$("#year").html(yr)
         $(`${eid} caption`).text(yr);
         $(`${eid} caption`).on("click", function () {
-            var s = $(this).parent().find("tbody").slideToggle("slow", "", function (e) {
-                alert(e)
-            })
-            console.log(s)
-            $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
-            $(this).addClass("hili_run_start")
-            var _THIS = this
             var y4 = $(this).text().trim()
-            uuti.svrApi.MyBiblicalDiary_load(y4, "", function (ret) {
-                $(_THIS).addClass("hili_run_stop").removeClass("hili_run_start")
-                var yobj = ret.out.data[y4]
-                if (yobj && "object" === typeof (yobj)) {
-                    for ([mmdd, txt] in Object.entries(yobj)) {
-                        $(`#${mmdd}`).html(txt)
-                    }
-                } else {
-                    alert("loaded err.")
+            var _THIS = this
+            $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
+            $(this).parent().find("tbody").slideToggle("slow", function (e) {
+                if ($(this).is(":visible")) {
+                    $(_THIS).addClass("hili_run_start")
+                    uuti.svrApi.MyBiblicalDiary_load(y4, "", function (ret) {
+                        console.log(ret)
+                        $(_THIS).addClass("hili_run_stop").removeClass("hili_run_start")
+                        var yobj = ret.out.data[y4]
+                        if (yobj && "object" === typeof (yobj)) {
+                            for ([mmdd, txt] of Object.entries(yobj)) {
+                                $(`#${y4 + mmdd}`).html(txt)
+                            }
+                        } else {
+                            alert("loaded err.")
+                        }
+                    })
                 }
-                $(this).addClass("hili")
             })
         })
         $(`${eid} tbody`).html(trs)
@@ -353,6 +367,7 @@ var calendar3yr = {
             var mmdd = uuti.svrApi.getMMDD(y4md)
             console.log(id, ":", y4md, tx)
             uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
+                console.log(ret)
                 $("#outx").val(JSON.stringify(ret, null, 4))
                 //$("#editxt").addClass("afterload")
                 if (ret.out.data[y4][mmdd] && "string" === typeof ret.out.data[y4][mmdd] && ret.out.data[y4][mmdd].trim().length > 0) {
