@@ -59,7 +59,7 @@ var storage = {
 var uuti = {
     export_notes: function () {
         var data = {}
-        $(".notes").each(function () {
+        $(".noteTag").each(function () {
             var txt = $(this).html().trim()
             var sdate = $(this).attr("id")
             if (txt.length > 1 && txt != "<ol><li></li></ol>" && txt != "<ol type=\"a\"><li></li></ol>" && txt != "<ul><li></li></ul>") {
@@ -71,7 +71,7 @@ var uuti = {
     },
     Clear: function () {
         if (confirm("Empty notes of Calendar?") == false) return
-        $(".notes").html("")
+        $(".noteTag").html("")
         setTimeout(() => {
             if (confirm("Clear all notes data in local storage? (unrecoverable)") == false) return
             localStorage.setItem("notes", "")
@@ -124,7 +124,7 @@ var uuti = {
         var width = $("#tab1 td").width();
         width += idlta
         $("td").width(width)
-        $(".notes").css({ "width": width })
+        $(".noteTag").css({ "width": width })
     },
 
     format_obj_txa: function () {
@@ -220,7 +220,7 @@ var calendar3yr = {
             if (weekidx === 0) continue;
             idaycounter++
 
-            trs += `<td class='month${imont}'><div class='sday' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID} class='notes' ${contenteditable}></div></td>`;
+            trs += `<td class='month${imont}'><div class='sday' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID} class='noteTag' ${contenteditable}></div></td>`;
 
             if (6 === iweek) {
                 trs += "</tr>";
@@ -258,16 +258,16 @@ var calendar3yr = {
     post_gen: function () {
         var storageObj = storage.load2ui()
 
-        $(".notes").on("keyup", function () {
+        $(".noteTag").on("keyup", function () {
             storage.save_notes()
         })
 
-        //set notes width
+        //set noteTag width
         var width = $("td").width()
-        $(".notes").css({ "width": width - 2 })
+        $(".noteTag").css({ "width": width - 2 })
 
         //
-        $(".notes").on("click", function (evt) {
+        $(".noteTag").on("click", function (evt) {
             evt.stopImmediatePropagation()
             var _This = this
             var display = $("#editorboard").css("display")
