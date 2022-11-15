@@ -26,11 +26,10 @@ var storage = {
         $("#info").text("size:" + str.length)
         localStorage.setItem("notes", str)
         var str = JSON.stringify(obj, null, 4)
-        $("#outx").val(str)
     },
     load2ui: function () {
         var str = localStorage.getItem("notes")
-        $("#outx").val(str)
+         
         if (!str) return
         return uuti.render2ui(str)
     },
@@ -181,7 +180,15 @@ var uuti = {
 }
 
 
-
+function on_editorboard_hide(e) {
+    console.log("on_editorboard_hide-------")
+    $(".afterload").removeClass("afterload")
+    //alert("saves")
+}
+function on_editorboard_show(e) {
+    console.log("show-------")
+    //alert("loades")
+}
 var calendar3yr = {
     gen_tbody: function (eid, inext) {
         var today = new Date()
@@ -250,14 +257,7 @@ var calendar3yr = {
 
         return $(`${eid} tbody`)
     },
-    end: function () {
-        setTimeout(function () {
-            calendar3yr.post_gen()
-        }, 500)
-    },
-    post_gen: function () {
-        var storageObj = storage.load2ui()
-
+    gen_all_tbodies_evt: function () {
         $(".noteTag").on("keyup", function () {
             storage.save_notes()
         })
@@ -312,10 +312,11 @@ var calendar3yr = {
         $(".sday").on("click", function () {
             $(this).toggleClass("hili_day")
         })
+    },
 
-
-
-
+    gen_evt_edit: function () {
+        ////////////////////////////
+        // Svc operation on editxt. 
         $("#LoadTxt").on("click", function (e) {
             e.stopImmediatePropagation()
             $(".afterload").removeClass("afterload")
@@ -356,19 +357,17 @@ var calendar3yr = {
                 $("#editxt").addClass("afterload")
             })
         })
+        $("#ord_lst").on("click",function(e){
+            e.stopImmediatePropagation()
+            $('#editxt').append('<ol><li></li></ol>');
+        })
         ///////////////////////////////
-        //$("#editorboard").hide()
-        function on_editorboard_hide(e) {
-            console.log("on_editorboard_hide-------")
-            $(".afterload").removeClass("afterload")
-            //alert("saves")
-        }
-        function on_editorboard_show(e) {
-            console.log("show-------")
-            //alert("loades")
-        }
 
 
+
+
+        /////////////////////////////////
+        // Editxt
         $("#editxt").off("keyup").on("keyup", function (evt) {
             if (evt.keyCode === 13) {
                 // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
@@ -380,24 +379,22 @@ var calendar3yr = {
             var id = $("#edishowdate").text()
             $(`#${id}`).html(htms)
             storage.save_notes()
-        })
-        $("#editxt_______").on("blur", function () {
-            var htms = $(this).html()
-            var id = $("#edishowdate").text()
-            $(`#${id}`).html(htms)
-            storage.save_notes()
-
-            $("#editorboard").hide("slow", on_editorboard_hide)
-        })
-        $("#editxt").on("click", function (evt) {
+            $("#outx").val(htms.replace(/\&nbsp\;/g, " "))
+        }).on("click", function (evt) {
             evt.stopImmediatePropagation()
             return false
         })
-        $("#ord_lst").on("click",function(e){
-            $('#editxt').focus().append('<ol><li></li></ol>');
-            e.stopImmediatePropagation()
-        })
 
+        $("#outx").on("keyup", function () {
+            var htms = $(this).val()
+             $("#editxt").html(htms)
+        }).on("click", function (evt) {
+            evt.stopImmediatePropagation()
+            return false
+        })
+         
+    },
+    gen_evt_others: function () {
         var eid = "#tab1"
         var rect = $(eid)[0].getBoundingClientRect();
         var width = $(eid).width()
@@ -424,10 +421,10 @@ var calendar3yr = {
 
         ///
 
+        $("#_MenuPanel").slideToggle()
         $("#menuPanelToggler").on("click", function () {
             $("#_MenuPanel").slideToggle()
         })
-        $("#_MenuPanel").slideToggle()
 
         $("#info").on("click", function () {
             uuti.format_obj_txa()
@@ -444,12 +441,18 @@ var calendar3yr = {
         })
 
         storage.input_load()
-
-        $("#ord_lst").on("click",function(e){
-            e.stopImmediatePropagation()
-            $('#editxt').append('<ol><li></li></ol>');
-        })
-    }
+    },
+    post_gen: function () {
+        var storageObj = storage.load2ui()
+        this.gen_all_tbodies_evt()
+        this.gen_evt_edit()
+        this.gen_evt_others()
+    },
+    end: function () {
+        setTimeout(function () {
+            calendar3yr.post_gen()
+        }, 500)
+    },
 }
 
 //{"22_09_02":"Seattle: arrived<div><br><div><br></div></div>","22_09_03":"hiking","22_09_04":"Moderna:Safeway<div>VitaminB</div><div>RoomTemp=90</div>","22_09_05":"Reaction: less food, more sleep","22_09_06":"normal<div>痰 phlegm/sputum/Spittle </div>","22_09_07":"throat sounds but no pain or uncomfort<div>hiking 3 hrs</div>","22_09_08":"hiking 3hr<div>RoomTemp=97</div>","22_09_09":"Timberlake Park, 5 hrs 5 mi.","22_09_10":"Golden Beach; Botanical Garden.&nbsp;","22_09_11":"crossroad church:Heb10:25","22_09_27":"flight 2 atlanta","22_11_09":"yty<div>af-op</div>"}

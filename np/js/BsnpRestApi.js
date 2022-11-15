@@ -122,41 +122,42 @@ BsnpRestUti.Init_RestApiStrn(RestApi_uPar_Validate, RestApi)
 function BsnpRestApi() {
     this.SSID = ""
     this.svrurl = ""
+    this.urlParams = null
     this.init_param_fr_url()
 }
 BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    var ip = urlParams.get('ip');
-    if (!ip) {
-        //use self ip.
-        ip = window.location.host
-    }
-    if (!ip) {
-        //use self ip.
-        ip = window.location.hostname
-    }
-    if (!ip) {
-        return alert("not localhost or missed in url with ?ip=x.x.x.x")
-    }
-    if ("undefined" === ip) {
-        return alert("not localhost or missed in url with ?ip=undefined")
-    }
-
-    if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
-
-    if (ip.indexOf("http") < 0) {
-        if (ip.indexOf("7778") > 0) {//ssl
-            ip = `http://${ip}`;
-        } else {
-            ip = `https://${ip}`;
+    function test_ip(ip){
+        if (!ip) {
+            //use self ip.
+            ip = window.location.host
         }
+        if (!ip) {
+            //use self ip.
+            ip = window.location.hostname
+        }
+        if (!ip) {
+            return alert("not localhost or missed in url with ?ip=x.x.x.x")
+        }
+        if ("undefined" === ip) {
+            return alert("not localhost or missed in url with ?ip=undefined")
+        }
+    
+        if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
+    
+        if (ip.indexOf("http") < 0) {
+            if (ip.indexOf("7778") > 0) {//ssl
+                ip = `http://${ip}`;
+            } else {
+                ip = `https://${ip}`;
+            }
+        }
+        return ip
     }
-    this.svrurl = ip
 
-    //const urlParams = new URLSearchParams(window.location.search);
-    var ssid = urlParams.get('SSID');
-    if (ssid) this.SSID = ssid
+    this.urlParams = new URLSearchParams(window.location.search);
+    var ip = urlParams.get('ip');
+    this.svrurl = test_ip(ip)
+    this.SSID = this.urlParams.get('SSID');
 
 
     //other param form url param ?ip=0.0.0.0:778&#Gen2:7

@@ -269,8 +269,11 @@ ol{
 }
 
 #outx {
+    overflow-wrap: break-word;
     overflow: scroll;
-    white-space: pre;
+    xxwhite-space: pre;
+    width: 200px;
+    height: 200px;
 }
 
 
@@ -302,4 +305,8 @@ div.Hili_cmp {
     margin: 0;
     padding: 0 0 0 1px;
     background-color: cyan;
+}
+
+.hili{
+    background-color: red;
 }
