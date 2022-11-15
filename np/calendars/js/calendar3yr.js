@@ -183,6 +183,7 @@ var uuti = {
 function on_editorboard_hide(e) {
     console.log("on_editorboard_hide-------")
     $(".afterload").removeClass("afterload")
+    $("#outx").val("")
     //alert("saves")
 }
 function on_editorboard_show(e) {
@@ -295,7 +296,7 @@ var calendar3yr = {
 
             var htm = $(this).html()
             $("#editxt").html(htm)
-            $("#edishowdate").text($(this).attr("id") + ", " + sWeek[iweek])
+            $("#edi_showDate").text($(this).attr("id") + ", " + sWeek[iweek])
 
             $("#editorboard")
                 .css({
@@ -375,13 +376,15 @@ var calendar3yr = {
                 // prevent the default behaviour of return key pressed
                 //return true;
             }
-            var htms = $(this).html()
-            var id = $("#edishowdate").text()
+            var htms = $(this).html().replace(/\&nbsp\;/g, " ")
+            var id = $("#edi_showDate").text()
             $(`#${id}`).html(htms)
             storage.save_notes()
-            $("#outx").val(htms.replace(/\&nbsp\;/g, " "))
+            $("#outx").val(htms)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
+            var htms = $(this).html()
+            $("#outx").val(htms.replace(/\&nbsp\;/g, " "))
             return false
         })
 
