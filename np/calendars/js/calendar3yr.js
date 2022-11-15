@@ -195,12 +195,12 @@ var calendar3yr = {
         //var yearEnd = new Date(2019, 11, 1);
         var trs = "", weekidx = 0, idaycounter = 0
         for (var i = 0; i <= 3650; i++) {
-            var sdat = date.addDays(i);
-            var iweek = sdat.getDay()
-            var iyear = sdat.getUTCFullYear()
-            var imont = 1 + sdat.getMonth()
-            var idate = sdat.getDate()
-            var sdateID = sdat.toLocalY4MMDD();// toLocal_YY_MM_DD()
+            var odat = date.addDays(i);
+            var iweek = odat.getDay()
+            var iyear = odat.getUTCFullYear()
+            var imont = 1 + odat.getMonth()
+            var idate = odat.getDate()
+            var sdateID = odat.toLocalY4MMDD();// toLocal_YY_MM_DD()
             var contenteditable = ""
             if (sdateID < todayID) contenteditable = ""
 
@@ -220,7 +220,7 @@ var calendar3yr = {
             if (weekidx === 0) continue;
             idaycounter++
 
-            trs += `<td class='month${imont}'><div class='sday' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div id=${sdateID} y4md='${sdat.toLocalY4MMDD()}' title=${sdateID} class='notes' ${contenteditable}></div></td>`;
+            trs += `<td class='month${imont}'><div class='sday' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID} class='notes' ${contenteditable}></div></td>`;
 
             if (6 === iweek) {
                 trs += "</tr>";
@@ -289,9 +289,9 @@ var calendar3yr = {
                 //$("#editxt").hide()
             }
 
+            //present editorboard
             var sWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
             var iweek = $(this).parent().index() - 1;
-
 
             var htm = $(this).html()
             $("#editxt").html(htm)
@@ -421,6 +421,34 @@ var calendar3yr = {
             $(".today")[0].scrollIntoView()
         }, 500)
 
+
+        ///
+
+        $("#menuPanelToggler").on("click", function () {
+            $("#_MenuPanel").slideToggle()
+        })
+        $("#_MenuPanel").slideToggle()
+
+        $("#info").on("click", function () {
+            uuti.format_obj_txa()
+        })
+
+        $("#emailto").on("click", function () {
+            var smail = $("#email_addr").val()
+            var sbody = JSON.stringify(uuti.export_notes())
+            var str = `mailto:${smail}?subject=https://bsnp21.github.io/tools/calendars/calendar3yr.htm&body=${encodeURIComponent(sbody)}`
+            $(this).attr("href", str)
+
+            storage.input_save()
+
+        })
+
+        storage.input_load()
+
+        $("#ord_lst").on("click",function(e){
+            e.stopImmediatePropagation()
+            $('#editxt').append('<ol><li></li></ol>');
+        })
     }
 }
 
