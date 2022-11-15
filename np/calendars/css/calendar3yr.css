@@ -110,6 +110,7 @@ td {
 .thidx {
     font-size:xx-small;
     background-color: white;
+    margin-bottom: 10px;
     
 }
 .vertxt {
@@ -125,7 +126,7 @@ td {
 .month_mark {
     font-size:x-small;
 
-    padding-left: 2px;
+    padding-left: 0px;
     padding-right: 2px;
     font-weight: lighter;
 
