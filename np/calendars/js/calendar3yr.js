@@ -358,7 +358,10 @@ var calendar3yr = {
         ////////////////////////////
         // Svc operation on editxt. 
         $("#LoadTxt").on("click", function (e) {
+            var _THIS = this
             e.stopImmediatePropagation()
+            $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
+            $(this).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
             var tx = $("#editxt").html().trim()
@@ -367,6 +370,8 @@ var calendar3yr = {
             var mmdd = uuti.svrApi.getMMDD(y4md)
             console.log(id, ":", y4md, tx)
             uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
+                $("#editxt").html(loadedtxt).addClass("afterload")
+                $(_THIS).removeClass("hili_run_start").addClass("hili_run_stop")
                 console.log(ret)
                 $("#outx").val(JSON.stringify(ret, null, 4))
                 //$("#editxt").addClass("afterload")
@@ -380,14 +385,17 @@ var calendar3yr = {
                             loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
                         }
                     }
-                    $("#editxt").html(loadedtxt).addClass("afterload")
+
                 } else {
                     alert("loaded empty.")
                 }
             })
         })
         $("#SaveTxt").on("click", function (e) {
+            var _THIS = this
             e.stopImmediatePropagation()
+            $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
+            $(this).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
             var tx = $("#editxt").html()
@@ -396,10 +404,13 @@ var calendar3yr = {
             uuti.svrApi.MyBiblicalDiary_save(uuti.svrApi.getY4(y4md), uuti.svrApi.getMMDD(y4md), tx, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
                 $("#editxt").addClass("afterload")
+                $(_THIS).removeClass("hili_run_start").addClass("hili_run_stop")
             })
         })
         $("#ord_lst").on("click", function (e) {
+            $(this).blur()
             e.stopImmediatePropagation()
+            //$('#editxt').focus()
             $('#editxt').append('<ol><li></li></ol>');
         })
         ///////////////////////////////
