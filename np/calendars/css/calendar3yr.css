@@ -110,6 +110,7 @@ td {
 .thidx {
     font-size:xx-small;
     background-color: white;
+    
 }
 .vertxt {
     display: flex;
@@ -119,6 +120,16 @@ td {
     min-height: 1em;
     line-height: 1em;
 
+
+}
+.month_mark {
+    padding-left: 2px;
+    padding-right: 2px;
+    font-weight: lighter;
+
+    width:5px;
+    xxheight: 100px;
+    margin-right: 3px;
 }
 
 
@@ -171,11 +182,6 @@ td {
     background-color: #C996CC;
 }
 
-.month_mark {
-    padding-left: 2px;
-    padding-right: 1px;
-    font-weight: lighter;
-}
 
 
 
