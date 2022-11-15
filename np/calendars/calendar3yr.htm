@@ -44,33 +44,6 @@
                 calendar3yr.gen_tbody("#tab2", 1).slideUp()
                 calendar3yr.end()
             }
-
-
-            $("#menuPanelToggler").on("click", function () {
-                $("#_MenuPanel").slideToggle()
-            })
-            $("#_MenuPanel").slideToggle()
-
-            $("#info").on("click", function () {
-                uuti.format_obj_txa()
-            })
-
-            $("#emailto").on("click", function () {
-                var smail = $("#email_addr").val()
-                var sbody = JSON.stringify(uuti.export_notes())
-                var str = `mailto:${smail}?subject=https://bsnp21.github.io/tools/calendars/calendar3yr.htm&body=${encodeURIComponent(sbody)}`
-                $(this).attr("href", str)
-
-                storage.input_save()
-
-            })
-
-            storage.input_load()
-
-            $("#ord_lst").on("click",function(e){
-                e.stopImmediatePropagation()
-                $('#editxt').append('<ol><li></li></ol>');
-            })
         });//
 
 
@@ -150,7 +123,7 @@
             <a id="emailto"
                 href="mailto:wdingsoft@gmail.com?cc=someoneelse@theirsite.com, another@thatsite.com, me@mysite.com&bcc=lastperson@theirsite.com&subject=Big%20News&body=Body-goes-here">EmailTo:</a>
             <input id="email_addr" type="text" x-webkit-speech="true"></input><br>
-            <a href="">Diary</a>
+            <a id="fromInfo" href="">Diary</a>
         </form>
 
         <button onclick="uuti.import_Notes();">import</button>
@@ -158,6 +131,8 @@
         <div id="cmp"></div>
 
         <textarea id="outx" value='1'></textarea><br>
+        <button id="TxtRefreshNote">Refresh</button>
+
         <button onclick="uuti.Clear();">Clear</button>
         <button onclick="storage.save_notes()">Save</button><br>
 
