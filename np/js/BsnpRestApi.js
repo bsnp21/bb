@@ -155,7 +155,7 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
     }
 
     this.urlParams = new URLSearchParams(window.location.search);
-    var ip = urlParams.get('ip');
+    var ip = this.urlParams.get('ip');
     this.svrurl = test_ip(ip)
     this.SSID = this.urlParams.get('SSID');
 

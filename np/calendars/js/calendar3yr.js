@@ -440,6 +440,8 @@ var calendar3yr = {
 
         })
 
+        var api = new BsnpRestApi()
+        $("#UserInfo").text(api.urlParams.get("repo"))
         storage.input_load()
     },
     post_gen: function () {
