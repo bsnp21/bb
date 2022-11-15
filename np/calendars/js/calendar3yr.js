@@ -241,7 +241,7 @@ var calendar3yr = {
 
 
             if (0 === iweek) {
-                trs += `<tr><th class='month${imont}'><a  class='thidx vertxt'>${++weekidx}</a>&nbsp;<a class='vertxt month${imont} month_mark'>${MonthName[imont]}</a></th>`;
+                trs += `<tr><th class='mnth month${imont}'><a  class='thidx '>${++weekidx}</a><a class='vertxt month${imont} month_mark'>${MonthName[imont]}</a></th>`;
             }
             if (weekidx === 0) continue;
             idaycounter++
