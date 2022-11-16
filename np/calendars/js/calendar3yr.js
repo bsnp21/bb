@@ -317,7 +317,7 @@ var calendar3yr = {
     gen_tbody: function (eid, inext) {
         var today = new Date()
         var todayID = today.toLocalY4MMDD();//toLocal_YY_MM_DD()
-        $("#ScrollToToday").text(todayID)
+        $("#ScrollToToday").text(todayID.slice(0, 4) + "-" + todayID.slice(4))
 
         //var yr = prompt("enter year xxxx", );
         var yr = today.getUTCFullYear()
@@ -436,10 +436,14 @@ var calendar3yr = {
             //present editorboard
             var sWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
             var iweek = $(this).parent().index() - 1;
+            var sid = $(this).attr("id")
+            sid = sid.slice(0,4)+"-"+sid.slice(4) + ", " + sWeek[iweek]
 
             var htm = $(this).html()
-            $("#editxt").html(htm)
-            $("#edi_showDate").text($(this).attr("id") + ", " + sWeek[iweek])
+            $("#editHtm").html(htm)
+            $("#editxar").val(htm)
+            $("#editinf").html(htm.length)
+            $("#edi_showDate").text(sid)
 
 
 
@@ -457,7 +461,7 @@ var calendar3yr = {
             $("#editorboard").css({
                 left: 15 + rect.left,
                 top: window.scrollY + rectTag.top + rectTag.height,   //20 + evt.pageY,
-                width: width-50,
+                width: width - 50,
             })
                 .focus()
 
@@ -480,7 +484,7 @@ var calendar3yr = {
             $(_THIS).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
-            var tx = $("#editxt").html().trim()
+            var tx = $("#editHtm").html().trim()
             var y4md = $(".hili_notes").attr("y4md")
             var y4 = uuti.svrApi.getY4(id)
             var mmdd = uuti.svrApi.getMMDD(id)
@@ -503,8 +507,10 @@ var calendar3yr = {
 
                         if (confirm(`${msg}\n-Ok to overwite current text?`)) {
                             //loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
-                            $("#editxt").html(loadedtxt).addClass("afterload")
                             $(`#${id}`).html(loadedtxt)
+                            $("#editHtm").html(loadedtxt).addClass("afterload")
+                            $("#editxar").val(loadedtxt)
+                            $("#editinf").html(loadedtxt.length)
                         }
                     }
                 } else {
@@ -520,12 +526,12 @@ var calendar3yr = {
             $(this).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
-            var tx = $("#editxt").html()
+            var tx = $("#editHtm").html()
             var y4md = $(".hili_notes").attr("y4md")
             console.log(id, ":", y4md, tx)
             uuti.svrApi.MyBiblicalDiary_save(uuti.svrApi.getY4(y4md), uuti.svrApi.getMMDD(y4md), tx, function (ret) {
                 $("#outx").val(JSON.stringify(ret, null, 4))
-                $("#editxt").addClass("afterload")
+                $("#editHtm").addClass("afterload")
                 $(_THIS).removeClass("hili_run_start").addClass("hili_run_stop")
             })
         })
@@ -533,7 +539,7 @@ var calendar3yr = {
             $(this).blur()
             e.stopImmediatePropagation()
             //$('#editxt').focus()
-            $('#editxt').append('<ol><li></li></ol>');
+            $('#editHtm').append('<ol><li></li></ol>');
         })
         ///////////////////////////////
 
@@ -542,7 +548,7 @@ var calendar3yr = {
 
         /////////////////////////////////
         // Editxt
-        $("#editxt").off("keyup").on("keyup", function (evt) {
+        $("#editHtm").off("keyup").on("keyup", function (evt) {
             if (evt.keyCode === 13) {
                 // insert 2 br tags (if only one br tag is inserted the cursor won't go to the next line)
                 //document.execCommand('insertLineBreak', true, '<br/>');
@@ -553,26 +559,32 @@ var calendar3yr = {
             var id = $("#edi_showDate").text()
             $(`#${id}`).html(htms)
             storage.save_note(id, htms)
-            $("#outx").val(htms)
+            $("#editxar").val(htms)
+            $("#editinf").text(htms.length)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
             var htms = $(this).html()
-            $("#outx").val(htms.replace(/\&nbsp\;/g, " "))
+            $("#editxar").val(htms.replace(/\&nbsp\;/g, " "))
             return false
         })
 
-        $("#outx").on("keyup", function () {
+        $("#editxar").slideToggle()
+        $("#editxar").on("keyup", function () {
             var htms = $(this).val()
-            $("#editxt").html(htms)
+            $("#editHtm").html(htms)
+            $("#editinf").text(htms.length)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
+            return false
+        })
+        $("#editinf").on("click", function (evt) {
+            evt.stopImmediatePropagation()
+            $("#editxar").slideToggle()
             return false
         })
 
     },
     gen_evt_others: function () {
-
-
 
         $("#editorboard").on("click", function () {
             $(this).hide("slow", on_editorboard_hide)
@@ -617,9 +629,6 @@ var calendar3yr = {
         this.gen_all_tbodies_evt()
         this.gen_evt_edit()
         this.gen_evt_others()
-
-        //var width = $("#tab1").width()
-        //$("#editorboard").width(width)
 
         $("#tab1 caption").trigger("click")
     },
