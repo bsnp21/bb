@@ -330,7 +330,7 @@ var calendar3yr = {
 
             $("#editorboard")
                 .css({
-                    xxleft: evt.pageX,
+                    
                     top: 20 + evt.pageY,
                 })
                 .focus()
