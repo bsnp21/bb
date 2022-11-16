@@ -372,8 +372,8 @@ var calendar3yr = {
                         var yobj = ret.out.data[y4]
                         if (yobj && "object" === typeof (yobj)) {
                             for ([mmdd, txt] of Object.entries(yobj)) {
-                                var sdiff = ""
                                 var id = y4 + mmdd
+                                var sdiff = ""
                                 if (id in notesObj) {
                                     var storedtxt = notesObj[id]
                                     if (storedtxt != txt) {

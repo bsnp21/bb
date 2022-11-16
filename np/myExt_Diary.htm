@@ -41,8 +41,10 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         td {}
 
         td[contenteditable='true'] {
-            background-color: aqua;
             vertical-align: top;
+        }
+        .editext{
+            background-color: antiquewhite;
         }
 
         .hili {
@@ -61,6 +63,29 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             min-height: 1em;
             line-height: 1em;
 
+        }
+
+        #menu_container_toggler {
+            position: fixed;
+            right: 15px;
+            top: 10px;
+        }
+
+        #menu_container {
+            position: fixed;
+            right: 15px;
+            top: 40px;
+
+            opacity: 0.8;
+            background-color: lightgray;
+        }
+
+        #calenderpage {
+            position: absolute;
+            right: 10px
+        }
+        #outx{
+            height: 100px;
         }
     </style>
     <script>
@@ -133,14 +158,26 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 retObj[yyyy][mmdd] = "-" + mmdd
             }
             var str = "", i = 0
-            for (key in retObj[yyyy]) {
-                str += `<tr><td class='idx'>${i++}</td><td class='datime' y4='${yyyy}' title='${yyyy}'><a class='vertxt'>${key}</a></td><td class='edtxt'>${retObj[yyyy][key]}</td></tr>`
+            for (mmdd in retObj[yyyy]) {
+                var id = yyyy + mmdd
+                str += `<tr><td class='idx'>${i++}</td><td class='datime' y4='${yyyy}' title='${yyyy}'><a class='vertxt'>${mmdd}</a></td><td class='edtxt' id='${id}'>${retObj[yyyy][mmdd]}</td></tr>`
             }
 
             $("#outb").html(str)
-            $(".edtxt").on("click", function () {
-                $(this).attr("contenteditable", "true")
+            $(".edtxt").on("click keyup", function () {
+                $(".editext, .savedok").removeClass("editext | savedok")
+                $(this).attr("contenteditable", "true").addClass("editext")
+            
+                var sid = $(this).attr("id")
+                var ths = $(this).html()
+                $("#outx").attr("sid", sid).val(ths)
             })
+            $("#outx").on("keyup",function(){
+                var id = $(this).attr("sid")
+                var ths = $(this).val()
+                $(`#${id}`).html(ths)
+            })
+
             $(".datime").on("click", function () {
                 var _THIS = this
                 $(".hili").removeClass("hili")
@@ -200,6 +237,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 init_load()
             })
 
+            init_menu()
         })
         function init_cap(yyyy) {
             var str = window.location.search
@@ -207,12 +245,25 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
             var usr = sea.get("repo")
             $("#cap").text(yyyy + ": " + usr)
         }
+
+        function init_menu() {
+            var app = new BsnpRestApi()
+            $("#menu_container_toggler").text(app.urlParams.get("repo"))
+            $("#menu_container_toggler").on("click", function () {
+                $("#menu_container").slideToggle()
+            })
+
+        }
     </script>
 </head>
 
 <body onbeforeunload="return 'leave?';">
 
-    <a id="calenderpage" href="./calendars/calendar3yr.htm">calendar</a>
+    <button id="menu_container_toggler">us</button>
+    <div id="menu_container">
+        <a id="calenderpage" href="./calendars/calendar3yr.htm">calendar</a><br>
+        <textarea id="outx"></textarea>
+    </div>
 
     <table border="1">
         <caption id="cap"></caption>
