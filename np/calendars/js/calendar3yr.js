@@ -530,7 +530,7 @@ var calendar3yr = {
                             $("#editHtm").addClass("afterload")
                             //$("#editxar").val(loadedtxt)
                             //$("#editinf").html(loadedtxt.length)
-                            synch_note_except_elemID('', loadedtxt)
+                            uuti.synch_note_except_elemID('', loadedtxt)
                         }
                     }
                 } else {
