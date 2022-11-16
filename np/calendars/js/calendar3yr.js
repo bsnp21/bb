@@ -227,9 +227,7 @@ var calendar3yr = {
             var imont = 1 + odat.getMonth()
             var idate = odat.getDate()
             var sdateID = odat.toLocalY4MMDD();// toLocal_YY_MM_DD()
-            var contenteditable = ""
-            if (sdateID < todayID) contenteditable = ""
-
+           
             var special = ""
             if (ReservedDays[sdateID]) {
                 ReservedDays[sdateID].forEach((desc) => {
@@ -246,7 +244,7 @@ var calendar3yr = {
             if (weekidx === 0) continue;
             idaycounter++
 
-            trs += `<td class='month${imont}'><div class='dayNum' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div class='noteTag' id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID} ${contenteditable}></div></td>`;
+            trs += `<td class='month${imont}'><div class='dayNum' title=${sdateID}  iweek='${iweek}'>${idate}</div><div class='ReservedDay'>${special}</div><div class='noteTag' id=${sdateID} y4md='${odat.toLocalY4MMDD()}' title=${sdateID}></div></td>`;
 
             if (6 === iweek) {
                 trs += "</tr>";
@@ -283,15 +281,10 @@ var calendar3yr = {
             })
 
 
-
-        //if (inext != 0) return $(`${eid} tbody`)
-
-
-        $(`#${todayID}`).each(function () {
+        $(`${eid} tbody`).find(`#${todayID}`).each(function () {
             $(this).parent().find(".dayNum").addClass("todayNum");
             //$(this)[0].scrollIntoView() //run in post_gen
         })
-
 
         return $(`${eid} tbody`)
     },
@@ -337,12 +330,8 @@ var calendar3yr = {
 
             $("#editorboard")
                 .css({
-                    position: 'absolute',
                     xxleft: evt.pageX,
                     top: 20 + evt.pageY,
-                    "margin-left": "auto",
-                    "margin-right": "auto",
-                    display: 'block'
                 })
                 .focus()
 
