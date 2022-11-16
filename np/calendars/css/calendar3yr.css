@@ -260,8 +260,10 @@ div.noteTag {
 
     background-color: yellow;
     display: none;
+    visibility:display;
     xxxxwhite-space: nowrap; /*inherited by editxt*/
 
+    top : -1000px;
     
     height: 250px;
     width:300px;
