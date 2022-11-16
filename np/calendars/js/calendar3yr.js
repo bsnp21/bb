@@ -227,7 +227,7 @@ var calendar3yr = {
             var imont = 1 + odat.getMonth()
             var idate = odat.getDate()
             var sdateID = odat.toLocalY4MMDD();// toLocal_YY_MM_DD()
-           
+
             var special = ""
             if (ReservedDays[sdateID]) {
                 ReservedDays[sdateID].forEach((desc) => {
@@ -328,11 +328,21 @@ var calendar3yr = {
             $("#editxt").html(htm)
             $("#edi_showDate").text($(this).attr("id") + ", " + sWeek[iweek])
 
-            $("#editorboard")
-                .css({
-                    
-                    top: 20 + evt.pageY,
-                })
+
+
+            console.log("window.scrollY=", window.scrollY)
+            var rectTag = $(this)[0].getBoundingClientRect();
+            console.log("rectTag", rectTag)
+            console.log("evt.pageY", evt.pageY)
+            var rect = $("#tab1")[0].getBoundingClientRect();
+            console.log(rect)
+
+            var width = $("#tab1").width()
+            $("#editorboard").css({
+                left: 15 + rect.left,
+                width: width-50,
+                top:  window.scrollY + rectTag.top + rectTag.height  //20 + evt.pageY,
+            })
                 .focus()
 
         })
@@ -350,7 +360,7 @@ var calendar3yr = {
             var _THIS = this
             e.stopImmediatePropagation()
             $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
-            $(this).addClass("hili_run_start")
+            $(_THIS).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
             var id = $(".hili_notes").attr("id")
             var tx = $("#editxt").html().trim()
@@ -363,17 +373,17 @@ var calendar3yr = {
                 console.log(ret)
                 $("#outx").val(JSON.stringify(ret, null, 4))
                 //$("#editxt").addClass("afterload")
-                if(!ret.out.data){
+                if (!ret.out.data) {
                     return alert("loaded data is empty.")
                 }
                 if (ret.out.data[y4][mmdd] && "string" === typeof ret.out.data[y4][mmdd] && ret.out.data[y4][mmdd].trim().length > 0) {
                     var loadedtxt = ret.out.data[y4][mmdd].trim()
                     if (tx != loadedtxt) {
-                        var msg=""
-                        if( tx.indexOf(loadedtxt) >=0) {msg=`loaded txt(${loadedtxt.length}) is part of current text(${tx.length}).`}
-                        else if( loadedtxt.indexOf(tx) >= 0) {msg = `loaded txt(${loadedtxt.length}) contains current txt(${tx.length}).`}
-                        else{ msg = `loaded txt(${loadedtxt.length}) differs to current txt(${tx.length}).` }
-                    
+                        var msg = ""
+                        if (tx.indexOf(loadedtxt) >= 0) { msg = `loaded txt(${loadedtxt.length}) is part of current text(${tx.length}).` }
+                        else if (loadedtxt.indexOf(tx) >= 0) { msg = `loaded txt(${loadedtxt.length}) contains current txt(${tx.length}).` }
+                        else { msg = `loaded txt(${loadedtxt.length}) differs to current txt(${tx.length}).` }
+
                         if (confirm(`${msg}\n-Ok to overwite current text`)) {
                             //loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
                             $("#editxt").html(loadedtxt).addClass("afterload")
@@ -387,7 +397,7 @@ var calendar3yr = {
         $("#SaveTxt").on("click", function (e) {
             var _THIS = this
             e.stopImmediatePropagation()
-            if(!confirm("Save it?")) return;
+            if (!confirm("Save it?")) return;
             $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
             $(this).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
@@ -443,14 +453,9 @@ var calendar3yr = {
 
     },
     gen_evt_others: function () {
-        var eid = "#tab1"
-        var rect = $(eid)[0].getBoundingClientRect();
-        var width = $(eid).width()
-        $("#editorboard").css({
-            "left": 30 + rect.left,
-            "top": 1000,
-            "width___x": width - 100
-        })
+
+
+
         $("#editorboard").on("click", function () {
             $(this).hide("slow", on_editorboard_hide)
         })
