@@ -261,12 +261,12 @@ div.noteTag {
     background-color: yellow;
     display: none;
     visibility:display;
-    xxxxwhite-space: nowrap; /*inherited by editxt*/
+    white-space: wrap; /*inherited by editxt*/
 
     top : -1000px;
     
     height: 250px;
-    width:300px;
+    width:420px;
     padding: 10px 10px 30px 10px;
 
     margin-left: auto;
@@ -345,5 +345,9 @@ div.Hili_cmp {
     background-color: red;
 }
 .hili_run_stop{
+    border: 1px solid red;
+}
+
+.diff_note{
     border: 1px solid red;
 }

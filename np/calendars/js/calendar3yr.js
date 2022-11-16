@@ -15,174 +15,174 @@ Date.prototype.toLocal_YY_MM_DD = function () {
     var sdate = this.getDate().toString().padStart(2, "0")
     return syear + "_" + smonth + "_" + sdate;
 }
-    //https://www.infoplease.com/calendars/holidays/jewish-holidays
-    //NOTE: All Hebrew holidays begin at sundown on the evening before the date given.
+//https://www.infoplease.com/calendars/holidays/jewish-holidays
+//NOTE: All Hebrew holidays begin at sundown on the evening before the date given.
 
-    var Festival_Website = {
-        "Purim": "https://www.infoplease.com/culture-entertainment/holidays/what-purim",
-        "Passover": "https://www.infoplease.com/encyclopedia/religion/judaism/info/passover",
-        "Shavuot": "https://www.infoplease.com/encyclopedia/religion/judaism/info/shavuot",
-        "RoshHashaah": "https://www.infoplease.com/culture-entertainment/holidays/rosh-hashanah-jewish-new-year",
-        "YomKippur": "https://www.infoplease.com/culture-entertainment/holidays/what-yom-kippur",
-        "Sukkot": "https://www.infoplease.com/encyclopedia/religion/judaism/info/tabernacles-feast-of",
-        "ShemiiAtzeret": "https://www.infoplease.com/dictionary/shemini-atzereth"
-    }
-    var Jewish_Festival_Dates = {
-        "20100228": "Purim",
-        "20100330": "Passover",
-        "20100519": "Shavuot",
-        "20100909": "RoshHashaah",
-        "20100918": "YomKippur",
-        "20100923": "Sukkot",
-        "20100930": "ShemiiAtzeret",
-        "20110320": "Purim",
-        "20110419": "Passover",
-        "20110608": "Shavuot",
-        "20110929": "RoshHashaah",
-        "20111008": "YomKippur",
-        "20111013": "Sukkot",
-        "20111020": "ShemiiAtzeret",
-        "20120308": "Purim",
-        "20120407": "Passover",
-        "20120527": "Shavuot",
-        "20120917": "RoshHashaah",
-        "20120926": "YomKippur",
-        "20121001": "Sukkot",
-        "20121008": "ShemiiAtzeret",
-        "20130224": "Purim",
-        "20130326": "Passover",
-        "20130515": "Shavuot",
-        "20130905": "RoshHashaah",
-        "20130914": "YomKippur",
-        "20130919": "Sukkot",
-        "20130926": "ShemiiAtzeret",
-        "20140316": "Purim",
-        "20140415": "Passover",
-        "20140604": "Shavuot",
-        "20140925": "RoshHashaah",
-        "20141004": "YomKippur",
-        "20141009": "Sukkot",
-        "20141016": "ShemiiAtzeret",
-        "20150305": "Purim",
-        "20150404": "Passover",
-        "20150524": "Shavuot",
-        "20150914": "RoshHashaah",
-        "20150923": "YomKippur",
-        "20150928": "Sukkot",
-        "20151005": "ShemiiAtzeret",
-        "20160324": "Purim",
-        "20160423": "Passover",
-        "20160612": "Shavuot",
-        "20161003": "RoshHashaah",
-        "20161012": "YomKippur",
-        "20161017": "Sukkot",
-        "20161024": "ShemiiAtzeret",
-        "20170312": "Purim",
-        "20170411": "Passover",
-        "20170531": "Shavuot",
-        "20170921": "RoshHashaah",
-        "20170930": "YomKippur",
-        "20171005": "Sukkot",
-        "20171012": "ShemiiAtzeret",
-        "20180301": "Purim",
-        "20180331": "Passover",
-        "20180520": "Shavuot",
-        "20180910": "RoshHashaah",
-        "20180919": "YomKippur",
-        "20180924": "Sukkot",
-        "20181001": "ShemiiAtzeret",
-        "20190321": "Purim",
-        "20190420": "Passover",
-        "20190609": "Shavuot",
-        "20190930": "RoshHashaah",
-        "20191009": "YomKippur",
-        "20191014": "Sukkot",
-        "20191021": "ShemiiAtzeret",
-        "20200310": "Purim",
-        "20200409": "Passover",
-        "20200529": "Shavuot",
-        "20200919": "RoshHashaah",
-        "20200928": "YomKippur",
-        "20201030": "Sukkot",
-        "20201010": "ShemiiAtzeret",
-        "20210226": "Purim",
-        "20210328": "Passover",
-        "20210517": "Shavuot",
-        "20210907": "RoshHashaah",
-        "20210916": "YomKippur",
-        "20210921": "Sukkot",
-        "20210928": "ShemiiAtzeret",
-        "20220317": "Purim",
-        "20220416": "Passover",
-        "20220605": "Shavuot",
-        "20220926": "RoshHashaah",
-        "20221005": "YomKippur",
-        "20221010": "Sukkot",
-        "20221017": "ShemiiAtzeret",
-        "20230307": "Purim",
-        "20230406": "Passover",
-        "20230526": "Shavuot",
-        "20230916": "RoshHashaah",
-        "20230925": "YomKippur",
-        "20230930": "Sukkot",
-        "20231007": "ShemiiAtzeret",
-        "20240324": "Purim",
-        "20240423": "Passover",
-        "20240612": "Shavuot",
-        "20241003": "RoshHashaah",
-        "20241012": "YomKippur",
-        "20241017": "Sukkot",
-        "20241024": "ShemiiAtzeret",
-        "20250314": "Purim",
-        "20250413": "Passover",
-        "20250602": "Shavuot",
-        "20250923": "RoshHashaah",
-        "20251002": "YomKippur",
-        "20251007": "Sukkot",
-        "20251014": "ShemiiAtzeret",
-        "20260303": "Purim",
-        "20260402": "Passover",
-        "20260522": "Shavuot",
-        "20260912": "RoshHashaah",
-        "20260921": "YomKippur",
-        "20260926": "Sukkot",
-        "20261003": "ShemiiAtzeret",
-        "20270323": "Purim",
-        "20270422": "Passover",
-        "20270611": "Shavuot",
-        "20271002": "RoshHashaah",
-        "20271011": "YomKippur",
-        "20271016": "Sukkot",
-        "20271023": "ShemiiAtzeret",
-        "20280312": "Purim",
-        "20280411": "Passover",
-        "20280531": "Shavuot",
-        "20280921": "RoshHashaah",
-        "20280930": "YomKippur",
-        "20281005": "Sukkot",
-        "20281012": "ShemiiAtzeret",
-        "20290301": "Purim",
-        "20290331": "Passover",
-        "20290520": "Shavuot",
-        "20290910": "RoshHashaah",
-        "20290919": "YomKippur",
-        "20290924": "Sukkot",
-        "20291001": "ShemiiAtzeret",
-        "20300319": "Purim",
-        "20300418": "Passover",
-        "20300607": "Shavuot",
-        "20300928": "RoshHashaah",
-        "20301007": "YomKippur",
-        "20301012": "Sukkot",
-        "20301019": "ShemiiAtzeret"
-    }//Jewish_Festival_Dates
-    var ReservedDays = {
+var Festival_Website = {
+    "Purim": "https://www.infoplease.com/culture-entertainment/holidays/what-purim",
+    "Passover": "https://www.infoplease.com/encyclopedia/religion/judaism/info/passover",
+    "Shavuot": "https://www.infoplease.com/encyclopedia/religion/judaism/info/shavuot",
+    "RoshHashaah": "https://www.infoplease.com/culture-entertainment/holidays/rosh-hashanah-jewish-new-year",
+    "YomKippur": "https://www.infoplease.com/culture-entertainment/holidays/what-yom-kippur",
+    "Sukkot": "https://www.infoplease.com/encyclopedia/religion/judaism/info/tabernacles-feast-of",
+    "ShemiiAtzeret": "https://www.infoplease.com/dictionary/shemini-atzereth"
+}
+var Jewish_Festival_Dates = {
+    "20100228": "Purim",
+    "20100330": "Passover",
+    "20100519": "Shavuot",
+    "20100909": "RoshHashaah",
+    "20100918": "YomKippur",
+    "20100923": "Sukkot",
+    "20100930": "ShemiiAtzeret",
+    "20110320": "Purim",
+    "20110419": "Passover",
+    "20110608": "Shavuot",
+    "20110929": "RoshHashaah",
+    "20111008": "YomKippur",
+    "20111013": "Sukkot",
+    "20111020": "ShemiiAtzeret",
+    "20120308": "Purim",
+    "20120407": "Passover",
+    "20120527": "Shavuot",
+    "20120917": "RoshHashaah",
+    "20120926": "YomKippur",
+    "20121001": "Sukkot",
+    "20121008": "ShemiiAtzeret",
+    "20130224": "Purim",
+    "20130326": "Passover",
+    "20130515": "Shavuot",
+    "20130905": "RoshHashaah",
+    "20130914": "YomKippur",
+    "20130919": "Sukkot",
+    "20130926": "ShemiiAtzeret",
+    "20140316": "Purim",
+    "20140415": "Passover",
+    "20140604": "Shavuot",
+    "20140925": "RoshHashaah",
+    "20141004": "YomKippur",
+    "20141009": "Sukkot",
+    "20141016": "ShemiiAtzeret",
+    "20150305": "Purim",
+    "20150404": "Passover",
+    "20150524": "Shavuot",
+    "20150914": "RoshHashaah",
+    "20150923": "YomKippur",
+    "20150928": "Sukkot",
+    "20151005": "ShemiiAtzeret",
+    "20160324": "Purim",
+    "20160423": "Passover",
+    "20160612": "Shavuot",
+    "20161003": "RoshHashaah",
+    "20161012": "YomKippur",
+    "20161017": "Sukkot",
+    "20161024": "ShemiiAtzeret",
+    "20170312": "Purim",
+    "20170411": "Passover",
+    "20170531": "Shavuot",
+    "20170921": "RoshHashaah",
+    "20170930": "YomKippur",
+    "20171005": "Sukkot",
+    "20171012": "ShemiiAtzeret",
+    "20180301": "Purim",
+    "20180331": "Passover",
+    "20180520": "Shavuot",
+    "20180910": "RoshHashaah",
+    "20180919": "YomKippur",
+    "20180924": "Sukkot",
+    "20181001": "ShemiiAtzeret",
+    "20190321": "Purim",
+    "20190420": "Passover",
+    "20190609": "Shavuot",
+    "20190930": "RoshHashaah",
+    "20191009": "YomKippur",
+    "20191014": "Sukkot",
+    "20191021": "ShemiiAtzeret",
+    "20200310": "Purim",
+    "20200409": "Passover",
+    "20200529": "Shavuot",
+    "20200919": "RoshHashaah",
+    "20200928": "YomKippur",
+    "20201030": "Sukkot",
+    "20201010": "ShemiiAtzeret",
+    "20210226": "Purim",
+    "20210328": "Passover",
+    "20210517": "Shavuot",
+    "20210907": "RoshHashaah",
+    "20210916": "YomKippur",
+    "20210921": "Sukkot",
+    "20210928": "ShemiiAtzeret",
+    "20220317": "Purim",
+    "20220416": "Passover",
+    "20220605": "Shavuot",
+    "20220926": "RoshHashaah",
+    "20221005": "YomKippur",
+    "20221010": "Sukkot",
+    "20221017": "ShemiiAtzeret",
+    "20230307": "Purim",
+    "20230406": "Passover",
+    "20230526": "Shavuot",
+    "20230916": "RoshHashaah",
+    "20230925": "YomKippur",
+    "20230930": "Sukkot",
+    "20231007": "ShemiiAtzeret",
+    "20240324": "Purim",
+    "20240423": "Passover",
+    "20240612": "Shavuot",
+    "20241003": "RoshHashaah",
+    "20241012": "YomKippur",
+    "20241017": "Sukkot",
+    "20241024": "ShemiiAtzeret",
+    "20250314": "Purim",
+    "20250413": "Passover",
+    "20250602": "Shavuot",
+    "20250923": "RoshHashaah",
+    "20251002": "YomKippur",
+    "20251007": "Sukkot",
+    "20251014": "ShemiiAtzeret",
+    "20260303": "Purim",
+    "20260402": "Passover",
+    "20260522": "Shavuot",
+    "20260912": "RoshHashaah",
+    "20260921": "YomKippur",
+    "20260926": "Sukkot",
+    "20261003": "ShemiiAtzeret",
+    "20270323": "Purim",
+    "20270422": "Passover",
+    "20270611": "Shavuot",
+    "20271002": "RoshHashaah",
+    "20271011": "YomKippur",
+    "20271016": "Sukkot",
+    "20271023": "ShemiiAtzeret",
+    "20280312": "Purim",
+    "20280411": "Passover",
+    "20280531": "Shavuot",
+    "20280921": "RoshHashaah",
+    "20280930": "YomKippur",
+    "20281005": "Sukkot",
+    "20281012": "ShemiiAtzeret",
+    "20290301": "Purim",
+    "20290331": "Passover",
+    "20290520": "Shavuot",
+    "20290910": "RoshHashaah",
+    "20290919": "YomKippur",
+    "20290924": "Sukkot",
+    "20291001": "ShemiiAtzeret",
+    "20300319": "Purim",
+    "20300418": "Passover",
+    "20300607": "Shavuot",
+    "20300928": "RoshHashaah",
+    "20301007": "YomKippur",
+    "20301012": "Sukkot",
+    "20301019": "ShemiiAtzeret"
+}//Jewish_Festival_Dates
+var ReservedDays = {
 
-    }
-    for (let [sdate, desc] of Object.entries(Jewish_Festival_Dates)) {
-        if (!ReservedDays[sdate]) ReservedDays[sdate] = []
-        ReservedDays[sdate].push(desc)
-    }
+}
+for (let [sdate, desc] of Object.entries(Jewish_Festival_Dates)) {
+    if (!ReservedDays[sdate]) ReservedDays[sdate] = []
+    ReservedDays[sdate].push(desc)
+}
 
 var MonthName = [
     "",
@@ -202,38 +202,19 @@ var MonthName = [
 
 
 var storage = {
-    save_notes: function () {
-        var obj = uuti.export_notes()
-        var str = JSON.stringify(obj)
-        $("#info").text("size:" + str.length)
-        localStorage.setItem("notes", str)
-        var str = JSON.stringify(obj, null, 4)
+    save_note: function (id, htms) {
+        var obj = this.get_notesObj()
+        obj[id] = htms;
+        var str2 = JSON.stringify(obj)
+        $("#info").text("size:" + str2.length)
+        localStorage.setItem("notes", str2)
     },
-    load2ui: function () {
+    get_notesObj: function () {
         var str = localStorage.getItem("notes")
-
-        if (!str) return
-        return uuti.render2ui(str)
-    },
-
-    input_save: function () {
-        var val = $("input").each(function () {
-            var val = $(this).val()
-            var id = $(this).attr("id")
-            if (id) {
-                localStorage.setItem(id, val)
-            }
-        })
-    },
-    input_load: function () {
-        var val = $("input").each(function () {
-            var id = $(this).attr("id")
-            if (id) {
-                var val = localStorage.getItem(id)
-                $(this).val(val)
-            }
-        })
-    },
+        if (!str) str = JSON.stringify({})
+        var obj = JSON.parse(str)
+        return obj
+    }
 }
 
 var uuti = {
@@ -257,11 +238,7 @@ var uuti = {
             localStorage.setItem("notes", "")
         }, 1)
     },
-    import_Notes: function () {
-        var str = $("#outx").val().trim()
-        if (str.length === 0 || str[0] !== "{") return alert("no data to table")
-        uuti.render2ui(str)
-    },
+
     render2ui: function (str) {
         var obj = JSON.parse(str)
         if (!obj) return alert("not obj:" + str)
@@ -270,35 +247,7 @@ var uuti = {
         }
         return obj
     },
-    Txa2uiCompare: function (str) {
-        var uiObj = uuti.export_notes()
-        var str = $("#outx").val().trim()
-        var txObj = JSON.parse(str)
-        if (!txObj) return alert("not obj:" + str)
 
-        var allNotes = {}
-        Object.keys(uiObj).forEach(key => allNotes[key] = 0)
-        Object.keys(txObj).forEach(key => allNotes[key] = 0)
-
-        var trs = ""
-        Object.keys(allNotes).forEach(key => {
-            var txt1 = uiObj[key], txt2 = txObj[key]
-            if (!txt1) txt1 = " "
-            if (!txt2) txt2 = " "
-            if (txt1 !== txt2) {
-                trs += `<tr><td>${key}</td><td><div class='cmpitm itm1'>${txt2}</div></td><td><div class='cmpitm itm2'>${txt1}</div></td></tr>`
-            }
-        })
-        if (trs.length === 0) return alert("identical")
-        $("#cmp").html(`<table border='1' class='cmp'><thead><tr><th>date</th><th>tx</th><th>ca</th></tr></thead><tbody>${trs}</tbody></table>`)
-        $(".cmpitm").on("click", function () {
-            $(this).toggleClass("Hili_cmp")
-            var id = $(this).parentsUntil("tbody").find("td:eq(0)").text()
-            var txt = $(this).html()
-            $(`#${id}`).html(txt)
-            storage.save_notes()
-        })
-    },
 
     increase_width: function (idlta) {
         var width = $("#tab1 td").width();
@@ -307,17 +256,7 @@ var uuti = {
         $(".noteTag").css({ "width": width })
     },
 
-    format_obj_txa: function () {
-        var val = $("#outx").val()
-        if (!val) return
-        var obj = JSON.parse(val)
-        var str = JSON.stringify(obj, null, 4)
-        $("#outx").val(str)
 
-        var w = $("#outx").width(), h = $("#outx").height()
-        w = (w >= 500) ? 300 : 510, h = (h >= 500) ? 50 : 510
-        $("#outx").css({ width: w, height: h })
-    },
 
 
     svrApi: {
@@ -420,6 +359,7 @@ var calendar3yr = {
         //$("#year").html(yr)
         $(`${eid} caption`).text(yr);
         $(`${eid} caption`).on("click", function () {
+            var notesObj = storage.get_notesObj()
             var y4 = $(this).text().trim()
             var _THIS = this
             $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
@@ -432,7 +372,16 @@ var calendar3yr = {
                         var yobj = ret.out.data[y4]
                         if (yobj && "object" === typeof (yobj)) {
                             for ([mmdd, txt] of Object.entries(yobj)) {
-                                $(`#${y4 + mmdd}`).html(txt)
+                                var sdiff = ""
+                                var id = y4 + mmdd
+                                if (id in notesObj) {
+                                    var storedtxt = notesObj[id]
+                                    if (storedtxt != txt) {
+                                        sdiff = "diff_note"
+                                        txt = storedtxt
+                                    }
+                                }
+                                $(`#${id}`).html(txt).addClass(sdiff)
                             }
                         } else {
                             alert("loaded err.")
@@ -456,9 +405,6 @@ var calendar3yr = {
         return $(`${eid} tbody`)
     },
     gen_all_tbodies_evt: function () {
-        $(".noteTag").on("keyup", function () {
-            storage.save_notes()
-        })
 
         //set noteTag width
         var width = $("td").width()
@@ -505,12 +451,16 @@ var calendar3yr = {
             console.log(rect)
 
             var width = $("#tab1").width()
+            $("#editorboard").width(width)
+            console.log("width", width)
+
             $("#editorboard").css({
                 left: 15 + rect.left,
+                top: window.scrollY + rectTag.top + rectTag.height,   //20 + evt.pageY,
                 width: width-50,
-                top:  window.scrollY + rectTag.top + rectTag.height  //20 + evt.pageY,
             })
                 .focus()
+
 
         })
         $(".dayNum").on("click", function () {
@@ -532,9 +482,9 @@ var calendar3yr = {
             var id = $(".hili_notes").attr("id")
             var tx = $("#editxt").html().trim()
             var y4md = $(".hili_notes").attr("y4md")
-            var y4 = uuti.svrApi.getY4(y4md)
-            var mmdd = uuti.svrApi.getMMDD(y4md)
-            console.log(id, ":", y4md, tx)
+            var y4 = uuti.svrApi.getY4(id)
+            var mmdd = uuti.svrApi.getMMDD(id)
+            console.log(id, ":", id, tx)
             uuti.svrApi.MyBiblicalDiary_load(y4, mmdd, function (ret) {
                 $(_THIS).removeClass("hili_run_start").addClass("hili_run_stop")
                 console.log(ret)
@@ -554,6 +504,7 @@ var calendar3yr = {
                         if (confirm(`${msg}\n-Ok to overwite current text?`)) {
                             //loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
                             $("#editxt").html(loadedtxt).addClass("afterload")
+                            $(`#${id}`).html(loadedtxt)
                         }
                     }
                 } else {
@@ -601,7 +552,7 @@ var calendar3yr = {
             var htms = $(this).html().replace(/\&nbsp\;/g, " ")
             var id = $("#edi_showDate").text()
             $(`#${id}`).html(htms)
-            storage.save_notes()
+            storage.save_note(id, htms)
             $("#outx").val(htms)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
@@ -656,20 +607,21 @@ var calendar3yr = {
             var str = `mailto:${smail}?subject=https://bsnp21.github.io/tools/calendars/calendar3yr.htm&body=${encodeURIComponent(sbody)}`
             $(this).attr("href", str)
 
-            storage.input_save()
-
         })
 
         var api = new BsnpRestApi()
         $("#menuPanelToggler").text(api.urlParams.get("repo"))
         $("#DiarySite").attr("href", `../myExt_Diary.htm${window.location.search}`)
-        storage.input_load()
     },
     post_gen: function () {
-        var storageObj = storage.load2ui()
         this.gen_all_tbodies_evt()
         this.gen_evt_edit()
         this.gen_evt_others()
+
+        //var width = $("#tab1").width()
+        //$("#editorboard").width(width)
+
+        $("#tab1 caption").trigger("click")
     },
     end: function () {
         setTimeout(function () {
