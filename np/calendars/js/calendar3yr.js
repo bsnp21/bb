@@ -256,7 +256,7 @@ var uuti = {
         $(".noteTag").css({ "width": width })
     },
 
-    refresh_notes_except_elemID: function (eid, htm) {
+    synch_note_except_elemID: function (eid, htm) {
         var sWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         var iweek = $(".noteTag.hili_notes").parent().index() - 1;
         var id = $(".noteTag.hili_notes").attr("id")
@@ -462,7 +462,7 @@ var calendar3yr = {
             //$("#editHtm").html(htm)
             //$("#editxar").val(htm)
             //$("#editinf").html(htm.length)
-            uuti.refresh_notes_except_elemID('', htm)
+            uuti.synch_note_except_elemID('', htm)
 
 
 
@@ -530,7 +530,7 @@ var calendar3yr = {
                             $("#editHtm").addClass("afterload")
                             //$("#editxar").val(loadedtxt)
                             //$("#editinf").html(loadedtxt.length)
-                            refresh_notes_except_elemID('', loadedtxt)
+                            synch_note_except_elemID('', loadedtxt)
                         }
                     }
                 } else {
@@ -562,7 +562,7 @@ var calendar3yr = {
             var ht = $('#editHtm').append('<ol><li></li></ol>').html()
             //$("#editxar").val(ht)
             //$("#editinf").text(ht.length)
-            uuti.refresh_notes_except_elemID('', ht)
+            uuti.synch_note_except_elemID('', ht)
         })
         ///////////////////////////////
 
@@ -579,7 +579,7 @@ var calendar3yr = {
                 //return true;
             }
             var htms = $(this).html().replace(/\&nbsp\;/g, " ")
-            var id = uuti.refresh_notes_except_elemID("editHtm", htms)
+            var id = uuti.synch_note_except_elemID("editHtm", htms)
             storage.save_note(id, htms)
             //$(`#${id}`).html(htms)
             //$("#editxar").val(htms)
@@ -594,7 +594,7 @@ var calendar3yr = {
         $("#editxar").slideToggle()
         $("#editxar").on("keyup", function () {
             var htms = $(this).val()
-            uuti.refresh_notes_except_elemID("editxar", htms)
+            uuti.synch_note_except_elemID("editxar", htms)
             //$("#editHtm").html(htms)
             //$("#editinf").text(htms.length)
         }).on("click", function (evt) {
