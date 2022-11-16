@@ -256,6 +256,24 @@ var uuti = {
         $(".noteTag").css({ "width": width })
     },
 
+    refresh_notes_except_elemID: function (eid, htm) {
+        var sWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        var iweek = $(".noteTag.hili_notes").parent().index() - 1;
+        var id = $(".noteTag.hili_notes").attr("id")
+        if (!id) return alert("err id=" + id)
+        if (iweek >= 0) {
+            var sid = id.slice(0, 4) + "-" + id.slice(4) + ", " + sWeek[iweek]
+            $("#edi_showDate").text(sid)
+        }
+
+        if (eid !== id) $(`#${id}`).html(htm)
+        if (eid !== "editHtm") $("#editHtm").html(htm)
+        if (eid !== "editxar") $("#editxar").val(htm)
+
+        $("#editinf").html(htm.length)
+        return id;
+    },
+
 
 
 
@@ -434,16 +452,17 @@ var calendar3yr = {
             }
 
             //present editorboard
-            var sWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-            var iweek = $(this).parent().index() - 1;
-            var sid = $(this).attr("id")
-            sid = sid.slice(0,4)+"-"+sid.slice(4) + ", " + sWeek[iweek]
+            // var sWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+            // var iweek = $(this).parent().index() - 1;
+            // var sid = $(this).attr("id")
+            // sid = sid.slice(0, 4) + "-" + sid.slice(4) + ", " + sWeek[iweek]
+            // $("#edi_showDate").text(sid)
 
             var htm = $(this).html()
-            $("#editHtm").html(htm)
-            $("#editxar").val(htm)
-            $("#editinf").html(htm.length)
-            $("#edi_showDate").text(sid)
+            //$("#editHtm").html(htm)
+            //$("#editxar").val(htm)
+            //$("#editinf").html(htm.length)
+            uuti.refresh_notes_except_elemID('', htm)
 
 
 
@@ -451,17 +470,17 @@ var calendar3yr = {
             var rectTag = $(this)[0].getBoundingClientRect();
             console.log("rectTag", rectTag)
             console.log("evt.pageY", evt.pageY)
-            var rect = $("#tab1")[0].getBoundingClientRect();
-            console.log(rect)
+            var rectTable = $("#tab1")[0].getBoundingClientRect();
+            console.log(rectTable)
 
-            var width = $("#tab1").width()
-            $("#editorboard").width(width)
-            console.log("width", width)
+            //var width = $("#tab1").width()
+            //$("#editorboard").width(width)
+            //console.log("width", width)
 
             $("#editorboard").css({
-                left: 15 + rect.left,
+                left: 15 + rectTable.left,
                 top: window.scrollY + rectTag.top + rectTag.height,   //20 + evt.pageY,
-                width: width - 50,
+                //width: width - 50,
             })
                 .focus()
 
@@ -507,10 +526,11 @@ var calendar3yr = {
 
                         if (confirm(`${msg}\n-Ok to overwite current text?`)) {
                             //loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
-                            $(`#${id}`).html(loadedtxt)
-                            $("#editHtm").html(loadedtxt).addClass("afterload")
-                            $("#editxar").val(loadedtxt)
-                            $("#editinf").html(loadedtxt.length)
+                            //$(`#${id}`).html(loadedtxt)
+                            $("#editHtm").addClass("afterload")
+                            //$("#editxar").val(loadedtxt)
+                            //$("#editinf").html(loadedtxt.length)
+                            refresh_notes_except_elemID('', loadedtxt)
                         }
                     }
                 } else {
@@ -539,7 +559,10 @@ var calendar3yr = {
             $(this).blur()
             e.stopImmediatePropagation()
             //$('#editxt').focus()
-            $('#editHtm').append('<ol><li></li></ol>');
+            var ht = $('#editHtm').append('<ol><li></li></ol>').html()
+            //$("#editxar").val(ht)
+            //$("#editinf").text(ht.length)
+            uuti.refresh_notes_except_elemID('', ht)
         })
         ///////////////////////////////
 
@@ -556,11 +579,11 @@ var calendar3yr = {
                 //return true;
             }
             var htms = $(this).html().replace(/\&nbsp\;/g, " ")
-            var id = $("#edi_showDate").text()
-            $(`#${id}`).html(htms)
+            var id = uuti.refresh_notes_except_elemID("editHtm", htms)
             storage.save_note(id, htms)
-            $("#editxar").val(htms)
-            $("#editinf").text(htms.length)
+            //$(`#${id}`).html(htms)
+            //$("#editxar").val(htms)
+            //$("#editinf").text(htms.length)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
             var htms = $(this).html()
@@ -571,8 +594,9 @@ var calendar3yr = {
         $("#editxar").slideToggle()
         $("#editxar").on("keyup", function () {
             var htms = $(this).val()
-            $("#editHtm").html(htms)
-            $("#editinf").text(htms.length)
+            uuti.refresh_notes_except_elemID("editxar", htms)
+            //$("#editHtm").html(htms)
+            //$("#editinf").text(htms.length)
         }).on("click", function (evt) {
             evt.stopImmediatePropagation()
             return false
