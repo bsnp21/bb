@@ -385,12 +385,11 @@ var calendar3yr = {
                         else if( loadedtxt.indexOf(tx) >= 0) {msg = `loaded txt(${loadedtxt.length}) contains current txt(${tx.length}).`}
                         else{ msg = `loaded txt(${loadedtxt.length}) differs to current txt(${tx.length}).` }
                     
-                        if (confirm(`${msg}\n-Ok to update loaded text`)) {
+                        if (confirm(`${msg}\n-Ok to overwite current text`)) {
                             //loadedtxt += "<div class='mergedtxt'>" + tx + "</div>"
                             $("#editxt").html(loadedtxt).addClass("afterload")
                         }
                     }
-
                 } else {
                     alert("loaded empty.")
                 }
@@ -399,6 +398,7 @@ var calendar3yr = {
         $("#SaveTxt").on("click", function (e) {
             var _THIS = this
             e.stopImmediatePropagation()
+            if(!confirm("Save it?")) return;
             $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
             $(this).addClass("hili_run_start")
             $(".afterload").removeClass("afterload")
