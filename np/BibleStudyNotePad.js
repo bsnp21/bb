@@ -2068,7 +2068,8 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         var mat = repo.match(/.+[\/](\w+)\.git$/)
         if(mat){
             //alert(mat[1])
-            $(this).attr("href", `./myExt_Diary.htm${window.location.search}&repo=${mat[1]}`)
+            //$(this).attr("href", `./myExt_Diary.htm${window.location.search}&repo=${mat[1]}`)
+            $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}&repo=${mat[1]}`)
         }else{
             alert("repousr not found in:" + repo)
         }
