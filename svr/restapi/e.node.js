@@ -30,6 +30,10 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 
 var validator = require("email-validator");
- 
-var ret = validator.validate("test@email.com"); // true
+
+var emails=["test@gmail.com","xyzzzzzzzzzzzzz@gmail.com"]
+var ret = validator.validate("test@gmail.com"); // true
 console.log(ret)
+emails.forEach(function(email){
+    console.log(email, validator.validate(email))
+})
