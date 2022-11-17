@@ -37,3 +37,7 @@ console.log(ret)
 emails.forEach(function(email){
     console.log(email, validator.validate(email))
 })
+
+const myArgs = process.argv.slice(2);
+console.log('myArgs: ', myArgs);
+console.log(validator.validate(myArgs))
