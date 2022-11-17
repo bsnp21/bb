@@ -37,7 +37,9 @@ console.log(ret)
 emails.forEach(function (email) {
     console.log(email, validator.validate(email))
 
-    emailCheck(email)
+    emailCheck(email,{
+        timeout:5000
+    })
         .then(function (res) {
             // Returns "true" if the email address exists, "false" if it doesn't.
             console.log("check",email, res);
