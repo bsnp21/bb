@@ -27,7 +27,9 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 
 var validator = require("email-validator");
+var emailExistence = require("email-existence");
 var emailCheck = require('email-check');
+
 const myArgs = process.argv.slice(2);
 
 var emails = ["test@gmail.com", "xyzzzzzzzzzzzzz@gmail.com"]
@@ -52,6 +54,11 @@ emails.forEach(function (email) {
                 // Decide what to do with other errors.
             }
         });
+
+    ///
+    emailExistence.check(email, function(error, response){
+        console.log(email, 'res: '+response);
+    });
 
 })
 
