@@ -32,14 +32,14 @@ var sver = "gmail"
 var transporter = nodemailer.createTransport({
   service: sver,
   auth: {
-    user: 'wdingsoft'+'@'+sver+'.com',
+    user: 'wdinge'+'@'+sver+'.com',
     pass: 'Matthew'+'2237!'
   }
 });
 
 var mailOptions = {
   from: 'youremail@gmail.com',
-  to: 'wdingsoft@gmail.com',
+  to: 'wdinge@gmail.com',
   subject: 'Sending Email using Node.js',
   text: 'That was easy!'
 };
