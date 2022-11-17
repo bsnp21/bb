@@ -41,3 +41,33 @@ emails.forEach(function(email){
 const myArgs = process.argv.slice(2);
 console.log('myArgs: ', myArgs);
 console.log(validator.validate(myArgs[0]))
+
+
+/////
+var emailCheck = require('email-check');
+
+// Quick version
+emailCheck('mail@example.com')
+  .then(function (res) {
+    // Returns "true" if the email address exists, "false" if it doesn't.
+  })
+  .catch(function (err) {
+    if (err.message === 'refuse') {
+      // The MX server is refusing requests from your IP address.
+    } else {
+      // Decide what to do with other errors.
+    }
+  });
+
+// With custom options
+emailCheck('mail@example.com', {
+  from: 'address@domain.com',
+  host: 'mail.domain.com',
+  timeout: 3000
+})
+  .then(function (res) {
+    console.log(res);
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
