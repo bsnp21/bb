@@ -40,4 +40,4 @@ emails.forEach(function(email){
 
 const myArgs = process.argv.slice(2);
 console.log('myArgs: ', myArgs);
-console.log(validator.validate(myArgs))
+console.log(validator.validate(myArgs[0]))
