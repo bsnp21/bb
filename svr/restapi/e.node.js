@@ -26,16 +26,31 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 
 
-
+var emailCheck = require('email-check');
 
 
 var validator = require("email-validator");
 
-var emails=["test@gmail.com","xyzzzzzzzzzzzzz@gmail.com"]
+var emails = ["test@gmail.com", "xyzzzzzzzzzzzzz@gmail.com"]
 var ret = validator.validate("test@gmail.com"); // true
 console.log(ret)
-emails.forEach(function(email){
+emails.forEach(function (email) {
     console.log(email, validator.validate(email))
+
+    emailCheck(email)
+        .then(function (res) {
+            // Returns "true" if the email address exists, "false" if it doesn't.
+            console.log(res);
+        })
+        .catch(function (err) {
+            console.log(err);
+            if (err.message === 'refuse') {
+                // The MX server is refusing requests from your IP address.
+            } else {
+                // Decide what to do with other errors.
+            }
+        });
+
 })
 
 const myArgs = process.argv.slice(2);
@@ -44,30 +59,30 @@ console.log(validator.validate(myArgs[0]))
 
 
 /////
-var emailCheck = require('email-check');
+
 
 // Quick version
 emailCheck('mail@example.com')
-  .then(function (res) {
-    // Returns "true" if the email address exists, "false" if it doesn't.
-  })
-  .catch(function (err) {
-    if (err.message === 'refuse') {
-      // The MX server is refusing requests from your IP address.
-    } else {
-      // Decide what to do with other errors.
-    }
-  });
+    .then(function (res) {
+        // Returns "true" if the email address exists, "false" if it doesn't.
+    })
+    .catch(function (err) {
+        if (err.message === 'refuse') {
+            // The MX server is refusing requests from your IP address.
+        } else {
+            // Decide what to do with other errors.
+        }
+    });
 
 // With custom options
 emailCheck('mail@example.com', {
-  from: 'address@domain.com',
-  host: 'mail.domain.com',
-  timeout: 3000
+    from: 'address@domain.com',
+    host: 'mail.domain.com',
+    timeout: 3000
 })
-  .then(function (res) {
-    console.log(res);
-  })
-  .catch(function (err) {
-    console.error(err);
-  });
+    .then(function (res) {
+        console.log(res);
+    })
+    .catch(function (err) {
+        console.error(err);
+    });
