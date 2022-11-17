@@ -26,6 +26,37 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 
 
+var nodemailer = require('nodemailer');
+
+var sver = "gmail"
+var transporter = nodemailer.createTransport({
+  service: sver,
+  auth: {
+    user: 'wdingsoft'+'@'+sver+'.com',
+    pass: 'Matthew'+'2237!'
+  }
+});
+
+var mailOptions = {
+  from: 'youremail@gmail.com',
+  to: 'wdingsoft@yahoo.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
+
+
+///////////
+
 var validator = require("email-validator");
 var emailExistence = require("email-existence");
 var emailCheck = require('email-check');
