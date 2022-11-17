@@ -28,8 +28,10 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 
 var validator = require("email-validator");
 var emailCheck = require('email-check');
+const myArgs = process.argv.slice(2);
 
 var emails = ["test@gmail.com", "xyzzzzzzzzzzzzz@gmail.com"]
+emails.push(myArgs[0])
 var ret = validator.validate("test@gmail.com"); // true
 console.log(ret)
 emails.forEach(function (email) {
@@ -51,6 +53,6 @@ emails.forEach(function (email) {
 
 })
 
-const myArgs = process.argv.slice(2);
+
 console.log('myArgs: ', myArgs);
 
