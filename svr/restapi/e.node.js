@@ -40,7 +40,7 @@ emails.forEach(function (email) {
     emailCheck(email)
         .then(function (res) {
             // Returns "true" if the email address exists, "false" if it doesn't.
-            console.log(email, res);
+            console.log("check",email, res);
         })
         .catch(function (err) {
             console.log(email, err);
