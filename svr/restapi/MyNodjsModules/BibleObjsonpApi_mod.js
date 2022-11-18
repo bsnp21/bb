@@ -548,8 +548,8 @@ var ApiJsonp_BibleObj = {
             //: unlimited write size. 
             var userProject = new BibleObjGituser()
             //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
-            var proj = userProject.Proj_parse_usr_login(inp)
-            if (!proj) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
+            inp.out.login = userProject.Proj_parse_usr_login(inp)
+            if (inp.out.login.err) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             inp.out.state.SSID = null;
