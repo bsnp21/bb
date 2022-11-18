@@ -917,8 +917,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     }
     return this.m_BaseGitUser.Set_Gitusr(this.m_usr.repopath, this.m_usr.passcode)
 }
-BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
-
+BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
 
     console.log("========__Proj_parse_usr_login__", inp)
     if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {

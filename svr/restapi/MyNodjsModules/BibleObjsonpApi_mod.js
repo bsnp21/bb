@@ -548,21 +548,12 @@ var ApiJsonp_BibleObj = {
             //: unlimited write size. 
             var userProject = new BibleObjGituser()
             //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
-            inp.out.login = userProject.Proj_parse_usr_login(inp)
+            inp.out.login = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
             if (inp.out.login.err) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
-            inp.out.state.SSID = null;
-            if (inp.out.state.bEditable) {
-                if (null === userProject.m_BaseGitUser.git_push_test()) {
-                    //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
-                    //console.log("git_push_test failed.!!!!!")
-                    inp.out.state.FailedTest = "git_push_test failed.!!!!!."
-                    userProject.m_BaseGitUser.Destroy_proj()
-                } else {
-                    inp.out.state.SSID = userProject.Session_create()
-                    console.log("Session_create ==", inp.out.state.SSID)
-                }
+            if(inp.out.login.ok){
+                inp.out.state = inp.out.login.ok
+                inp.out.state.SSID = inp.out.login.ssid
             }
         })
     },
