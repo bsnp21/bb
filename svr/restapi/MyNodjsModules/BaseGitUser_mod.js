@@ -573,7 +573,7 @@ function GitSponsor(ownername) {
 GitSponsor.prototype.gh_repo_list_Obj_Sponsor = function () {
     var sponsor_git_usr = "bsnp21"
     var istart = this.sponsor_git_usr.length + 1
-    var str = BaseGUti.execSync_Cmd("gh repo list --json url").toString()
+    var str = BaseGUti.execSync_Cmd("gh repo list --json nameWithOwner").toString()
     console.log("gh repo list:", str)
     var lines = str.split(/[\r|\n]/)
     var usrsInfo = {}
