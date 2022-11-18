@@ -613,10 +613,18 @@ cd ..
     console.log("git_clogh_repo_createne_cmd...")
     var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
     console.log("ret", ret)
+
     return ret
 }
 
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
+
+
+    var ret = BaseGUti.execSync_Cmd("gh repo list").toString()
+    console.log("ret", ret)
+
+
+
 
     if (repopath.indexOf("https") < 0) {
         var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
