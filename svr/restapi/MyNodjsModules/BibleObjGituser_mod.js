@@ -945,16 +945,16 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
 
     console.log("========__Proj_parse_usr_login__", inp)
     if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
-        return { err: inp.par.repopath + ": not exist." }
+        return { err: { msg: inp.par.repopath + ": not exist." } }
     }
     this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
     this.m_BaseGitUser.Deploy_proj()
     var ar = this.m_BaseGitUser.get_repo_salts()
     if (ar.indexOf(inp.par.passcode) < 0) {
-        return { err: "password error." }
+        return { err: ["password error.", ar[1]] }
     }
     var ret = this.m_BaseGitUser.Check_proj_state()
-    return {ok: ret}
+    return { ok: ret }
 }
 
 BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
@@ -1046,7 +1046,7 @@ BibleObjGituser.prototype.Session_create = function () {
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
-     //   ttl = parseInt(this.m_inp.usr.ttl)
+    //   ttl = parseInt(this.m_inp.usr.ttl)
     //}
 
     NCache.Set(ssid_b64, this.m_inp.usr, ttl)

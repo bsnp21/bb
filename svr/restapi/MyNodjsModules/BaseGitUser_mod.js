@@ -626,8 +626,8 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var dir = this.get_host_usr_dir()
     if (!hintword) hintword = ""
+    var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
     var commit_msg = this.get_usr_git_dir(".salts")
-    var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.
     var gh_repo_create = `
 # create my-project and clone 
 echo ${dir}

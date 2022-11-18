@@ -286,11 +286,11 @@
         api.ApiUsrAccount_login(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            if (rob.out.login.err) {
+            if (rob.out.login) {
                 $("#errmsg").html(rob.out.login.err)
             } else {
                 var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
-                window.opn(ur, "_target")
+                window.open(ur, "_target")
             }
 
             if (cbf) cbf(rob)
