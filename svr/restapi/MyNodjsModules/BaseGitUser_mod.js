@@ -589,7 +589,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 }
 
 
-BaseGitUser.prototype.gh_repo_create = function (username, password) {
+BaseGitUser.prototype.gh_repo_create = function (username) {
     var dir = this.get_host_usr_dir()
     var gh_repo_create = `
 # create my-project and clone 
@@ -606,9 +606,9 @@ sudo -S git push -u origin main
 cd ..
     `
     console.log("git_clogh_repo_createne_cmd...")
-    inp.out.gh_repo_create = gh_repo_create
     var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
     console.log("ret", ret)
+    return ret
 }
 
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
