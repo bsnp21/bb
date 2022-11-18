@@ -49,7 +49,7 @@
             padding: 1px 10px 0px 10px;
             margin-left: auto;
             margin-right: auto;
-            width: 300px;
+            width: 250px;
         }
 
         .centered_elem {
@@ -140,9 +140,8 @@
 
     <div id="input_area">
         <form action="">
-            <h3 style="text-align: center;margin-top: 10px;" id="GitInfo">Git Info</h3>
-
-
+       
+            <br>
 
             <a id="">Username:</a> (<font color='red'>required</font>)<br>
             <input id="repopath" maxlength="120" class="inputxt" value=""
@@ -154,13 +153,8 @@
 
 
 
-
-
-
-
-
             <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)
-            <input id="passcode" type="password" maxlength="120" class="inputxt" value=""></input><a
+            <input id="passcode" type="text" maxlength="120" class="inputxt" value=""></input><a
                 class="clearout">X</a>
 
 
@@ -170,24 +164,17 @@
 
 
                 <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Log-in</button>
-                <a id="CheckIn">&nbsp;&nbsp;&nbsp; check-status </a> 
-                <a id="SignOn">&nbsp;&nbsp;&nbsp; Sign-on </a> 
+                <a id="CheckIn">&nbsp;&nbsp;&nbsp; Status </a> 
+                <a id="SignOn">&nbsp;&nbsp;&nbsp; Create </a> 
                 <br>
                 <font color='red'><a id="errmsg"></a></font>
-                <div style="float:right;">
-
-
-                    <a id='Test' onclick="$('#testPanel').toggle();">.</a>
-                </div>
+               
+                
             </div>
             <br>
         </form>
 
     </div>
-
-    <div style="text-align: center;margin-top: 0px;" onclick="$('#txtarea').val('');" id="otb">...</div>
-    
-    
 
 
 
@@ -205,57 +192,6 @@
 
     $(function () {
 
-
-        $("#txtarea").hide()
-        $("#toggle_txtarea").on("click", function () {
-            $("#txtarea").toggle()
-        })
-
-        $("#label_password").on("click", function () {
-            var typns = $("#passcode").attr("type")
-            typns = ("password" === typns) ? "text" : "password"
-            $("#passcode").attr("type", typns)
-        })
-
-        $("#required_password_test").on("click", function () {
-            var repopath = $("#repopath").val()
-            var ret = Uti.validate_repository_url(repopath)
-            $("#passcode").val(ret.repo)
-        })
-
-
-
-        $(".inputxt").on("focus", function () {
-            $(".HiliFocused").removeClass('HiliFocused')
-            $(this).addClass("HiliFocused")
-        }).on("blur", function () {
-            //$(this).removeClass("HiliFocused")
-            $(".HiliFocused").removeClass('HiliFocused')
-        })
-
-        $("#GitInfo").on("click", function () {
-            //PageUti.Repositories_History("#account_history", 1)
-        }).on("blur", function () {
-            //PageUti.Repositories_History("#account_history", 0)
-        })
-
-        $("#repodesc").on("focus", function () {
-            //PageUti.Repositories_History("#account_history", 2)
-        })
-        $("#passcode").on("focus", function () {
-            //PageUti.Repositories_History("#account_history", -1)
-        })
-
-
-
-        $("#respdesc_history").on("click", function () {
-            //PageUti.Repositories_History("#account_history", 2)
-        })
-
-        //Uti.visual_check_repository("#Format_Check")
-
-
-
     })
 </script>
 <script>
@@ -266,8 +202,9 @@
 
         init_by_url_params()
 
-        $("#otb").on("click", function () {
-            //PageUti.Repositories_History("#account_history", 1)
+  
+        $(".clearout").on("click",function(){
+            $(this).prev().val("")
         })
 
         $(".signinBtn").removeAttr("disabled")
