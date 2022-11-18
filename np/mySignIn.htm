@@ -222,7 +222,6 @@
             var paths = $("#repopath").val()
             sign_in(function (rob, ur) {
                 var tb = PageUti.Repo_fstat_table(rob)
-                //MyStorage.SSID(rob.out.state.SSID)
                 var a = `<a href='${ur}' target="_self">Successfully checked in<br>${paths} <br>click here to continue to log in</a>`
                 $("#errmsg").html(a)
                 $("#output").html(tb)
@@ -234,7 +233,6 @@
             var paths = $("#repopath").val()
             create_acct(function (rob, ur) {
                 var tb = PageUti.Repo_fstat_table(rob)
-                //MyStorage.SSID(rob.out.state.SSID)
                 var a = `<a href='${ur}' target="_self">Successfully checked in<br>${paths} <br>click here to continue to log in</a>`
                 $("#errmsg").html(a)
                 $("#output").html(tb)
@@ -276,9 +274,9 @@
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             if (rob) {
-                failure(rob)
-            } else {
                 success(rob)
+            } else {
+                failure(rob)
             }
         })
     }
