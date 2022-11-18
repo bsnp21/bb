@@ -661,6 +661,7 @@ cd ..
 BaseGitUser.prototype.get_repo_salts = function (u) {
     var fname = this.get_usr_git_dir(".salts")
     var txt = fs.readFileSync(fname)
+    console.log("salt", fname, txt)
     if(!txt) return []
     var ar = JSON.parse(txt)
     return ar
