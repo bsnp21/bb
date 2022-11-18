@@ -125,7 +125,7 @@
     </h2>
 
     <h3 id="Enter" style="text-align: center;margin-top: 10px;">Sign-in Page</h3>
-    <div id="output" style="text-align: center;margin-top: 10px;">.</div>
+    
 
 
 
@@ -164,7 +164,7 @@
 
 
                 <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Log-in</button>
-                <a id="CheckIn">&nbsp;&nbsp;&nbsp; Status </a> 
+                <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a> 
                 <a id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create </a> 
                 <br>
                 <font color='red'><a id="errmsg"></a></font>
@@ -174,6 +174,7 @@
             <br>
         </form>
 
+        <div id="output" style="text-align: center;margin-top: 10px;">.----.</div>
     </div>
 
 
@@ -215,16 +216,18 @@
             }, failure)
         })
 
-        $("#CheckIn").on("click", function () {
-            $(this).toggle("slow")
+        $("#Check_Status").on("click", function () {
+            //$(this).toggle("slow")
+            $("#output").html("--")
             var paths = $("#repopath").val()
             sign_in(function (rob, ur) {
                 var tb = PageUti.Repo_fstat_table(rob)
                 //MyStorage.SSID(rob.out.state.SSID)
                 var a = `<a href='${ur}' target="_self">Successfully checked in<br>${paths} <br>click here to continue to log in</a>`
-                $("#Enter").html(a)
+                $("#errmsg").html(a)
                 $("#output").html(tb)
-                $("#input_area, #account_history_table").hide()
+                //$("#errmsg").html(a+tb)
+                //$("#input_area, #account_history_table").hide()
             }, failure)
         })
         $("#SignOnCreate").on("click", function () {
@@ -233,9 +236,9 @@
                 var tb = PageUti.Repo_fstat_table(rob)
                 //MyStorage.SSID(rob.out.state.SSID)
                 var a = `<a href='${ur}' target="_self">Successfully checked in<br>${paths} <br>click here to continue to log in</a>`
-                $("#Enter").html(a)
+                $("#errmsg").html(a)
                 $("#output").html(tb)
-                $("#input_area, #account_history_table").hide()
+                //$("#input_area, #account_history_table").hide()
             }, failure)
         })
 
@@ -281,7 +284,7 @@
     }
     $("#errmsg").on("click", function () {
         $("*[disabled").removeAttr("disabled")
-        $("#CheckIn").show("slow")
+        //$("#CheckIn").show("slow")
     })
     function failure() {
         $("#errmsg").text("failed to sign in.")
