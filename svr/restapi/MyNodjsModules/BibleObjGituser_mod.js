@@ -1039,7 +1039,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 
 
 BibleObjGituser.prototype.Session_create = function () {
-    var gitdir = this.m_BaseGitUser.get_usr_git_dir()
+    //var gitdir = this.m_BaseGitUser.get_usr_git_dir()
 
 
     var ssid = this.m_BaseGitUser.m_gitinf.ownerId //usr_proj
@@ -1048,6 +1048,7 @@ BibleObjGituser.prototype.Session_create = function () {
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
     //   ttl = parseInt(this.m_inp.usr.ttl)
     //}
+    console.log("ssid=",ssid, ssid_b64, this.m_inp.usr, ttl), 
 
     NCache.Set(ssid_b64, this.m_inp.usr, ttl)
     console.log("Session_create:", ssid, ssid_b64, this.m_inp.usr)
