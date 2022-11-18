@@ -556,6 +556,8 @@ var BaseGUti = {
             state: { bGitDir: -1, bMyojDir: -1, bDatDir: -1, bEditable: -1, bRepositable: -1 }
         }
     },
+
+
     //// BaseGUti /////
 }
 
@@ -563,7 +565,39 @@ var BaseGUti = {
 
 
 
+function GitSponsor(ownername) {
+    this.sponsor_git_usr = "bsnp21"
+    var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
+    this.sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
+}
+GitSponsor.prototype.gh_repo_list_Obj_Sponsor = function () {
+    var sponsor_git_usr = "bsnp21"
+    var istart = this.sponsor_git_usr.length + 1
+    var str = BaseGUti.execSync_Cmd("gh repo list").toString()
+    console.log("gh repo list:", str)
+    var lines = str.split(/[\r|\n]/)
+    var usrsInfo = {}
+    for (var i = 0; i < lines.length; i++) {
+        var lin = lines[i]
+        if (!lin) continue
+        var ar = lin.split(/[\t|\s]+/)
+        console.log(i, ar)
+        usrsInfo[ar[0].slice(istart)] = ar.slice(1)
+    }
+    console.log("lines", lines)
+    console.log("usrsInfo", usrsInfo)
+    return usrsInfo
+}
+GitSponsor.prototype.git_repo_user_url = function (repopath) {
+    //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
+    //this.m_giturl = `https://${sponsor_git_usr}:${sponsor_git_pat}@github.com/${sponsor_git_usr}/${this.m_repos}.git`
 
+    if (repopath.indexOf("https") < 0) {
+        var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
+        repopath = `https://github.com/${sponsor_git_usr}/${sponser_git_rep}.git`
+    }
+    return repopath
+}
 
 
 
@@ -617,41 +651,22 @@ cd ..
     return ret
 }
 
+BaseGitUser.prototype.Check_username = function (repopath, passcode) {
+    var sponsor_git_usr = "bsnp21"
+
+    var usrsinfo = BaseGitUser.gh_repo_list_Obj_Sponsor(sponsor_git_usr)
+    if (repopath in usrsinfo) {
+        return true;
+    }
+    return false
+}
+
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
 
-
-    var sponsor_git_usr = "bsnp21"
-    var istart = sponsor_git_usr.length
-    var str = BaseGUti.execSync_Cmd("gh repo list").toString()
-    console.log("gh repo list:", str)
-    var lines = str.split(/[\r|\n]/)
-    var usrsInfo = {}
-    for (var i = 0; i < lines.length; i++) {
-        var lin = lines[i]
-        if (!lin) continue
-        var ar = lin.split(/[\t|\s]+/)
-        console.log(i, ar)
-        usrsInfo[ar[0].slice(istart)] = ar.slice(1)
-    }
-    console.log("lines", lines)
-    console.log("usrsInfo", usrsInfo)
-
-
-
-
-
-    if (repopath.indexOf("https") < 0) {
-        var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
-        var sponsor_git_usr = "bsnp21"
-        repopath = `https://github.com/${sponsor_git_usr}/${sponser_git_rep}.git`
-        var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
-        passcode = "ghp_" + part.join("").replace(/[\-]/g, "")
-    }
-
-
-    //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
-    //this.m_giturl = `https://${sponsor_git_usr}:${sponsor_git_pat}@github.com/${sponsor_git_usr}/${this.m_repos}.git`
-
+    //hijack
+    var sponser = new GitSponsor()
+    repopath = sponser.git_repo_user_url(repopath)
+    passcode = sponser.sponsor_git_pat;
 
     ////////////
 

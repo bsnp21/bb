@@ -15,7 +15,7 @@ const crypto = require('crypto')
 
 const NodeCache = require("node-cache");
 
-var { BaseGitUser, WorkingRootNodeName} = require("./BaseGitUser_mod");
+var { BaseGitUser, WorkingRootNodeName } = require("./BaseGitUser_mod");
 
 
 //const WorkingRootNodeName = "bist"
@@ -898,6 +898,7 @@ var BibleObjGituser = function () {
 
 BibleObjGituser.prototype.Proj_usr_account_create = function (inp) {
     console.log("========Proj_usr_account_create", inp)
+    this.m_UserProjFileSys.Check_username(inp.par.repopath, inp.par.passcode)
     this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath, inp.par.passcode)
     this.m_UserProjFileSys.gh_repo_create(inp.par.repopath)
     var ret = this.m_UserProjFileSys.Check_proj_state()
@@ -1022,7 +1023,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 BibleObjGituser.prototype.Session_create = function () {
     var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
 
-    
+
     var ssid = this.m_UserProjFileSys.m_gitinf.ownerId //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
