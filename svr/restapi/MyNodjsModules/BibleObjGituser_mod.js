@@ -900,7 +900,7 @@ BibleObjGituser.prototype.Proj_usr_account_create = function (inp) {
     console.log("========Proj_usr_account_create", inp)
     this.m_UserProjFileSys.Check_username(inp.par.repopath, inp.par.passcode)
     this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath, inp.par.passcode)
-    this.m_UserProjFileSys.gh_repo_create(inp.par.repopath)
+    this.m_UserProjFileSys.gh_repo_create(inp.par.repopath, inp.par.passcode)
     var ret = this.m_UserProjFileSys.Check_proj_state()
     return ret
 }

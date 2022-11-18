@@ -573,7 +573,7 @@ function GitSponsor(ownername) {
 GitSponsor.prototype.gh_repo_list_Obj_Sponsor = function () {
     var sponsor_git_usr = "bsnp21"
     var istart = this.sponsor_git_usr.length + 1
-    var str = BaseGUti.execSync_Cmd("gh repo list").toString()
+    var str = BaseGUti.execSync_Cmd("gh repo list --json url").toString()
     console.log("gh repo list:", str)
     var lines = str.split(/[\r|\n]/)
     var usrsInfo = {}
@@ -623,7 +623,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 }
 
 
-BaseGitUser.prototype.gh_repo_create = function (username) {
+BaseGitUser.prototype.gh_repo_create = function (username, passcode) {
     var dir = this.get_host_usr_dir()
     var gh_repo_create = `
 # create my-project and clone 
@@ -633,12 +633,12 @@ sudo -S gh repo create ${username} --public --clone
 sudo -S chmod 777 ${username}
 sudo -S chmod 777 ${username}/.git/config
 cd ${username}
-echo '${username}' > readme.txt
+echo '${passcode}' > .salts
 sudo -S mkdir account
 sudo -S chmod 777 account
 sudo -S cp -rf ${this.get_dir_lib_template()}/*  ./account/.
 sudo -S git add *
-sudo -S git commit -m "readme.txt"
+sudo -S git commit -m ".salts"
 sudo -S git branch -M main
 sudo -S git remote add origin https://github.com/bsnp21/${username}.git
 sudo -S git push -u origin main
