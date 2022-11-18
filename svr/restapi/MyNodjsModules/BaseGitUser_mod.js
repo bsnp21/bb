@@ -626,7 +626,8 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
     var usrsInfo={}
     for (var i = 0; i < lines.length; i++) {
         var lin = lines[i]
-        var ar = lin.split(/[\t|\s]/)
+        if(!lin) continue
+        var ar = lin.split(/[\t|\s]+/)
         console.log(i, ar)
     }
     console.log("lines",lines)
