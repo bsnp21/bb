@@ -519,24 +519,6 @@ var BibleUti = {
     },
 
 
-    _check_pub_testing: function (inp) {
-        if (inp.usr.passcode.length === 0) {
-            return null
-        }
-        ////SpecialTestRule: repopath must be same as password.
-        inp.usr.repopath = inp.usr.repopath.trim()
-        const PUB_TEST = "pub_test", MYPASSWORD = "3edcFDSA"
-        if (this.m_BaseGitUser.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_BaseGitUser.usr_proj.projname.indexOf("Guest")) {
-            if (this.m_BaseGitUser.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
-                console.log("This is for pub_test only but discord to the rule.")
-                return null
-            } else {
-                console.log("This is for pub_test only: sucessfully pass the rule.")
-                inp.usr.passcode = MYPASSWORD
-            }
-        }
-        return inp
-    },
     _deplore_usr_proj_dirs: function (userproj, base_Dir) {
         if (!userproj) return
         //const base_Dir = "bible_study_notes/usrs"
@@ -622,7 +604,7 @@ var BibleUti = {
             }
         }
 
-        //inp.usr.repodesc = inp.usr.repodesc.trim().replace(/[\r|\n]/g, ",")//:may distroy cmdline.
+
     },
 
 
@@ -758,7 +740,7 @@ NCache.Init = function () {
         inp.SSID = key
         var userProject = new BibleObjGituser()
         if (inp.gitusr = userProject.m_BaseGitUser.Set_Gitusr(val.repopath, val.passcode)) {
-            userProject.m_inp = inp
+            //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
             if (1 === inp.out.state.bRepositable) {
@@ -896,13 +878,13 @@ var BibleObjGituser = function () {
 
 
 
-BibleObjGituser.prototype.Proj_usr_account_create = function (inp) {
+BibleObjGituser.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
     console.log("========Proj_usr_account_create", inp)
-    if (this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
-        return { create_er: inp.par.repopath + ": user alreay exists." }
+    if (this.m_BaseGitUser.IsUserExist(repopath)) {
+        return { create_er: repopath + ": user alreay exists." }
     }
-    this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
-    this.m_BaseGitUser.gh_repo_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
+    this.m_BaseGitUser.Set_Gitusr(repopath)
+    this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword)
     var ret = this.m_BaseGitUser.Check_proj_state()
     return ret
 }
@@ -927,81 +909,77 @@ BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, 
 }
 BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     console.log("========Proj_parse_usr_signin")
-    this.m_inp = inp
-    if (!inp || !inp.out) {
-        console.log("!inp || !inp.out")
-        return null
-    }
 
-    inp.usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
-    if (!inp.usr) {
+    this.m_usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
+    if (!this.m_usr) {
         console.log("*****failed: sdfadfasjiasf")
         return null
     }
-    return this.m_BaseGitUser.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(this.m_usr.repopath, this.m_usr.passcode)
 }
 BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
-    this.m_inp = inp
-    this.m_user={repopath:inp.par.repopath}
+
 
     console.log("========__Proj_parse_usr_login__", inp)
     if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
-        return { err:  [ "not exist:", inp.par.repopath]  }
+        return { err: ["not exist:", inp.par.repopath] }
     }
     this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
+    this.m_usr = this.m_BaseGitUser.m_usr
+
     this.m_BaseGitUser.Deploy_proj()
     var ar = this.m_BaseGitUser.get_repo_salts()
     if (ar.indexOf(inp.par.passcode) < 0) {
         return { err: ["password error.", ar[1]] }
     }
+
+    //inp.out.state.SSID = userProject.Session_create()
+    var ssid = this.Session_create()
+
     var ret = this.m_BaseGitUser.Check_proj_state()
-    return { ok: ret }
+    return { ok: ret, ssid: ssid }
 }
 
 BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
-    this.m_inp = inp
-    if (!inp || !inp.out) {
-        return null
-    }
 
-    inp.usr = this.proj_get_usr_fr_cache_ssid(inp)
-    if (!inp.usr) {
+    this.m_usr = this.proj_get_usr_fr_cache_ssid(inp.SSID)
+    if (!this.m_usr) {
         console.log("*****failed sdfadfas")
         return null
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
 
-    return this.m_BaseGitUser.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(this.m_usr.repopath, this.m_usr.passcode)
 }
 
 BibleObjGituser.prototype.proj_get_usr_aux_ttl = function (inp) {
     var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
     return ttl
 }
-BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (inp) {
-    inp.out.state.ssid_cur = inp.SSID
-    if (!inp.SSID || inp.SSID.length === 0) {
+BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
+    inp.out.state.ssid_cur = ssid
+    if (!ssid || ssid.length === 0) {
         return null
     }
-    if (!NCache.myCache.has(inp.SSID)) {
+    if (!NCache.myCache.has(ssid)) {
         inp.out.state.failed_ssid = "not have."
-        console.log("***** proj_get_usr_fr_cache_ssid: could not find key: NCache.myCache.has(inp.SSID)", inp.SSID)
+        console.log("***** proj_get_usr_fr_cache_ssid: could not find key: NCache.myCache.has(inp.SSID)", ssid)
         return null
     }
 
     //var ttl = ///this.proj_get_usr_aux_ttl(inp);// inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
-    inp.usr = NCache.Get(inp.SSID)
+    this.m_usr = NCache.Get(ssid)
 
-    if (!inp.usr) {
+    if (!this.m_usr) {
         inp.out.state.failed_ssid = "expired or not exist."
     }
 
 
-    return inp.usr
+    return this.m_usr
 }
 BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
 
-    if (!inp.SSID || inp.SSID.length === 0 || !inp.usr || !inp.par.aux) {
+    if (!inp.SSID || inp.SSID.length === 0 || !this.m_usr || !inp.par.aux) {
         return null
     }
 
@@ -1010,10 +988,10 @@ BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
     //     return
     // }
     //ttl = parseInt(ttl)
-    NCache.Set(inp.SSID, inp.usr, 3600*24*180)
+    NCache.Set(inp.SSID, this.m_usr, 3600 * 24 * 180)
     console.log(`Update_repodesc ************* inp.par.aux= ${JSON.stringify(inp.par.aux)}`)
 
-    return inp.usr
+    return this.m_usr
 }
 
 
@@ -1042,27 +1020,24 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 BibleObjGituser.prototype.Session_create = function () {
     //var gitdir = this.m_BaseGitUser.get_usr_git_dir()
 
-
     var ssid = this.m_BaseGitUser.m_gitinf.ownerId //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
     //   ttl = parseInt(this.m_inp.usr.ttl)
     //}
-    console.log("ssid=",ssid, ssid_b64, this.m_inp.usr, ttl), 
+    console.log("ssid=", ssid, ssid_b64, this.m_BaseGitUser.m_usr, ttl)
 
-    NCache.Set(ssid_b64, this.m_inp.usr, ttl)
-    console.log("Session_create:", ssid, ssid_b64, this.m_inp.usr)
+    NCache.Set(ssid_b64, this.m_BaseGitUser.m_usr, ttl)
+    console.log("Session_create:", ssid, ssid_b64, this.m_BaseGitUser.m_usr)
 
     return ssid_b64
 }
 BibleObjGituser.prototype.Session_delete = function () {
     if (!this.m_inp.SSID) return
     var ret = NCache.myCache.take(this.m_inp.SSID)
-    //NCache.myCache.set(this.m_inp.SSID, null)
-    //console.log("Session_delete:", this.m_inp.SSID, this.m_inp.usr, ret)
-    //ret = NCache.myCache.del(this.m_inp.SSID)
-    console.log("Session_delete:", this.m_inp.SSID, this.m_inp.usr, ret)
+
+    console.log("Session_delete:", this.m_inp.SSID, this.m_BaseGitUser.m_usr, ret)
 
     NCache.myCache.set(this.m_inp.SSID, null)
 }

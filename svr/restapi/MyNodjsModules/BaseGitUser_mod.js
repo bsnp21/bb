@@ -523,24 +523,7 @@ var BaseGUti = {
     },
 
 
-    _check_pub_testing: function (inp) {
-        if (inp.usr.passcode.length === 0) {
-            return null
-        }
-        ////SpecialTestRule: repopath must be same as password.
-        inp.usr.repopath = inp.usr.repopath.trim()
-        const PUB_TEST = "pub_test", MYPASSWORD = "3edcFDSA"
-        if (this.m_BaseGitUser.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_BaseGitUser.usr_proj.projname.indexOf("Guest")) {
-            if (this.m_BaseGitUser.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
-                console.log("This is for pub_test only but discord to the rule.")
-                return null
-            } else {
-                console.log("This is for pub_test only: sucessfully pass the rule.")
-                inp.usr.passcode = MYPASSWORD
-            }
-        }
-        return inp
-    },
+  
 
 
 
@@ -682,12 +665,14 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
     repopath = sponser.git_repo_user_url(repopath)
     var passcode = sponser.sponsor_git_pat;
 
+    this.m_usr = { repopath: repopath, passcode: passcode } //sponsor
     ////////////
 
     this.usr_acct = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
     this.m_projDirs = this._prepare_proj_dirs()
+
     return (this.m_gitinf && this.m_projDirs);
 }
 BaseGitUser.prototype._interpret_repo_url_str = function (proj_url) {
