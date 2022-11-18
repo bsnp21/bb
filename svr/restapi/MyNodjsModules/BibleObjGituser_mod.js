@@ -896,6 +896,12 @@ var BibleObjGituser = function () {
 
 
 
+BibleObjGituser.prototype.Proj_usr_account_create = function (inp) {
+    console.log("========Proj_parse_usr_signin")
+    this.m_UserProjFileSys.Set_Gitusr(inp.usr.reponame)
+    this.m_UserProjFileSys.gh_repo_create(inp.usr.reponame)
+}
+
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
     console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
 

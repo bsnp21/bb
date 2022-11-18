@@ -85,6 +85,7 @@ var BsnpRestUti = {
 var RestApi_uPar_Validate = {
     "Get_OTK": function (upar) { },
     "Jsonpster": "Jsonpster",
+    "ApiUsrAccount_create": function (usr) { },
     "ApiUsrReposData_signin": function (usr) { },
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
@@ -225,6 +226,9 @@ BsnpRestApi.prototype.ajaxion = function (sapi, par, cbf) {
 
 //////////////////////////////////////////////////////////////////////
 // for easier to use.
+BsnpRestApi.prototype.ApiUsrAccount_create = function (par, cbf) {
+    return this.ajaxion("ApiUsrAccount_create", par, cbf)
+}
 BsnpRestApi.prototype.ApiUsrReposData_signin = function (par, cbf) {
     return this.signin(par, cbf)
 }

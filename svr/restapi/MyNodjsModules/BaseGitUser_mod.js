@@ -587,6 +587,30 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 
     return rootdir
 }
+
+
+BaseGitUser.prototype.gh_repo_create = function (username, password) {
+    var dir = this.get_host_usr_dir()
+    var gh_repo_create = `
+# create my-project and clone 
+echo ${dir}
+cd ${dir}
+sudo -S gh repo create ${username} --public --clone
+cd ${username}
+echo ${username} > readme.txt
+sudo -S git add *
+sudo -S git commit -m "readme.txt"
+sudo -S git branch -M main
+sudo -S git remote add origin https://github.com/bsnp21/${username}.git
+sudo -S git push -u origin main
+cd ..
+    `
+    console.log("git_clogh_repo_createne_cmd...")
+    inp.out.gh_repo_create = gh_repo_create
+    var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
+    console.log("ret", ret)
+}
+
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
 
     if (repopath.indexOf("https") < 0) {
@@ -725,6 +749,9 @@ BaseGitUser.prototype.get_usr_git_dir = function (subpath) {
 BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
     return (!subpath) ? this.m_projDirs.std_bible_obj_lib_template : `${this.m_projDirs.std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 
+}
+BaseGitUser.prototype.get_host_usr_dir = function (subpath) {
+    return (!subpath) ? this.m_projDirs.user_dir : `${this.m_projDirs.user_dir}/${subpath.replace(/^[\/]/, "")}`
 }
 
 

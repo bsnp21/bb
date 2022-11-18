@@ -205,7 +205,7 @@ var ApiJsonp_BibleObj = {
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var proj = userProject.Proj_parse_usr_after_signed(inp)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-            inp.out.state =  userProject.m_UserProjFileSys.Deploy_proj()
+            inp.out.state = userProject.m_UserProjFileSys.Deploy_proj()
             var TbcvObj = {};
             if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
@@ -503,6 +503,21 @@ var ApiJsonp_BibleObj = {
         res.writeHead(200, { 'Content-Type': 'text/javascript' });
         res.write(`Jsonpster.Response(${sret},${sid});`);
         res.end();
+    },
+    ApiUsrAccount_create: function (req, res) {
+        console.log("ApiUsrAccount_create")
+        var userProject = new BibleObjGituser()
+        var proj = userProject.Proj_usr_account_create(inp)
+        if (!proj) return console.log("ApiUsrAccount_create failed.")
+
+        userProject.m_UserProjFileSys.Check_proj_state()
+        if (0 === inp.out.state.bRepositable) {
+            //case push failed. Don't delete
+            console.log("git dir not exit.")
+
+        } else {
+           
+        }
     },
     ApiUsrReposData_signin: function (req, res) {
         console.log("ApiUsrReposData_signin")
