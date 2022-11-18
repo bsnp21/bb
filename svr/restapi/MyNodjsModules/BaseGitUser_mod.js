@@ -620,6 +620,8 @@ cd ..
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
 
 
+    var sponsor_git_usr = "bsnp21"
+    var istart = sponsor_git_usr.length
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()
     console.log("gh repo list:", str)
     var lines = str.split(/[\r|\n]/)
@@ -629,7 +631,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
         if (!lin) continue
         var ar = lin.split(/[\t|\s]+/)
         console.log(i, ar)
-        usrsInfo[ar[0]] = ar.slice(1)
+        usrsInfo[ar[0].slice(istart)] = ar.slice(1)
     }
     console.log("lines", lines)
     console.log("usrsInfo", usrsInfo)
