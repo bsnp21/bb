@@ -165,7 +165,7 @@
 
                 <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Log-in</button>
                 <a id="CheckIn">&nbsp;&nbsp;&nbsp; Status </a> 
-                <a id="SignOn">&nbsp;&nbsp;&nbsp; Create </a> 
+                <a id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create </a> 
                 <br>
                 <font color='red'><a id="errmsg"></a></font>
                
@@ -227,6 +227,17 @@
                 $("#input_area, #account_history_table").hide()
             }, failure)
         })
+        $("#SignOnCreate").on("click", function () {
+            var paths = $("#repopath").val()
+            create_acct(function (rob, ur) {
+                var tb = PageUti.Repo_fstat_table(rob)
+                //MyStorage.SSID(rob.out.state.SSID)
+                var a = `<a href='${ur}' target="_self">Successfully checked in<br>${paths} <br>click here to continue to log in</a>`
+                $("#Enter").html(a)
+                $("#output").html(tb)
+                $("#input_area, #account_history_table").hide()
+            }, failure)
+        })
 
     })
     function sign_in(success, failed) {
@@ -241,6 +252,24 @@
             console.log(rob)
             var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
 
+            if (err) {
+                failure(rob, ur)
+            } else {
+                success(rob, ur)
+            }
+        })
+    }
+    function create_acct(success, failed) {
+        $(".signinBtn").attr("disabled", true)
+        $("#errmsg").text("runing ...")
+       
+        var api = new BsnpRestApi()
+        api.SSID="-"
+        var usr = { repopath: $("#repopath").val(), passcode: "aa"};   //
+
+        api.ApiUsrAccount_create(usr, function (rob, err) {
+            $(".signinBtn").removeAttr("disabled")
+            console.log(rob)
             if (err) {
                 failure(rob, ur)
             } else {

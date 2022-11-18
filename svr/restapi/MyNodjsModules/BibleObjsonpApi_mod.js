@@ -506,18 +506,20 @@ var ApiJsonp_BibleObj = {
     },
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
-        var userProject = new BibleObjGituser()
-        var proj = userProject.Proj_usr_account_create(inp)
-        if (!proj) return console.log("ApiUsrAccount_create failed.")
+        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
+            var userProject = new BibleObjGituser()
+            var proj = userProject.Proj_usr_account_create(inp)
+            if (!proj) return console.log("ApiUsrAccount_create failed.")
 
-        userProject.m_UserProjFileSys.Check_proj_state()
-        if (0 === inp.out.state.bRepositable) {
-            //case push failed. Don't delete
-            console.log("git dir not exit.")
+            userProject.m_UserProjFileSys.Check_proj_state()
+            if (0 === inp.out.state.bRepositable) {
+                //case push failed. Don't delete
+                console.log("git dir not exit.")
 
-        } else {
-           
-        }
+            } else {
+
+            }
+        })
     },
     ApiUsrReposData_signin: function (req, res) {
         console.log("ApiUsrReposData_signin")
