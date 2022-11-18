@@ -267,13 +267,13 @@
         api.SSID="-"
         var usr = { repopath: $("#repopath").val(), passcode: "aa"};   //
 
-        api.ApiUsrAccount_create(usr, function (rob, err) {
+        api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             if (err) {
-                failure(rob, ur)
+                failure(rob)
             } else {
-                success(rob, ur)
+                success(rob)
             }
         })
     }
