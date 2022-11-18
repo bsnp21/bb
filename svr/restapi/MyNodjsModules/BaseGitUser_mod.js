@@ -623,14 +623,16 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()
     console.log("gh repo list:", str)
     var lines = str.split(/[\r|\n]/)
-    var usrsInfo={}
+    var usrsInfo = {}
     for (var i = 0; i < lines.length; i++) {
         var lin = lines[i]
-        if(!lin) continue
+        if (!lin) continue
         var ar = lin.split(/[\t|\s]+/)
         console.log(i, ar)
+        usrsInfo[ar[0]] = ar.slice(1)
     }
-    console.log("lines",lines)
+    console.log("lines", lines)
+    console.log("usrsInfo", usrsInfo)
 
 
 
