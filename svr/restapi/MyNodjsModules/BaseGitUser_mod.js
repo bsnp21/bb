@@ -530,8 +530,8 @@ var BaseGUti = {
         ////SpecialTestRule: repopath must be same as password.
         inp.usr.repopath = inp.usr.repopath.trim()
         const PUB_TEST = "pub_test", MYPASSWORD = "3edcFDSA"
-        if (this.m_UserProjFileSys.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_UserProjFileSys.usr_proj.projname.indexOf("Guest")) {
-            if (this.m_UserProjFileSys.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
+        if (this.m_BaseGitUser.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_BaseGitUser.usr_proj.projname.indexOf("Guest")) {
+            if (this.m_BaseGitUser.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
                 console.log("This is for pub_test only but discord to the rule.")
                 return null
             } else {

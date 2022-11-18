@@ -526,8 +526,8 @@ var BibleUti = {
         ////SpecialTestRule: repopath must be same as password.
         inp.usr.repopath = inp.usr.repopath.trim()
         const PUB_TEST = "pub_test", MYPASSWORD = "3edcFDSA"
-        if (this.m_UserProjFileSys.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_UserProjFileSys.usr_proj.projname.indexOf("Guest")) {
-            if (this.m_UserProjFileSys.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
+        if (this.m_BaseGitUser.usr_proj.projname.indexOf(PUB_TEST) === 0 || 0 === this.m_BaseGitUser.usr_proj.projname.indexOf("Guest")) {
+            if (this.m_BaseGitUser.usr_proj.projname !== inp.usr.passcode && MYPASSWORD !== inp.usr.passcode) {
                 console.log("This is for pub_test only but discord to the rule.")
                 return null
             } else {
@@ -757,9 +757,9 @@ NCache.Init = function () {
         inp.out = BibleUti.default_inp_out_obj()
         inp.SSID = key
         var userProject = new BibleObjGituser()
-        if (inp.gitusr = userProject.m_UserProjFileSys.Set_Gitusr(val.repopath, val.passcode)) {
+        if (inp.gitusr = userProject.m_BaseGitUser.Set_Gitusr(val.repopath, val.passcode)) {
             userProject.m_inp = inp
-            userProject.m_UserProjFileSys.Check_proj_state()
+            userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
             if (1 === inp.out.state.bRepositable) {
                 //
@@ -768,7 +768,7 @@ NCache.Init = function () {
                 var res3 = userProject.execSync_cmd_git(`git commit -m "on del in Cache"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.m_UserProjFileSys.Destroy_proj()
+                var res5 = userProject.m_BaseGitUser.Destroy_proj()
             }
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)
@@ -889,8 +889,8 @@ NCache.Init()
 //../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function () {
 
-    this.m_UserProjFileSys = new BaseGitUser()
-    this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_UserProjFileSys.pathrootdir)
+    this.m_BaseGitUser = new BaseGitUser()
+    this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_BaseGitUser.pathrootdir)
 }
 
 
@@ -898,12 +898,12 @@ var BibleObjGituser = function () {
 
 BibleObjGituser.prototype.Proj_usr_account_create = function (inp) {
     console.log("========Proj_usr_account_create", inp)
-    if (this.m_UserProjFileSys.IsUserExist(inp.par.repopath)) {
+    if (this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
         return { create_er: inp.par.repopath + ": user alreay exists." }
     }
-    this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath)
-    this.m_UserProjFileSys.gh_repo_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
-    var ret = this.m_UserProjFileSys.Check_proj_state()
+    this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
+    this.m_BaseGitUser.gh_repo_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
+    var ret = this.m_BaseGitUser.Check_proj_state()
     return ret 
 }
 
@@ -938,7 +938,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
         console.log("*****failed: sdfadfasjiasf")
         return null
     }
-    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
 }
 BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
     console.log("=======__Proj_parse_usr_login__")
@@ -949,14 +949,14 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
     }
 
     console.log("========Proj_usr_account_create", inp)
-    if (!this.m_UserProjFileSys.IsUserExist(inp.par.repopath)) {
+    if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
         return { login_er: inp.par.repopath + ": not exist." }
     }
-    this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath)
-    this.m_UserProjFileSys.Deploy_proj()
-    var ret = this.m_UserProjFileSys.Check_proj_state()
+    this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
+    this.m_BaseGitUser.Deploy_proj()
+    var ret = this.m_BaseGitUser.Check_proj_state()
     return ret 
-    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
@@ -972,7 +972,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     }
     this.proj_update_cache_ssid_by_inp_aux(inp)
 
-    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
 }
 
 BibleObjGituser.prototype.proj_get_usr_aux_ttl = function (inp) {
@@ -1041,10 +1041,10 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 
 
 BibleObjGituser.prototype.Session_create = function () {
-    var gitdir = this.m_UserProjFileSys.get_usr_git_dir()
+    var gitdir = this.m_BaseGitUser.get_usr_git_dir()
 
 
-    var ssid = this.m_UserProjFileSys.m_gitinf.ownerId //usr_proj
+    var ssid = this.m_BaseGitUser.m_gitinf.ownerId //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
