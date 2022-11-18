@@ -945,7 +945,7 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
 
     console.log("========__Proj_parse_usr_login__", inp)
     if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
-        return { err: { msg: inp.par.repopath + ": not exist." } }
+        return { err:  [ "not exist:", np.par.repopath]  }
     }
     this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
     this.m_BaseGitUser.Deploy_proj()

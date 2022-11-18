@@ -287,10 +287,13 @@
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             if (rob.out.login) {
-                $("#errmsg").html(rob.out.login.err)
-            } else {
-                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
-                window.open(ur, "_target")
+                if (rob.out.login.err) {
+                    $("#errmsg").html(rob.out.login.err)
+                }
+                else {
+                    var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
+                    window.open(ur, "_target")
+                }
             }
 
             if (cbf) cbf(rob)
@@ -304,12 +307,12 @@
         $("#errmsg").text("failed to sign in.")
     }
 
-    function remeber_ui(){
+    function remeber_ui() {
         var paths = $("#repopath").val()
         var codes = $("#passcode").val()
         localStorage.setItem("repopath", paths)
         localStorage.setItem("passcode", codes)
-        var usr = { repopath: paths, passcode: codes };   
+        var usr = { repopath: paths, passcode: codes };
         return usr
     }
 
