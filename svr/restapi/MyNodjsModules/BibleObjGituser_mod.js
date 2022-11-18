@@ -940,6 +940,24 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     }
     return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
 }
+BibleObjGituser.prototype.Proj_parse_usr_login = function (inp) {
+    console.log("=======__Proj_parse_usr_login__")
+    this.m_inp = inp
+    if (!inp || !inp.out) {
+        console.log("!inp || !inp.out")
+        return null
+    }
+
+    console.log("========Proj_usr_account_create", inp)
+    if (!this.m_UserProjFileSys.IsUserExist(inp.par.repopath)) {
+        return { login_er: inp.par.repopath + ": not exist." }
+    }
+    this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath)
+    this.m_UserProjFileSys.Deploy_proj()
+    var ret = this.m_UserProjFileSys.Check_proj_state()
+    return ret 
+    return this.m_UserProjFileSys.Set_Gitusr(inp.usr.repopath, inp.usr.passcode)
+}
 
 BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     this.m_inp = inp
