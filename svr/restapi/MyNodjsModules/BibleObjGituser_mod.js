@@ -919,7 +919,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
 }
 BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
 
-    console.log("========__Proj_parse_usr_login__", inp)
+    console.log("========__Proj_parse_usr_login__")
     if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
         return { err: ["not exist:", inp.par.repopath] }
     }
