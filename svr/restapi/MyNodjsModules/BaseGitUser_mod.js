@@ -625,6 +625,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var dir = this.get_host_usr_dir()
+    if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.
     var gh_repo_create = `
 # create my-project and clone 
@@ -653,7 +654,7 @@ cd ..
     return ret
 }
 
-BaseGitUser.prototype.Check_username = function (repopath, passcode) {
+BaseGitUser.prototype.IsUserExist = function (repopath) {
     var gsp = new GitSponsor()
     var usrsinfo = gsp.gh_repo_list_Obj_Sponsor()
     if (repopath in usrsinfo) {
@@ -667,7 +668,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
     //hijack
     var sponser = new GitSponsor()
     repopath = sponser.git_repo_user_url(repopath)
-    passcode = sponser.sponsor_git_pat;
+    var passcode = sponser.sponsor_git_pat;
 
     ////////////
 

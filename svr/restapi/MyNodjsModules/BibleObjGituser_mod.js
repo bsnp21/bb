@@ -898,11 +898,13 @@ var BibleObjGituser = function () {
 
 BibleObjGituser.prototype.Proj_usr_account_create = function (inp) {
     console.log("========Proj_usr_account_create", inp)
-    this.m_UserProjFileSys.Check_username(inp.par.repopath, inp.par.passcode)
-    this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath, inp.par.passcode)
-    this.m_UserProjFileSys.gh_repo_create(inp.par.repopath, inp.par.passcode)
+    if (this.m_UserProjFileSys.IsUserExist(inp.par.repopath)) {
+        return { create_er: "user alreay exists." }
+    }
+    this.m_UserProjFileSys.Set_Gitusr(inp.par.repopath)
+    this.m_UserProjFileSys.gh_repo_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
     var ret = this.m_UserProjFileSys.Check_proj_state()
-    return ret
+    return { create_ok: ret }
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
