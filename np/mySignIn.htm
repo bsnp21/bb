@@ -243,14 +243,16 @@
     function sign_in(success, failed) {
         $(".signinBtn").attr("disabled", true)
         $("#errmsg").text("runing ...")
+        var repopath =$("#repopath").val() 
+        var passcode =$("#passcode").val() 
        
         var api = new BsnpRestApi()
-        var usr = { repopath: $("#repopath").val(), passcode: "aa" };   //
+        var usr = { repopath: repopath, passcode: "aa" };   //
         usr.ttl = 9999999
         api.signin(usr, function (rob, err) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
+            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({username:repopath})}`
 
             if (err) {
                 failure(rob, ur)
@@ -270,7 +272,7 @@
         api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            if (err) {
+            if (rob) {
                 failure(rob)
             } else {
                 success(rob)

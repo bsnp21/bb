@@ -146,15 +146,15 @@ var MyStorage = {
         }
 
         StoreRepositorie.prototype.repos_app_set = function (obj) {
-            $("#repopath").val(obj.repopath)
+            //$("#repopath").val(obj.repopath)
             $("#passcode").val(obj.passcode)
             $("#repodesc").val(obj.repodesc)
             var reob = Uti.validate_repository_url(obj.repopath)
             if (!reob) {
-                $("#SignOut_repopathname").text("ErrorRepo")
+                //$("#SignOut_repopathname").text("ErrorRepo")
                 return
             }
-            $("#SignOut_repopathname").text(reob.repo)
+            //$("#SignOut_repopathname").text(reob.repo)
 
             obj.repopath = reob.full_path
 

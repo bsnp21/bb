@@ -122,22 +122,7 @@ var Uti = {
         }
     },
 
-    visual_check_repository: function (eid) {
-        $(eid).on("click", function () {
-            var repopath = $("#repopath").val()
-            // var reob = Uti.validate_repository_url(repopath)
-            // if (!reob) return alert("empty")
-            // if (reob.format === 2) {
-            //     //$("#repopath").val(reob.user_repo)
-            // }
-            // if (reob.format === 1) {
-            //     //$("#repopath").val(reob.full_path)
-            // }
-            // var ar = ["", "https-url", "user-repos"]
-            // $(this).text("Format:" + ar[reob.format])
-            $("#SignOut_repopathname").text(repopath);//reob.repo)
-        })
-    },
+
     validate_repository_url: function (repoath) {
         return { format: 1, desc: "user_repo", full_path: repoath, user_repo: repoath, user: repoath, repo: repoath }
 

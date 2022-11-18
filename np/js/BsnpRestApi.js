@@ -127,7 +127,7 @@ function BsnpRestApi() {
     this.init_param_fr_url()
 }
 BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
-    function test_ip(ip){
+    function test_ip(ip) {
         if (!ip) {
             //use self ip.
             ip = window.location.host
@@ -142,9 +142,9 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
         if ("undefined" === ip) {
             return alert("not localhost or missed in url with ?ip=undefined")
         }
-    
+
         if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
-    
+
         if (ip.indexOf("http") < 0) {
             if (ip.indexOf("7778") > 0) {//ssl
                 ip = `http://${ip}`;
@@ -171,11 +171,17 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
         console.log("ip,pcv:", ip, bcv)
     }
 }
-BsnpRestApi.prototype.urlRedirectParam = function () {
+BsnpRestApi.prototype.urlRedirectParam = function (parm) {
     var spar = `?ip=${this.svrurl}`
     if (this.SSID && this.SSID.length > 10) {
         spar += "&SSID=" + this.SSID
     }
+    var username = this.urlParams.get("username")
+    if(parm.username) username = parm.username
+    if (username) {
+        spar += "&username=" + parm.username
+    }
+
 
     return spar
 }

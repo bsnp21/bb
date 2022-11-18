@@ -2058,9 +2058,10 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         //$("#repodesc").val(d.toISOString().substr(0, 10) + "," + d.toLocaleTimeString() + ". " + tx)
     })
     $("#account_reSignIn").on("click", function () {
-        Uti.open_child_window("./mySignIn.htm", function (data) {
-            MyStorage.Repositories().repos_app_set(data)
-        })
+        const urlParams = new URLSearchParams(window.location.search);
+        var ip = urlParams.get('ip'), username=urlParams.get('username');
+
+        window.open(`./mySignIn.htm?ip=${ip}&username=${username}`, "_target")
     })
 
     $("#myExt_Diary").on("click", function () {
@@ -2090,8 +2091,8 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     //      PageUti.Repositories_History("#outConfig", 1)
     //  })
     $("#repodesc").on("focus", function () {
-        PageUti.Repositories_History("#account_set_info", 2)
-        MyStorage.Repositories().repos_app_update()
+        //PageUti.Repositories_History("#account_set_info", 2)
+        //MyStorage.Repositories().repos_app_update()
     })
 
     //$("#cacheTTL").on("change, keyup, click, blur", function () {
@@ -2124,11 +2125,12 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
 
         var api = new BsnpRestApi()
+        var url = `./mySignIn.htm${window.location.search}`
         api.ajaxion(RestApi.ApiUsrReposData_destroy, {
 
         }, function (ret) {
             $("body").attr("onbeforeunload", null)
-            window.open("./index.htm", "_self")
+            window.open(url, "_self")
         })
     })
 }
@@ -2413,6 +2415,11 @@ AppInstancesManager.prototype.init_load_storage = function () {
 
     function _init_load_repo() {
         Uti.Msg("start ...", "" + window.location.href);
+        var api = new BsnpRestApi()
+        var username = api.urlParams.get("username")
+        $("#SignOut_repopathname").text(username)
+        $("#repopath").val(username)
+        //$("#passcode").val(obj.passcode)
 
         Uti.Msg("RestApi=", RestApi);
 
