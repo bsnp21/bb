@@ -160,9 +160,8 @@
             <br><br>
 
             <div xxclass="centered_elem">
-
-
-                <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Log-in</button>
+                <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button>
+                <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
                 <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a>
                 <a id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create </a>
                 <br>
@@ -214,6 +213,11 @@
                 window.open(ur, '_self');
             }, failure)
         })
+        $("#loginAsUser").on("click", function () {
+            login_acct(function (rob) {
+                //window.open(ur, '_self');
+            })
+        })
 
         $("#Check_Status").on("click", function () {
             //$(this).toggle("slow")
@@ -248,7 +252,6 @@
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: repopath })}`
-
             if (err) {
                 failure(rob, ur)
             } else {
@@ -273,6 +276,29 @@
             $("#errmsg").html(a)
             $("#output").html(tb)
             cbf(rob)
+        })
+    }
+    function login_acct(cbf) {
+        $(".signinBtn").attr("disabled", true)
+        $("#errmsg").text("runing ...")
+
+        var paths = $("#repopath").val()
+        var codes = $("#passcode").val()
+        var api = new BsnpRestApi()
+        api.SSID = ""
+        var usr = { repopath: paths, passcode: codes };   //
+
+        api.ApiUsrAccount_login(usr, function (rob) {
+            $(".signinBtn").removeAttr("disabled")
+            console.log(rob)
+            if(rob.out.login.err){
+                $("#errmsg").html(rob.out.login.err)
+            }else{
+                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: paths })}`
+                window.opn(ur, "_target")
+            }
+            
+            if (cbf) cbf(rob)
         })
     }
     $("#errmsg").on("click", function () {

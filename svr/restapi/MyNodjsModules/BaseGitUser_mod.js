@@ -626,6 +626,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var dir = this.get_host_usr_dir()
     if (!hintword) hintword = ""
+    var commit_msg = this.get_usr_git_dir(".salts")
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.
     var gh_repo_create = `
 # create my-project and clone 
@@ -641,19 +642,28 @@ sudo -S chmod 777 account
 #sudo -S cp -rf ${this.get_dir_lib_template()}/*  ./account/.
 sudo -S git add .salts
 sudo -S git add *
-sudo -S git commit -m ".salts"
+sudo -S git commit -m "${commit_msg}"
 sudo -S git branch -M main
 sudo -S git remote add origin https://github.com/bsnp21/${username}.git
 sudo -S git push -u origin main
 cd ..
     `
+    if(this.get_usr_git_dir() !== this.get_host_usr_dir(username)){
+        console.log( this.get_usr_git_dir() +" is not the same with: "+ this.get_host_usr_dir(username))
+    }
+
     console.log("git_clogh_repo_createne_cmd...")
     var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
     console.log("ret", ret)
 
     return ret
 }
-
+BaseGitUser.prototype.get_repo_salts = function (u) {
+    var fname = this.get_usr_git_dir(".salts")
+    var txt = fs.readFileSync(fname)
+    var ar = JSON.parse(txt)
+    return ar
+}
 BaseGitUser.prototype.IsUserExist = function (repopath) {
     var gsp = new GitSponsor()
     var usrsinfo = gsp.gh_repo_list_Obj_Sponsor()
