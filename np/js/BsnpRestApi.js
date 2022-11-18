@@ -172,7 +172,7 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
 }
 BsnpRestApi.prototype.urlRedirectParam = function () {
     var spar = `?ip=${this.svrurl}`
-    if (this.SSID.length > 10) {
+    if (this.SSID && this.SSID.length > 10) {
         spar += "&SSID=" + this.SSID
     }
 

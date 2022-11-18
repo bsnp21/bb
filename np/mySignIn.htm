@@ -47,6 +47,9 @@
 
             margin: 0px 10px 0px 10px;
             padding: 1px 10px 0px 10px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 300px;
         }
 
         .centered_elem {
@@ -141,71 +144,50 @@
 
 
 
+            <a id="">Username:</a> (<font color='red'>required</font>)<br>
+            <input id="repopath" maxlength="120" class="inputxt" value=""
+                placeholderx="https://github.com/username/reposname.git"
+                note="https://github.com/bsnp21/pub_test.git"></input><a class="clearout">X</a><br><br>
 
 
 
-            <div>
-                <a id="">Git Repository HTTPS URL:</a> (<font color='red'>required</font>)
 
-                <div class="help_label">
-                    <a class="" id="Format_Check">Format</a> |
-                    <a class="" onclick="$('.helpinfo.Repository').toggle('slow');">help?</a>
+
+
+
+
+
+
+
+            <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)
+            <input id="passcode" type="password" maxlength="120" class="inputxt" value=""></input><a
+                class="clearout">X</a>
+
+
+            <br><br>
+
+            <div xxclass="centered_elem">
+
+
+                <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Log-in</button>
+                <a id="CheckIn">&nbsp;&nbsp;&nbsp; check-status </a> 
+                <a id="SignOn">&nbsp;&nbsp;&nbsp; Sign-on </a> 
+                <br>
+                <font color='red'><a id="errmsg"></a></font>
+                <div style="float:right;">
+
+
+                    <a id='Test' onclick="$('#testPanel').toggle();">.</a>
                 </div>
-
             </div>
-            <div class="helpinfo Repository" id="help_Repository">
-            </div>
-
-
-            <div>
-                <textarea id="repopath" maxlength="120" class="inputxt" value=""
-                    placeholder="https://github.com/username/reposname.git">https://github.com/bsnp21/pub_test.git</textarea>
-            </div>
-
-
-
-
-
-
-
-            <br>
-
-            <div>
-                <a for="editor1" id="label_password">Git Personal-Access-Token</a> :
-                (<a style="color:red;" id="required_password_test">required</a>)
-
-
-                <a class="help_label" onclick="$('.helpinfo.Password').toggle('slow');">help?</a>
-                <a class="help_label"> &nbsp; | &nbsp; </a>
-                <a class="help_label" onclick="$('#passcode').val('')"> [X] </a>
-            </div>
-            <div class="helpinfo Password">
-            </div>
-            <textarea id="passcode" type="password" maxlength="120" style="width:100%;" class="inputxt"
-                value=""></textarea>
-
-            <br>
-            <hr />
             <br>
         </form>
-        <div class="centered_elem">
 
-
-            <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button>
-            <a id="CheckIn">&nbsp;&nbsp;&nbsp; check-in </a>
-            <br>
-            <font color='red'><a id="errmsg"></a></font>
-            <div style="float:right;">
-
-
-                <a id='Test' onclick="$('#testPanel').toggle();">.</a>
-            </div>
-        </div>
     </div>
 
     <div style="text-align: center;margin-top: 0px;" onclick="$('#txtarea').val('');" id="otb">...</div>
-    <div id="account_history" class="center" style="display: none;">.</div>
-
+    
+    
 
 
 
@@ -252,7 +234,7 @@
         })
 
         $("#GitInfo").on("click", function () {
-            PageUti.Repositories_History("#account_history", 1)
+            //PageUti.Repositories_History("#account_history", 1)
         }).on("blur", function () {
             //PageUti.Repositories_History("#account_history", 0)
         })
@@ -267,10 +249,10 @@
 
 
         $("#respdesc_history").on("click", function () {
-            PageUti.Repositories_History("#account_history", 2)
+            //PageUti.Repositories_History("#account_history", 2)
         })
 
-        Uti.visual_check_repository("#Format_Check")
+        //Uti.visual_check_repository("#Format_Check")
 
 
 
@@ -279,13 +261,13 @@
 <script>
     $(function () {
 
-        PageUti.Repositories_History("#account_history", 1)
-        PageUti.Repositories_History("#account_history", -1)
+        //PageUti.Repositories_History("#account_history", 1)
+        //PageUti.Repositories_History("#account_history", -1)
 
         init_by_url_params()
 
         $("#otb").on("click", function () {
-            PageUti.Repositories_History("#account_history", 1)
+            //PageUti.Repositories_History("#account_history", 1)
         })
 
         $(".signinBtn").removeAttr("disabled")
@@ -313,16 +295,17 @@
     function sign_in(success, failed) {
         $(".signinBtn").attr("disabled", true)
         $("#errmsg").text("runing ...")
+       
         var api = new BsnpRestApi()
-        var usr = MyStorage.Repositories().repos_app_update()
-        usr.ttl = MyStorage.cacheTTL()
+        var usr = { repopath: $("#repopath").val(), passcode: "aa" };   //
+        usr.ttl = 9999999
         api.signin(usr, function (rob, err) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
 
             if (err) {
-                failed(rob, ur)
+                failure(rob, ur)
             } else {
                 success(rob, ur)
             }
@@ -346,8 +329,8 @@
             $("#repopath").val(rep)
             $("#passcode").val(pat)
         }
-        if(opt==='run'){
-            setTimeout(function(){
+        if (opt === 'run') {
+            setTimeout(function () {
                 $("#signInAsUsers").trigger("click")
             }, 1000)
         }
