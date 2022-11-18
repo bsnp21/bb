@@ -242,16 +242,14 @@
     function sign_in(success, failed) {
         $(".signinBtn").attr("disabled", true)
         $("#errmsg").text("runing ...")
-        var repopath = $("#repopath").val()
-        var passcode = $("#passcode").val()
 
         var api = new BsnpRestApi()
-        var usr = { repopath: repopath, passcode: "aa" };   //
+        var usr = remeber_ui();   //
         usr.ttl = 9999999
         api.signin(usr, function (rob, err) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: repopath })}`
+            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
             if (err) {
                 failure(rob, ur)
             } else {
@@ -263,16 +261,15 @@
         $(".signinBtn").attr("disabled", true)
         $("#errmsg").text("runing ...")
 
-        var paths = $("#repopath").val()
         var api = new BsnpRestApi()
         api.SSID = "-"
-        var usr = { repopath: paths, passcode: "aa" };   //
+        var usr = remeber_ui();   //
 
         api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             var tb = PageUti.Repo_fstat_table(rob)
-            var a = `<font color="green">Successfully created<br>${paths}</font></a>`
+            var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
             $("#errmsg").html(a)
             $("#output").html(tb)
             cbf(rob)
@@ -282,22 +279,20 @@
         $(".signinBtn").attr("disabled", true)
         $("#errmsg").text("runing ...")
 
-        var paths = $("#repopath").val()
-        var codes = $("#passcode").val()
         var api = new BsnpRestApi()
-        api.SSID = ""
-        var usr = { repopath: paths, passcode: codes };   //
+        api.SSID = "-"
+        var usr = remeber_ui();   //
 
         api.ApiUsrAccount_login(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            if(rob.out.login.err){
+            if (rob.out.login.err) {
                 $("#errmsg").html(rob.out.login.err)
-            }else{
-                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: paths })}`
+            } else {
+                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
                 window.opn(ur, "_target")
             }
-            
+
             if (cbf) cbf(rob)
         })
     }
@@ -309,16 +304,27 @@
         $("#errmsg").text("failed to sign in.")
     }
 
+    function remeber_ui(){
+        var paths = $("#repopath").val()
+        var codes = $("#passcode").val()
+        localStorage.setItem("repopath", paths)
+        localStorage.setItem("passcode", codes)
+        var usr = { repopath: paths, passcode: codes };   
+        return usr
+    }
 
     function init_by_url_params() {
         const urlParams = new URLSearchParams(window.location.search);
         const rep = urlParams.get('rep');
         const pat = urlParams.get('pat');
         const opt = urlParams.get('opt');
-        if (rep && pat) {
-            $("#repopath").val(rep)
-            $("#passcode").val(pat)
-        }
+
+        var repo = localStorage.getItem("repopath")
+        var pass = localStorage.getItem("passcode")
+        //if (rep && pat) {
+        if (repo) $("#repopath").val(repo)
+        if (pass) $("#passcode").val(pass)
+        //} 
         if (opt === 'run') {
             setTimeout(function () {
                 $("#signInAsUsers").trigger("click")
