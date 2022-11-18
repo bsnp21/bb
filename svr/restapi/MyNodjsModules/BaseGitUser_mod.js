@@ -652,9 +652,8 @@ cd ..
 }
 
 BaseGitUser.prototype.Check_username = function (repopath, passcode) {
-    var sponsor_git_usr = "bsnp21"
-
-    var usrsinfo = BaseGitUser.gh_repo_list_Obj_Sponsor(sponsor_git_usr)
+    var gsp = new GitSponsor()
+    var usrsinfo = gsp.gh_repo_list_Obj_Sponsor()
     if (repopath in usrsinfo) {
         return true;
     }
