@@ -538,8 +538,7 @@ var ApiJsonp_BibleObj = {
                 }
             }
 
-            var ret = BaseGUti.execSync_Cmd("gh repo list").toString()
-            console.log("gh repo list", ret)
+           
         })
     },
 

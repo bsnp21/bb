@@ -621,7 +621,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
 
 
     var ret = BaseGUti.execSync_Cmd("gh repo list").toString()
-    console.log("ret", ret)
+    console.log("gh repo list:", ret)
 
 
 
