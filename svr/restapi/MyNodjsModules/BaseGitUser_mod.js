@@ -627,6 +627,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
         var lin = lines[i]
         console.log(i, lin)
     }
+    console.log(lines)
 
 
 
