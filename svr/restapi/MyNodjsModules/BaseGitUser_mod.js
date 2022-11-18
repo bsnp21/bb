@@ -620,8 +620,14 @@ cd ..
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
 
 
-    var ret = BaseGUti.execSync_Cmd("gh repo list").toString()
-    console.log("gh repo list:", ret)
+    var str = BaseGUti.execSync_Cmd("gh repo list").toString()
+    console.log("gh repo list:", str)
+    var lines = str.split(/[\r|\n]/)
+    for(var i=i;i<lines.length;i++){
+        var lin = lines[i]
+        console.log(i, lin)
+    }
+
 
 
 
