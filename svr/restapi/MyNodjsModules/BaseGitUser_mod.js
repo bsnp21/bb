@@ -596,8 +596,9 @@ BaseGitUser.prototype.gh_repo_create = function (username) {
 echo ${dir}
 cd ${dir}
 sudo -S gh repo create ${username} --public --clone
+sudo -S chmod 777 ${username}
 cd ${username}
-echo ${username} > readme.txt
+echo '${username}' > readme.txt
 sudo -S git add *
 sudo -S git commit -m "readme.txt"
 sudo -S git branch -M main
