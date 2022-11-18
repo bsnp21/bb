@@ -638,7 +638,7 @@ cd ${username}
 echo '${salts}' > .salts
 sudo -S mkdir account
 sudo -S chmod 777 account
-sudo -S cp -rf ${this.get_dir_lib_template()}/*  ./account/.
+#sudo -S cp -rf ${this.get_dir_lib_template()}/*  ./account/.
 sudo -S git add .salts
 sudo -S git add *
 sudo -S git commit -m ".salts"
