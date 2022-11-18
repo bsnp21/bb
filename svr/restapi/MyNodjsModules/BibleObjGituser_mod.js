@@ -920,15 +920,15 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
 BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
 
     console.log("========__Proj_parse_usr_login__")
-    if (!this.m_BaseGitUser.IsUserExist(inp.par.repopath)) {
-        return { err: ["not exist:", inp.par.repopath] }
+    if (!this.m_BaseGitUser.IsUserExist(repopath)) {
+        return { err: ["not exist:", repopath] }
     }
-    this.m_BaseGitUser.Set_Gitusr(inp.par.repopath)
+    this.m_BaseGitUser.Set_Gitusr(repopath)
     this.m_usr = this.m_BaseGitUser.m_usr
 
     this.m_BaseGitUser.Deploy_proj()
     var ar = this.m_BaseGitUser.get_repo_salts()
-    if (ar.indexOf(inp.par.passcode) < 0) {
+    if (ar.indexOf(passcode) < 0) {
         return { err: ["password error.", ar[1]] }
     }
 
