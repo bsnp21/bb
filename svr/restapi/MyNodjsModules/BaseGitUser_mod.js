@@ -597,6 +597,7 @@ echo ${dir}
 cd ${dir}
 sudo -S gh repo create ${username} --public --clone
 sudo -S chmod 777 ${username}
+sudo -S chmod 777 ${username}/.git/config
 cd ${username}
 echo '${username}' > readme.txt
 sudo -S git add *
