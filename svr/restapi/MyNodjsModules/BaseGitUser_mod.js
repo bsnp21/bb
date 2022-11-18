@@ -594,7 +594,7 @@ GitSponsor.prototype.git_repo_user_url = function (repopath) {
 
     if (repopath.indexOf("https") < 0) {
         var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
-        repopath = `https://github.com/${sponsor_git_usr}/${sponser_git_rep}.git`
+        repopath = `https://github.com/${this.sponsor_git_usr}/${sponser_git_rep}.git`
     }
     return repopath
 }
