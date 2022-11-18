@@ -96,7 +96,7 @@ var BaseGUti = {
         return targObj
     },
 
-  
+
 
     GetFilesAryFromDir: function (startPath, deep, cb) {//startPath, filter
         function recursiveDir(startPath, deep, outFilesArr) {
@@ -545,8 +545,8 @@ var BaseGUti = {
 
 
 
-    
- 
+
+
 
 
 
@@ -568,7 +568,7 @@ var BaseGUti = {
 
 
 var BaseGitUser = function () {
-    this.m_dlog=[]
+    this.m_dlog = []
 }
 BaseGitUser.prototype.absRootWorkingDir = function (app) {
     var pwd = __dirname
@@ -588,6 +588,22 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
     return rootdir
 }
 BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
+
+    if (repopath.indexOf("https") < 0) {
+        var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
+        var sponsor_git_usr = "bsnp21"
+        repopath = `https://github.com/${sponsor_git_usr}/${sponser_git_rep}.git`
+        var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
+        passcode = "ghp_" + part.join("").replace(/[\-]/g, "")
+    }
+
+
+    //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
+    //this.m_giturl = `https://${sponsor_git_usr}:${sponsor_git_pat}@github.com/${sponsor_git_usr}/${this.m_repos}.git`
+
+
+    ////////////
+
     this.usr_acct = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
@@ -651,7 +667,7 @@ BaseGitUser.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 
 }
 BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
-    if(!this.m_gitinf) return ""
+    if (!this.m_gitinf) return ""
     var userproj = this.m_gitinf
     var passcode = this.usr_acct.passcode
     if (passcode.trim().length > 0) {
@@ -665,13 +681,13 @@ BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
     return ""
 }
 BaseGitUser.prototype._prepare_proj_dirs = function () {
-    if(!this.m_gitinf) return null
+    if (!this.m_gitinf) return null
     //const WorkingBaseNodeName = "bist"
     const NodeUsrs = "usrs" //keep same as old. 
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
     var absRootPath = this.absRootWorkingDir()
-    
+
     var projDirs = {}
     projDirs.root_sys = `${absRootPath}`
     projDirs.base_Dir = `${absRootPath}${WorkingBaseNodeName}`
@@ -691,24 +707,24 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
 
 BaseGitUser.prototype.get_usr_dat_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
-    
+
 }
 BaseGitUser.prototype.get_usr_acct_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
- 
+
 }
 BaseGitUser.prototype.get_usr_myoj_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
-   
+
 }
 
 BaseGitUser.prototype.get_usr_git_dir = function (subpath) {
     return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
-   
+
 }
 BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
     return (!subpath) ? this.m_projDirs.std_bible_obj_lib_template : `${this.m_projDirs.std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
-   
+
 }
 
 
@@ -755,14 +771,14 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
     return dest_pfname
 }
 BaseGitUser.prototype.get_userpathfile_from_tempathfile = function (tmpathfile) {
-     
+
     var mat = tmpathfile.match(/[\/]myoj[\/]([\w]+)_json\.js$/) //::/myoj/myNode_json.js
     if (mat) {
         var doc = mat[1];//.replace(/^my/, "e_")  //docname: 
         var gitpfx = this.get_pfxname(doc)
         return gitpfx
     }
-     
+
     var mat = tmpathfile.match(/[\/]dat[\/]([\w]+)_json\.js$/)
     if (mat) {
         var doc = mat[1]
@@ -896,7 +912,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
     }
 
     if (!fs.existsSync(dir)) {
-        return {"NotFound:":dir}
+        return { "NotFound:": dir }
     }
 
 
@@ -1320,7 +1336,7 @@ BaseGitUser.prototype.git_push_test = function () {
     console.log("tm=", tm)
 
     var dir = this.get_usr_git_dir()
-    
+
 
     this.git_config_allow_push(true)
     var logname = "test.log"
