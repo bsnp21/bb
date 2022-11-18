@@ -623,8 +623,9 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 }
 
 
-BaseGitUser.prototype.gh_repo_create = function (username, passcode) {
+BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var dir = this.get_host_usr_dir()
+    var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.
     var gh_repo_create = `
 # create my-project and clone 
 echo ${dir}
@@ -633,8 +634,7 @@ sudo -S gh repo create ${username} --public --clone
 sudo -S chmod 777 ${username}
 sudo -S chmod 777 ${username}/.git/config
 cd ${username}
-echo '${passcode}' > .salts
-echo '${passcode}' > salts.txt
+echo '${salts}' > .salts
 sudo -S mkdir account
 sudo -S chmod 777 account
 sudo -S cp -rf ${this.get_dir_lib_template()}/*  ./account/.
