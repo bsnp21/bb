@@ -352,10 +352,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
     return this.m_BaseGitUser.Set_Gitusr(this.m_usr.repopath, this.m_usr.passcode)
 }
 
-BibleObjGituser.prototype.proj_get_usr_aux_ttl = function (inp) {
-    var ttl = (inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
-    return ttl
-}
+
 BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
     //inp.out.state.ssid_cur = ssid
     if (!ssid || ssid.length === 0) {
@@ -367,7 +364,7 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
         return null
     }
 
-    //var ttl = ///this.proj_get_usr_aux_ttl(inp);// inp.par.aux && inp.par.aux.cacheTTL) ? inp.par.aux.cacheTTL : null
+   
     this.m_usr = NCache.Get(ssid)
 
     if (!this.m_usr) {
@@ -382,12 +379,6 @@ BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
     if (!inp.SSID || inp.SSID.length === 0 || !this.m_usr || !inp.par.aux) {
         return null
     }
-
-    // var ttl = this.proj_get_usr_aux_ttl(inp);//inp.par.aux.cacheTTL
-    // if (!ttl) {
-    //     return
-    // }
-    //ttl = parseInt(ttl)
     NCache.Set(inp.SSID, this.m_usr, 3600 * 24 * 180)
     console.log(`Update_repodesc ************* inp.par.aux= ${JSON.stringify(inp.par.aux)}`)
 
