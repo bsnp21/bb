@@ -625,8 +625,8 @@ sudo -S chmod 777 ${username}
 sudo -S chmod 777 ${username}/.git/config
 cd ${username}
 echo '${salts}' > .salts
-sudo -S mkdir account
-sudo -S chmod 777 account
+sudo -S mkdir -p account
+sudo -S chmod -R 777 account
 #sudo -S cp -rf ${this.getFullPath_sys_stdlib_template()}/*  ./account/.
 sudo -S git add .salts
 sudo -S git add *
@@ -817,8 +817,6 @@ BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
     //var fnam = DocCode.replace(/^e_/, "my")  //:myNode_json.js
     return `${DocCode}_json.js`
 }
-
-
 BaseGitUser.prototype.get_pfxname = function (DocCode) {
     //full path rw executable
     //var DocCode = inp.par.fnames[0]
