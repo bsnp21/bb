@@ -606,7 +606,7 @@ BaseGitUser.prototype.absRootWorkingDir = function (app) {
 
 
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
-    var dir = this.get_host_usr_dir()
+    var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
     var commit_msg = this.getFullPath_usr_git(".salts")
@@ -630,8 +630,8 @@ sudo -S git remote add origin https://github.com/bsnp21/${username}.git
 sudo -S git push -u origin main
 cd ..
     `
-    if (this.getFullPath_usr_git() !== this.get_host_usr_dir(username)) {
-        console.log(this.getFullPath_usr_git() + " is not the same with: " + this.get_host_usr_dir(username))
+    if (this.getFullPath_usr_git() !== this.getFullPath_usr_host(username)) {
+        console.log(this.getFullPath_usr_git() + " is not the same with: " + this.getFullPath_usr_host(username))
     }
 
     console.log("git_clogh_repo_createne_cmd...")
@@ -759,7 +759,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     var projDirs = {}
     projDirs.root_sys = `${absRootPath}`
     projDirs.base_Dir = `${absRootPath}${WorkingBaseNodeName}`
-    projDirs.user_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`
+    projDirs.user_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`                                    //<==User's host
     projDirs.git_root = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`               //<==User's git root
     projDirs.acct_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`       //<==User's acct
     projDirs.dest_myo = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`  //<==User's myoj
@@ -768,10 +768,11 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     console.log("_prepare_proj_dirs---- projDirs =", projDirs)
     return projDirs
 }
-
-BaseGitUser.prototype.getFullPath_usr_dat = function (subpath) {
-    return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
-
+BaseGitUser.prototype.getFullPath_usr_host = function (subpath) {
+    return (!subpath) ? this.m_projDirs.user_dir : `${this.m_projDirs.user_dir}/${subpath.replace(/^[\/]/, "")}`
+}
+BaseGitUser.prototype.getFullPath_usr_git = function (subpath) {
+    return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
 }
 BaseGitUser.prototype.getFullPath_usr_acct = function (subpath) {
     return (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
@@ -781,18 +782,14 @@ BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
 
 }
-
-BaseGitUser.prototype.getFullPath_usr_git = function (subpath) {
-    return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
-
+BaseGitUser.prototype.getFullPath_usr_dat = function (subpath) {
+    return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
 }
+
 BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
+}
 
-}
-BaseGitUser.prototype.get_host_usr_dir = function (subpath) {
-    return (!subpath) ? this.m_projDirs.user_dir : `${this.m_projDirs.user_dir}/${subpath.replace(/^[\/]/, "")}`
-}
 
 
 
