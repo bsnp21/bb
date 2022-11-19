@@ -682,7 +682,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
 
     this.m_std_bible_obj_lib_template = `${absRootPath}/bible_obj_lib/jsdb/UsrDataTemplate`
 
-    return;
+    return true;
 }
 BaseGitUser.prototype._interpret_repo_url_str = function (proj_url) {
     if (!proj_url) return null
