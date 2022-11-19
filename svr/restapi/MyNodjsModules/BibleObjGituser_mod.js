@@ -404,10 +404,10 @@ BibleObjGituser.prototype.Session_create = function (usr) {
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
     //   ttl = parseInt(this.m_inp.usr.ttl)
     //}
-    console.log("ssid=", ssid, ssid_b64, usr, ttl)
+    
 
     NCache.Set(ssid_b64, usr, ttl)
-    console.log("Session_create:", ssid, ssid_b64, usr)
+    console.log("Session_create:ssid=", ssid, ssid_b64, usr, ttl)
 
     return ssid_b64
 }
