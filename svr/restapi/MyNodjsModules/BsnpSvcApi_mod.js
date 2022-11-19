@@ -559,6 +559,7 @@ var ApiJsonp_BibleObj = {
             //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
             var ret = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
             ApiUti.Set_output(inp.out, ret)
+            console.log(inp)
         })
     },
 
