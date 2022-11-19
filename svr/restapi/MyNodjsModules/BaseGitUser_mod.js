@@ -667,7 +667,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     this.m_usr = { repopath: repopath, passcode: passcode } //sponsor
     ////////////
 
-    this.usr_acct = { repopath: repopath, passcode: passcode }
+    this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
     this.m_projDirs = this._prepare_proj_dirs()
@@ -733,7 +733,7 @@ BaseGitUser.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
     if (!this.m_gitinf) return ""
     var userproj = this.m_gitinf
-    var passcode = this.usr_acct.passcode
+    var passcode = this.usr_repos.passcode
     if (passcode.trim().length > 0) {
         if ("github.com" === userproj.hostname) {
             return `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
@@ -1094,20 +1094,20 @@ BaseGitUser.prototype.load_git_config = function () {
     if (!fs.existsSync(git_config_fname)) return ""
     //if (!this.m_git_config_old || !this.m_git_config_new) {
     var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
-    var ipos1 = txt.indexOf(this.usr_acct.repopath)
+    var ipos1 = txt.indexOf(this.usr_repos.repopath)
     var ipos2 = txt.indexOf(this.git_Usr_Pwd_Url)//usr_proj
 
-    console.log("ipos1:", ipos1, this.usr_acct.repopath)
+    console.log("ipos1:", ipos1, this.usr_repos.repopath)
     console.log("ipos2:", ipos2, this.git_Usr_Pwd_Url)//usr_proj
 
     var configurl = ""
     if (ipos1 > 0) {
         olds = txt
-        news = txt.replace(this.usr_acct.repopath, this.git_Usr_Pwd_Url)//usr_proj
+        news = txt.replace(this.usr_repos.repopath, this.git_Usr_Pwd_Url)//usr_proj
     }
     if (ipos2 > 0) {
         news = txt
-        olds = txt.replace(this.git_Usr_Pwd_Url, this.usr_acct.repopath)//usr_proj
+        olds = txt.replace(this.git_Usr_Pwd_Url, this.usr_repos.repopath)//usr_proj
 
         console.log("initial git_config_fname not normal:", txt)
     }
@@ -1262,7 +1262,7 @@ BaseGitUser.prototype.git_clone = function () {
 
     var clone_https = this.git_Usr_Pwd_Url
     if (clone_https.length === 0) {
-        clone_https = this.usr_acct.repopath
+        clone_https = this.usr_repos.repopath
     }
     if (clone_https.length === 0) {
         inp.out.git_clone_res.desc += ",no url."
@@ -1344,7 +1344,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
     echo '=>git add *'
     echo 'lll'|  sudo -S git add *
     echo '=>git commit'
-    echo 'lll'|  sudo -S git commit -m "Sync:${msg}. repodesc:${this.usr_acct.repodesc}"
+    echo 'lll'|  sudo -S git commit -m "Sync:${msg}. repodesc:${this.usr_repos.repodesc}"
     echo '=>git push'
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     echo '=>git status'
