@@ -881,12 +881,12 @@ var BibleObjGituser = function () {
 BibleObjGituser.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
     if (this.m_BaseGitUser.IsUserExist(repopath)) {
-        return { create_er: repopath + ": user alreay exists." }
+        return { err: repopath + ": user alreay exists." }
     }
     this.m_BaseGitUser.Set_Gitusr(repopath)
     this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword)
     var ret = this.m_BaseGitUser.Check_proj_state()
-    return ret
+    return { ok: ret }
 }
 
 BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {

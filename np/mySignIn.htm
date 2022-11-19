@@ -270,7 +270,7 @@
         api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            $("#txtarea").val(JSON.stringify(rob,null,4))
+            $("#txtarea").val(JSON.stringify(rob, null, 4))
             var tb = PageUti.Repo_fstat_table(rob)
             var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
             $("#errmsg").html(a)
@@ -289,19 +289,18 @@
         api.ApiUsrAccount_login(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
-            $("#txtarea").val(JSON.stringify(rob,null,4))
-            if (rob.out.login) {
-                if (rob.out.err) {
-                    $("#errmsg").html(rob.out.err)
-                }
-                else {
-                    if (cbf && !cbf(rob)){
-                        return
-                    }
-                    var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
-                    window.open(ur, "_target")
-                }
+            $("#txtarea").val(JSON.stringify(rob, null, 4))
+            if (rob.out.err) {
+                $("#errmsg").html(rob.out.err)
             }
+            else {
+                if (cbf && !cbf(rob)) {
+                    return
+                }
+                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
+                window.open(ur, "_self")
+            }
+
 
         })
     }

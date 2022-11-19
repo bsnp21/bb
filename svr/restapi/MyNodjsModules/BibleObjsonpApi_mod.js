@@ -508,8 +508,15 @@ var ApiJsonp_BibleObj = {
         console.log("ApiUsrAccount_create")
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             var userProject = new BibleObjGituser()
-            inp.out.state = userProject.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
-            if (!inp.out.state) return console.log("ApiUsrAccount_create failed.")
+            var ret = userProject.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
+            //if (!inp.out.state) return console.log("ApiUsrAccount_create failed.")
+            if (ret.err) {
+                inp.out.err = ret.err;// //) 
+                console.log(inp, "\n\n----ApiUsrAccount_login failed.")
+            } else {
+                inp.out.state = ret.ok
+                inp.out.state.SSID = ret.ssid
+            }
         })
     },
     ApiUsrReposData_signin: function (req, res) {
@@ -551,8 +558,8 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
             if (ret.err) {
                 inp.out.err = ret.err;// //) 
-                return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
-            }else{
+                console.log(inp, "\n\n----ApiUsrAccount_login failed.")
+            } else {
                 inp.out.state = ret.ok
                 inp.out.state.SSID = ret.ssid
             }
