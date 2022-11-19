@@ -23,7 +23,7 @@ const {
 
 
 var { BibleObjJsonpApi } = require("./MyNodjsModules/BibleObjsonpApi_mod");
-const { BibleUti } = require("./MyNodjsModules/BibleObjGituser_mod")
+
 
 // var HebrewQ = require("./MyNodjsModules/HebrewQ.module").HebrewQ;
 // var BibDesk = require("./MyNodjsModules/BibDesk.module").BibDesk;
@@ -91,7 +91,7 @@ console.log("http svr port:", MASTER_SVR.http.port);
 //
 ////////////////////////////////////////////////
 //require("../../htmf/studynotes")
-//BibleUti.access_dir(app,"bsnp")
+
 
 
 
