@@ -448,7 +448,6 @@ BibleObjGituser.prototype.Session_delete = function () {
 
 
 module.exports = {
-    BibleUti: BibleUti,
     NCache: NCache,
     BibleObjGituser: BibleObjGituser
 }
