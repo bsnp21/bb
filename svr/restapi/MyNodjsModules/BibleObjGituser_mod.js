@@ -321,7 +321,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 }
 BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
-    this.m_usr = { repopath: repopath, passcode: passcode }
+    var usrObj = { repopath: repopath, passcode: passcode }
 
     console.log("========__Proj_parse_usr_login__")
     if (!this.m_BaseGitUser.IsUserExist(repopath)) {
@@ -338,7 +338,7 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     }
 
     //inp.out.state.SSID = userProject.Session_create()
-    var ssid = this.Session_create(this.m_usr)
+    var ssid = this.Session_create(usrObj)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     return { ok: ret, ssid: ssid }
