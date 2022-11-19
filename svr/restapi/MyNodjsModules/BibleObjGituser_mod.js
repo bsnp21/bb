@@ -418,7 +418,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 
 
 BibleObjGituser.prototype.Session_create = function () {
-    //var gitdir = this.m_BaseGitUser.get_usr_git_dir()
+
 
     var ssid = this.m_BaseGitUser.m_gitinf.ownerId //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")

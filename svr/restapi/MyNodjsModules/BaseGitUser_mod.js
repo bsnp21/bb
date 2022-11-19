@@ -609,7 +609,7 @@ BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var dir = this.get_host_usr_dir()
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
-    var commit_msg = this.get_usr_git_dir(".salts")
+    var commit_msg = this.getFullPath_usr_git(".salts")
     var gh_repo_create = `
 # create my-project and clone 
 echo ${dir}
@@ -630,8 +630,8 @@ sudo -S git remote add origin https://github.com/bsnp21/${username}.git
 sudo -S git push -u origin main
 cd ..
     `
-    if (this.get_usr_git_dir() !== this.get_host_usr_dir(username)) {
-        console.log(this.get_usr_git_dir() + " is not the same with: " + this.get_host_usr_dir(username))
+    if (this.getFullPath_usr_git() !== this.get_host_usr_dir(username)) {
+        console.log(this.getFullPath_usr_git() + " is not the same with: " + this.get_host_usr_dir(username))
     }
 
     console.log("git_clogh_repo_createne_cmd...")
@@ -641,7 +641,7 @@ cd ..
     return ret
 }
 BaseGitUser.prototype.get_repo_salts = function (u) {
-    var fname = this.get_usr_git_dir(".salts")
+    var fname = this.getFullPath_usr_git(".salts")
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
     if (!txt) return []
@@ -769,20 +769,20 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     return projDirs
 }
 
-BaseGitUser.prototype.get_usr_dat_dir = function (subpath) {
+BaseGitUser.prototype.getFullPath_usr_dat = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
 
 }
-BaseGitUser.prototype.get_usr_acct_dir = function (subpath) {
+BaseGitUser.prototype.getFullPath_usr_acct = function (subpath) {
     return (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
 
 }
-BaseGitUser.prototype.get_usr_myoj_dir = function (subpath) {
+BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
 
 }
 
-BaseGitUser.prototype.get_usr_git_dir = function (subpath) {
+BaseGitUser.prototype.getFullPath_usr_git = function (subpath) {
     return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
 
 }
@@ -822,13 +822,13 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
         case "e": //: e_Node,
             {
                 var fnam = this.get_DocCode_Fname(DocCode)
-                dest_pfname = this.get_usr_myoj_dir(`/${fnam}`)
+                dest_pfname = this.getFullPath_usr_myoj(`/${fnam}`)
             }
             break
         case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
                 var fnam = DocCode.substr(1)
-                dest_pfname = this.get_usr_acct_dir(`${fnam}_json.js`)
+                dest_pfname = this.getFullPath_usr_acct(`${fnam}_json.js`)
             }
             break;
         default: //: NIV, CUVS, NIV_Jw  
@@ -873,13 +873,13 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
 
 
-    var dir = this.get_usr_myoj_dir()
+    var dir = this.getFullPath_usr_myoj()
     stat.bMyojDir = (fs.existsSync(dir)) ? 1 : 0
 
-    var dir = this.get_usr_dat_dir()
+    var dir = this.getFullPath_usr_dat()
     stat.bDatDir = (fs.existsSync(dir)) ? 1 : 0
 
-    var dir = this.get_usr_git_dir("/.git/config")
+    var dir = this.getFullPath_usr_git("/.git/config")
     stat.bGitDir = (fs.existsSync(dir)) ? 1 : 0
 
     stat.bEditable = (1 === stat.bMyojDir && 1 === stat.bDatDir && 1 === stat.bGitDir) ? 1 : 0
@@ -897,7 +897,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
         stat.bRepositable = 1
     }
 
-    var accdir = this.get_usr_acct_dir()
+    var accdir = this.getFullPath_usr_acct()
     var fstat = {}
     var totalsize = 0
     var iAlertLevel = 0
@@ -970,7 +970,7 @@ BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
 BaseGitUser.prototype.Deploy_proj = function () {
     console.log("********************************************* Deploy_proj  1")
 
-    var dir = this.get_usr_git_dir("/.git/config")
+    var dir = this.getFullPath_usr_git("/.git/config")
     if (!fs.existsSync(dir)) {
         this.git_clone() //always sucess even passwd is wrong.
     } else {
@@ -986,7 +986,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
         this.run_makingup_missing_files(true)
     }
 
-    var dir = this.get_usr_acct_dir()
+    var dir = this.getFullPath_usr_acct()
     if (fs.existsSync(dir)) {
         BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
@@ -1001,7 +1001,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
 BaseGitUser.prototype.Destroy_proj = function () {
     var inp = { out: {} };//this.m_inp
 
-    var gitdir = this.get_usr_git_dir()
+    var gitdir = this.getFullPath_usr_git()
     //var password = "lll" //dev mac
     var proj_destroy = `
       sudo -S rm -rf ${gitdir}
@@ -1023,7 +1023,7 @@ BaseGitUser.prototype.cp_template_to_git = function () {
     var inp = { out: { desc: "" } };//this.m_inp
     inp.out.desc += ",clone."
 
-    var gitdir = this.get_usr_myoj_dir()
+    var gitdir = this.getFullPath_usr_myoj()
     if (fs.existsSync(`${gitdir}`)) {
         inp.out.desc += ", usr acct already exist: "
         return inp
@@ -1031,7 +1031,7 @@ BaseGitUser.prototype.cp_template_to_git = function () {
 
 
     //var password = "lll" //dev mac
-    var acctDir = this.get_usr_acct_dir()
+    var acctDir = this.getFullPath_usr_acct()
     var cp_template_cmd = `
     #!/bin/sh
     echo 'lll' | sudo -S mkdir -p ${acctDir}
@@ -1058,7 +1058,7 @@ BaseGitUser.prototype.chmod_R_777_acct = function (spath) {
     // mode : "777" 
     var inp = { out: {} };//this.m_inp
 
-    var dir = this.get_usr_acct_dir(spath)
+    var dir = this.getFullPath_usr_acct(spath)
     console.log("perm:", dir)
     if (!fs.existsSync(dir)) {
         return inp
@@ -1089,7 +1089,7 @@ BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
 
 
 BaseGitUser.prototype.load_git_config = function () {
-    var git_config_fname = this.get_usr_git_dir("/.git/config")
+    var git_config_fname = this.getFullPath_usr_git("/.git/config")
     if (!fs.existsSync(git_config_fname)) return ""
     //if (!this.m_git_config_old || !this.m_git_config_new) {
     var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
@@ -1209,7 +1209,7 @@ BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
     //if (!this.usr_proj) return
     if (!this.git_Usr_Pwd_Url) return //usr_proj
 
-    var git_config_fname = this.get_usr_git_dir("/.git/config")
+    var git_config_fname = this.getFullPath_usr_git("/.git/config")
     if (!fs.existsSync(git_config_fname)) {
         console.log(".git/config not exist:", git_config_fname)
         return
@@ -1250,7 +1250,7 @@ BaseGitUser.prototype.git_clone = function () {
     }
 
     inp.out.git_clone_res = { desc: "git-clone", bExist: false }
-    var gitdir = this.get_usr_git_dir("/.git")
+    var gitdir = this.getFullPath_usr_git("/.git")
     if (fs.existsSync(gitdir)) {
         inp.out.git_clone_res.desc += "|already done."
         inp.out.git_clone_res.bExist = true
@@ -1277,7 +1277,7 @@ BaseGitUser.prototype.git_clone = function () {
     }
     var ret = BaseGUti.execSync_Cmd(`echo 'lll'|  sudo -S chmod -R 777 ${dir}`).toString()
 
-    gitdir = this.get_usr_git_dir()
+    gitdir = this.getFullPath_usr_git()
     if (fs.existsSync(gitdir)) {
         inp.out.git_clone_res.desc += "|git folder exit but no .git"
         inp.out.git_clone_res.bExist = true
@@ -1309,11 +1309,11 @@ BaseGitUser.prototype.git_status = async function (_sb) {
     if (!inp.out.state) return console.log("*** Fatal Error: inp.out.state = null")
 
     if (undefined === _sb) _sb = ""
-    var gitdir = this.get_usr_git_dir("/.git/config")
+    var gitdir = this.getFullPath_usr_git("/.git/config")
     if (fs.existsSync(gitdir)) {
         /////// git status
         var git_status_cmd = `
-        cd ${this.get_usr_git_dir()}
+        cd ${this.getFullPath_usr_git()}
         git status ${_sb}
         #git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.`
 
@@ -1325,7 +1325,7 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
     var _THIS = this
     var inp = {};//this.m_inp
-    var gitdir = this.get_usr_git_dir()
+    var gitdir = this.getFullPath_usr_git()
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists.");
     }
@@ -1401,7 +1401,7 @@ BaseGitUser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
-    var dir = this.get_usr_git_dir()
+    var dir = this.getFullPath_usr_git()
 
 
     this.git_config_allow_push(true)
@@ -1418,7 +1418,7 @@ BaseGitUser.prototype.git_push_test = function () {
         console.log("\n*** test git push:", dir, ret)
         if (ret.match(/failed/i)) {
             if (!fs.existsSync(dir)) {
-                console.log("*********** get_usr_git_dir not exist.", dir)
+                console.log("*********** getFullPath_usr_git not exist.", dir)
                 return null
             }
             ret = null
@@ -1431,7 +1431,7 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
     var _THIS = this
 
 
-    if (!fs.existsSync(this.get_usr_git_dir())) {
+    if (!fs.existsSync(this.getFullPath_usr_git())) {
         return null
     }
 
@@ -1439,7 +1439,7 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
     //var password = "lll" //dev mac
     var scmd = `
     #!/bin/sh
-    cd ${this.get_usr_git_dir()}
+    cd ${this.getFullPath_usr_git()}
      echo lll |sudo -S ${gitcmd}
     `
     console.log("\n----git_cmd start:>", scmd)
