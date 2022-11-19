@@ -16,13 +16,12 @@ const crypto = require('crypto')
 const NodeCache = require("node-cache");
 
 
-const WorkingRootNodeName = "bist"
-
-const WorkingBaseNodeName = "bist"
+const WorkingRootNodeName = "bugit"
 
 
 
-//const WorkingRootNodeName = "bist"
+
+//const WorkingRootNodeName = "bugit"
 var BaseGUti = {
 
     GetEmptyObj: function (obj) {
@@ -771,7 +770,7 @@ BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
 }
 BaseGitUser.prototype._prepare_proj_dirs = function () {
     if (!this.m_gitinf) return null
-    //const WorkingBaseNodeName = "bist"
+    //const WorkingBaseNodeName = "bugit"
     const NodeUsrs = "usrs" //keep same as old. 
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
@@ -996,7 +995,7 @@ BaseGitUser.prototype.mkdir_empty_proj = function () {
     //var password = "lll" //dev mac
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
-    var bist = this.getFullPath_root_sys(WorkingBaseNodeName)
+    var bugit = this.getFullPath_root_sys(WorkingBaseNodeName)
     var usrs_home = this.getFullPath_usr_host()
 
     var git_clone_cmd = `
@@ -1005,13 +1004,13 @@ BaseGitUser.prototype.mkdir_empty_proj = function () {
     if [ -f "${usrs_home}" ]; then
         echo "${usrs_home} exists."
     else 
-        echo "${bist} does not exist."
+        echo "${bugit} does not exist."
         echo 'lll' | sudo -S mkdir -p ${usrs_home}
-        echo 'lll' | sudo -S chmod -R 777 ${bist}
+        echo 'lll' | sudo -S chmod -R 777 ${bugit}
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
-    console.log("-mkdir_empty_proj:", bist, fs.existsSync(bist), ret)
+    console.log("-mkdir_empty_proj:", bugit, fs.existsSync(bugit), ret)
     return ret
 }
 BaseGitUser.prototype.git_clone = function () {
@@ -1019,7 +1018,7 @@ BaseGitUser.prototype.git_clone = function () {
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
     var clone_https = this.git_Usr_Pwd_Url
-    var bist = this.getFullPath_root_sys(WorkingBaseNodeName)
+    var bugit = this.getFullPath_root_sys(WorkingBaseNodeName)
 
     var git_clone_cmd = `
     #!/bin/sh

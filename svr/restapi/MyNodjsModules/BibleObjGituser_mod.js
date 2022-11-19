@@ -18,7 +18,7 @@ const NodeCache = require("node-cache");
 var { BaseGitUser,BaseGUti, WorkingRootNodeName } = require("./BaseGitUser_mod");
 
 
-//const WorkingRootNodeName = "bist" BibleUti
+//const WorkingRootNodeName = "bugit" BibleUti
 
 
 var SvrUsrsBCV = function (srcpath) {
@@ -268,8 +268,8 @@ NCache.Init()
 
 
 
-//../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/dat
-//../../../../bist/usrs/{hostname}/{Usrname}/{projname}/account/myoj
+//../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/dat
+//../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BibleObjGituser = function () {
 
     this.m_BaseGitUser = new BaseGitUser()
@@ -328,7 +328,7 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     this.m_usr = this.m_BaseGitUser.m_usr
 
     this.m_BaseGitUser.Deploy_proj()
-    
+
     var ar = this.m_BaseGitUser.get_repo_salts()
     if (ar.indexOf(passcode) < 0) {
         return { err: ["password error.", ar[1]] }
@@ -388,7 +388,7 @@ BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
 
 
 BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
-    //jspfn: ../../../../bist/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
+    //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var ary = docfile.split("/")
     var idx = ary.indexOf("usrs")
     var hostname = ary[idx + 1]
@@ -398,7 +398,7 @@ BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
     return owner
 }
 BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
-    //jspfn: ../../../../bist/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
+    //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var pos = docfile.indexOf("/account/")
     var gitpath = docfile.substr(0, pos)
     console.log("gitpath", gitpath)
