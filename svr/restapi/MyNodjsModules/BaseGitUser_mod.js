@@ -621,7 +621,7 @@ cd ${username}
 echo '${salts}' > .salts
 sudo -S mkdir account
 sudo -S chmod 777 account
-#sudo -S cp -rf ${this.get_dir_lib_template()}/*  ./account/.
+#sudo -S cp -rf ${this.getFullPath_sys_stdlib_template()}/*  ./account/.
 sudo -S git add .salts
 sudo -S git add *
 sudo -S git commit -m "${commit_msg}"
@@ -786,7 +786,7 @@ BaseGitUser.prototype.getFullPath_usr_dat = function (subpath) {
     return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
 }
 
-BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
+BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 }
 
@@ -936,10 +936,10 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
 
     var _THIS = this
-    var srcdir = this.get_dir_lib_template()
+    var srcdir = this.getFullPath_sys_stdlib_template()
     var nMissed = 0
     BaseGUti.GetFilesAryFromDir(srcdir, true, function (srcfname) {
-        //console.log("---get_dir_lib_template:", srcfname)
+        //console.log("---getFullPath_sys_stdlib_template:", srcfname)
         var ret = path.parse(srcfname);
         var ext = ret.ext
         var bas = ret.base
