@@ -262,6 +262,7 @@
     function create_acct(cbf) {
         $(".signinBtn").attr("disabled", true)
         $("#errmsg").text("runing ...")
+        $("#output").html("")
 
         var api = new BsnpRestApi()
         api.SSID = "-"
@@ -271,10 +272,15 @@
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
             $("#txtarea").val(JSON.stringify(rob, null, 4))
-            var tb = PageUti.Repo_fstat_table(rob)
-            var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
-            $("#errmsg").html(a)
-            $("#output").html(tb)
+            if (rob.out.err) {
+                $("#errmsg").html(rob.out.err)
+            } else {
+                var tb = PageUti.Repo_fstat_table(rob)
+                var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
+                $("#errmsg").html(a)
+                $("#output").html(tb)
+            }
+
             cbf(rob)
         })
     }

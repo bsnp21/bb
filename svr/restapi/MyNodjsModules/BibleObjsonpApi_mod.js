@@ -135,6 +135,15 @@ var ApiUti = {
 
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
+    },
+    Set_output:function(pout, ret){
+        if (ret.err) {
+            pout.err = ret.err;// //) 
+            //console.log(inp, "\n\n----ApiUsrAccount_login failed.")
+        } else {
+            pout.state = ret.ok
+            pout.state.SSID = ret.ssid
+        }
     }
 
 }
@@ -509,14 +518,7 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             var userProject = new BibleObjGituser()
             var ret = userProject.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
-            //if (!inp.out.state) return console.log("ApiUsrAccount_create failed.")
-            if (ret.err) {
-                inp.out.err = ret.err;// //) 
-                console.log(inp, "\n\n----ApiUsrAccount_login failed.")
-            } else {
-                inp.out.state = ret.ok
-                inp.out.state.SSID = ret.ssid
-            }
+            ApiUti.Set_output(inp.out, ret)
         })
     },
     ApiUsrReposData_signin: function (req, res) {
@@ -556,13 +558,7 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGituser()
             //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
             var ret = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
-            if (ret.err) {
-                inp.out.err = ret.err;// //) 
-                console.log(inp, "\n\n----ApiUsrAccount_login failed.")
-            } else {
-                inp.out.state = ret.ok
-                inp.out.state.SSID = ret.ssid
-            }
+            ApiUti.Set_output(inp.out, ret)
         })
     },
 
