@@ -11,8 +11,8 @@ const crypto = require('crypto')
 //var SvcUti = require("./SvcUti.module").SvcUti;
 //const exec = require('child_process').exec;
 
-const { BibleObjGituser, BibleUti, NCache } = require("./BibleObjGituser_mod")
-
+const { BibleObjGituser,  NCache } = require("./BibleObjGituser_mod")
+const { BaseGUti } = require("./BaseGitUser_mod")
 
 var ApiUti = {
     Parse_GET_req_to_inp: function (req, cbf) {
@@ -51,7 +51,7 @@ var ApiUti = {
             //d64 = Buffer.from(d64, 'base64').toString()
             var sin = decodeURIComponent(d64);//must for client's encodeURIComponent
 
-            var out = BibleUti.default_inp_out_obj()
+            var out = BaseGUti.default_inp_out_obj()
             try {
                 var inpObj = JSON.parse(sin);
                 inpObj.out = out
@@ -88,7 +88,7 @@ var ApiUti = {
                 var inpObj = null
                 try {
                     inpObj = JSON.parse(body)
-                    inpObj.out = BibleUti.default_inp_out_obj()
+                    inpObj.out = BaseGUti.default_inp_out_obj()
                 } catch (err) {
                     inpObj.err = err
                 }
@@ -221,16 +221,16 @@ var ApiJsonp_BibleObj = {
                     var trn = inp.par.fnames[i];
                     var jsfname = userProject.m_BaseGitUser.get_pfxname(trn)
                     console.log("jsfname:", jsfname)
-                    var bib = BibleUti.loadObj_by_fname(jsfname);
+                    var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) continue
-                    var bcObj = BibleUti.copy_biobj(bib.obj, inp.par.bibOj);
+                    var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
                     TbcvObj[trn] = bcObj;
                     inp.out.desc += ":" + trn
                 }
             }
             var bcvT = {}
-            BibleUti.convert_Tbcv_2_bcvT(TbcvObj, bcvT)
-            inp.out.data = BibleUti.search_str_in_bcvT(bcvT, inp.par.Search.File, inp.par.Search.Strn);
+            BaseGUti.convert_Tbcv_2_bcvT(TbcvObj, bcvT)
+            inp.out.data = BaseGUti.search_str_in_bcvT(bcvT, inp.par.Search.File, inp.par.Search.Strn);
 
             inp.out.desc += ":success."
             userProject.m_BaseGitUser.Check_proj_state()
@@ -262,13 +262,13 @@ var ApiJsonp_BibleObj = {
                         var trn = inp.par.fnames[i];
                         var jsfname = userProject.m_BaseGitUser.get_pfxname(trn)
                         console.log("load:", jsfname)
-                        var bib = BibleUti.loadObj_by_fname(jsfname);
+                        var bib = BaseGUti.loadObj_by_fname(jsfname);
                         if (!bib.obj) {
                             inp.out.desc += ":noexist:" + trn
                             console.log("not exist..............", jsfname)
                             continue
                         }
-                        var bcObj = BibleUti.copy_biobj(bib.obj, inp.par.bibOj);
+                        var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
                         TbcObj[trn] = bcObj;
                         inp.out.desc += ":" + trn
                     }
@@ -276,7 +276,7 @@ var ApiJsonp_BibleObj = {
                 }
                 //console.log(TbcObj)
                 var bcvT = {}
-                BibleUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
+                BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
                 inp.out.data = bcvT
                 //console.log(bcvT)
             }
@@ -303,13 +303,13 @@ var ApiJsonp_BibleObj = {
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
             var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
-            var bio = BibleUti.loadObj_by_fname(jsfname);
+            var bio = BaseGUti.loadObj_by_fname(jsfname);
             if (!bio.obj) {
                 save_res.desc = `load(${doc},${jsfname})=null`
                 return;
             }
 
-            var karyObj = BibleUti.inpObj_to_karyObj(inp.par.inpObj)
+            var karyObj = BaseGUti.inpObj_to_karyObj(inp.par.inpObj)
             if (karyObj.kary.length !== 4) {
                 save_res.desc = `err inpObj: ${JSON.stringify(karyObj)}`
                 return
@@ -374,8 +374,8 @@ var ApiJsonp_BibleObj = {
             //////----
             function __load_to_obj(outObj, jsfname, owner, shareID, inpObj,) {
                 //'../../../../bible_study_notes/usrs/bsnp21/pub_wd01/account/myoj/myNote_json.js': 735213,
-                var bio = BibleUti.loadObj_by_fname(jsfname);
-                var karyObj = BibleUti.inpObj_to_karyObj(inpObj)
+                var bio = BaseGUti.loadObj_by_fname(jsfname);
+                var karyObj = BaseGUti.inpObj_to_karyObj(inpObj)
                 if (karyObj.kary.length < 3) {
                     console.log("error",)
                 }

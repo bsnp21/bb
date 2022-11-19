@@ -658,7 +658,7 @@ BaseGitUser.prototype.IsUserExist = function (repopath) {
     return false
 }
 
-BaseGitUser.prototype.Set_Gitusr = function (repopath, passcode) {
+BaseGitUser.prototype.Set_Gitusr = function (repopath) {
 
     //hijack
     var sponser = new GitSponsor()
@@ -1458,6 +1458,7 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
 
 
 module.exports = {
+    BaseGUti:BaseGUti,
     BaseGitUser: BaseGitUser,
     WorkingRootNodeName: WorkingRootNodeName,
 
