@@ -22,7 +22,7 @@ const {
 
 
 
-var { BibleObjJsonpApi } = require("./MyNodjsModules/BibleObjsonpApi_mod");
+var { BibleObjJsonpApi } = require("./MyNodjsModules/BsnpSvcApi_mod");
 
 
 // var HebrewQ = require("./MyNodjsModules/HebrewQ.module").HebrewQ;
