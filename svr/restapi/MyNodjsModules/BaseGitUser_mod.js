@@ -572,7 +572,7 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
 }
 GitSponsor.prototype.git_repo_user_url = function (repopath) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
-    //this.m_giturl = `https://${m_sponsor.ownername}:${sponsor_git_pat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
+    //this.m_giturl = `https://${m_sponsor.ownername}:${m_sponsor.ownerpat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
 
     if (repopath.indexOf("https") < 0) {
         //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
@@ -662,7 +662,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     //hijack
     var sponser = new GitSponsor()
     repopath = sponser.git_repo_user_url(repopath)
-    var passcode = sponser.sponsor_git_pat;
+    var passcode = sponser.m_sponsor.ownerpat;
 
     this.m_usr = { repopath: repopath, passcode: passcode } //sponsor
     ////////////
