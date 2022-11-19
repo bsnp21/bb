@@ -85,7 +85,7 @@ var BsnpRestUti = {
 var RestApi_uPar_Validate = {
     "Get_OTK": function (upar) { },
     "Jsonpster": "Jsonpster",
-    "ApiUsrAccount_login": function(usr){},
+    "ApiUsrAccount_login": function (usr) { },
     "ApiUsrAccount_create": function (usr) { },
     "ApiUsrReposData_signin": function (usr) { },
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
@@ -178,7 +178,7 @@ BsnpRestApi.prototype.urlRedirectParam = function (parm) {
         spar += "&SSID=" + this.SSID
     }
     var username = this.urlParams.get("username")
-    if(parm.username) username = parm.username
+    if (parm.username) username = parm.username
     if (username) {
         spar += "&username=" + parm.username
     }
@@ -240,7 +240,13 @@ BsnpRestApi.prototype.ApiUsrReposData_signin = function (par, cbf) {
     return this.signin(par, cbf)
 }
 BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
-    return this.ajaxion("ApiUsrAccount_login", par, cbf)
+    var _this = this
+    return this.ajaxion("ApiUsrAccount_login", par, function (rob) {
+        if (ret.out.state.SSID) {
+            _this.SSID = ret.out.state.SSID //for urlRedirectParam
+        }
+        if (cbf) cbf(rob)
+    })
 }
 
 BsnpRestApi.prototype.ApiUsrReposData_destroy = function (par, cbf) {
