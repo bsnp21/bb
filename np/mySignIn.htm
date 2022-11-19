@@ -291,8 +291,8 @@
             console.log(rob)
             $("#txtarea").val(JSON.stringify(rob,null,4))
             if (rob.out.login) {
-                if (rob.out.login.err) {
-                    $("#errmsg").html(rob.out.login.err)
+                if (rob.out.err) {
+                    $("#errmsg").html(rob.out.err)
                 }
                 else {
                     if (cbf && !cbf(rob)){
