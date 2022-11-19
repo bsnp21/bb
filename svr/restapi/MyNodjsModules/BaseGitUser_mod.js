@@ -912,7 +912,6 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
         var str = "" + fMB + "/100(MB)"
         if (fMB >= 80.0) { ////** Github: 100 MB per file, 1 GB per repo, svr:10GB
             var str = nam + ":" + fMB + "/100(MB)"
-            warnsAry.push(str)
             iAlertLevel = 1
             str += "*"
         }
