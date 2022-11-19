@@ -548,12 +548,13 @@ var ApiJsonp_BibleObj = {
             //: unlimited write size. 
             var userProject = new BibleObjGituser()
             //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
-            inp.out.err = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
-            if (inp.out.err) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
-
-            if(!inp.out.err){
-                inp.out.state = inp.out.login.ok
-                inp.out.state.SSID = inp.out.login.ssid
+            var ret = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
+            if (ret.err) {
+                inp.out.err = ret.err;// //) 
+                return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
+            }else{
+                inp.out.state = ret.ok
+                inp.out.state.SSID = ret.ssid
             }
         })
     },
