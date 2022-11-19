@@ -216,6 +216,7 @@
         $("#loginAsUser").on("click", function () {
             login_acct(function (rob) {
                 //window.open(ur, '_self');
+                return true; //contine;
             })
         })
 
@@ -223,14 +224,15 @@
             //$(this).toggle("slow")
             $("#output").html("--")
             var paths = $("#repopath").val()
-            sign_in(function (rob, ur) {
+            login_acct(function (rob) {
                 var tb = PageUti.Repo_fstat_table(rob)
-                var a = `<a href='${ur}' target="_self">Successfully checked in<br>${paths} <br>click here to continue to log in</a>`
+                var a = `<font color="green">Success: ${paths} </font>`
                 $("#errmsg").html(a)
                 $("#output").html(tb)
                 //$("#errmsg").html(a+tb)
                 //$("#input_area, #account_history_table").hide()
-            }, failure)
+                return false;//stop next open.
+            })
         })
         $("#SignOnCreate").on("click", function () {
             var paths = $("#repopath").val()
@@ -268,6 +270,7 @@
         api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
+            $("#txtarea").val(JSON.stringify(rob,null,4))
             var tb = PageUti.Repo_fstat_table(rob)
             var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
             $("#errmsg").html(a)
@@ -286,17 +289,20 @@
         api.ApiUsrAccount_login(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
             console.log(rob)
+            $("#txtarea").val(JSON.stringify(rob,null,4))
             if (rob.out.login) {
                 if (rob.out.login.err) {
                     $("#errmsg").html(rob.out.login.err)
                 }
                 else {
+                    if (cbf && !cbf(rob)){
+                        return
+                    }
                     var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
                     window.open(ur, "_target")
                 }
             }
 
-            if (cbf) cbf(rob)
         })
     }
     $("#errmsg").on("click", function () {
