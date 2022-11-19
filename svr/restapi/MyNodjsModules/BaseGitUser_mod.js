@@ -770,7 +770,7 @@ BaseGitUser.prototype._interpret_git_config_Usr_Pwd_Url = function () {
 }
 BaseGitUser.prototype._prepare_proj_dirs = function () {
     if (!this.m_gitinf) return null
-    //const WorkingBaseNodeName = "bugit"
+    //const WorkingRootNodeName = "bugit"
     const NodeUsrs = "usrs" //keep same as old. 
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
@@ -778,12 +778,12 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
 
     var projDirs = {}
     projDirs.root_sys = `${absRootPath}`
-    projDirs.base_Dir = `${absRootPath}${WorkingBaseNodeName}`
-    projDirs.user_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`                                    //<==User's host
-    projDirs.git_root = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`               //<==User's git dir .git
-    projDirs.acct_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`       //<==User's acct
-    projDirs.dest_myo = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`  //<==User's myoj
-    projDirs.dest_dat = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`   //<==User's dat
+    projDirs.base_Dir = `${absRootPath}${WorkingRootNodeName}`
+    projDirs.user_dir = `${absRootPath}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`                                    //<==User's host
+    projDirs.git_root = `${absRootPath}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`               //<==User's git dir .git
+    projDirs.acct_dir = `${absRootPath}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`       //<==User's acct
+    projDirs.dest_myo = `${absRootPath}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`  //<==User's myoj
+    projDirs.dest_dat = `${absRootPath}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`   //<==User's dat
 
     console.log("_prepare_proj_dirs---- projDirs =", projDirs)
     return projDirs
@@ -995,7 +995,7 @@ BaseGitUser.prototype.mkdir_empty_proj = function () {
     //var password = "lll" //dev mac
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
-    var bugit = this.getFullPath_root_sys(WorkingBaseNodeName)
+    var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
     var usrs_home = this.getFullPath_usr_host()
 
     var git_clone_cmd = `
@@ -1018,7 +1018,7 @@ BaseGitUser.prototype.git_clone = function () {
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
     var clone_https = this.git_Usr_Pwd_Url
-    var bugit = this.getFullPath_root_sys(WorkingBaseNodeName)
+    var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
 
     var git_clone_cmd = `
     #!/bin/sh
