@@ -670,7 +670,11 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
-    this.m_projDirs = this._prepare_proj_dirs()
+
+    var absRootPath = this.absRootWorkingDir()
+    this.m_projDirs = this._prepare_proj_dirs(absRootPath)
+
+    this.m_std_bible_obj_lib_template = `${absRootPath}/bible_obj_lib/jsdb/UsrDataTemplate`
 
     return (this.m_gitinf && this.m_projDirs);
 }
@@ -763,7 +767,6 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
 
 
     //////
-    projDirs.std_bible_obj_lib_template = `${absRootPath}/bible_obj_lib/jsdb/UsrDataTemplate`
 
     console.log("_prepare_proj_dirs---- projDirs =", projDirs)
     return projDirs
@@ -787,7 +790,7 @@ BaseGitUser.prototype.getFullPath_usr_git = function (subpath) {
 
 }
 BaseGitUser.prototype.get_dir_lib_template = function (subpath) {
-    return (!subpath) ? this.m_projDirs.std_bible_obj_lib_template : `${this.m_projDirs.std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
+    return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 
 }
 BaseGitUser.prototype.get_host_usr_dir = function (subpath) {
