@@ -1008,7 +1008,7 @@ BaseGitUser.prototype.mkdir_empty_proj = function () {
     if [ -f "${usrs_home}" ]; then
         echo "${usrs_home} exists."
     else 
-        echo "${bugit} does not exist."
+        echo "${bugit} does not exist, to make it.${usrs_home}"
         echo 'lll' | sudo -S mkdir -p ${usrs_home}
         echo 'lll' | sudo -S chmod -R 777 ${bugit}
     fi
