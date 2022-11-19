@@ -174,7 +174,7 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
 }
 BsnpRestApi.prototype.urlRedirectParam = function (parm) {
     var spar = `?ip=${this.svrurl}`
-    if (this.SSID && this.SSID.length > 10) {
+    if (this.SSID && this.SSID.length > 1) {
         spar += "&SSID=" + this.SSID
     }
     var username = this.urlParams.get("username")
@@ -244,7 +244,7 @@ BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
     return this.ajaxion("ApiUsrAccount_login", par, function (ret) {
         if (ret.out.state.SSID) {
             _this.SSID = ret.out.state.SSID //for urlRedirectParam
-        }
+        }else alert("missed SSID in ret.out.state.")
         if (cbf) cbf(ret)
     })
 }

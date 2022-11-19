@@ -2427,7 +2427,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
         MyStorage.Repo_load_data_MostRecentVerses({ MostRecent_Verses: {}, MostRecent_Searches: {} }, function (ret) {
             //if (cbf) cbf(ret)
             Uti.set_menuContainer_color(ret)
-            Uti.Msg("Ready ret.out", ret.out)
+            Uti.Msg("Ready ret.out", ret)
             try {
                 /////////////////////////////////////////////////////
                 if ("MostRecent_Verses" in ret.out.data) {

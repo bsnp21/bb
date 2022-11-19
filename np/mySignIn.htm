@@ -300,10 +300,10 @@
                 $("#errmsg").html(rob.out.err)
             }
             else {
+                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
                 if (cbf && !cbf(rob)) {
                     return
                 }
-                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
                 window.open(ur, "_self")
             }
 
