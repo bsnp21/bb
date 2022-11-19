@@ -241,11 +241,11 @@ BsnpRestApi.prototype.ApiUsrReposData_signin = function (par, cbf) {
 }
 BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
     var _this = this
-    return this.ajaxion("ApiUsrAccount_login", par, function (rob) {
+    return this.ajaxion("ApiUsrAccount_login", par, function (ret) {
         if (ret.out.state.SSID) {
             _this.SSID = ret.out.state.SSID //for urlRedirectParam
         }
-        if (cbf) cbf(rob)
+        if (cbf) cbf(ret)
     })
 }
 
