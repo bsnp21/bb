@@ -570,14 +570,29 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     console.log("usrsInfo", usrsInfo)
     return usrsInfo
 }
-GitSponsor.prototype.git_repo_user_url = function (repopath) {
+GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
     //this.m_giturl = `https://${m_sponsor.ownername}:${m_sponsor.ownerpat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
 
+    var secure = "";
+    if (bSecure) {
+        secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`
+    }
+
     if (repopath.indexOf("https") < 0) {
         //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
-        repopath = `https://github.com/${this.m_sponsor.ownername}/${repopath}.git`
+        repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${repopath}.git`
     }
+
+    // if (passcode.trim().length > 0) {
+    //     if ("github.com" === userproj.hostname) {
+    //         return `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
+    //     }
+    //     if ("bitbucket.org" === userproj.hostname) {
+    //         return `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.prjbitbk}/${userproj.projname}.git`
+    //     }
+    // }
+
     return repopath
 }
 
@@ -675,7 +690,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
 
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
-    this.git_Usr_Pwd_Url = this._interpret_git_config_Usr_Pwd_Url()
+    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(repopath, true) 
 
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
@@ -766,7 +781,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     projDirs.root_sys = `${absRootPath}`
     projDirs.base_Dir = `${absRootPath}${WorkingBaseNodeName}`
     projDirs.user_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`                                    //<==User's host
-    projDirs.git_root = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`               //<==User's git root
+    projDirs.git_root = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`               //<==User's git dir .git
     projDirs.acct_dir = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`       //<==User's acct
     projDirs.dest_myo = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`  //<==User's myoj
     projDirs.dest_dat = `${absRootPath}${WorkingBaseNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`   //<==User's dat
@@ -799,7 +814,10 @@ BaseGitUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
 }
-
+BaseGitUser.prototype.getFullPath_root_sys = function (subpath) {
+    var sysBibleObjPath = `${this.m_projDirs.root_sys}`
+    return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
+}
 
 
 
@@ -840,7 +858,7 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
             dest_pfname = this.getFullPath_sys_stdlib_BibleObj(`${DocCode}.json.js`);
             break;
     }
-    if(!fs.existsSync(dest_pfname)){ 
+    if (!fs.existsSync(dest_pfname)) {
 
     }
     return dest_pfname
@@ -974,9 +992,57 @@ BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
     return nMissed
 }
 
+BaseGitUser.prototype.mkdir_empty_proj = function () {
+    //var password = "lll" //dev mac
+    var root_sys = this.getFullPath_root_sys()
+    var git_root = this.getFullPath_usr_git()
+    var bist = this.getFullPath_root_sys(WorkingBaseNodeName)
+    var usrs_home = this.getFullPath_usr_host()
+
+    var git_clone_cmd = `
+    #!/bin/sh
+    cd ${root_sys}
+    if [ -f "${usrs_home}" ]; then
+        echo "${usrs_home} exists."
+    else 
+        echo "${bist} does not exist."
+        echo 'lll' | sudo -S mkdir -p ${usrs_home}
+        echo 'lll' | sudo -S chmod -R 777 ${bist}
+    fi
+    `
+    var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
+    console.log("-mkdir_empty_proj:", bist, fs.existsSync(bist), ret)
+    return ret
+}
+BaseGitUser.prototype.git_clone = function () {
+    //var password = "lll" //dev mac
+    var root_sys = this.getFullPath_root_sys()
+    var git_root = this.getFullPath_usr_git()
+    var clone_https = this.git_Usr_Pwd_Url
+    var bist = this.getFullPath_root_sys(WorkingBaseNodeName)
+
+    var git_clone_cmd = `
+    #!/bin/sh
+    if [ -f "${git_root}/.git/config" ]; then
+        echo "${git_root}/.git/config exists."
+        echo 'lll' | sudo -S chmod  777 ${git_root}/.git/config
+    else 
+        echo "${git_root}/.git/config does not exist, so to clone"
+        cd ${root_sys}
+        echo 'lll' | sudo -S mkdir -p ${git_root}
+        echo 'lll' | sudo -S chmod -R 777 ${git_root}
+        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
+    fi
+    `
+    var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
+    console.log("git_clone_cmd:", git_root, ret)
+    return ret
+}
 
 BaseGitUser.prototype.Deploy_proj = function () {
     console.log("********************************************* Deploy_proj  1")
+
+    this.mkdir_empty_proj()
 
     var dir = this.getFullPath_usr_git("/.git/config")
     if (!fs.existsSync(dir)) {
@@ -991,12 +1057,12 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
 
     if (fs.existsSync(dir)) {
-        this.run_makingup_missing_files(true)
+        //this.run_makingup_missing_files(true)
     }
 
     var dir = this.getFullPath_usr_acct()
     if (fs.existsSync(dir)) {
-        BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
+        //BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
     }
 
     var ret = this.Check_proj_state()
@@ -1239,78 +1305,6 @@ BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
     }
 }
 
-
-BaseGitUser.prototype.git_clone = function () {
-    //var password = "lll" //dev mac
-    var _THIS = this
-    var inp = { out: {} };//this.m_inp
-    var proj = this.m_projDirs //usr_proj;
-    if (!proj) {
-        inp.out.desc += ", failed inp.usr parse"
-        console.log("failed-git-parse", inp.out.desc)
-        return inp
-    }
-
-    var dir = this.m_projDirs.root_sys
-    if (!fs.existsSync(dir)) {
-        console.log("Fatal Error: not exist dir:", dir)
-        return null
-    }
-
-    inp.out.git_clone_res = { desc: "git-clone", bExist: false }
-    var gitdir = this.getFullPath_usr_git("/.git")
-    if (fs.existsSync(gitdir)) {
-        inp.out.git_clone_res.desc += "|already done."
-        inp.out.git_clone_res.bExist = true
-        console.log("already exist:", gitdir)
-        return inp
-    }
-
-
-    var clone_https = this.git_Usr_Pwd_Url
-    if (clone_https.length === 0) {
-        clone_https = this.usr_repos.repopath
-    }
-    if (clone_https.length === 0) {
-        inp.out.git_clone_res.desc += ",no url."
-        console.log("clone_https null:", clone_https)
-        return inp
-    }
-    console.log("to clone: ", clone_https)
-
-    //console.log("proj", proj)
-    var dir = this.m_projDirs.user_dir //usr_proj
-    if (!fs.existsSync(dir)) {
-        var ret = BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S mkdir -p ${dir}`).toString()
-    }
-    var ret = BaseGUti.execSync_Cmd(`echo 'lll'|  sudo -S chmod -R 777 ${dir}`).toString()
-
-    gitdir = this.getFullPath_usr_git()
-    if (fs.existsSync(gitdir)) {
-        inp.out.git_clone_res.desc += "|git folder exit but no .git"
-        inp.out.git_clone_res.bExist = true
-        var ret = BaseGUti.execSync_Cmd(`echo 'lll'|  sudo -S rm -rf ${gitdir}`).toString()
-        console.log(ret)
-    }
-
-
-    var git_clone_cmd = `
-    #!/bin/sh
-    cd ${this.m_projDirs.root_sys}
-    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${proj.git_root}
-    if [ -f "${proj.git_root}/.git/config" ]; then
-        echo "${proj.git_root}/.git/config exists."
-        echo 'lll'| sudo -S chmod  777 ${proj.git_root}/.git/config
-    else 
-        echo "${proj.git_root}/.git/config does not exist."
-    fi
-    `
-    console.log("git_clone_cmd...")
-    inp.out.git_clone_res.git_clone_cmd = git_clone_cmd
-    var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
-    console.log("ret", ret)
-    return inp
-}
 
 BaseGitUser.prototype.git_status = async function (_sb) {
     var inp = { out: {} }

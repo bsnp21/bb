@@ -328,6 +328,7 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     this.m_usr = this.m_BaseGitUser.m_usr
 
     this.m_BaseGitUser.Deploy_proj()
+    
     var ar = this.m_BaseGitUser.get_repo_salts()
     if (ar.indexOf(passcode) < 0) {
         return { err: ["password error.", ar[1]] }
