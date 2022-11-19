@@ -583,10 +583,16 @@ GitSponsor.prototype.git_repo_user_url = function (repopath) {
 
 
 
+
+
+
+
+
+///////////////////////////////
 var BaseGitUser = function () {
     this.m_dlog = []
 }
-BaseGitUser.prototype.absRootWorkingDir = function (app) {
+BaseGitUser.prototype.absRootWorkingDir = function () {
     var pwd = __dirname
     console.log("__dirname=", pwd)
 
@@ -676,7 +682,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
 
     this.m_std_bible_obj_lib_template = `${absRootPath}/bible_obj_lib/jsdb/UsrDataTemplate`
 
-    return (this.m_gitinf && this.m_projDirs);
+    return;
 }
 BaseGitUser.prototype._interpret_repo_url_str = function (proj_url) {
     if (!proj_url) return null
@@ -789,6 +795,10 @@ BaseGitUser.prototype.getFullPath_usr_dat = function (subpath) {
 BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 }
+BaseGitUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
+    var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj`
+    return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
+}
 
 
 
@@ -829,7 +839,7 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
             }
             break;
         default: //: NIV, CUVS, NIV_Jw  
-            dest_pfname = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj/${DocCode}.json.js`;
+            dest_pfname = this.getFullPath_sys_stdlib_BibleObj(`${DocCode}.json.js`);
             break;
     }
     return dest_pfname
