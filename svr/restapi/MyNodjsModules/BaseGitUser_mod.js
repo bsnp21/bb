@@ -523,7 +523,7 @@ var BaseGUti = {
     },
 
 
-  
+
 
 
 
@@ -549,13 +549,12 @@ var BaseGUti = {
 
 
 function GitSponsor(ownername) {
-    this.sponsor_git_usr = "bsnp21"
     var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
-    this.sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
+    var sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
+    this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
 }
-GitSponsor.prototype.gh_repo_list_Obj_Sponsor = function () {
-    var sponsor_git_usr = "bsnp21"
-    var istart = this.sponsor_git_usr.length + 1
+GitSponsor.prototype.gh_repo_list_all_obj = function () {
+    var istart = this.m_sponsor.ownername.length + 1
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
     var lines = str.split(/[\r|\n]/)
@@ -573,11 +572,11 @@ GitSponsor.prototype.gh_repo_list_Obj_Sponsor = function () {
 }
 GitSponsor.prototype.git_repo_user_url = function (repopath) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
-    //this.m_giturl = `https://${sponsor_git_usr}:${sponsor_git_pat}@github.com/${sponsor_git_usr}/${this.m_repos}.git`
+    //this.m_giturl = `https://${m_sponsor.ownername}:${sponsor_git_pat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
 
     if (repopath.indexOf("https") < 0) {
-        var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
-        repopath = `https://github.com/${this.sponsor_git_usr}/${sponser_git_rep}.git`
+        //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
+        repopath = `https://github.com/${this.m_sponsor.ownername}/${repopath}.git`
     }
     return repopath
 }
@@ -631,8 +630,8 @@ sudo -S git remote add origin https://github.com/bsnp21/${username}.git
 sudo -S git push -u origin main
 cd ..
     `
-    if(this.get_usr_git_dir() !== this.get_host_usr_dir(username)){
-        console.log( this.get_usr_git_dir() +" is not the same with: "+ this.get_host_usr_dir(username))
+    if (this.get_usr_git_dir() !== this.get_host_usr_dir(username)) {
+        console.log(this.get_usr_git_dir() + " is not the same with: " + this.get_host_usr_dir(username))
     }
 
     console.log("git_clogh_repo_createne_cmd...")
@@ -645,13 +644,13 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     var fname = this.get_usr_git_dir(".salts")
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
-    if(!txt) return []
+    if (!txt) return []
     var ar = JSON.parse(txt)
     return ar
 }
 BaseGitUser.prototype.IsUserExist = function (repopath) {
     var gsp = new GitSponsor()
-    var usrsinfo = gsp.gh_repo_list_Obj_Sponsor()
+    var usrsinfo = gsp.gh_repo_list_all_obj()
     if (repopath in usrsinfo) {
         return true;
     }
@@ -1458,7 +1457,7 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
 
 
 module.exports = {
-    BaseGUti:BaseGUti,
+    BaseGUti: BaseGUti,
     BaseGitUser: BaseGitUser,
     WorkingRootNodeName: WorkingRootNodeName,
 
