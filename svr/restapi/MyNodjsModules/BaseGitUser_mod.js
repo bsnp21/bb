@@ -603,6 +603,9 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
 
 
 ///////////////////////////////
+
+
+
 var BaseGitUser = function () {
     this.m_dlog = []
 }
@@ -679,12 +682,13 @@ BaseGitUser.prototype.IsUserExist = function (repopath) {
 
 BaseGitUser.prototype.Set_Gitusr = function (repopath) {
 
+    this.m_gitusername = repopath
     //hijack
     var sponser = new GitSponsor()
     repopath = sponser.git_repo_user_url(repopath)
     var passcode = sponser.m_sponsor.ownerpat;
+    //this.m_usr = { repopath: repopath, passcode: passcode } //sponsor
 
-    this.m_usr = { repopath: repopath, passcode: passcode } //sponsor
     ////////////
 
     this.usr_repos = { repopath: repopath, passcode: passcode }

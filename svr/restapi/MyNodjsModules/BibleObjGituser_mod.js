@@ -15,7 +15,7 @@ const crypto = require('crypto')
 
 const NodeCache = require("node-cache");
 
-var { BaseGitUser,BaseGUti, WorkingRootNodeName } = require("./BaseGitUser_mod");
+var { BaseGitUser, BaseGUti, WorkingRootNodeName } = require("./BaseGitUser_mod");
 
 
 //const WorkingRootNodeName = "bugit" BibleUti
@@ -201,9 +201,11 @@ NCache.Init = function () {
 NCache.Set = function (key, val, ttl) {
     if (undefined === ttl) return console.log("*** fatal err: ttl not set.")
     if ("object" === typeof val) {
-        val.tms = (new Date()).getTime() //timestampe for last access.
-        val.ttl = ttl
+    }else{
+        val = this.myCache.get(key)
     }
+    val.tms = (new Date()).getTime() //timestampe for last access.
+    val.ttl = ttl
     this.myCache.set(key, val, ttl) //restart ttl -- reborn again.
     console.log("NCache.Set|key,val,ttl |", key, val, ttl)
 }
@@ -311,21 +313,22 @@ BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, 
 BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     console.log("========Proj_parse_usr_signin")
 
-    this.m_usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
-    if (!this.m_usr) {
+    var usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
+    if (!usr) {
         console.log("*****failed: sdfadfasjiasf")
         return null
     }
-    return this.m_BaseGitUser.Set_Gitusr(this.m_usr.repopath, this.m_usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 }
 BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
+    this.m_usr = { repopath: repopath, passcode: passcode }
 
     console.log("========__Proj_parse_usr_login__")
     if (!this.m_BaseGitUser.IsUserExist(repopath)) {
         return { err: ["not exist:", repopath] }
     }
     this.m_BaseGitUser.Set_Gitusr(repopath)
-    this.m_usr = this.m_BaseGitUser.m_usr
+
 
     this.m_BaseGitUser.Deploy_proj()
 
@@ -335,22 +338,22 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     }
 
     //inp.out.state.SSID = userProject.Session_create()
-    var ssid = this.Session_create()
+    var ssid = this.Session_create(this.m_usr)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     return { ok: ret, ssid: ssid }
 }
 
-BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (inp) {
+BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (ssid) {
 
-    this.m_usr = this.proj_get_usr_fr_cache_ssid(inp.SSID)
-    if (!this.m_usr) {
+    var usr = this.proj_get_usr_fr_cache_ssid(ssid)
+    if (!usr) {
         console.log("*****failed sdfadfas")
         return null
     }
-    this.proj_update_cache_ssid_by_inp_aux(inp)
+    NCache.Set(ssid, usr, 3600 * 24 * 180)
 
-    return this.m_BaseGitUser.Set_Gitusr(this.m_usr.repopath, this.m_usr.passcode)
+    return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 }
 
 
@@ -365,25 +368,8 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
         return null
     }
 
-   
-    this.m_usr = NCache.Get(ssid)
-
-    if (!this.m_usr) {
-        //inp.out.state.failed_ssid = "expired or not exist."
-    }
-
-
-    return this.m_usr
-}
-BibleObjGituser.prototype.proj_update_cache_ssid_by_inp_aux = function (inp) {
-
-    if (!inp.SSID || inp.SSID.length === 0 || !this.m_usr || !inp.par.aux) {
-        return null
-    }
-    NCache.Set(inp.SSID, this.m_usr, 3600 * 24 * 180)
-    console.log(`Update_repodesc ************* inp.par.aux= ${JSON.stringify(inp.par.aux)}`)
-
-    return this.m_usr
+    var usr = NCache.Get(ssid)
+    return usr;
 }
 
 
@@ -409,19 +395,19 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 }
 
 
-BibleObjGituser.prototype.Session_create = function () {
+BibleObjGituser.prototype.Session_create = function (usr) {
 
 
-    var ssid = this.m_BaseGitUser.m_gitinf.ownerId //usr_proj
+    var ssid = this.m_BaseGitUser.m_gitusername //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
     //   ttl = parseInt(this.m_inp.usr.ttl)
     //}
-    console.log("ssid=", ssid, ssid_b64, this.m_BaseGitUser.m_usr, ttl)
+    console.log("ssid=", ssid, ssid_b64, usr, ttl)
 
-    NCache.Set(ssid_b64, this.m_BaseGitUser.m_usr, ttl)
-    console.log("Session_create:", ssid, ssid_b64, this.m_BaseGitUser.m_usr)
+    NCache.Set(ssid_b64, usr, ttl)
+    console.log("Session_create:", ssid, ssid_b64, usr)
 
     return ssid_b64
 }
@@ -429,7 +415,7 @@ BibleObjGituser.prototype.Session_delete = function () {
     if (!this.m_inp.SSID) return
     var ret = NCache.myCache.take(this.m_inp.SSID)
 
-    console.log("Session_delete:", this.m_inp.SSID, this.m_BaseGitUser.m_usr, ret)
+    console.log("Session_delete:", this.m_inp.SSID, this.m_usr, ret)
 
     NCache.myCache.set(this.m_inp.SSID, null)
 }
