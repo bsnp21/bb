@@ -366,7 +366,7 @@ var ApiJsonp_BibleObj = {
             var inpObj = inp.par.inpObj
 
             var doc = inp.par.fnames[0]
-            //var docname = userProject.get_DocCode_Fname(doc)
+           
             var docpathfilname = userProject.m_BaseGitUser.get_pfxname(doc)
             var outfil = userProject.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
 

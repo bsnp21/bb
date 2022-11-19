@@ -820,7 +820,7 @@ BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
 
 
 BaseGitUser.prototype.get_pfxname = function (DocCode) {
-    var inp = this.m_inp
+    //full path rw executable
     //var DocCode = inp.par.fnames[0]
     if (!DocCode) return ""
     var dest_pfname = ""
@@ -841,6 +841,9 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
         default: //: NIV, CUVS, NIV_Jw  
             dest_pfname = this.getFullPath_sys_stdlib_BibleObj(`${DocCode}.json.js`);
             break;
+    }
+    if(!fs.existsSync(dest_pfname)){ 
+
     }
     return dest_pfname
 }
