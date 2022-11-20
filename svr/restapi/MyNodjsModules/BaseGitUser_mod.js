@@ -552,7 +552,7 @@ function GitSponsor() {
     var sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
     this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
 
-    var ret = BaseGUti.loadObj_by_fname("~/install/gh/sponsorInfo.json.js")
+    var ret = BaseGUti.loadObj_by_fname("~/install/gh/sponsorCfg.json.js")
     if(ret){
         this.m_sponsor.ownername = atob(ret.obj.ownername)
         this.m_sponsor.ownerpat  = atob(ret.obj.ownerpets.join(""))
