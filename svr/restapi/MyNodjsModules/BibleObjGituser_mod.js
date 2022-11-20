@@ -137,10 +137,10 @@ NCache.Init = function () {
         console.log("on del:* start to del proj_destroy ownr=", gitdir)
         var inp = {}
         inp.usr = val
-        inp.out = BibleUti.default_inp_out_obj()
+        inp.out = BaseGUti.default_inp_out_obj()
         inp.SSID = key
         var userProject = new BibleObjGituser()
-        if (inp.gitusr = userProject.m_BaseGitUser.Set_Gitusr(val.repopath, val.passcode)) {
+        if (inp.gitusr = userProject.m_BaseGitUser.Set_Gitusr(val.repopath)) {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
@@ -304,7 +304,7 @@ BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, 
 
     console.log(cipherusrs)
 
-    var str = BibleUti.decrypt_txt(cipherusrs, robj.privateKey)
+    var str = BaseGUti.decrypt_txt(cipherusrs, robj.privateKey)
     var usrObj = JSON.parse(str)
     console.log("session_decipher_usrs usrObj=")
     console.log(usrObj)
@@ -411,13 +411,13 @@ BibleObjGituser.prototype.Session_create = function (usr) {
 
     return ssid_b64
 }
-BibleObjGituser.prototype.Session_delete = function () {
-    if (!this.m_inp.SSID) return
-    var ret = NCache.myCache.take(this.m_inp.SSID)
+BibleObjGituser.prototype.Session_delete = function (ssid) {
+    
+    var ret = NCache.myCache.take(ssid)
 
-    console.log("Session_delete:", this.m_inp.SSID, this.m_usr, ret)
+    console.log("Session_delete:", ssid,  ret)
 
-    NCache.myCache.set(this.m_inp.SSID, null)
+    NCache.myCache.set(ssid, null)
 }
 
 

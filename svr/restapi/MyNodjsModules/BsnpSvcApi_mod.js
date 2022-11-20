@@ -601,7 +601,7 @@ var ApiJsonp_BibleObj = {
             }
 
             //userProject.Check_proj_state()
-            userProject.Session_delete()
+            userProject.Session_delete(inp.SSID)
         })
 
         // var sret = JSON.stringify(inp, null, 4)
