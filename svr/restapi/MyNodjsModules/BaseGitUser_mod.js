@@ -1104,9 +1104,9 @@ BaseGitUser.prototype.Deploy_proj = function () {
     }
 
     var cfg_old = fs.readFileSync(cfg, "utf8")
-    console.log("cfg_old :",this.m_git_conf_new)
-    console.log("new cfg:",this.m_git_conf_new)
-    fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
+    console.log("cfg_old :",this.cfg_old)
+    //console.log("new cfg:",this.m_git_conf_new)
+    //fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
 
     var dir = this.getFullPath_usr_acct()
     if (fs.existsSync(dir)) {
