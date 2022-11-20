@@ -573,10 +573,9 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
     //this.m_giturl = `https://${m_sponsor.ownername}:${m_sponsor.ownerpat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
 
-    var secure = "";
-    if (bSecure) {
-        secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`
-    }
+    var secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`;
+    if (!bSecure) secure = ""
+    
 
     if (repopath.indexOf("https") < 0) {
         //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
@@ -593,6 +592,23 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     // }
 
     return repopath
+}
+GitSponsor.prototype.git_conf_txt = function (reponame){
+    var secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`
+    var cfg = `
+    [core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+    [remote "origin"]
+        url = https://${secure}github.com/bsnp21/${reponame}.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+    [branch "main"]
+        remote = origin
+        merge = refs/heads/main    
+        `
+    return cfg
 }
 
 
@@ -687,8 +703,8 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     var sponser = new GitSponsor()
     repopath = sponser.git_repo_user_url(repopath)
     var passcode = sponser.m_sponsor.ownerpat;
-    //this.m_usr = { repopath: repopath, passcode: passcode } //sponsor
-
+  
+    this.m_git_conf = sponser.git_conf_txt(repopath)
     ////////////
 
     this.usr_repos = { repopath: repopath, passcode: passcode }
@@ -940,17 +956,17 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     stat.bEditable = (1 === stat.bMyojDir && 1 === stat.bDatDir && 1 === stat.bGitDir) ? 1 : 0
     //stat.bRepositable = stat.bGitDir
 
-    stat.missedFiles = this.run_makingup_missing_files(false)
-    var configtxt = this.load_git_config()
+    ///// stat.missedFiles = this.run_makingup_missing_files(false)
+    //var configtxt = this.load_git_config()
 
     //console.log("Check_proj_state ----------")
     /////// git status
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
     //this.m_inp.out.state.bRepositable = 0
-    if (configtxt.length > 0) {
+    //if (configtxt.length > 0) {
         //if clone with password ok, it would ok for pull/push 
         stat.bRepositable = 1
-    }
+    //}
 
     var accdir = this.getFullPath_usr_acct()
     var fstat = {}
@@ -991,7 +1007,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 /////
 
 
-BaseGitUser.prototype.run_makingup_missing_files = function (bCpy) {
+BaseGitUser.prototype._________________run_makingup_missing_files = function (bCpy) {
 
     var _THIS = this
     var srcdir = this.getFullPath_sys_stdlib_template()
@@ -1191,42 +1207,6 @@ BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
 }
 
 
-BaseGitUser.prototype.load_git_config = function () {
-    var git_config_fname = this.getFullPath_usr_git("/.git/config")
-    if (!fs.existsSync(git_config_fname)) return ""
-    //if (!this.m_git_config_old || !this.m_git_config_new) {
-    var olds, news, txt = fs.readFileSync(git_config_fname, "utf8")
-    var ipos1 = txt.indexOf(this.usr_repos.repopath)
-    var ipos2 = txt.indexOf(this.git_Usr_Pwd_Url)//usr_proj
-
-    console.log("ipos1:", ipos1, this.usr_repos.repopath)
-    console.log("ipos2:", ipos2, this.git_Usr_Pwd_Url)//usr_proj
-
-    var configurl = ""
-    if (ipos1 > 0) {
-        olds = txt
-        news = txt.replace(this.usr_repos.repopath, this.git_Usr_Pwd_Url)//usr_proj
-    }
-    if (ipos2 > 0) {
-        news = txt
-        olds = txt.replace(this.git_Usr_Pwd_Url, this.usr_repos.repopath)//usr_proj
-
-        console.log("initial git_config_fname not normal:", txt)
-    }
-    if ((ipos1 * ipos2) < 0) {
-        this.m_git_config_old = olds
-        this.m_git_config_new = news
-
-        //var txt = fs.readFileSync(git_config_fname, "utf8")
-        var pos0 = txt.indexOf("[remote \"origin\"]")
-        var pos1 = txt.indexOf("\n\tfetch = +refs");//("[branch \"master\"]")
-        configurl = txt.substring(pos0 + 19, pos1)
-    }
-    this.configurl = configurl //usr_proj
-    //}
-    //console.log("load_git_config__end.configurl=", this.usr_proj)
-    return configurl
-}
 
 
 
@@ -1235,6 +1215,19 @@ BaseGitUser.prototype.load_git_config = function () {
 
 
 BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
+    var cfg = `
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/bsnp21/gh2.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main    
+    `
     { /****.git/config
         [core]
                 repositoryformatversion = 0
@@ -1268,15 +1261,15 @@ BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
 
 
     if (!this.m_git_config_old || !this.m_git_config_new) {
-        this.load_git_config()
+        ///this.load_git_config()
         console.log("========")
     }
 
     if (bAllowPush) {
-        fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
+        //fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
         console.log("bAllowPush=1:url =", this.git_Usr_Pwd_Url)//usr_proj
     } else {
-        fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
+        //fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
         //console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
     }
 }
