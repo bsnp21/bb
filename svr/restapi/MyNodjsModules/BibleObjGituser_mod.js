@@ -288,6 +288,9 @@ BibleObjGituser.prototype.Proj_usr_account_create = function (repopath, passcode
         return { err: repopath + ": user alreay exists." }
     }
     this.m_BaseGitUser.Set_Gitusr(repopath)
+
+    this.m_BaseGitUser.mkdir_empty_proj()
+
     this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword)
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.repoInfo = info
