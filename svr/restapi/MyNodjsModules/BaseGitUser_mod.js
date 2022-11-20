@@ -710,7 +710,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = sponser.git_repo_user_url(repopath, true)
-    console.log("git_Usr_Pwd_Url=",git_Usr_Pwd_Url)
+    console.log("git_Usr_Pwd_Url=",this.git_Usr_Pwd_Url)
 
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
