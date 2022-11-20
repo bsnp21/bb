@@ -685,6 +685,9 @@ cd ..
 }
 BaseGitUser.prototype.get_repo_salts = function (u) {
     var fname = this.getFullPath_usr_git(".salts")
+    if(!fs.existsSync(fname)){
+        return ["a","a"]
+    }
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
     if (!txt) return []
