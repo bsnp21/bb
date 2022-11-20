@@ -806,7 +806,7 @@ BaseGitUser.prototype.getFullPath_usr_acct = function (subpath) {
 BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath, bCopyIfNonexistance) {
     var fullpathname = (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
     if (subpath && bCopyIfNonexistance) {
-        var std = this.getFullPath_sys_stdlib_template(subpath)
+        var std = this.getFullPath_sys_stdlib_template(`/myoj/${subpath}`)
         if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
             this.getFullPath_usr__cp_std(subpath, fullpathname)
         }
@@ -816,7 +816,7 @@ BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath, bCopyIfNonexista
 BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistance) {
     var fullpathname  = (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
     if (subpath && bCopyIfNonexistance) {
-        var std = this.getFullPath_sys_stdlib_template(subpath)
+        var std = this.getFullPath_sys_stdlib_template(`/dat/${subpath}`)
         console.log("bCopyIfNonexistance=true", std, fullpathname)
         if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
             this.getFullPath_usr__cp_std(subpath, fullpathname)
