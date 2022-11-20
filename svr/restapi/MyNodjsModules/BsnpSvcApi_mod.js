@@ -445,7 +445,7 @@ var ApiJsonp_BibleObj = {
             var par = inp.par
             var save_res = { desc: "ok" }
             var doc = par.fnames[0]
-            var jsfname = this.get_pfxname(doc, "cpIfNonexistance")
+            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, "cpIfNonexistance")
             console.log("jsfname=", jsfname)
             var ret = BaseGUti.loadObj_by_fname(jsfname)
             if (ret.obj) {
