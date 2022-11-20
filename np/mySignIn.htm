@@ -220,7 +220,7 @@
 
 
         $(".clearout").on("click", function () {
-            $(this).prev().find("input").val("")
+            $(this).parent().prev().find("input").val("")
         })
         $("#label_password").on("click", function () {
             var type = $("#passcode").attr("type") === "password" ? "text": "password"
