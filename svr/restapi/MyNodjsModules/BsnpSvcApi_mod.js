@@ -460,7 +460,7 @@ var ApiJsonp_BibleObj = {
 
                 inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
-                
+
                 if (0) {
                     await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
                     })
@@ -468,6 +468,7 @@ var ApiJsonp_BibleObj = {
 
                 //inp.out.data = userProject.m_BaseGitUser.Load_back_userData(inp.par)
                 ///
+                var par = inp.par;
                 var doc = par.fnames[0]
                 var jsfname = this.get_pfxname(doc)
                 var ret = BaseGUti.loadObj_by_fname(jsfname)
@@ -482,7 +483,7 @@ var ApiJsonp_BibleObj = {
                         //inp.out.state.err = err
                     }
                 }
-                inp.out.data =  retObj;
+                inp.out.data = retObj;
                 if (!inp.out.state) inp.out.state.bEditable = 1
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
 

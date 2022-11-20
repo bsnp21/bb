@@ -848,7 +848,7 @@ BaseGitUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
 }
 BaseGitUser.prototype.getFullPath_root_sys = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}`
-    return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
+    return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}${subpath.replace(/^[\/]/, "")}`
 }
 
 
