@@ -698,7 +698,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
 
-    this.m_std_bible_obj_lib_template = `${absRootPath}/bible_obj_lib/jsdb/UsrDataTemplate`
+    this.m_std_bible_obj_lib_template = `${absRootPath}bible_obj_lib/jsdb/UsrDataTemplate`
 
     return true;
 }
@@ -878,12 +878,12 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
         case "e": //: e_Node,
             {
                 var fnam = this.get_DocCode_Fname(DocCode)
-                dest_pfname = this.getFullPath_usr_myoj(`/${fnam}`, "copyIfnonexistance")
+                dest_pfname = this.getFullPath_usr_myoj(`/myoj/${fnam}`, "copyIfnonexistance")
             }
             break
         case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
-                var fnam = DocCode.replace("./dat/", "")
+                var fnam = DocCode.slice(1)
                 dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, "copyIfnonexistance")
             }
             break;
