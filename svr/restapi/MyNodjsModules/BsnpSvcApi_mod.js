@@ -439,7 +439,7 @@ var ApiJsonp_BibleObj = {
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
-            if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
+            //if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
 
             // inp.out.state.save_res = userProject.m_BaseGitUser.Save_userData_frm_client(inp.par)
             var par = inp.par
