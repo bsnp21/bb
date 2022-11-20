@@ -252,7 +252,7 @@ var ApiJsonp_BibleObj = {
                 console.log("inp.par.fnames:", inp.par.fnames)
                 for (var i = 0; i < inp.par.fnames.length; i++) {
                     var trn = inp.par.fnames[i];
-                    var jsfname = userProject.m_BaseGitUser.get_pfxname(trn)
+                    var jsfname = userProject.m_BaseGitUser.get_pfxname(trn, "cpyIfNonexistance")
                     console.log("load:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) {
