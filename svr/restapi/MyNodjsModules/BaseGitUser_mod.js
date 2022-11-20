@@ -637,7 +637,7 @@ BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
 # create my-project and clone 
 echo ${dir}
 cd ${dir}
-sudo -S gh repo create ${username} --public --clone
+sudo -S gh repo create ${username} --private --clone
 sudo -S chmod 777 ${username}
 sudo -S chmod 777 ${username}/.git/config
 cd ${username}
@@ -1122,7 +1122,7 @@ BaseGitUser.prototype.Destroy_proj = function () {
 
 
 
-BaseGitUser.prototype.cp_template_to_git = function () {
+BaseGitUser.prototype.______________________cp_template_to_git = function () {
     var inp = { out: { desc: "" } };//this.m_inp
     inp.out.desc += ",clone."
 
