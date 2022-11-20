@@ -426,7 +426,7 @@ var BaseGUti = {
         var ret = { obj: null, fname: jsfnm, fsize: -1, header: "", err: "" };
 
         if (!fs.existsSync(jsfnm)) {
-            console.log("f not exit:", jsfnm)
+            console.log("loadObj_by_fname,f not exit:", jsfnm)
             return ret;
         }
         ret.stat = BaseGUti.GetFileStat(jsfnm)
@@ -824,17 +824,17 @@ BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistan
     }
     return fullpathname;
 }
-BaseGitUser.prototype.getFullPath_usr__cp_std = function (subpath, fullpathname) {
-    var std = this.getFullPath_sys_stdlib_template(subpath)
+BaseGitUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
     if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
         var acctDir = this.m_projDirs.acct_dir;//this.getFullPath_usr_acct()
+        var ret = path.parse(fullpathname);
         var cp_template_cmd = `
             #!/bin/sh
-            echo 'lll' | sudo -S mkdir -p ${acctDir}
-            echo 'lll' | sudo -S chmod -R 777 ${acctDir}
-            echo 'lll' | sudo -S cp -aR  ${std}  ${fullpathname}/
-            ###### echo 'lll' | sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
+            echo 'lll' | sudo -S mkdir -p ${ret.dir}
+            echo 'lll' | sudo -S chmod -R 777 ${ret.dir}
+            echo 'lll' | sudo -S cp  ${std}  ${fullpathname}
             echo 'lll' | sudo -S chmod -R 777 ${fullpathname}
+            ###### echo 'lll' | sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
             #cd -`
         var ret = BaseGUti.execSync_Cmd(cp_template_cmd).toString()
         console.log("getFullPath_usr_acct", cp_template_cmd, ret)
