@@ -704,12 +704,13 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     repopath = sponser.git_repo_user_url(repopath)
     var passcode = sponser.m_sponsor.ownerpat;
   
-    this.m_git_conf = sponser.git_conf_txt(repopath)
+    this.m_git_conf_new = sponser.git_conf_txt(repopath)
     ////////////
 
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = sponser.git_repo_user_url(repopath, true)
+    console.log("git_Usr_Pwd_Url=",git_Usr_Pwd_Url)
 
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
@@ -1089,21 +1090,14 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
     this.mkdir_empty_proj()
 
-    var dir = this.getFullPath_usr_git("/.git/config")
-    if (!fs.existsSync(dir)) {
+    var cfg = this.getFullPath_usr_git("/.git/config")
+    if (!fs.existsSync(cfg)) {
         this.git_clone() //always sucess even passwd is wrong.
     } else {
         this.git_pull()
     }
 
-    if (!fs.existsSync(dir)) {
-        return { "NotFound:": dir }
-    }
-
-
-    if (fs.existsSync(dir)) {
-        //this.run_makingup_missing_files(true)
-    }
+    fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
 
     var dir = this.getFullPath_usr_acct()
     if (fs.existsSync(dir)) {
