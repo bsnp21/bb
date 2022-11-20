@@ -578,14 +578,14 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     if (!bSecure) {
         secure = ""
     }
-    
 
-    if (repopath.indexOf("https") < 0) {
-        //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
-        repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${repopath}.git`
-    }
 
-    console.log("git_Usr_Pwd_Url secure",secure, repopath)
+    //if (repopath.indexOf("https") < 0) {
+    //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
+    var secu_repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${repopath}.git`
+    //}
+
+    console.log("git_Usr_Pwd_Url secure",bSecure, secure, repopath, secu_repopath)
 
     // if (passcode.trim().length > 0) {
     //     if ("github.com" === userproj.hostname) {
@@ -596,9 +596,9 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     //     }
     // }
 
-    return repopath
+    return secu_repopath
 }
-GitSponsor.prototype.git_conf_txt = function (reponame){
+GitSponsor.prototype.git_conf_txt = function (reponame) {
     var secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`
     var cfg = `
     [core]
@@ -708,14 +708,14 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
     var sponser = new GitSponsor()
     repopath = sponser.git_repo_user_url(repopath)
     var passcode = sponser.m_sponsor.ownerpat;
-  
+
     this.m_git_conf_new = sponser.git_conf_txt(repopath)
     ////////////
 
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
     this.git_Usr_Pwd_Url = sponser.git_repo_user_url(repopath, true)
-    console.log("git_Usr_Pwd_Url=",this.git_Usr_Pwd_Url)
+    console.log("git_Usr_Pwd_Url=", this.git_Usr_Pwd_Url)
 
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
@@ -970,8 +970,8 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
     //this.m_inp.out.state.bRepositable = 0
     //if (configtxt.length > 0) {
-        //if clone with password ok, it would ok for pull/push 
-        stat.bRepositable = 1
+    //if clone with password ok, it would ok for pull/push 
+    stat.bRepositable = 1
     //}
 
     var accdir = this.getFullPath_usr_acct()
