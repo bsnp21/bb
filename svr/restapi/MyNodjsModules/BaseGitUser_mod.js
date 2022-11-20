@@ -866,7 +866,7 @@ BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
     //var fnam = DocCode.replace(/^e_/, "my")  //:myNode_json.js
     return `${DocCode}_json.js`
 }
-BaseGitUser.prototype.get_pfxname = function (DocCode) {
+BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
     //full path rw executable
     //var DocCode = inp.par.fnames[0]
     if (!DocCode) return ""
@@ -876,13 +876,13 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
         case "e": //: e_Node,
             {
                 var fnam = this.get_DocCode_Fname(DocCode)
-                dest_pfname = this.getFullPath_usr_myoj(`${fnam}`, "copyIfnonexistance")
+                dest_pfname = this.getFullPath_usr_myoj(`${fnam}`, cpyIfNonsistance)
             }
             break
         case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
                 var fnam = DocCode.slice(6)
-                dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, "copyIfnonexistance")
+                dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, cpyIfNonsistance)
             }
             break;
         default: //: NIV, CUVS, NIV_Jw  

@@ -470,7 +470,7 @@ var ApiJsonp_BibleObj = {
                 ///
                 var par = inp.par;
                 var doc = par.fnames[0]
-                var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
+                var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, "cpyIfNonexistance")
                 var ret = BaseGUti.loadObj_by_fname(jsfname)
                 var retObj = ret.obj  //get obj structure w/ keys.
                 if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
