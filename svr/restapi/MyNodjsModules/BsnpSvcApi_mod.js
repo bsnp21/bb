@@ -244,43 +244,35 @@ var ApiJsonp_BibleObj = {
             var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
-            if (!inp.out.state || inp.out.state.bEditable !== 1) {
-                console.log("proj_setup failed.", inp.out.state)
-                return inp;
-            }
 
-
-            if (!inp.out.state || inp.out.state.bMyojDir <= 0) {
-                console.log("-----:bMyojDir<=0. dir not exist")
-            } else {
-                console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
-                console.log("-----:binp.par.bibOj", inp.par.bibOj)
-                var TbcObj = {};
-                if (proj && "object" === typeof inp.par.fnames && inp.par.bibOj) {//['NIV','ESV']
-                    console.log("inp.par.fnames:", inp.par.fnames)
-                    for (var i = 0; i < inp.par.fnames.length; i++) {
-                        var trn = inp.par.fnames[i];
-                        var jsfname = userProject.m_BaseGitUser.get_pfxname(trn)
-                        console.log("load:", jsfname)
-                        var bib = BaseGUti.loadObj_by_fname(jsfname);
-                        if (!bib.obj) {
-                            inp.out.desc += ":noexist:" + trn
-                            console.log("not exist..............", jsfname)
-                            continue
-                        }
-                        var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
-                        TbcObj[trn] = bcObj;
-                        inp.out.desc += ":" + trn
+            console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
+            console.log("-----:binp.par.bibOj", inp.par.bibOj)
+            var TbcObj = {};
+            if (proj && "object" === typeof inp.par.fnames && inp.par.bibOj) {//['NIV','ESV']
+                console.log("inp.par.fnames:", inp.par.fnames)
+                for (var i = 0; i < inp.par.fnames.length; i++) {
+                    var trn = inp.par.fnames[i];
+                    var jsfname = userProject.m_BaseGitUser.get_pfxname(trn)
+                    console.log("load:", jsfname)
+                    var bib = BaseGUti.loadObj_by_fname(jsfname);
+                    if (!bib.obj) {
+                        inp.out.desc += ":noexist:" + trn
+                        console.log("not exist..............", jsfname)
+                        continue
                     }
-                    inp.out.desc += ":success"
+                    var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
+                    TbcObj[trn] = bcObj;
+                    inp.out.desc += ":" + trn
                 }
-                //console.log(TbcObj)
-                var bcvT = {}
-                BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
-                inp.out.data = bcvT
-                //console.log(bcvT)
+                inp.out.desc += ":success"
             }
-            userProject.m_BaseGitUser.Check_proj_state()
+            //console.log(TbcObj)
+            var bcvT = {}
+            BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
+            inp.out.data = bcvT
+            //console.log(bcvT)
+
+            inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
         })
     },
 
@@ -456,7 +448,7 @@ var ApiJsonp_BibleObj = {
                 //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
                 //console.log(inp.out.state.err)
             }
-            inp.out.state.save=save_res
+            inp.out.state.save = save_res
 
             //
             userProject.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
