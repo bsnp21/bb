@@ -284,7 +284,7 @@ var BibleObjGituser = function () {
 BibleObjGituser.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
     var info = this.m_BaseGitUser.Get_repoInfo(repopath)
-    if (!info) {
+    if (info) {
         return { err: repopath + ": user alreay exists." }
     }
     this.m_BaseGitUser.Set_Gitusr(repopath)
