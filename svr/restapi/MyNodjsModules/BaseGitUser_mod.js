@@ -817,6 +817,7 @@ BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistan
     var fullpathname  = (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
     if (subpath && bCopyIfNonexistance) {
         var std = this.getFullPath_sys_stdlib_template(subpath)
+        console.log("bCopyIfNonexistance=true", std, fullpathname)
         if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
             this.getFullPath_usr__cp_std(subpath, fullpathname)
         }
