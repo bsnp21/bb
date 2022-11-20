@@ -817,7 +817,7 @@ BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistan
     if (subpath && bCopyIfNonexistance) {
         var std = this.getFullPath_sys_stdlib_template(`/dat/${subpath}`)
         console.log("bCopyIfNonexistance=true", std, fullpathname)
-        this.getFullPath_usr__cp_std(subpath, fullpathname)
+        this.getFullPath_usr__cp_std(std, fullpathname)
     }
     return fullpathname;
 }
