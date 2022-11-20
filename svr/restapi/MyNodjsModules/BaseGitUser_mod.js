@@ -553,6 +553,7 @@ function GitSponsor() {
     this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
 
     var ret = BaseGUti.loadObj_by_fname("/home/ubuntu/install/gh/sponsorCfg.json.js")
+    console.log("loadObj_by_fname", ret)
     if(ret.obj){
         this.m_sponsor.ownername = Buffer.from(ret.obj.ownername, 'base64')
         this.m_sponsor.ownerpat  = Buffer.from(ret.obj.ownerpets.join(""), 'base64')
