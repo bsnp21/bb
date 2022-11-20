@@ -693,7 +693,7 @@ BaseGitUser.prototype.Set_Gitusr = function (repopath) {
 
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
-    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(repopath, true) 
+    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(repopath, true)
 
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
@@ -798,18 +798,47 @@ BaseGitUser.prototype.getFullPath_usr_host = function (subpath) {
 BaseGitUser.prototype.getFullPath_usr_git = function (subpath) {
     return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
 }
+
 BaseGitUser.prototype.getFullPath_usr_acct = function (subpath) {
-    return (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
-
+    var fullpathname = (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
+    return fullpathname;
 }
-BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath) {
-    return (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
-
+BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath, bCopyIfNonexistance) {
+    var fullpathname = (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
+    if (subpath && bCopyIfNonexistance) {
+        var std = this.getFullPath_sys_stdlib_template(subpath)
+        if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
+            this.getFullPath_usr__cp_std(subpath, fullpathname)
+        }
+    }
+    return fullpathname;
 }
-BaseGitUser.prototype.getFullPath_usr_dat = function (subpath) {
-    return (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
+BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistance) {
+    var fullpathname  = (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
+    if (subpath && bCopyIfNonexistance) {
+        var std = this.getFullPath_sys_stdlib_template(subpath)
+        if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
+            this.getFullPath_usr__cp_std(subpath, fullpathname)
+        }
+    }
+    return fullpathname;
 }
-
+BaseGitUser.prototype.getFullPath_usr__cp_std = function (subpath, fullpathname) {
+    var std = this.getFullPath_sys_stdlib_template(subpath)
+    if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
+        var acctDir = this.m_projDirs.acct_dir;//this.getFullPath_usr_acct()
+        var cp_template_cmd = `
+            #!/bin/sh
+            echo 'lll' | sudo -S mkdir -p ${acctDir}
+            echo 'lll' | sudo -S chmod -R 777 ${acctDir}
+            echo 'lll' | sudo -S cp -aR  ${std}  ${fullpathname}/
+            ###### echo 'lll' | sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
+            echo 'lll' | sudo -S chmod -R 777 ${fullpathname}
+            #cd -`
+        var ret = BaseGUti.execSync_Cmd(cp_template_cmd).toString()
+        console.log("getFullPath_usr_acct", cp_template_cmd, ret)
+    }
+}
 BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 }
@@ -848,22 +877,20 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
         case "e": //: e_Node,
             {
                 var fnam = this.get_DocCode_Fname(DocCode)
-                dest_pfname = this.getFullPath_usr_myoj(`/${fnam}`)
+                dest_pfname = this.getFullPath_usr_myoj(`/${fnam}`, "copyIfnonexistance")
             }
             break
         case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
-                var fnam = DocCode.substr(1)
-                dest_pfname = this.getFullPath_usr_acct(`${fnam}_json.js`)
+                var fnam = DocCode.replace("./dat/", "")
+                dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, "copyIfnonexistance")
             }
             break;
         default: //: NIV, CUVS, NIV_Jw  
             dest_pfname = this.getFullPath_sys_stdlib_BibleObj(`${DocCode}.json.js`);
             break;
     }
-    if (!fs.existsSync(dest_pfname)) {
 
-    }
     return dest_pfname
 }
 BaseGitUser.prototype.get_userpathfile_from_tempathfile = function (tmpathfile) {

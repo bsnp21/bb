@@ -11,7 +11,7 @@ const crypto = require('crypto')
 //var SvcUti = require("./SvcUti.module").SvcUti;
 //const exec = require('child_process').exec;
 
-const { BibleObjGituser,  NCache } = require("./BibleObjGituser_mod")
+const { BibleObjGituser, NCache } = require("./BibleObjGituser_mod")
 const { BaseGUti } = require("./BaseGitUser_mod")
 
 var ApiUti = {
@@ -136,7 +136,7 @@ var ApiUti = {
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
     },
-    Set_output:function(pout, ret){
+    Set_output: function (pout, ret) {
         if (ret.err) {
             pout.err = ret.err;// //) 
             //console.log(inp, "\n\n----ApiUsrAccount_login failed.")
@@ -366,7 +366,7 @@ var ApiJsonp_BibleObj = {
             var inpObj = inp.par.inpObj
 
             var doc = inp.par.fnames[0]
-           
+
             var docpathfilname = userProject.m_BaseGitUser.get_pfxname(doc)
             var outfil = userProject.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
 
@@ -460,15 +460,32 @@ var ApiJsonp_BibleObj = {
 
                 inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
-                var retp = userProject.m_BaseGitUser.Check_proj_state()
+                
                 if (0) {
                     await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
-
                     })
                 }
 
-                inp.out.data = userProject.m_BaseGitUser.Load_back_userData(inp.par)
+                //inp.out.data = userProject.m_BaseGitUser.Load_back_userData(inp.par)
+                ///
+                var doc = par.fnames[0]
+                var jsfname = this.get_pfxname(doc)
+                var ret = BaseGUti.loadObj_by_fname(jsfname)
+                var retObj = ret.obj  //get obj structure w/ keys.
+                if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
+                    try {
+                        retObj = JSON.parse(JSON.stringify(par.data));// 
+                        BaseGUti.FetchObjDat(retObj, ret.obj)
+                        console.log("out.data", retObj)
+                    } catch (err) {
+                        console.log("err", err)
+                        //inp.out.state.err = err
+                    }
+                }
+                inp.out.data =  retObj;
                 if (!inp.out.state) inp.out.state.bEditable = 1
+                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+
             }
         })
 
