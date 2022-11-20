@@ -2441,8 +2441,10 @@ AppInstancesManager.prototype.init_load_storage = function () {
                     })
                     $("#input_browsers").html(str)
                 }
-
-
+            } catch {
+                console.error("warn: ret:", ret)
+            }
+            try {
                 /////////////////////////////////////////////////////
                 if ("MostRecent_Searches" in ret.out.data) {
                     var MrKysSearc = Object.keys(ret.out.data.MostRecent_Searches)

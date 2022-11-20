@@ -1032,10 +1032,10 @@ BaseGitUser.prototype.mkdir_empty_proj = function () {
     var git_clone_cmd = `
     #!/bin/sh
     cd ${root_sys}
-    if [ -f "${usrs_home}" ]; then
+    if [ -d "${usrs_home}" ]; then
         echo "${usrs_home} exists."
     else 
-        echo "${bugit} does not exist, to make it.${usrs_home}"
+        echo "${usrs_home} does not exist, to make it: ${usrs_home}"
         echo 'lll' | sudo -S mkdir -p ${usrs_home}
         echo 'lll' | sudo -S chmod -R 777 ${bugit}
     fi
