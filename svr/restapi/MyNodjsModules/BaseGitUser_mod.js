@@ -554,9 +554,11 @@ function GitSponsor() {
 
     var ret = BaseGUti.loadObj_by_fname("/home/ubuntu/install/gh/sponsorCfg.json.js")
     if(ret){
-        this.m_sponsor.ownername = atob(ret.obj.ownername)
-        this.m_sponsor.ownerpat  = atob(ret.obj.ownerpets.join(""))
+        this.m_sponsor.ownername = Buffer.from(ret.obj.ownername, 'base64')
+        this.m_sponsor.ownerpat  = Buffer.from(ret.obj.ownerpets.join(""), 'base64')
     }
+    console.log("sponsor", this.m_sponsor)
+    //const buffer = Buffer.from(toDecrypt, 'base64')
 
 }
 GitSponsor.prototype.gh_repo_list_all_obj = function () {
