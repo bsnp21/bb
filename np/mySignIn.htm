@@ -116,6 +116,9 @@
             margin-right: auto;
             width: 70%;
         }
+        .inputxt{
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -143,32 +146,42 @@
 
             <br>
 
-            <a id="">Username:</a> (<font color='red'>required</font>)<br>
-            <input id="repopath" maxlength="120" class="inputxt" value=""
-                placeholderx="https://github.com/username/reposname.git"
-                note="https://github.com/bsnp21/pub_test.git"></input><a class="clearout">X</a><br><br>
+
+            <table border="1">
+                <tr>
+                    <td>
+                        <a id="">Username:</a> (<font color='red'>required</font>)<br>
+                        <input id="repopath" class="inputxt" value="" placeholder="username"
+                            note="https://github.com/bsnp21/pub_test.git"></input>
+                    </td>
+                    <td class="clearout"><br>X</td>
+                </tr>
 
 
 
 
+                <tr>
+                    <td>
+                        <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)<br>
+                        <span><input id="passcode" type="text" maxlength="120" class="inputxt" value=""></input>
+                    </td>
+                    <td><a class="clearout">X</a></td>
+                </tr>
 
 
-            <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)
-            <span><input id="passcode" type="text" maxlength="120" class="inputxt" value=""></input><a class="clearout">X</a></span>
+                <tr>
+                    <td colspan="2">
+                        <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
+                        <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
+                        <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a>
+                        <a id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create </a>
+                        <br>
+                        <font color='red'><a id="errmsg"></a></font>
 
+                    </td>
+                </tr>
+            </table>
 
-            <br><br>
-
-            <div xxclass="centered_elem">
-                <button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button>
-                <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
-                <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a>
-                <a id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create </a>
-                <br>
-                <font color='red'><a id="errmsg"></a></font>
-
-
-            </div>
             <br>
         </form>
 
