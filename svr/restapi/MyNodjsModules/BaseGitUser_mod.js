@@ -1083,6 +1083,7 @@ BaseGitUser.prototype.git_clone = function () {
         echo 'lll' | sudo -S mkdir -p ${git_root}
         echo 'lll' | sudo -S chmod -R 777 ${git_root}
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
+        echo 'lll' | sudo -S chmod  777 ${git_root}/.git/config
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
@@ -1102,6 +1103,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
         this.git_pull()
     }
 
+    console.log("new cfg:",this.m_git_conf_new)
     fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
 
     var dir = this.getFullPath_usr_acct()
