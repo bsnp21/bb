@@ -1250,9 +1250,10 @@ BaseGitUser.prototype.git_push_test = function () {
     var cmd = `
     cd ${dir}
     echo lll | sudo -S  touch  ${logname}
+    echo lll | sudo -S  chmod 777  ${logname}
     echo lll | sudo -S  echo '${tm}' >> ${logname}
     echo lll | sudo -S  git add ${logname}
-    echo lll | sudo -S  git commit -m 'test.log'
+    echo lll | sudo -S  git commit -m '${logname}'
     echo lll | sudo -S  git push
     `
     var ret = this.execSync_cmd_git(cmd).toString()
