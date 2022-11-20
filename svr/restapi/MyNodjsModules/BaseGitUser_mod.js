@@ -714,7 +714,7 @@ BaseGitUser.prototype.Set_Gitusr = function (reponame) {
     this.m_gitinf = this._interpret_repo_url_str(repopath)
 
     this.m_git_conf_new = sponser.git_conf_txt(reponame)
-    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(reponame, true)
+    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(reponame, false)
   
     
     var absRootPath = this.absRootWorkingDir()
@@ -1064,10 +1064,11 @@ BaseGitUser.prototype.Deploy_proj = function () {
     var cfg_old = fs.readFileSync(cfg, "utf8")
     console.log("cfg_old :",cfg_old)
 
+    console.log("new cfg:",this.m_git_conf_new)
+    fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
+    
     this.git_push_test()
-    //console.log("new cfg:",this.m_git_conf_new)
-    //fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
-
+    
     var dir = this.getFullPath_usr_acct()
     if (fs.existsSync(dir)) {
         //BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
