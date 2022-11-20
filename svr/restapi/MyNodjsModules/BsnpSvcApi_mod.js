@@ -441,9 +441,23 @@ var ApiJsonp_BibleObj = {
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
 
-            //
-            inp.out.state.save_res = userProject.m_BaseGitUser.Save_userData_frm_client(inp.par)
-
+            // inp.out.state.save_res = userProject.m_BaseGitUser.Save_userData_frm_client(inp.par)
+            var par = inp.par
+            var save_res = { desc: "ok" }
+            var doc = par.fnames[0]
+            var jsfname = this.get_pfxname(doc, "cpIfNonexistance")
+            console.log("jsfname=", jsfname)
+            var ret = BaseGUti.loadObj_by_fname(jsfname)
+            if (ret.obj) {
+                BaseGUti.FlushObjDat(par.data, ret.obj)
+                console.log("ret", ret)
+                ret.writeback()
+            } else {
+                save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
+                //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
+                //console.log(inp.out.state.err)
+            }
+            inp.out.state.save=save_res
 
             //
             userProject.m_BaseGitUser.git_add_commit_push_Sync(inp.out.state.save_res.desc);//after saved
@@ -455,22 +469,16 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGituser()
             var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
-
             if (proj) {
-
                 inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
-
 
                 if (0) {
                     await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
                     })
                 }
-
-                //inp.out.data = userProject.m_BaseGitUser.Load_back_userData(inp.par)
-                ///
                 var par = inp.par;
                 var doc = par.fnames[0]
-                var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, "cpyIfNonexistance")
+                var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
                 var ret = BaseGUti.loadObj_by_fname(jsfname)
                 var retObj = ret.obj  //get obj structure w/ keys.
                 if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
