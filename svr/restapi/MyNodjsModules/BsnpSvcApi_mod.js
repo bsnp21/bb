@@ -441,7 +441,6 @@ var ApiJsonp_BibleObj = {
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             //if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
 
-            // inp.out.state.save_res = userProject.m_BaseGitUser.Save_userData_frm_client(inp.par)
             var par = inp.par
             var save_res = { desc: "ok" }
             var doc = par.fnames[0]
@@ -460,7 +459,7 @@ var ApiJsonp_BibleObj = {
             inp.out.state.save=save_res
 
             //
-            userProject.m_BaseGitUser.git_add_commit_push_Sync(inp.out.state.save_res.desc);//after saved
+            userProject.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
         })
     },
     ApiUsrDat_load: async function (req, res) {

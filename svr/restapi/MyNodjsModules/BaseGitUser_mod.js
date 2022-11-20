@@ -1233,59 +1233,6 @@ BaseGitUser.prototype.load_git_config = function () {
 
 
 
-BaseGitUser.prototype.Load_back_userData = function (par) {
-    //var inp = this.m_inp
-    var doc = par.fnames[0]
-    var jsfname = this.get_pfxname(doc)
-    var ret = BaseGUti.loadObj_by_fname(jsfname)
-
-    var retObj = ret.obj  //get obj structure w/ keys.
-    if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
-        try {
-            retObj = JSON.parse(JSON.stringify(par.data));// 
-            BaseGUti.FetchObjDat(retObj, ret.obj)
-            console.log("out.data", retObj)
-        } catch (err) {
-            console.log("err", err)
-            //inp.out.state.err = err
-        }
-    }
-    return retObj;
-}
-
-
-
-BaseGitUser.prototype.Save_userData_frm_client = function (par) {
-    //var inp = this.m_inp
-    var save_res = { desc: "ok" }
-    var doc = par.fnames[0]
-    var jsfname = this.get_pfxname(doc)
-    console.log("jsfname=", jsfname)
-    var ret = BaseGUti.loadObj_by_fname(jsfname)
-    if (ret.obj) {
-        BaseGUti.FlushObjDat(par.data, ret.obj)
-        console.log("ret", ret)
-        ret.writeback()
-    } else {
-        save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
-        //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
-        //console.log(inp.out.state.err)
-    }
-
-    //// 
-    //var save_res = {}
-    //save_res.desc = "len:" + inp.par.data.length;// + ",dlt:" + ret.dlt_size
-    //save_res.dlt = ret.dlt_size
-    //save_res.len = inp.par.data.length
-    //inp.par.data = ""
-    //save_res.ret = ret
-    //inp.out.save_res = save_res
-    return save_res;
-}
-
-
-
-
 
 BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
     { /****.git/config
