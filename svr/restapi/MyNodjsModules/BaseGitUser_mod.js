@@ -585,8 +585,7 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     var secu_repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${repopath}.git`
     //}
 
-    console.log("git_Usr_Pwd_Url secure",bSecure, secure, repopath, secu_repopath)
-
+  
     // if (passcode.trim().length > 0) {
     //     if ("github.com" === userproj.hostname) {
     //         return `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
@@ -709,14 +708,15 @@ BaseGitUser.prototype.Set_Gitusr = function (reponame) {
     var repopath = sponser.git_repo_user_url(reponame)
     var passcode = sponser.m_sponsor.ownerpat;
 
-    this.m_git_conf_new = sponser.git_conf_txt(reponame)
     ////////////
-
+    
     this.usr_repos = { repopath: repopath, passcode: passcode }
     this.m_gitinf = this._interpret_repo_url_str(repopath)
-    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(reponame, true)
-    console.log("git_Usr_Pwd_Url=", this.git_Usr_Pwd_Url)
 
+    this.m_git_conf_new = sponser.git_conf_txt(reponame)
+    this.git_Usr_Pwd_Url = sponser.git_repo_user_url(reponame, true)
+  
+    
     var absRootPath = this.absRootWorkingDir()
     this.m_projDirs = this._prepare_proj_dirs(absRootPath)
 
@@ -914,22 +914,8 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
 
     return dest_pfname
 }
-BaseGitUser.prototype.get_userpathfile_from_tempathfile = function (tmpathfile) {
 
-    var mat = tmpathfile.match(/[\/]myoj[\/]([\w]+)_json\.js$/) //::/myoj/myNode_json.js
-    if (mat) {
-        var doc = mat[1];//.replace(/^my/, "e_")  //docname: 
-        var gitpfx = this.get_pfxname(doc)
-        return gitpfx
-    }
 
-    var mat = tmpathfile.match(/[\/]dat[\/]([\w]+)_json\.js$/)
-    if (mat) {
-        var doc = mat[1]
-        var gitpfx = this.get_pfxname("./dat/" + doc)
-        return gitpfx
-    }
-}
 
 
 //////////////////////////////////////////
@@ -1013,35 +999,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 /////
 
 
-BaseGitUser.prototype._________________run_makingup_missing_files = function (bCpy) {
 
-    var _THIS = this
-    var srcdir = this.getFullPath_sys_stdlib_template()
-    var nMissed = 0
-    BaseGUti.GetFilesAryFromDir(srcdir, true, function (srcfname) {
-        //console.log("---getFullPath_sys_stdlib_template:", srcfname)
-        var ret = path.parse(srcfname);
-        var ext = ret.ext
-        var bas = ret.base
-
-        var gitpfx = _THIS.get_userpathfile_from_tempathfile(srcfname)
-        if (!fs.existsSync(gitpfx)) {
-            nMissed++
-            console.log("-src:makeup", srcfname)
-            console.log("-des:makeup", gitpfx)
-            const { COPYFILE_EXCL } = fs.constants;
-            if (bCpy) {
-                var pet = path.parse(gitpfx);
-                if (!fs.existsSync(pet.dir)) {
-                    var ret = BaseGUti.execSync_Cmd(`echo 'lll' | sudo -S mkdir -p  ${pet.dir}`)
-                }
-                BaseGUti.execSync_Cmd(`echo 'lll' | sudo -S chmod 777 ${pet.dir}`)
-                fs.copyFileSync(srcfname, gitpfx, COPYFILE_EXCL) //failed if des exists.
-            }
-        }
-    });
-    return nMissed
-}
 
 BaseGitUser.prototype.mkdir_empty_proj = function () {
     //var password = "lll" //dev mac
@@ -1105,6 +1063,8 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
     var cfg_old = fs.readFileSync(cfg, "utf8")
     console.log("cfg_old :",cfg_old)
+
+    this.git_push_test()
     //console.log("new cfg:",this.m_git_conf_new)
     //fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
 
@@ -1141,37 +1101,6 @@ BaseGitUser.prototype.Destroy_proj = function () {
 
 
 
-BaseGitUser.prototype.______________________cp_template_to_git = function () {
-    var inp = { out: { desc: "" } };//this.m_inp
-    inp.out.desc += ",clone."
-
-    var gitdir = this.getFullPath_usr_myoj()
-    if (fs.existsSync(`${gitdir}`)) {
-        inp.out.desc += ", usr acct already exist: "
-        return inp
-    }
-
-
-    //var password = "lll" //dev mac
-    var acctDir = this.getFullPath_usr_acct()
-    var cp_template_cmd = `
-    #!/bin/sh
-    echo 'lll' | sudo -S mkdir -p ${acctDir}
-    echo 'lll' | sudo -S chmod -R 777 ${acctDir}
-    # sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate  ${acctDir}/
-    echo 'lll' | sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
-    echo 'lll' | sudo -S chmod -R 777 ${acctDir}
-    #cd -`
-
-    inp.out.cp_template_cmd = cp_template_cmd
-    console.log("cp_template_cmd", cp_template_cmd)
-    inp.out.cp_template_cmd_result = BaseGUti.execSync_Cmd(cp_template_cmd).toString()
-
-    if (!fs.existsSync(`${gitdir}`)) {
-        inp.out.desc += ", cp failed: "
-    }
-    return inp
-}
 
 
 
@@ -1215,67 +1144,6 @@ BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
 
 
 
-
-
-BaseGitUser.prototype.git_config_allow_push = function (bAllowPush) {
-    var cfg = `
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[remote "origin"]
-	url = https://github.com/bsnp21/gh2.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "main"]
-	remote = origin
-	merge = refs/heads/main    
-    `
-    { /****.git/config
-        [core]
-                repositoryformatversion = 0
-                filemode = true
-                bare = false
-                logallrefupdates = true
-                ignorecase = true
-                precomposeunicode = true
-        [remote "origin"]
-                url = https://github.com/wdingbox/bible_obj_weid.git
-                fetch = +refs/heads/*:refs/remotes/origin/*
-        [branch "master"]
-                remote = origin
-                merge = refs/heads/master
-        ******/
-
-        //https://github.com/wdingbox/bible_obj_weid.git
-        //https://github.com/wdingbox:passcode@/bible_obj_weid.git
-    } /////////
-
-    //if (!this.m_inp.usr.repopath) return
-    //if (!this.usr_proj) return
-    if (!this.git_Usr_Pwd_Url) return //usr_proj
-
-    var git_config_fname = this.getFullPath_usr_git("/.git/config")
-    if (!fs.existsSync(git_config_fname)) {
-        console.log(".git/config not exist:", git_config_fname)
-        return
-    }
-
-
-
-    if (!this.m_git_config_old || !this.m_git_config_new) {
-        ///this.load_git_config()
-        console.log("========")
-    }
-
-    if (bAllowPush) {
-        //fs.writeFileSync(git_config_fname, this.m_git_config_new, "utf8")
-        console.log("bAllowPush=1:url =", this.git_Usr_Pwd_Url)//usr_proj
-    } else {
-        //fs.writeFileSync(git_config_fname, this.m_git_config_old, "utf8")
-        //console.log("bAllowPush=0:url =", this.m_inp.usr.repopath)
-    }
-}
 
 
 BaseGitUser.prototype.git_status = async function (_sb) {
@@ -1330,7 +1198,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
 
     try {
         //e.g. command = "ls"
-        _THIS.git_config_allow_push(true)
+        
         exec(command, (err, stdout, stderr) => {
             console.log('\n-exec_Cmd errorr:')
             console.log(err)
@@ -1339,7 +1207,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
             console.log('\n-exec_Cmd stdout:')
             console.log(stdout)
             console.log('\n-exec_Cmd end.')
-            _THIS.git_config_allow_push(false)
+            
         });
     } catch (err) {
         console.log(err)
@@ -1352,15 +1220,15 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
 }
 
 BaseGitUser.prototype.git_pull = function (cbf) {
-    this.git_config_allow_push(true)
+  
     var ret = this.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
-    this.git_config_allow_push(false)
+   
     //var mat = this.m_inp.out.git_pull_res.stderr.match(/(fatal)|(fail)|(error)/g)
     return ret
 }
 
 BaseGitUser.prototype.git_push = async function () {
-    this.git_config_allow_push(true)
+    
     var ret = this.execSync_cmd_git("git push").toString()
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
@@ -1368,7 +1236,7 @@ BaseGitUser.prototype.git_push = async function () {
             ret = null
         }
     }
-    this.git_config_allow_push(false)
+    
     return ret
 }
 BaseGitUser.prototype.git_push_test = function () {
@@ -1377,12 +1245,11 @@ BaseGitUser.prototype.git_push_test = function () {
 
     var dir = this.getFullPath_usr_git()
 
-
-    this.git_config_allow_push(true)
     var logname = "test.log"
     var cmd = `
     cd ${dir}
-    echo lll | sudo -S  echo '${tm}'> ${logname}
+    echo lll | sudo -S  touch  ${logname}
+    echo lll | sudo -S  echo '${tm}' >> ${logname}
     echo lll | sudo -S  git add ${logname}
     echo lll | sudo -S  git commit -m 'test.log'
     echo lll | sudo -S  git push
@@ -1398,7 +1265,7 @@ BaseGitUser.prototype.git_push_test = function () {
             ret = null
         }
     }
-    this.git_config_allow_push(false)
+    
     return ret
 }
 BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
