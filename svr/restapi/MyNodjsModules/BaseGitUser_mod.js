@@ -691,11 +691,11 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     var ar = JSON.parse(txt)
     return ar
 }
-BaseGitUser.prototype.IsUserExist = function (repopath) {
+BaseGitUser.prototype.Get_repoInfo = function (repopath) {
     var gsp = new GitSponsor()
     var usrsinfo = gsp.gh_repo_list_all_obj()
     if (repopath in usrsinfo) {
-        return true;
+        return usrsinfo[repopath];
     }
     return false
 }
