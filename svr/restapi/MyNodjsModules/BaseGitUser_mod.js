@@ -609,6 +609,7 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
 }
 GitSponsor.prototype.git_conf_txt = function (reponame) {
     var secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`
+    var sec_url = this.git_repo_user_url(reponame, true)
     var cfg = `
     [core]
         repositoryformatversion = 0
@@ -616,7 +617,7 @@ GitSponsor.prototype.git_conf_txt = function (reponame) {
         bare = false
         logallrefupdates = true
     [remote "origin"]
-        url = https://${secure}github.com/bsnp21/${reponame}.git
+        url = ${sec_url}
         fetch = +refs/heads/*:refs/remotes/origin/*
     [branch "main"]
         remote = origin
@@ -679,7 +680,8 @@ sudo -S git add .salts
 sudo -S git add *
 sudo -S git commit -m "${commit_msg}"
 sudo -S git branch -M main
-sudo -S git remote add origin https://github.com/bsnp21/${username}.git
+#sudo -S git remote add origin https://github.com/bsnp21/${username}.git
+sudo -S git remote add origin ${this.usr_repos.repopath}
 sudo -S git push -u origin main
 cd ..
     `
