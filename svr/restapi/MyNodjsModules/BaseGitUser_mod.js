@@ -547,10 +547,17 @@ var BaseGUti = {
 
 
 
-function GitSponsor(ownername) {
+function GitSponsor() {
     var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
     var sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
     this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
+
+    var ret = BaseGUti.loadObj_by_fname("~/install/gh/sponsorInfo.json.js")
+    if(ret){
+        this.m_sponsor.ownername = atob(ret.obj.ownername)
+        this.m_sponsor.ownerpat  = atob(ret.obj.ownerpets.join(""))
+    }
+
 }
 GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var istart = this.m_sponsor.ownername.length + 1

@@ -155,7 +155,8 @@
                         <input id="repopath" class="inputxt" value="" placeholder="username"
                             note="https://github.com/bsnp21/pub_test.git"></input>
                     </td>
-                    <td class="clearout"><br>X
+                    <td class="clearout">
+                        <br>X
                     </td>
                 </tr>
 
@@ -168,7 +169,8 @@
                         <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)<br>
                         <input id="passcode" type="password" maxlength="120" class="inputxt" value=""></input>
                     </td>
-                    <td><a class="clearout"><br><br>X</a>
+                    <td class="clearout">
+                        <br><br>X
                     </td>
                 </tr>
 
@@ -220,7 +222,7 @@
 
 
         $(".clearout").on("click", function () {
-            $(this).parent().prev().find("input").val("")
+            $(this).prev().find("input").val("")
         })
         $("#label_password").on("click", function () {
             var type = $("#passcode").attr("type") === "password" ? "text": "password"
