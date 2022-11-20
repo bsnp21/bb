@@ -2066,14 +2066,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     $("#myExt_Diary").on("click", function () {
         var repo = $("#repopath").val()
-        var mat = repo.match(/.+[\/](\w+)\.git$/)
-        if(mat){
-            //alert(mat[1])
-            //$(this).attr("href", `./myExt_Diary.htm${window.location.search}&repo=${mat[1]}`)
-            $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}&repo=${mat[1]}`)
-        }else{
-            alert("repousr not found in:" + repo)
-        }
+        $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}&repo=${repo}`)
     })
     //<a id='myExt_Diary' target='_blank' href="./myExt_Diary.htm${window.location.search+"&repo="}" title='Diary'>Diary</a> | 
 
