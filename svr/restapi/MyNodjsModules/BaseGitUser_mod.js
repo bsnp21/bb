@@ -574,13 +574,18 @@ GitSponsor.prototype.git_repo_user_url = function (repopath, bSecure) {
     //this.m_giturl = `https://${m_sponsor.ownername}:${m_sponsor.ownerpat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
 
     var secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`;
-    if (!bSecure) secure = ""
+
+    if (!bSecure) {
+        secure = ""
+    }
     
 
     if (repopath.indexOf("https") < 0) {
         //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
         repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${repopath}.git`
     }
+
+    console.log("git_Usr_Pwd_Url secure",secure, repopath)
 
     // if (passcode.trim().length > 0) {
     //     if ("github.com" === userproj.hostname) {
