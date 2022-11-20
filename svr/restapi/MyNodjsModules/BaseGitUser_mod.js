@@ -878,12 +878,12 @@ BaseGitUser.prototype.get_pfxname = function (DocCode) {
         case "e": //: e_Node,
             {
                 var fnam = this.get_DocCode_Fname(DocCode)
-                dest_pfname = this.getFullPath_usr_myoj(`/myoj/${fnam}`, "copyIfnonexistance")
+                dest_pfname = this.getFullPath_usr_myoj(`${fnam}`, "copyIfnonexistance")
             }
             break
         case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
-                var fnam = DocCode.slice(1)
+                var fnam = DocCode.slice(6)
                 dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, "copyIfnonexistance")
             }
             break;
