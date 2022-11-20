@@ -1103,7 +1103,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
         this.git_pull()
     }
 
-    var cfg_old = fs.readFileSyncFileSync(cfg, "utf8")
+    var cfg_old = fs.readFileSync(cfg, "utf8")
     console.log("cfg_old :",this.m_git_conf_new)
     console.log("new cfg:",this.m_git_conf_new)
     fs.writeFileSync(cfg, this.m_git_conf_new, "utf8")
