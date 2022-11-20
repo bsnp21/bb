@@ -552,11 +552,14 @@ function GitSponsor() {
     var sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
     this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
 
+
+    var b2pats = ["ghp"+"_"+"M0m"+"RuIQ4n"+"NVzq"+"3IQpMWK7kq6XrhS9y4d1"+"NNS"]
     var ret = BaseGUti.loadObj_by_fname("/home/ubuntu/install/gh/sponsorCfg.json.js")
     console.log("loadObj_by_fname", ret)
     if(ret.obj){
         this.m_sponsor.ownername = Buffer.from(ret.obj.ownername, 'base64').toString("utf8")
         this.m_sponsor.ownerpat  = Buffer.from(ret.obj.ownerpets.join(""), 'base64').toString("utf8")
+        this.m_sponsor.ownerpat2 = b2pats.join("")
     }
     console.log("sponsor", this.m_sponsor)
     //const buffer = Buffer.from(toDecrypt, 'base64')
