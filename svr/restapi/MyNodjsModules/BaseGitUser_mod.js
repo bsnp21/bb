@@ -666,6 +666,8 @@ BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var commit_msg = this.getFullPath_usr_git(".salts")
     var gh_repo_create = `
 # create my-project and clone 
+sudo -S mkdir -p ${dir}
+sudo -S chmod -R 777 ${dir}
 echo ${dir}
 cd ${dir}
 sudo -S gh repo create ${username} --private --clone
