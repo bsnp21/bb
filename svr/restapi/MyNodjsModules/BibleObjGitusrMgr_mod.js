@@ -200,7 +200,7 @@ NCache.Init = function () {
 NCache.Set = function (key, val, ttl) {
     if (undefined === ttl) return console.log("*** fatal err: ttl not set.")
     if ("object" === typeof val) {
-    }else{
+    } else {
         val = this.myCache.get(key)
     }
     val.tms = (new Date()).getTime() //timestampe for last access.
@@ -331,13 +331,13 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var usrObj = { repopath: repopath, passcode: passcode }
 
     this.m_BaseGitUser.Set_Gitusr(repopath)
-    
+
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.Get_repoInfo(repopath)
     if (!info) {
         return { err: ["not exist:", repopath] }
     }
-    
+
 
 
     this.m_BaseGitUser.Deploy_proj()
@@ -352,7 +352,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.repoInfo = info
-    return { ok: ret, ssid: ssid }
+    return { ok: ret, SSID: ssid } //must be SSID capitalized ret.
 }
 
 BibleObjGitusrMgr.prototype.Proj_parse_usr_after_signed = function (ssid) {
@@ -360,11 +360,13 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_after_signed = function (ssid) {
     var usr = this.proj_get_usr_fr_cache_ssid(ssid)
     if (!usr) {
         console.log("*****timeout, failed ssid")
-        return null
+        return { err: "nonexist | timeout" }
     }
     NCache.Set(ssid, usr, 3600 * 24 * 180)
 
-    return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
+    this.m_BaseGitUser.Set_Gitusr(usr.repopath)
+
+    return { ok: "ok" }
 }
 
 
@@ -415,7 +417,7 @@ BibleObjGitusrMgr.prototype.Session_create = function (usr) {
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
     //   ttl = parseInt(this.m_inp.usr.ttl)
     //}
-    
+
 
     NCache.Set(ssid_b64, usr, ttl)
     console.log("Session_create:ssid=", ssid, ssid_b64, usr, ttl)
@@ -423,10 +425,10 @@ BibleObjGitusrMgr.prototype.Session_create = function (usr) {
     return ssid_b64
 }
 BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
-    
+
     var ret = NCache.myCache.take(ssid)
 
-    console.log("Session_delete:", ssid,  ret)
+    console.log("Session_delete:", ssid, ret)
 
     NCache.myCache.set(ssid, null)
 }

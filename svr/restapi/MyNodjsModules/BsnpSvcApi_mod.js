@@ -137,13 +137,13 @@ var ApiUti = {
         return { CUID: cuid, pkb64: pkb64 }
     },
     Set_output: function (pout, ret) {
+        Object.keys(ret).forEach(function (key) {
+            pout.state[key] = ret[key]
+        })
         if (ret.err) {
-            pout.err = ret.err;// //) 
-            //console.log(inp, "\n\n----ApiUsrAccount_login failed.")
-        } else {
-            pout.state = ret.ok
-            pout.state.SSID = ret.ssid
-        }
+            return false;
+        } 
+        return true;
     }
 
 }

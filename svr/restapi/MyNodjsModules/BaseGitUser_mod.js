@@ -652,8 +652,8 @@ var BaseGitUser = function () {
     this.m_dlog = []
 }
 BaseGitUser.prototype.absRootWorkingDir = function () {
-    var rootdir = __dirname.slice(0, __dirname.indexOf("/bb/")+1)
-    console.log("__dirname=",__dirname, "rootdir=", rootdir)
+    var rootdir = __dirname.slice(0, __dirname.indexOf("/bb/") + 1)
+    console.log("__dirname=", __dirname, "rootdir=", rootdir)
     return rootdir
 }
 
@@ -709,7 +709,6 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
 
 BaseGitUser.prototype.Set_Gitusr = function (reponame) {
 
-    //hijack
     this.m_sponser = new GitSponsor(reponame)
 
     this.m_projDirs = this._prepare_proj_data_dirs()
@@ -948,29 +947,6 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 
 
 
-
-BaseGitUser.prototype.mkdir_empty_proj = function () {
-    //var password = "lll" //dev mac
-    var root_sys = this.getFullPath_root_sys()
-    var git_root = this.getFullPath_usr_git()
-    var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
-    var usrs_home = this.getFullPath_usr_host()
-
-    var git_clone_cmd = `
-    #!/bin/sh
-    cd ${root_sys}
-    if [ -d "${usrs_home}" ]; then
-        echo "${usrs_home} exists."
-    else 
-        echo "${usrs_home} does not exist, to make it: ${usrs_home}"
-        echo 'lll' | sudo -S mkdir -p ${usrs_home}
-        echo 'lll' | sudo -S chmod -R 777 ${bugit}
-    fi
-    `
-    var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
-    console.log("-mkdir_empty_proj:", bugit, fs.existsSync(bugit), ret)
-    return ret
-}
 BaseGitUser.prototype.git_clone = function () {
     //var password = "lll" //dev mac
     var root_sys = this.getFullPath_root_sys()
@@ -998,18 +974,22 @@ BaseGitUser.prototype.git_clone = function () {
 BaseGitUser.prototype.Deploy_proj = function () {
     console.log("********************************************* Deploy_proj  1")
 
-    var cfg = this.getFullPath_usr_git("/.git/config")
-    if (!fs.existsSync(cfg)) {
+    var cfgf = this.getFullPath_usr_git("/.git/config")
+    if (!fs.existsSync(cfgf)) {
         this.git_clone() //always sucess even passwd is wrong.
     } else {
         this.git_pull()
     }
 
-    var cfg_old = fs.readFileSync(cfg, "utf8")
-    console.log("cfg_old :", cfg_old)
+    var old_txt = fs.readFileSync(cfgf, "utf8")
+    console.log("old_cfg :", old_txt)
+    var old_file = cfgf + "_old"
+    if (!fs.existsSync(old_file)) {
+        fs.writeFileSync(old_file, old_txt, "utf8")
+    }
+
     console.log("new cfg:", this.m_sponser.git_conf_txt(true))
-    fs.writeFileSync(cfg+"_old", cfg_old, "utf8")
-    fs.writeFileSync(cfg, this.m_sponser.git_conf_txt(true), "utf8")
+    fs.writeFileSync(cfgf, this.m_sponser.git_conf_txt(true), "utf8")
 
     this.git_push_test()
 
