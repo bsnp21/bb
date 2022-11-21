@@ -1068,8 +1068,6 @@ BaseGitUser.prototype.git_clone = function () {
 BaseGitUser.prototype.Deploy_proj = function () {
     console.log("********************************************* Deploy_proj  1")
 
-    //this.mkdir_empty_proj()
-
     var cfg = this.getFullPath_usr_git("/.git/config")
     if (!fs.existsSync(cfg)) {
         this.git_clone() //always sucess even passwd is wrong.
@@ -1237,10 +1235,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
 }
 
 BaseGitUser.prototype.git_pull = function (cbf) {
-  
     var ret = this.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
-   
-    //var mat = this.m_inp.out.git_pull_res.stderr.match(/(fatal)|(fail)|(error)/g)
     return ret
 }
 
@@ -1267,7 +1262,7 @@ BaseGitUser.prototype.git_push_test = function () {
     cd ${dir}
     echo lll | sudo -S  touch  ${logname}
     echo lll | sudo -S  chmod 777  ${logname}
-    echo lll | sudo -S  echo '${tm}' >> ${logname}
+    echo lll | sudo -S  echo '${tm}' > ${logname}
     echo lll | sudo -S  git add ${logname}
     echo lll | sudo -S  git commit -m '${logname}'
     echo lll | sudo -S  git push
