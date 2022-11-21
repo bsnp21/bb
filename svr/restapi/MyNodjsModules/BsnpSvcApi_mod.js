@@ -137,10 +137,8 @@ var ApiUti = {
         return { CUID: cuid, pkb64: pkb64 }
     },
     Set_output: function (pout, ret) {
-
         if (ret.err) {
             pout.err = ret.err;// //) 
-            //console.log(inp, "\n\n----ApiUsrAccount_login failed.")
             return false;
         }
         //pout.state = ret.ok
@@ -148,7 +146,6 @@ var ApiUti = {
         Object.keys(ret).forEach(function (key) {
             pout.state[key] = ret[key]
         })
-
         return true;
     }
 
@@ -218,8 +215,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
             //if (!inp.usr.f_path) inp.usr.f_path = ""
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             var TbcvObj = {};
             if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
@@ -247,8 +244,8 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
             console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
@@ -290,8 +287,8 @@ var ApiJsonp_BibleObj = {
             //: unlimited write size. 
             var save_res = { desc: "to save" }
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             if (!inp.out.state || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp.out.state)
@@ -350,8 +347,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             console.log(inp.par.aux)
             if (!inp.par.aux) {
@@ -433,8 +430,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             //if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
@@ -464,8 +461,8 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
             if (proj) {
                 inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
@@ -553,8 +550,8 @@ var ApiJsonp_BibleObj = {
             //: unlimited write size. 
             var userProject = new BibleObjGitusrMgr()
             //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
-            var proj = userProject.Proj_parse_usr_signin(inp)
-            if (!proj) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
+            var ret = userProject.Proj_parse_usr_signin(inp)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             inp.out.state.SSID = null;
@@ -590,8 +587,8 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             userProject.m_BaseGitUser.Check_proj_state()
             if (0 === inp.out.state.bRepositable) {
@@ -624,8 +621,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             var ret = userProject.m_BaseGitUser.Check_proj_state()
             var res2 = userProject.m_BaseGitUser.execSync_cmd_git("git status -sb")
@@ -653,8 +650,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             //await userProject.git_add_commit_push("push hard.", "");//real push hard.
@@ -679,8 +676,8 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             userProject.m_BaseGitUser.git_pull();
@@ -700,8 +697,8 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
-            var proj = userProject.Proj_parse_usr_after_signed(inp.SSID)
-            if (!proj) return console.log("Proj_parse_usr_after_signed failed.")
+            var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
             var ret = userProject.m_BaseGitUser.Check_proj_state()
             var rso = userProject.m_BaseGitUser.execSync_cmd_git()
