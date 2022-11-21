@@ -216,7 +216,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
             inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             var TbcvObj = {};
-            if (proj && "object" === typeof inp.par.fnames) {//['NIV','ESV']
+            if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
                     var trn = inp.par.fnames[i];
                     var jsfname = userProject.m_BaseGitUser.get_pfxname(trn)
@@ -248,7 +248,7 @@ var ApiJsonp_BibleObj = {
             console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
             console.log("-----:binp.par.bibOj", inp.par.bibOj)
             var TbcObj = {};
-            if (proj && "object" === typeof inp.par.fnames && inp.par.bibOj) {//['NIV','ESV']
+            if ("object" === typeof inp.par.fnames && inp.par.bibOj) {//['NIV','ESV']
                 console.log("inp.par.fnames:", inp.par.fnames)
                 for (var i = 0; i < inp.par.fnames.length; i++) {
                     var trn = inp.par.fnames[i];
@@ -371,7 +371,7 @@ var ApiJsonp_BibleObj = {
                 if (karyObj.kary.length < 3) {
                     console.log("error",)
                 }
-                if (proj && bio.obj && karyObj.kary.length >= 3) {
+                if (bio.obj && karyObj.kary.length >= 3) {
                     var tms = (new Date(bio.stat.mtime)).toISOString().substr(0, 10)
                     var usr_repo = `${owner}#${shareID}@${tms}`
                     outObj[usr_repo] = bio.obj[karyObj.bkc][karyObj.chp][karyObj.vrs]
@@ -460,33 +460,33 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
-            if (proj) {
-                inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
-                if (0) {
-                    await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
-                    })
-                }
-                var par = inp.par;
-                var doc = par.fnames[0]
-                var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
-                var ret = BaseGUti.loadObj_by_fname(jsfname)
-                var retObj = ret.obj  //get obj structure w/ keys.
-                if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
-                    try {
-                        retObj = JSON.parse(JSON.stringify(par.data));// 
-                        BaseGUti.FetchObjDat(retObj, ret.obj)
-                        console.log("out.data", retObj)
-                    } catch (err) {
-                        console.log("err", err)
-                        //inp.out.state.err = err
-                    }
-                }
-                inp.out.data = retObj;
-                if (!inp.out.state) inp.out.state.bEditable = 1
-                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
+            if (0) {
+                await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
+                })
             }
+            var par = inp.par;
+            var doc = par.fnames[0]
+            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
+            var ret = BaseGUti.loadObj_by_fname(jsfname)
+            var retObj = ret.obj  //get obj structure w/ keys.
+            if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
+                try {
+                    retObj = JSON.parse(JSON.stringify(par.data));// 
+                    BaseGUti.FetchObjDat(retObj, ret.obj)
+                    console.log("out.data", retObj)
+                } catch (err) {
+                    console.log("err", err)
+                    //inp.out.state.err = err
+                }
+            }
+            inp.out.data = retObj;
+            if (!inp.out.state) inp.out.state.bEditable = 1
+            inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+
+
         })
 
         //var sret = JSON.stringify(inp)
