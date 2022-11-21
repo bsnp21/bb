@@ -827,7 +827,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     fi
     `
     var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
-    console.log("-mkdir_empty_proj:", fs.existsSync(ghroot), cmd_ghroot)
+    console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot))
     if(fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
     return projDirs
