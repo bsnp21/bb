@@ -644,22 +644,8 @@ var BaseGitUser = function () {
     this.m_dlog = []
 }
 BaseGitUser.prototype.absRootWorkingDir = function () {
-    var pwd = __dirname
-    console.log("__dirname=", pwd)
-
-
-    var wd = "", rootdir = pwd.slice(0, pwd.indexOf("/bb/")), prev = ""
-    pwd.split("/").forEach(function (nodname) {
-        wd += nodname + "/"
-        console.log(wd)
-        if (fs.existsSync(`${wd}/.git`)) {
-            rootdir = prev
-        }
-        prev = wd
-    })
-    console.log(rootdir, "  <=== svr rootdir")
-    rootdir = pwd.slice(0, pwd.indexOf("/bb/"))
-    console.log("rootdir=", rootdir)
+    var rootdir = __dirname.slice(0, __dirname.indexOf("/bb/"))
+    console.log("__dirname=",__dirname, "rootdir=", rootdir)
     return rootdir
 }
 
