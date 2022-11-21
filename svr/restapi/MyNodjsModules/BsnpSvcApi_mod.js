@@ -141,11 +141,8 @@ var ApiUti = {
             pout.err = ret.err;// //) 
             return false;
         }
-        //pout.state = ret.ok
-        //pout.state.SSID = ret.ssid
-        Object.keys(ret).forEach(function (key) {
-            pout.state[key] = ret[key]
-        })
+        pout.state = ret.ok
+        pout.state.SSID = ret.ssid
         return true;
     }
 
