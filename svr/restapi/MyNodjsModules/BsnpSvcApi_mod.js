@@ -142,7 +142,7 @@ var ApiUti = {
             return false;
         }
         pout.state = ret.ok
-        pout.state.SSID = ret.ssid
+        pout.state.SSID = ret.SSID
         return true;
     }
 
