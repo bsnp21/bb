@@ -949,12 +949,11 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 
 BaseGitUser.prototype.git_clone = function () {
     //var password = "lll" //dev mac
-    var root_sys = this.getFullPath_root_sys()
+    //var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
     var git_cfg = this.getFullPath_usr_git("/.git/config")
     var clone_https = this.m_sponser.git_repo_user_url_private(true)
-    var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
-
+    
     var git_clone_cmd = `
     #!/bin/sh
     if [ -f "${git_cfg}" ]; then
@@ -1221,7 +1220,5 @@ BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
 
 module.exports = {
     BaseGUti: BaseGUti,
-    BaseGitUser: BaseGitUser,
-    WorkingRootNodeName: WorkingRootNodeName,
-
+    BaseGitUser: BaseGitUser
 }
