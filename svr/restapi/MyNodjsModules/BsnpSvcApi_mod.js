@@ -141,6 +141,7 @@ var ApiUti = {
             pout.state[key] = ret[key]
         })
         console.log("Set_output:", pout)
+        console.log("ret:", ret)
         if (ret.err) {
             return false;
         } 
