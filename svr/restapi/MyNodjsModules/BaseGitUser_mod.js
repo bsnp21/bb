@@ -818,8 +818,9 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     # cd ${absSvcRoot}
     if [ -d "${ghroot}" ]; then
         echo "${ghroot} already has been created."
+        echo 'lll' | sudo -S ls -al ${ghroot}
     else 
-        echo "${ghroot} does not exist, to make it: ${ghroot}"
+        echo "${ghroot} does not exist, create it one-time-for-all: ${ghroot}"
         echo 'lll' | sudo -S mkdir -p ${ghroot}
         echo 'lll' | sudo -S chmod -R 777 ${projDirs.base_Dir}
         echo 'lll' | sudo -S ls -al ${ghroot}
