@@ -712,12 +712,11 @@ BaseGitUser.prototype.Set_Gitusr = function (reponame) {
     //hijack
     this.m_sponser = new GitSponsor(reponame)
 
-    this.m_projDirs = this._prepare_proj_dirs()
+    this.m_projDirs = this._prepare_proj_data_dirs()
 
     return true;
 }
-
-BaseGitUser.prototype._prepare_proj_dirs = function () {
+BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     //const WorkingRootNodeName = "ddir"
     const NodeUsrs = "usrs" //keep same as old. 
     var absSvcRoot = this.absRootWorkingDir()
@@ -734,7 +733,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     projDirs.dest_myo = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}/${projname}/account/myoj`  //<==User's myoj
     projDirs.dest_dat = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}/${projname}/account/dat`   //<==User's dat
 
-    console.log("_prepare_proj_dirs---- projDirs =", projDirs)
+    console.log("_prepare_proj_data_dirs---- projDirs =", projDirs)
 
     function make_path_777(startPath, endpath) {
         var cmd_ghroot = `
