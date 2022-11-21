@@ -355,7 +355,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     return { ok: ret, SSID: ssid } //must be SSID capitalized ret.
 }
 
-BibleObjGitusrMgr.prototype.Proj_parse_usr_after_signed = function (ssid) {
+BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 
     var usr = this.proj_get_usr_fr_cache_ssid(ssid)
     if (!usr) {
