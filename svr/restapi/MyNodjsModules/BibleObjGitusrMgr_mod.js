@@ -366,7 +366,8 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_after_signed = function (ssid) {
 
     this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 
-    return { ok: "ok" }
+    var ret = this.m_BaseGitUser.Check_proj_state()
+    return { ok: ret }
 }
 
 
