@@ -549,25 +549,25 @@ function GitSponsor(reponame) {
 
     var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
     var sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
-    this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
+    this.m_acct = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
 
 
     var b2pats = ["ghp" + "_" + "M0m" + "RuIQ4n" + "NVzq" + "3IQpMWK7kq6XrhS9y4d1" + "NNS"]
     var ret = BaseGUti.loadObj_by_fname("/home/ubuntu/install/gh/sponsorCfg.json.js")
     console.log("loadObj_by_fname", ret)
     if (ret.obj) {
-        this.m_sponsor.ownername = Buffer.from(ret.obj.ownername, 'base64').toString("utf8")
-        this.m_sponsor.ownerpat = Buffer.from(ret.obj.ownerpets.join(""), 'base64').toString("utf8")
-        this.m_sponsor.ownerpat2 = b2pats.join("")
+        this.m_acct.ownername = Buffer.from(ret.obj.ownername, 'base64').toString("utf8")
+        this.m_acct.ownerpat = Buffer.from(ret.obj.ownerpets.join(""), 'base64').toString("utf8")
+        this.m_acct.ownerpa2 = b2pats.join("")
     }
-    console.log("sponsor", this.m_sponsor)
+    console.log("sponsor", this.m_acct)
     //const buffer = Buffer.from(toDecrypt, 'base64')
 }
 GitSponsor.prototype.set_reponame = function (reponame) {
     this.m_reponame = reponame
 }
 GitSponsor.prototype.gh_repo_list_all_obj = function () {
-    var istart = this.m_sponsor.ownername.length + 1
+    var istart = this.m_acct.ownername.length + 1
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
     var lines = str.split(/[\r|\n]/)
@@ -585,9 +585,9 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
 }
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
-    //this.m_giturl = `https://${m_sponsor.ownername}:${m_sponsor.ownerpat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
+    //this.m_giturl = `https://${m_acct.ownername}:${m_acct.ownerpat}@github.com/${m_acct.ownername}/${this.m_repos}.git`
 
-    var secure = `${this.m_sponsor.ownername}:${this.m_sponsor.ownerpat}@`;
+    var secure = `${this.m_acct.ownername}:${this.m_acct.ownerpat}@`;
 
     if (!bSecure) {
         secure = ""
@@ -596,7 +596,7 @@ GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
 
     //if (repopath.indexOf("https") < 0) {
     //var sponser_git_rep = repopath.replace(/[\@|\.|\:|\/]/g, "_")
-    var secu_repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${this.m_reponame}.git`
+    var secu_repopath = `https://${secure}github.com/${this.m_acct.ownername}/${this.m_reponame}.git`
     //}
 
 
@@ -779,7 +779,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function (projname) {
     const NodeUsrs = "usrs" //keep same as old. 
     var absSvcRoot = this.absRootWorkingDir()
     var hostname = "github.com"
-    var username = this.m_sponser.ownername;
+    var username = this.m_sponser.m_acct.ownername;
 
     var projDirs = {}
     projDirs.root_sys = `${absSvcRoot}`
