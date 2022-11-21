@@ -1045,21 +1045,19 @@ BaseGitUser.prototype.git_clone = function () {
     //var password = "lll" //dev mac
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
+    var git_cfg = this.getFullPath_usr_git("/.git/config")
     var clone_https = this.m_sponser.git_repo_user_url(false)
     var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
 
     var git_clone_cmd = `
     #!/bin/sh
-    if [ -f "${git_root}/.git/config" ]; then
-        echo "${git_root}/.git/config exists."
-        echo 'lll' | sudo -S chmod  777 ${git_root}/.git/config
+    if [ -f "${git_cfg}" ]; then
+        echo "${git_cfg} exists."
+        echo 'lll' | sudo -S chmod  777 ${git_cfg}
     else 
         echo "${git_root}/.git/config does not exist, so to clone"
-        cd ${root_sys}
-        echo 'lll' | sudo -S mkdir -p ${git_root}
-        echo 'lll' | sudo -S chmod -R 777 ${git_root}
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
-        echo 'lll' | sudo -S chmod  777 ${git_root}/.git/config
+        echo 'lll' | sudo -S chmod  777 ${git_cfg} 
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
@@ -1070,7 +1068,7 @@ BaseGitUser.prototype.git_clone = function () {
 BaseGitUser.prototype.Deploy_proj = function () {
     console.log("********************************************* Deploy_proj  1")
 
-    this.mkdir_empty_proj()
+    //this.mkdir_empty_proj()
 
     var cfg = this.getFullPath_usr_git("/.git/config")
     if (!fs.existsSync(cfg)) {
