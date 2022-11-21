@@ -15,10 +15,9 @@ const crypto = require('crypto')
 
 const NodeCache = require("node-cache");
 
-var { BaseGitUser, BaseGUti, WorkingRootNodeName } = require("./BaseGitUser_mod");
+var { BaseGitUser, BaseGUti } = require("./BaseGitUser_mod");
 
 
-//const WorkingRootNodeName = "bugit" BibleUti
 
 
 var SvrUsrsBCV = function (srcpath) {

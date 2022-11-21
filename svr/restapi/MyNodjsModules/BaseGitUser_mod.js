@@ -16,7 +16,7 @@ const crypto = require('crypto')
 const NodeCache = require("node-cache");
 
 
-const WorkingRootNodeName = "dd"
+const WorkingRootNodeName = "ddir"
 
 
 var BaseGUti = {
@@ -775,7 +775,7 @@ BaseGitUser.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 }
 
 BaseGitUser.prototype._prepare_proj_dirs = function (projname) {
-    //const WorkingRootNodeName = "dd"
+    //const WorkingRootNodeName = "ddir"
     const NodeUsrs = "usrs" //keep same as old. 
     var absSvcRoot = this.absRootWorkingDir()
     var hostname = "github.com"
