@@ -139,7 +139,7 @@ NCache.Init = function () {
         inp.usr = val
         inp.out = BaseGUti.default_inp_out_obj()
         inp.SSID = key
-        var userProject = new BibleObjGituser()
+        var userProject = new BibleObjGitusrMgr()
         if (inp.gitusr = userProject.m_BaseGitUser.Set_Gitusr(val.repopath)) {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
@@ -272,7 +272,7 @@ NCache.Init()
 
 //../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/myoj
-var BibleObjGituser = function () {
+var BibleObjGitusrMgr = function () {
 
     this.m_BaseGitUser = new BaseGitUser()
     this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_BaseGitUser.pathrootdir)
@@ -281,7 +281,7 @@ var BibleObjGituser = function () {
 
 
 
-BibleObjGituser.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
+BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
     var info = this.m_BaseGitUser.Get_repoInfo(repopath)
     if (info) {
@@ -297,7 +297,7 @@ BibleObjGituser.prototype.Proj_usr_account_create = function (repopath, passcode
     return { ok: ret }
 }
 
-BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
+BibleObjGitusrMgr.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
     console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
 
     if (!cuid || cuid.length === 0 || cipherusrs.length === 0) return null
@@ -315,7 +315,7 @@ BibleObjGituser.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, 
     console.log(usrObj)
     return usrObj
 }
-BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
+BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
     console.log("========Proj_parse_usr_signin")
 
     var usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
@@ -325,7 +325,7 @@ BibleObjGituser.prototype.Proj_parse_usr_signin = function (inp) {
     }
     return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 }
-BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
+BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     var usrObj = { repopath: repopath, passcode: passcode }
 
     console.log("========__Proj_parse_usr_login__")
@@ -351,7 +351,7 @@ BibleObjGituser.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     return { ok: ret, ssid: ssid }
 }
 
-BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (ssid) {
+BibleObjGitusrMgr.prototype.Proj_parse_usr_after_signed = function (ssid) {
 
     var usr = this.proj_get_usr_fr_cache_ssid(ssid)
     if (!usr) {
@@ -364,7 +364,7 @@ BibleObjGituser.prototype.Proj_parse_usr_after_signed = function (ssid) {
 }
 
 
-BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
+BibleObjGitusrMgr.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
     //inp.out.state.ssid_cur = ssid
     if (!ssid || ssid.length === 0) {
         return null
@@ -380,7 +380,7 @@ BibleObjGituser.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
 }
 
 
-BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
+BibleObjGitusrMgr.prototype.session_get_github_owner = function (docfile) {
     //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var ary = docfile.split("/")
     var idx = ary.indexOf("usrs")
@@ -390,7 +390,7 @@ BibleObjGituser.prototype.session_get_github_owner = function (docfile) {
     var owner = username + "/" + reponame
     return owner
 }
-BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
+BibleObjGitusrMgr.prototype.session_git_repodesc_load = function (docfile) {
     //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var pos = docfile.indexOf("/account/")
     var gitpath = docfile.substr(0, pos)
@@ -402,7 +402,7 @@ BibleObjGituser.prototype.session_git_repodesc_load = function (docfile) {
 }
 
 
-BibleObjGituser.prototype.Session_create = function (usr) {
+BibleObjGitusrMgr.prototype.Session_create = function (usr) {
 
 
     var ssid = this.m_BaseGitUser.m_gitusername //usr_proj
@@ -418,7 +418,7 @@ BibleObjGituser.prototype.Session_create = function (usr) {
 
     return ssid_b64
 }
-BibleObjGituser.prototype.Session_delete = function (ssid) {
+BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
     
     var ret = NCache.myCache.take(ssid)
 
@@ -434,5 +434,5 @@ BibleObjGituser.prototype.Session_delete = function (ssid) {
 
 module.exports = {
     NCache: NCache,
-    BibleObjGituser: BibleObjGituser
+    BibleObjGitusrMgr: BibleObjGitusrMgr
 }
