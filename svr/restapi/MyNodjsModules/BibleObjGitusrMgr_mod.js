@@ -297,6 +297,9 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     return { ok: ret }
 }
 
+
+
+
 BibleObjGitusrMgr.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
     console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
 
@@ -340,7 +343,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     var ar = this.m_BaseGitUser.get_repo_salts()
     if (ar.indexOf(passcode) < 0) {
-        return { err: ["password error.", ar[1]] }
+        return { err: ["password error. Hint:", ar[1]] }
     }
 
     //inp.out.state.SSID = userProject.Session_create()
