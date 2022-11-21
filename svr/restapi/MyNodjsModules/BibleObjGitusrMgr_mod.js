@@ -282,13 +282,13 @@ var BibleObjGitusrMgr = function () {
 
 BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
+
+    this.m_BaseGitUser.Set_Gitusr(repopath)
+
     var info = this.m_BaseGitUser.m_sponser.Get_repoInfo(repopath)
     if (info) {
         return { err: repopath + ": user alreay exists." }
     }
-    this.m_BaseGitUser.Set_Gitusr(repopath)
-
-    //this.m_BaseGitUser.mkdir_empty_proj()
 
     this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword)
     var ret = this.m_BaseGitUser.Check_proj_state()
