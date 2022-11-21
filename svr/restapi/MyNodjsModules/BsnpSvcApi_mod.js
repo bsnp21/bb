@@ -140,7 +140,7 @@ var ApiUti = {
         Object.keys(ret).forEach(function (key) {
             pout.state[key] = ret[key]
         })
-        console.log(pout)
+        console.log("Set_output:", pout)
         if (ret.err) {
             return false;
         } 
