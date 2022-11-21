@@ -16,12 +16,9 @@ const crypto = require('crypto')
 const NodeCache = require("node-cache");
 
 
-const WorkingRootNodeName = "bugit"
+const WorkingRootNodeName = "dd"
 
 
-
-
-//const WorkingRootNodeName = "bugit"
 var BaseGUti = {
 
     GetEmptyObj: function (obj) {
@@ -798,7 +795,7 @@ BaseGitUser.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 
 BaseGitUser.prototype._prepare_proj_dirs = function () {
     if (!this.m_gitinf) return null
-    //const WorkingRootNodeName = "bugit"
+    //const WorkingRootNodeName = "dd"
     const NodeUsrs = "usrs" //keep same as old. 
     var userproj = this.m_gitinf
     console.log("m_gitinf", this.m_gitinf)
