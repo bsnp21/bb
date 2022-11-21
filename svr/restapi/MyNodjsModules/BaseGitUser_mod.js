@@ -818,7 +818,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     var ghroot = projDirs.user_dir
     var cmd_ghroot = `
     #!/bin/sh
-    # cd ${root_sys}
+    # cd ${absSvcRoot}
     if [ -d "${ghroot}" ]; then
         echo "${ghroot} already has been created."
     else 
