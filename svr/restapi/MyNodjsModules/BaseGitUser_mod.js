@@ -727,8 +727,6 @@ BaseGitUser.prototype.Set_Gitusr = function (reponame) {
 
     this.m_projDirs = this._prepare_proj_dirs(reponame)
 
-    this.m_std_bible_obj_lib_template = `${absRootPath}bible_obj_lib/jsdb/UsrDataTemplate`
-
     return true;
 }
 BaseGitUser.prototype._interpret_repo_url_str = function (proj_url) {
@@ -827,6 +825,8 @@ BaseGitUser.prototype._prepare_proj_dirs = function (projname) {
     make_path_777(projDirs.base_Dir, ghroot)
     if (fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
+
+    this.m_std_bible_obj_lib_template = `${absSvcRoot}bible_obj_lib/jsdb/UsrDataTemplate`
 
 
     return projDirs
