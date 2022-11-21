@@ -644,7 +644,7 @@ var BaseGitUser = function () {
     this.m_dlog = []
 }
 BaseGitUser.prototype.absRootWorkingDir = function () {
-    var rootdir = __dirname.slice(0, __dirname.indexOf("/bb/"))
+    var rootdir = __dirname.slice(0, __dirname.indexOf("/bb/")+1)
     console.log("__dirname=",__dirname, "rootdir=", rootdir)
     return rootdir
 }
