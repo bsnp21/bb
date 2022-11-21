@@ -584,6 +584,13 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     console.log("usrsInfo", usrsInfo)
     return usrsInfo
 }
+GitSponsor.prototype.Get_repoInfo = function (repopath) {
+    var usrsinfo = this.gh_repo_list_all_obj()
+    if (repopath in usrsinfo) {
+        return usrsinfo[repopath];
+    }
+    return false
+}
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
     //this.m_giturl = `https://${m_acct.ownername}:${m_acct.ownerpat}@github.com/${m_acct.ownername}/${this.m_repos}.git`
@@ -699,14 +706,7 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     var ar = JSON.parse(txt)
     return ar
 }
-BaseGitUser.prototype.Get_repoInfo = function (repopath) {
-    var gsp = new GitSponsor()
-    var usrsinfo = gsp.gh_repo_list_all_obj()
-    if (repopath in usrsinfo) {
-        return usrsinfo[repopath];
-    }
-    return false
-}
+
 
 BaseGitUser.prototype.Set_Gitusr = function (reponame) {
 
@@ -754,7 +754,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
         console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot))
     }
 
-    
+
     var ghroot = projDirs.user_dir
     make_path_777(projDirs.base_Dir, ghroot)
     if (fs.existsSync(ghroot)) this.ghRoot = ghroot
