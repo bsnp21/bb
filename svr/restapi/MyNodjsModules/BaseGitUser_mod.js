@@ -668,7 +668,8 @@ BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
 # sudo -S mkdir -p ${dir}
 echo ${dir}
 cd ${dir}
-sudo -S gh repo create ${username} --private --clone
+###   sudo -S gh repo create ${username} --private --clone   #sudo cause gh to create repo on previos git account. 
+gh repo create ${username} --private --clone
 # sudo -S chmod 777 ${username}
 # sudo -S chmod 777 ${username}/.git/config
 echo '${salts}' > ${username}/.salts
