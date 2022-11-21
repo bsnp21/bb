@@ -545,19 +545,19 @@ var BaseGUti = {
 
 
 function GitSponsor(reponame) {
-    if(reponame) this.m_reponame = reponame
+    if (reponame) this.m_reponame = reponame
 
     var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
     var sponsor_git_pat = "ghp_" + part.join("").replace(/[\-]/g, "")
     this.m_sponsor = { ownername: "bsnp21", ownerpat: sponsor_git_pat }
 
 
-    var b2pats = ["ghp"+"_"+"M0m"+"RuIQ4n"+"NVzq"+"3IQpMWK7kq6XrhS9y4d1"+"NNS"]
+    var b2pats = ["ghp" + "_" + "M0m" + "RuIQ4n" + "NVzq" + "3IQpMWK7kq6XrhS9y4d1" + "NNS"]
     var ret = BaseGUti.loadObj_by_fname("/home/ubuntu/install/gh/sponsorCfg.json.js")
     console.log("loadObj_by_fname", ret)
-    if(ret.obj){
+    if (ret.obj) {
         this.m_sponsor.ownername = Buffer.from(ret.obj.ownername, 'base64').toString("utf8")
-        this.m_sponsor.ownerpat  = Buffer.from(ret.obj.ownerpets.join(""), 'base64').toString("utf8")
+        this.m_sponsor.ownerpat = Buffer.from(ret.obj.ownerpets.join(""), 'base64').toString("utf8")
         this.m_sponsor.ownerpat2 = b2pats.join("")
     }
     console.log("sponsor", this.m_sponsor)
@@ -599,7 +599,7 @@ GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     var secu_repopath = `https://${secure}github.com/${this.m_sponsor.ownername}/${this.m_reponame}.git`
     //}
 
-  
+
     // if (passcode.trim().length > 0) {
     //     if ("github.com" === userproj.hostname) {
     //         return `https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
@@ -701,8 +701,8 @@ cd ..
 }
 BaseGitUser.prototype.get_repo_salts = function (u) {
     var fname = this.getFullPath_usr_git(".salts")
-    if(!fs.existsSync(fname)){
-        return ["a","a"]
+    if (!fs.existsSync(fname)) {
+        return ["a", "a"]
     }
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
@@ -724,13 +724,8 @@ BaseGitUser.prototype.Set_Gitusr = function (reponame) {
     this.m_gitusername = reponame
     //hijack
     this.m_sponser = new GitSponsor(reponame)
-    var repopath = this.m_sponser.git_repo_user_url_private(false)
-   
-    ////////////
-    this.m_gitinf = this._interpret_repo_url_str(repopath)
-    
-    var absRootPath = this.absRootWorkingDir()
-    this.m_projDirs = this._prepare_proj_dirs(absRootPath)
+
+    this.m_projDirs = this._prepare_proj_dirs(reponame)
 
     this.m_std_bible_obj_lib_template = `${absRootPath}bible_obj_lib/jsdb/UsrDataTemplate`
 
@@ -793,43 +788,47 @@ BaseGitUser.prototype._interpret_repo_url_bitbucket = function (proj_url) {
 
 }
 
-BaseGitUser.prototype._prepare_proj_dirs = function () {
-    if (!this.m_gitinf) return null
+BaseGitUser.prototype._prepare_proj_dirs = function (projname) {
     //const WorkingRootNodeName = "dd"
     const NodeUsrs = "usrs" //keep same as old. 
-    var userproj = this.m_gitinf
-    console.log("m_gitinf", this.m_gitinf)
     var absSvcRoot = this.absRootWorkingDir()
+    var hostname = "github.com"
+    var username = this.m_sponser.ownername;
 
     var projDirs = {}
     projDirs.root_sys = `${absSvcRoot}`
     projDirs.base_Dir = `${absSvcRoot}${WorkingRootNodeName}`
-    projDirs.user_dir = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}`                                    //<==User's host
-    projDirs.git_root = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}`               //<==User's git dir .git
-    projDirs.acct_dir = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account`       //<==User's acct
-    projDirs.dest_myo = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/myoj`  //<==User's myoj
-    projDirs.dest_dat = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${userproj.hostname}/${userproj.username}/${userproj.projname}/account/dat`   //<==User's dat
+    projDirs.user_dir = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}`                                    //<==User's host
+    projDirs.git_root = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}/${projname}`               //<==User's git dir .git
+    projDirs.acct_dir = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}/${projname}/account`       //<==User's acct
+    projDirs.dest_myo = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}/${projname}/account/myoj`  //<==User's myoj
+    projDirs.dest_dat = `${absSvcRoot}${WorkingRootNodeName}/${NodeUsrs}/${hostname}/${username}/${projname}/account/dat`   //<==User's dat
 
     console.log("_prepare_proj_dirs---- projDirs =", projDirs)
 
-    var ghroot = projDirs.user_dir
-    var cmd_ghroot = `
+    function make_path_777(startPath, endpath) {
+        var cmd_ghroot = `
     #!/bin/sh
-    # cd ${absSvcRoot}
-    if [ -d "${ghroot}" ]; then
-        echo "${ghroot} already has been created."
-        echo 'lll' | sudo -S ls -al ${ghroot}
+    if [ -d "${endpath}" ]; then
+        echo "${endpath} already has been created."
+        echo 'lll' | sudo -S ls -al ${endpath}
     else 
-        echo "${ghroot} does not exist, create it one-time-for-all: ${ghroot}"
-        echo 'lll' | sudo -S mkdir -p ${ghroot}
-        echo 'lll' | sudo -S chmod -R 777 ${projDirs.base_Dir}
-        echo 'lll' | sudo -S ls -al ${ghroot}
+        echo "${endpath} does not exist, create it one-time-for-all: ${endpath}"
+        echo 'lll' | sudo -S mkdir -p ${endpath}
+        echo 'lll' | sudo -S chmod -R 777 ${startPath}
+        echo 'lll' | sudo -S ls -al ${endpath}
     fi
     `
-    var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
-    console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot))
-    if(fs.existsSync(ghroot)) this.ghRoot = ghroot
+        var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
+        console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot))
+    }
+
+    var ghroot = projDirs.user_dir
+    make_path_777(projDirs.base_Dir, ghroot)
+    if (fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
+
+
     return projDirs
 }
 BaseGitUser.prototype.getFullPath_usr_host = function (subpath) {
@@ -1076,13 +1075,13 @@ BaseGitUser.prototype.Deploy_proj = function () {
     }
 
     var cfg_old = fs.readFileSync(cfg, "utf8")
-    console.log("cfg_old :",cfg_old)
+    console.log("cfg_old :", cfg_old)
 
-    console.log("new cfg:",this.m_sponser.git_conf_txt(true))
+    console.log("new cfg:", this.m_sponser.git_conf_txt(true))
     fs.writeFileSync(cfg, this.m_sponser.git_conf_txt(true), "utf8")
-    
+
     this.git_push_test()
-    
+
     var dir = this.getFullPath_usr_acct()
     if (fs.existsSync(dir)) {
         //BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
@@ -1213,7 +1212,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
 
     try {
         //e.g. command = "ls"
-        
+
         exec(command, (err, stdout, stderr) => {
             console.log('\n-exec_Cmd errorr:')
             console.log(err)
@@ -1222,7 +1221,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
             console.log('\n-exec_Cmd stdout:')
             console.log(stdout)
             console.log('\n-exec_Cmd end.')
-            
+
         });
     } catch (err) {
         console.log(err)
@@ -1240,7 +1239,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
 }
 
 BaseGitUser.prototype.git_push = async function () {
-    
+
     var ret = this.execSync_cmd_git("git push").toString()
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
@@ -1248,7 +1247,7 @@ BaseGitUser.prototype.git_push = async function () {
             ret = null
         }
     }
-    
+
     return ret
 }
 BaseGitUser.prototype.git_push_test = function () {
@@ -1278,7 +1277,7 @@ BaseGitUser.prototype.git_push_test = function () {
             ret = null
         }
     }
-    
+
     return ret
 }
 BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
