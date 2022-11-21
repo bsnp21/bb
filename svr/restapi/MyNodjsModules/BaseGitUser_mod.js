@@ -665,17 +665,15 @@ BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
     var commit_msg = this.getFullPath_usr_git(".salts")
     var gh_repo_create = `
 # create my-project and clone 
-sudo -S mkdir -p ${dir}
-sudo -S chmod -R 777 ${dir}
+# sudo -S mkdir -p ${dir}
 echo ${dir}
 cd ${dir}
 sudo -S gh repo create ${username} --private --clone
-sudo -S chmod 777 ${username}
-sudo -S chmod 777 ${username}/.git/config
-cd ${username}
-echo '${salts}' > .salts
+# sudo -S chmod 777 ${username}
+# sudo -S chmod 777 ${username}/.git/config
+echo '${salts}' > ${username}/.salts
 #
-sudo -S git add .salts
+sudo -S git add ${username}/.salts
 sudo -S git add *
 sudo -S git commit -m "${commit_msg}"
 sudo -S git branch -M main
@@ -1009,8 +1007,8 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
     var cfg_old = fs.readFileSync(cfg, "utf8")
     console.log("cfg_old :", cfg_old)
-
     console.log("new cfg:", this.m_sponser.git_conf_txt(true))
+    fs.writeFileSync(cfg+"_old", cfg_old, "utf8")
     fs.writeFileSync(cfg, this.m_sponser.git_conf_txt(true), "utf8")
 
     this.git_push_test()
