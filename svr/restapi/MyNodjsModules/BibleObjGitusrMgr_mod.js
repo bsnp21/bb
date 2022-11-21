@@ -330,12 +330,14 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
 BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     var usrObj = { repopath: repopath, passcode: passcode }
 
+    this.m_BaseGitUser.Set_Gitusr(repopath)
+    
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.Get_repoInfo(repopath)
     if (!info) {
         return { err: ["not exist:", repopath] }
     }
-    this.m_BaseGitUser.Set_Gitusr(repopath)
+    
 
 
     this.m_BaseGitUser.Deploy_proj()
@@ -357,7 +359,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_after_signed = function (ssid) {
 
     var usr = this.proj_get_usr_fr_cache_ssid(ssid)
     if (!usr) {
-        console.log("*****failed sdfadfas")
+        console.log("*****timeout, failed ssid")
         return null
     }
     NCache.Set(ssid, usr, 3600 * 24 * 180)
