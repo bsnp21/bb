@@ -1046,7 +1046,7 @@ BaseGitUser.prototype.git_clone = function () {
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
     var git_cfg = this.getFullPath_usr_git("/.git/config")
-    var clone_https = this.m_sponser.git_repo_user_url(false)
+    var clone_https = this.m_sponser.git_repo_user_url(true)
     var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
 
     var git_clone_cmd = `
