@@ -214,7 +214,7 @@ var ApiJsonp_BibleObj = {
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             var TbcvObj = {};
             if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
@@ -243,7 +243,7 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
             console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
             console.log("-----:binp.par.bibOj", inp.par.bibOj)
@@ -287,7 +287,7 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             if (!inp.out.state || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp.out.state)
 
 
@@ -430,7 +430,7 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             //if (!inp || inp.out.state.bEditable !== 1) return console.log("proj_setup failed.", inp)
 
             var par = inp.par
@@ -461,7 +461,7 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
 
             if (0) {
                 await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
@@ -550,7 +550,7 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_signin(inp)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             inp.out.state.SSID = null;
             if (inp.out.state.bEditable) {
                 if (null === userProject.m_BaseGitUser.git_push_test()) {
@@ -650,7 +650,7 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             //await userProject.git_add_commit_push("push hard.", "");//real push hard.
 
             var res2 = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
@@ -676,7 +676,7 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_parse_usr_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_parse_usr_after_signed failed.")
 
-            inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             userProject.m_BaseGitUser.git_pull();
             userProject.m_BaseGitUser.Check_proj_state()
 
