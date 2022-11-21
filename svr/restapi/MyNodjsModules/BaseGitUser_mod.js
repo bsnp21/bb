@@ -821,7 +821,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     else 
         echo "${ghroot} does not exist, to make it: ${ghroot}"
         echo 'lll' | sudo -S mkdir -p ${ghroot}
-        echo 'lll' | sudo -S chmod -R 777 ${ghroot}
+        echo 'lll' | sudo -S chmod -R 777 ${WorkingRootNodeName}
         echo 'lll' | sudo -S ls -al ${ghroot}
     fi
     `
