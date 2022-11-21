@@ -545,6 +545,7 @@ var BaseGUti = {
 
 
 function GitSponsor(reponame) {
+    this.m_hostname = "github.com"
     if (reponame) this.m_reponame = reponame
 
     var part = ["Yp" + "EaWa651" + "IjKK" + "-" + "IBGv0" + "Ylnx" + "Nq" + "-Jr0LMH00MD80"]
@@ -683,7 +684,7 @@ cd ..
 
     console.log("git_clogh_repo_createne_cmd...")
     var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
-    console.log("ret", ret)
+    //console.log("ret", ret)
 
     return ret
 }
@@ -709,21 +710,21 @@ BaseGitUser.prototype.Get_repoInfo = function (repopath) {
 
 BaseGitUser.prototype.Set_Gitusr = function (reponame) {
 
-    this.m_gitusername = reponame
     //hijack
     this.m_sponser = new GitSponsor(reponame)
 
-    this.m_projDirs = this._prepare_proj_dirs(reponame)
+    this.m_projDirs = this._prepare_proj_dirs()
 
     return true;
 }
 
-BaseGitUser.prototype._prepare_proj_dirs = function (projname) {
+BaseGitUser.prototype._prepare_proj_dirs = function () {
     //const WorkingRootNodeName = "ddir"
     const NodeUsrs = "usrs" //keep same as old. 
     var absSvcRoot = this.absRootWorkingDir()
-    var hostname = "github.com"
+    var hostname = this.m_sponser.m_hostname;//"github.com"
     var username = this.m_sponser.m_acct.ownername;
+    var projname = this.m_sponser.m_reponame
 
     var projDirs = {}
     projDirs.root_sys = `${absSvcRoot}`
@@ -753,13 +754,13 @@ BaseGitUser.prototype._prepare_proj_dirs = function (projname) {
         console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot))
     }
 
+    
     var ghroot = projDirs.user_dir
     make_path_777(projDirs.base_Dir, ghroot)
     if (fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
 
     this.m_std_bible_obj_lib_template = `${absSvcRoot}bible_obj_lib/jsdb/UsrDataTemplate`
-
 
     return projDirs
 }

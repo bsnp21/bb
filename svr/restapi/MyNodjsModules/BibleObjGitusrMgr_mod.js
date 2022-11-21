@@ -407,7 +407,7 @@ BibleObjGitusrMgr.prototype.session_git_repodesc_load = function (docfile) {
 BibleObjGitusrMgr.prototype.Session_create = function (usr) {
 
 
-    var ssid = this.m_BaseGitUser.m_gitusername //usr_proj
+    var ssid = this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
     var ssid_b64 = Buffer.from(ssid).toString("base64")
     var ttl = NCache.m_TTL //default.
     //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
