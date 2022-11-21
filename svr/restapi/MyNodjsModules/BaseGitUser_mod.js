@@ -583,7 +583,7 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     console.log("usrsInfo", usrsInfo)
     return usrsInfo
 }
-GitSponsor.prototype.git_repo_user_url = function (bSecure) {
+GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
     //this.m_giturl = `https://${m_sponsor.ownername}:${m_sponsor.ownerpat}@github.com/${m_sponsor.ownername}/${this.m_repos}.git`
 
@@ -612,7 +612,7 @@ GitSponsor.prototype.git_repo_user_url = function (bSecure) {
     return secu_repopath
 }
 GitSponsor.prototype.git_conf_txt = function (bSecure) {
-    var sec_url = this.git_repo_user_url(bSecure)
+    var sec_url = this.git_repo_user_url_private(bSecure)
     var cfg = `
     [core]
         repositoryformatversion = 0
@@ -684,7 +684,7 @@ sudo -S git add *
 sudo -S git commit -m "${commit_msg}"
 sudo -S git branch -M main
 ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
-sudo -S git remote add origin ${this.m_sponser.git_repo_user_url(false)}
+sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
 sudo -S git push -u origin main
 cd ..
     `
@@ -724,7 +724,7 @@ BaseGitUser.prototype.Set_Gitusr = function (reponame) {
     this.m_gitusername = reponame
     //hijack
     this.m_sponser = new GitSponsor(reponame)
-    var repopath = this.m_sponser.git_repo_user_url(false)
+    var repopath = this.m_sponser.git_repo_user_url_private(false)
    
     ////////////
     this.m_gitinf = this._interpret_repo_url_str(repopath)
@@ -827,7 +827,7 @@ BaseGitUser.prototype._prepare_proj_dirs = function () {
     fi
     `
     var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
-    console.log("-mkdir_empty_proj:", fs.existsSync(ghroot), cmd_ghroot,  ret)
+    console.log("-mkdir_empty_proj:", fs.existsSync(ghroot), cmd_ghroot)
     if(fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
     return projDirs
@@ -1046,7 +1046,7 @@ BaseGitUser.prototype.git_clone = function () {
     var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
     var git_cfg = this.getFullPath_usr_git("/.git/config")
-    var clone_https = this.m_sponser.git_repo_user_url(true)
+    var clone_https = this.m_sponser.git_repo_user_url_private(true)
     var bugit = this.getFullPath_root_sys(WorkingRootNodeName)
 
     var git_clone_cmd = `
