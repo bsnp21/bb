@@ -294,8 +294,8 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     if (!res) return { err: repopath + " failed to create." }
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repoInfo = info
-    ret.GitHostUsrSize = Object.keys(info).length;
+    ret.repoInfo = info[repopath]
+    ret.GitHostUsrsTot = Object.keys(info).length;
     return { ok: ret }
 }
 
