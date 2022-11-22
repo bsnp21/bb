@@ -287,7 +287,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (undefined === info[repopath]) {
-        return { err: repopath + ": user alreay exists." }
+        return { err: repopath + ": user alreay exists - " + info[repopath]}
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
