@@ -121,14 +121,16 @@
             width: 100%;
         }
 
-        #SignOnCreate{
-            float:right;
+        #SignOnCreate {
+            float: right;
         }
+
         .successed {
-            color:green;
+            color: green;
         }
-        .failed{
-            color:red;
+
+        .failed {
+            color: red;
         }
     </style>
 </head>
@@ -190,9 +192,9 @@
                         <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
                         <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
                         <a id="Check_Status"></a>
-                        <a id="SignOnCreate" href="">  Create </a>
+                        <a id="SignOnCreate" href=""> Create </a>
                         <br><br>
-                        <font color=''><a id="errmsg">status..</a></font>
+                        <font color=''><a id="errmsg">status...</a></font>
 
                     </td>
                 </tr>
@@ -225,8 +227,6 @@
 <script>
     $(function () {
 
-        //PageUti.Repositories_History("#account_history", 1)
-        //PageUti.Repositories_History("#account_history", -1)
 
         init_by_url_params()
 
@@ -235,7 +235,7 @@
             $(this).prev().find("input").val("")
         })
         $("#label_password").on("click", function () {
-            var type = $("#passcode").attr("type") === "password" ? "text": "password"
+            var type = $("#passcode").attr("type") === "password" ? "text" : "password"
             $("#passcode").attr("type", type)
         })
 
@@ -270,7 +270,7 @@
         })
         $("#SignOnCreate").on("click", function () {
             var ur = `./mySignCreate.htm${window.location.search}`
-            $(this).attr("href",ur)
+            $(this).attr("href", ur)
             return
             var paths = $("#repopath").val()
             create_acct(function (rob) {
@@ -304,6 +304,9 @@
         var api = new BsnpRestApi()
         api.SSID = "-"
         var usr = remeber_ui();   //
+        usr.hintword = $("#hintword").val().trim()
+        usr.accesstr = $("input[type='radio']:checked").val().trim()
+        //alert($("input[type='radio']:checked").val())
 
         api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")

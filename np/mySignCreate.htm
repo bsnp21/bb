@@ -120,8 +120,17 @@
         .inputxt {
             width: 100%;
         }
-        #SignOnCreate{
+
+        #SignOnCreate {
             float: right;
+        }
+
+        .successed {
+            color: green;
+        }
+
+        .failed {
+            color: red;
         }
     </style>
 </head>
@@ -205,10 +214,11 @@
                     <td><br>
                         <input type="radio" name="a" checked="true" value="public" id="public"></input><label
                             for="public">public (free)</label>
-                        <input type="radio" name="a" id="private" value="private"></input><label for="private">Private</label>
+                        <input type="radio" name="a" id="private" value="private"></input><label
+                            for="private">Private</label>
                     </td>
                     <td class="clearout">
-                    
+
                     </td>
                 </tr>
 
@@ -282,12 +292,13 @@
 
         $("#Check_Status, #errmsg").on("click", function () {
             //$(this).toggle("slow")
+            $("#errmsg").removeClass("successed failed")
             $("#output").html("--")
             var paths = $("#repopath").val()
             login_acct(function (rob) {
                 var tb = PageUti.Repo_fstat_table(rob)
-                var a = `<font color="green">Success: ${paths} </font>`
-                $("#errmsg").html(a)
+                var a = `Success: ${paths}`
+                $("#errmsg").html(a).addClass("successed")
                 $("#output").html(tb)
                 //$("#errmsg").html(a+tb)
                 //$("#input_area, #account_history_table").hide()
@@ -335,9 +346,8 @@
         api.SSID = "-"
         var usr = remeber_ui();   //
         usr.hintword = $("#hintword").val().trim()
-        usr.accesstr=$("input[type='radio']:checked").val().trim()
+        usr.accesstr = $("input[type='radio']:checked").val().trim()
         //alert($("input[type='radio']:checked").val())
-
 
         api.ApiUsrAccount_create(usr, function (rob) {
             $(".signinBtn").removeAttr("disabled")
@@ -368,7 +378,7 @@
             console.log(rob)
             $("#txtarea").val(JSON.stringify(rob, null, 4))
             if (rob.out.err) {
-                $("#errmsg").html(rob.out.err)
+                $("#errmsg").html(rob.out.err).addClass("failed")
             }
             else {
                 var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
