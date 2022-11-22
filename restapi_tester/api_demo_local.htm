@@ -127,7 +127,7 @@
             var sample_apiPar = {
                 ApiUsrAccount_create: [{ repopath: "p1", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiUsrAccount_login: [{ repopath: "p1", passcode: "a" }],
-                ApiUsrReposData_destroy: [{ ghrepodelete: 1 }, { git_push_rm: 1 }, { git_push_only: 1 }],
+                ApiUsrReposData_destroy: [{ gh_repo_delete: 1 }, { git_push_rm: 1 }, { git_push_only: 1 }],
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
                 ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
@@ -363,7 +363,7 @@
         </li>
 
         <li>
-            <h3 id="">Signin</h3>
+            <h3 id="">Login</h3>
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()

@@ -214,7 +214,7 @@ var ApiJsonp_BibleObj = {
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-    
+
             var TbcvObj = {};
             if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
@@ -240,7 +240,7 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-            
+
 
             console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
             console.log("-----:binp.par.bibOj", inp.par.bibOj)
@@ -531,8 +531,8 @@ var ApiJsonp_BibleObj = {
         //    //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
         //    var ret = userProject.Proj_parse_usr_signin(inp)
         //    if (!ApiUti.Set_output(inp.out, ret)) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
-//
-    //
+        //
+        //
         //    inp.out.state.SSID = null;
         //    if (inp.out.state.bEditable) {
         //        if (null === userProject.m_BaseGitUser.git_push_test()) {
@@ -569,7 +569,14 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            console.log("destroy====par:",inp.par)
+            console.log("destroy====par:", inp.par)
+            if (inp.par.gh_repo_delete === 1) {
+                var username = userProject.m_BaseGitUser.m_sponser.m_reponame;
+                console.log("to delete:" + username)
+                inp.out.destroy_res = userProject.m_BaseGitUser.execSync_cmd_git(`gh repo delete ${username}`)
+                userProject.Session_delete(inp.SSID)
+                return
+            }
 
             userProject.m_BaseGitUser.Check_proj_state()
             if (0 === inp.out.state.bRepositable) {
