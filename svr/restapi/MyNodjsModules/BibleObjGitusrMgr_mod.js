@@ -287,11 +287,11 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (undefined != info[repopath]) {
-        return { err: repopath + ": user alreay exists. " }
+        return { err: ["user alreay exists. ", repopath] }
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
-    if (!res) return { err: repopath + " failed to create." }
+    if (!res) return { err: ["failed to create.", repopath] }
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.repo_gitInfo = info[repopath]
@@ -338,14 +338,14 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (!info[repopath]) {
-        return { err: ["not exist:", repopath] }
+        return { err: ["not exist: ", repopath] }
     }
 
     this.m_BaseGitUser.Deploy_proj()
 
     var ar = this.m_BaseGitUser.get_repo_salts()
     if (ar.indexOf(passcode) < 0) {
-        return { err: ["password error. Hint:", ar[1]] }
+        return { err: ["password error. Hint: ", ar[1]] }
     }
 
     var ssid = this.Session_create(usrObj)

@@ -313,7 +313,7 @@
             console.log(rob)
             $("#txtarea").val(JSON.stringify(rob, null, 4))
             if (rob.out.err) {
-                $("#errmsg").html(rob.out.err)
+                $("#errmsg").html(rob.out.err).addClass("failed")
             } else {
                 var tb = PageUti.Repo_fstat_table(rob)
                 var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
