@@ -225,7 +225,7 @@
                 <tr>
                     <td colspan="2"><br>
                         <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
-                        <a class="signinBtn" id="loginAsUser" href='' title="login to account" disabled>Log-in</a>
+                        <a class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</a>
                         <a id="Check_Status"></a>
                         <button id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create &nbsp;&nbsp;&nbsp;</button>
                         <br><br>
@@ -283,7 +283,9 @@
         })
 
         $("#loginAsUser").attr("href", `./mySignin.htm${window.location.search}`)
-        $("#loginAsUser2").on("click", function () {
+        $("#loginAsUser").on("click", function () {
+            var ur = `./mySignin.htm${window.location.search}`
+            return window.open(ur, "_self")
             login_acct(function (rob) {
                 //window.open(ur, '_self');
                 return true; //contine;
