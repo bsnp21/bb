@@ -679,7 +679,7 @@ cd ${dir}
 gh repo create ${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
 sudo -S chmod 777 ${username}
 sudo -S chmod 777 ${username}/.git/config
-sudo -S echo '${salts}' > ${username}/.salts
+ls -al
 #
 cd ${dir}/${username}
 sudo -S echo '${salts}' > .salts
