@@ -658,18 +658,20 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 }
 
 
-BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword) {
+BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
     var commit_msg = this.getFullPath_usr_git(".salts")
+    if(["public", "private"].indexOf(accesstr)<0) return console.log("accesstr invalide value. public|private.")
+
     var gh_repo_create = `
 # create my-project and clone 
 # sudo -S mkdir -p ${dir}
 echo ${dir}
 cd ${dir}
 ###   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
-gh repo create ${username} --private --clone    ## must remove sudo for third pary github account. 
+gh repo create ${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
 # sudo -S chmod 777 ${username}
 # sudo -S chmod 777 ${username}/.git/config
 echo '${salts}' > ${username}/.salts

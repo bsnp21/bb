@@ -280,7 +280,7 @@ var BibleObjGitusrMgr = function () {
 
 
 
-BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword) {
+BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
 
     this.m_BaseGitUser.Set_Gitusr(repopath)
@@ -290,7 +290,9 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
         return { err: repopath + ": user alreay exists." }
     }
 
-    this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword)
+    var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
+    if (!res) return { err: "gh repo create failed." }
+
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.repoInfo = info
     return { ok: ret }

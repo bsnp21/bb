@@ -516,7 +516,7 @@ var ApiJsonp_BibleObj = {
         console.log("ApiUsrAccount_create")
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword)
+            var ret = userProject.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
             ApiUti.Set_output(inp.out, ret)
         })
     },
