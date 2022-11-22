@@ -307,6 +307,7 @@
         })
         $("#SignOnCreate").on("click", function (evt) {
             evt.preventDefault()
+            $("#errmsg").text("status").removeClass("successed failed")
             var pswd = $("#passcode").val()
             if (pswd.length === 0) return !alert("require password.")
             if ($("#passcode2").val() != pswd) {
@@ -318,6 +319,10 @@
             })
         })
 
+        $("#footer").slideToggle()
+        $("#toggle_txtarea").on("click", function(){
+            $("#footer").slideToggle()
+        })
     })
     function sign_in(success, failed) {
         $(".signinBtn").attr("disabled", true)

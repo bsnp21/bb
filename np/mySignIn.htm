@@ -268,7 +268,8 @@
                 return false;//stop next open.
             })
         })
-        $("#SignOnCreate").on("click", function () {
+        $("#SignOnCreate").on("click", function (evt) {
+            $("#errmsg").text("status").removeClass("successed failed")
             var ur = `./mySignCreate.htm${window.location.search}`
             $(this).attr("href", ur)
             return
@@ -277,6 +278,10 @@
             })
         })
 
+        $("#footer").slideToggle()
+        $("#toggle_txtarea").on("click", function(){
+            $("#footer").slideToggle()
+        })
     })
     function sign_in(success, failed) {
         $(".signinBtn").attr("disabled", true)
