@@ -986,9 +986,9 @@ BaseGitUser.prototype.Deploy_proj = function () {
     console.log("old_cfg :", old_txt)
     var old_file = cfgf + "_old"
     if (!fs.existsSync(old_file)) {
-        fs.writeFileSync(old_file, old_txt, "utf8", function(err){
-            console.log("failed to write old_file", old_file, err)
-        })
+        //fs.writeFileSync(old_file, old_txt, "utf8", function(err){
+        //    console.log("failed to write old_file", old_file, err)
+        //})
     }
 
     console.log("new cfg:", this.m_sponser.git_conf_txt(true))
