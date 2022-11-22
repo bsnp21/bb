@@ -659,12 +659,14 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 
 
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
-    username = username.replace(/\s/g, "")
+    if(username.match(/\s/g)) return { err: ["username has spaces.", username, console.log("username has spaces.")] }
+    if(passcode.match(/\s/g)) return { err: ["username has spaces.", passcode, console.log("passcode has spaces.")] }
+
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
     var commit_msg = this.getFullPath_usr_git(".salts")
-    if(["public", "private"].indexOf(accesstr)<0) return console.log("accesstr must be public|private, accesstr=", accesstr)
+    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr, console.log("accesstr must be public|private.")] }
 
     var gh_repo_create = `
 # create my-project and clone 
@@ -956,7 +958,7 @@ BaseGitUser.prototype.git_clone = function () {
     var git_root = this.getFullPath_usr_git()
     var git_cfg = this.getFullPath_usr_git("/.git/config")
     var clone_https = this.m_sponser.git_repo_user_url_private(true)
-    
+
     var git_clone_cmd = `
     #!/bin/sh
     if [ -f "${git_cfg}" ]; then
