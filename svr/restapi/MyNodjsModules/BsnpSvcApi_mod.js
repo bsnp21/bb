@@ -574,7 +574,7 @@ var ApiJsonp_BibleObj = {
                 var username = userProject.m_BaseGitUser.m_sponser.m_reponame;
                 console.log("to delete:" + username)
                 inp.out.destroy_res = userProject.m_BaseGitUser.execSync_cmd_git(`gh repo delete ${username}`)
-                userProject.Session_delete(inp.SSID)
+                //userProject.Session_delete(inp.SSID)
                 return
             }
 
@@ -592,6 +592,7 @@ var ApiJsonp_BibleObj = {
             }
 
             //userProject.Check_proj_state()
+
             userProject.Session_delete(inp.SSID)
         })
 

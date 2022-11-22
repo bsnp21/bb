@@ -203,6 +203,7 @@ NCache.Set = function (key, val, ttl) {
     } else {
         val = this.myCache.get(key)
     }
+    if(null == val) return;
     val.tms = (new Date()).getTime() //timestampe for last access.
     val.ttl = ttl
     this.myCache.set(key, val, ttl) //restart ttl -- reborn again.
