@@ -373,7 +373,7 @@ var ApiJsonp_BibleObj = {
 
             /////--------------
             var retObj = {}
-            var owner = userProject.session_get_github_owner(docpathfilname)
+            var owner = userProject.___session_get_github_owner(docpathfilname)
             __load_to_obj(retObj, docpathfilname, owner, inp.usr.repodesc, inpObj)
             //console.log("jspfn:", jsfname)
             console.log("dcpfn:", docpathfilname)
@@ -382,16 +382,16 @@ var ApiJsonp_BibleObj = {
                 var jspfn = outfil.m_olis[i]
                 if (docpathfilname === jspfn) continue;
                 console.log("*docfname=", jspfn)
-                var others = userProject.session_git_repodesc_load(jspfn)
+                var others = userProject.___session_git_repodesc_load(jspfn)
                 if (!others) continue
                 if ("*" === shareID) {//no restriction
-                    var owner = userProject.session_get_github_owner(jspfn)
+                    var owner = userProject.___session_get_github_owner(jspfn)
                     __load_to_obj(retObj, jspfn, owner, others.repodesc, inpObj)
                     continue
                 }
                 console.log("*repodesc=", others.repodesc, shareID)
                 if (others.repodesc === shareID) {
-                    var owner = userProject.session_get_github_owner(jspfn)
+                    var owner = userProject.___session_get_github_owner(jspfn)
                     __load_to_obj(retObj, jspfn, owner, others.repodesc, inpObj)
                 }
             }

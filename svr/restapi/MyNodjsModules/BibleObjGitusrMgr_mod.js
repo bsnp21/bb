@@ -287,7 +287,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (undefined != info[repopath]) {
-        return { err: repopath + ": user alreay exists - " + info[repopath]}
+        return { err: repopath + ": user alreay exists. " }
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
@@ -341,8 +341,6 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
         return { err: ["not exist:", repopath] }
     }
 
-
-
     this.m_BaseGitUser.Deploy_proj()
 
     var ar = this.m_BaseGitUser.get_repo_salts()
@@ -350,7 +348,6 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
         return { err: ["password error. Hint:", ar[1]] }
     }
 
-    //inp.out.state.SSID = userProject.Session_create()
     var ssid = this.Session_create(usrObj)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
@@ -361,7 +358,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
 BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 
-    var usr = this.proj_get_usr_fr_cache_ssid(ssid)
+    var usr = this.Session_get_usr(ssid)
     if (!usr) {
         console.log("*****timeout, failed ssid")
         return { err: "nonexist | timeout" }
@@ -375,23 +372,10 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 }
 
 
-BibleObjGitusrMgr.prototype.proj_get_usr_fr_cache_ssid = function (ssid) {
-    //inp.out.state.ssid_cur = ssid
-    if (!ssid || ssid.length === 0) {
-        return null
-    }
-    if (!NCache.myCache.has(ssid)) {
-        //inp.out.state.failed_ssid = "not have."
-        console.log("***** proj_get_usr_fr_cache_ssid: could not find key: NCache.myCache.has(inp.SSID)", ssid)
-        return null
-    }
-
-    var usr = NCache.Get(ssid)
-    return usr;
-}
 
 
-BibleObjGitusrMgr.prototype.session_get_github_owner = function (docfile) {
+
+BibleObjGitusrMgr.prototype.___session_get_github_owner = function (docfile) {
     //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var ary = docfile.split("/")
     var idx = ary.indexOf("usrs")
@@ -401,7 +385,7 @@ BibleObjGitusrMgr.prototype.session_get_github_owner = function (docfile) {
     var owner = username + "/" + reponame
     return owner
 }
-BibleObjGitusrMgr.prototype.session_git_repodesc_load = function (docfile) {
+BibleObjGitusrMgr.prototype.___session_git_repodesc_load = function (docfile) {
     //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var pos = docfile.indexOf("/account/")
     var gitpath = docfile.substr(0, pos)
@@ -412,17 +396,25 @@ BibleObjGitusrMgr.prototype.session_git_repodesc_load = function (docfile) {
     return { repodesc: usrObj.repodesc, pathfile: gitpath }
 }
 
+BibleObjGitusrMgr.prototype.Session_get_usr = function (ssid) {
+    //inp.out.state.ssid_cur = ssid
+    if (!ssid || ssid.length === 0) {
+        return null
+    }
+    if (!NCache.myCache.has(ssid)) {
+        //inp.out.state.failed_ssid = "not have."
+        console.log("***** Session_get_usr: could not find key: NCache.myCache.has(inp.SSID)", ssid)
+        return null
+    }
 
+    var usr = NCache.Get(ssid)
+    return usr;
+}
 BibleObjGitusrMgr.prototype.Session_create = function (usr) {
 
-
     var ssid = this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
-    var ssid_b64 = Buffer.from(ssid).toString("base64")
+    var ssid_b64 = Buffer.from(ssid).toString("base64") //=btoa()
     var ttl = NCache.m_TTL //default.
-    //if (this.m_inp.usr.ttl && false === isNaN(parseInt(this.m_inp.usr.ttl))) {
-    //   ttl = parseInt(this.m_inp.usr.ttl)
-    //}
-
 
     NCache.Set(ssid_b64, usr, ttl)
     console.log("Session_create:ssid=", ssid, ssid_b64, usr, ttl)
