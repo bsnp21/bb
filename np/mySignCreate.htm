@@ -228,7 +228,9 @@
                         <a class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</a>
                         <a id="Check_Status"></a>
                         <button id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create &nbsp;&nbsp;&nbsp;</button>
-                        <br><br>
+                        <br>
+                        
+                        <br>
                         <font color=''><a id="errmsg">status...</a></font>
 
                     </td>
@@ -245,6 +247,7 @@
 
 
     <hr id="toggle_txtarea">
+    <button id="ButnDestroy">&nbsp;&nbsp;&nbsp; Destroy &nbsp;&nbsp;&nbsp;</button>
 
     <div id="footer" style="text-align: center;margin-top: 50px;">
         <textarea id="txtarea" rows="25"></textarea>
@@ -322,7 +325,7 @@
             })
         })
 
-        $("#footer").slideToggle()
+        // $("#footer").slideToggle()
         $("#toggle_txtarea").on("click", function () {
             $("#footer").slideToggle()
         })

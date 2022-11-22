@@ -17,7 +17,7 @@
 
     <!----------------------------------------------------------------------------->
     <!------ api ---->
-  
+
     <script src="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
     <script src="https://bsnp21.github.io/home/js/test_bsnp_ip_availability.js"></script>
     <script src="../../home/js/test_bsnp_ip_availability.js"></script>
@@ -80,7 +80,7 @@
                 usr.ttl = $("#ttl").val()
 
                 var api = new BsnpRestApi()
-                api.SSID="-"
+                api.SSID = "-"
                 api.ApiUsrAccount_login(usr, function (rob, err) {
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
@@ -119,12 +119,15 @@
             gen_BibleNames()
             gen_bibOjStdKeys()
 
-    
+
         })
 
 
         function gen_api_sam() {
             var sample_apiPar = {
+                ApiUsrAccount_create: [{ repopath: "p1", passcode: "a", hintword: "aas", accesstr: "public" }],
+                ApiUsrAccount_login: [{ repopath: "p1", passcode: "a" }],
+                ApiUsrReposData_destroy: [{ ghrepodelete: 1 }, { git_push_rm: 1 }, { git_push_only: 1 }],
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
                 ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
@@ -191,7 +194,7 @@
             for (key in sample_apiPar) {
                 var sam = ""
                 sample_apiPar[key].forEach(function (obj) {
-                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.${key}(par, (ret)=>{});</button><pre class='outp'></pre>`
+                    sam += `<pre contenteditable='true'>var par=${JSON.stringify(obj, null, 4)}</pre><button class='run_sam' apiId='${key}'>api.${key}(par, (ret)=>{});</button><pre class='outp'></pre><a class='xcloseup'>X</a>`
                 })
                 lis += `<li><h4>RestApi.${key}</h4>${sam}</li>`
             }
@@ -219,6 +222,9 @@
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
                     })
+            })
+            $(".xcloseup").on("click",function(){
+                $(this).prev().slideToggle()
             })
             //$("pre[contenteditable='true']").slideToggle()
             $("pre[contenteditable='true']").prev().on("click", function () {
@@ -266,7 +272,7 @@
 
     <script>
 
-    
+
     </script>
 </HEAD>
 
@@ -301,43 +307,43 @@
             <a href="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js">&lt;script
                 src='https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js'&gt;</a>
 
-                <table id="test_ip_availability" note="frame for gen_avai_sel">
-                    <tr>
-                        <td>
-                            <table border="1">
-                                <caption id="host_cap">Host Signin<br>
-                                    <button class="protocal hili">http</button>
-                                    <button class="protocal">https</button>
-                                </caption>
-                                <tbody id="hostaddr"></tbody>
-                            </table>
-                        </td>
-            
-                        <td>
-                            <table border="1">
-                                <caption id="svr_cap"> <a>Svc IP param</a><br>
-                                    <button class="protocal hili">http</button>
-                                    <button class="protocal">https</button>
-                                </caption>
-                                <tbody id="svcaddr"></tbody>
-                            </table>
-            
-                        </td>
-                        <td>
-                            <table border="1">
-                                <caption></caption>
-                                <tbody id="sam"></tbody>
-                            </table>
-                        </td>
-                    </tr>
-            
-                    <tr>
-                        <td colspan="3">
-                            <a id="linkstr"></a>
-            
-                        </td>
-                    </tr>
-                </table>
+            <table id="test_ip_availability" note="frame for gen_avai_sel">
+                <tr>
+                    <td>
+                        <table border="1">
+                            <caption id="host_cap">Host Signin<br>
+                                <button class="protocal hili">http</button>
+                                <button class="protocal">https</button>
+                            </caption>
+                            <tbody id="hostaddr"></tbody>
+                        </table>
+                    </td>
+
+                    <td>
+                        <table border="1">
+                            <caption id="svr_cap"> <a>Svc IP param</a><br>
+                                <button class="protocal hili">http</button>
+                                <button class="protocal">https</button>
+                            </caption>
+                            <tbody id="svcaddr"></tbody>
+                        </table>
+
+                    </td>
+                    <td>
+                        <table border="1">
+                            <caption></caption>
+                            <tbody id="sam"></tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <a id="linkstr"></a>
+
+                    </td>
+                </tr>
+            </table>
 
 
 
