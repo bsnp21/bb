@@ -279,15 +279,25 @@ var BibleObjGitusrMgr = function () {
 
 
 
-
+BibleObjGitusrMgr.prototype.validate_reponame = function (reponame) {
+    //The repository name must start with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes.
+    if (reponame.length >= 120) {
+        return { err: ["invalide name length."] }
+    }
+    if (!reponame.match(/^[a-z][a-z0-9\_]+$/)) return { err: ["illegal name."] }
+    return {}
+}
 BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
+    repopath = repopath.toLowerCase()
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
+    var vld = this.validate_reponame(repopath)
+    if (vld.err) return vld;
 
     this.m_BaseGitUser.Set_Gitusr(repopath)
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (info.err) { console.log(info); return info }
-    if (undefined != info.obj[repopath.toLowerCase()]) {
+    if (undefined != info.obj[repopath]) {
         return { err: ["user alreay exists. ", repopath] }
     }
 
@@ -333,7 +343,11 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
     return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 }
 BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
-    var usrObj = { repopath: repopath, passcode: passcode }
+    repopath = repopath.toLowerCase()
+    var vld = this.validate_reponame(repopath)
+    if (vld.err) return vld;
+
+
 
     this.m_BaseGitUser.Set_Gitusr(repopath)
 
@@ -341,7 +355,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (info.err) { console.log(info); return info }
     //if(info[""]) return {err:info[""]};
-    if (!info.obj[repopath.toLowerCase()]) {
+    if (!info.obj[repopath]) {
         return { err: ["not exist: ", repopath] }
     }
 
@@ -352,6 +366,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
         return { err: ["password error. Hint: ", ar[1]] }
     }
 
+    var usrObj = { repopath: repopath, passcode: passcode }
     var ssid = this.Session_create(usrObj)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
