@@ -180,7 +180,7 @@
                         <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
                         <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
                         <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a>
-                        <a id="SignOnCreate" href="">&nbsp;&nbsp;&nbsp; Create </a>
+                        <a id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create </a>
                         <br>
                         <font color='red'><a id="errmsg"></a></font>
 
@@ -258,9 +258,6 @@
             })
         })
         $("#SignOnCreate").on("click", function () {
-            var ur = `./mySignCreate.htm${window.location.search}`
-            $(this).attr("href",ur)
-            return
             var paths = $("#repopath").val()
             create_acct(function (rob) {
             })
