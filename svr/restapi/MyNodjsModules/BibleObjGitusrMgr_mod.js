@@ -294,7 +294,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     if (!res) return { err: repopath + " failed to create." }
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repoInfo = info[repopath]
+    ret.repo_gitInfo = info[repopath]
     ret.ghrepolistTot = Object.keys(info).length;
     return { ok: ret }
 }
@@ -354,7 +354,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var ssid = this.Session_create(usrObj)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repoInfo = info[repopath]
+    ret.repo_gitInfo = info[repopath]
     ret.ghrepolistTot = Object.keys(info).length;
     return { ok: ret, SSID: ssid } //must be SSID capitalized ret.
 }
