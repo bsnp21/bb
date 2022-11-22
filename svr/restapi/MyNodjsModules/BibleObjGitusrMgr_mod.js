@@ -291,7 +291,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
-    if (!res) return { err: "gh repo create failed." }
+    if (!res) return { err: repopath+" failed to create." }
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.repoInfo = info
