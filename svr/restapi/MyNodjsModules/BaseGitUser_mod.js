@@ -689,15 +689,15 @@ sudo -S git commit -m "${commit_msg}"
 sudo -S git branch -M main
 ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
 sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
-sudo -S git push -u origin main
+git push -u origin main   ##error for sudo
 
     `
-    console.log(gh_repo_create)
+    //console.log(gh_repo_create)
     if (this.getFullPath_usr_git() !== this.getFullPath_usr_host(username)) {
         console.log(this.getFullPath_usr_git() + " is not the same with: " + this.getFullPath_usr_host(username))
     }
 
-    console.log("git_clogh_repo_createne_cmd...")
+    console.log("git_gh_repo_createne_cmd...")
     var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
     //console.log("ret", ret)
 

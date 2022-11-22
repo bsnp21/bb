@@ -19,7 +19,7 @@ var PageUti = {
                 trs += `<tr class='${clsn}'><td>${nam}</td><td>${str}</td></tr>`
             })
         }
-        var accesstr = ret.out.state.repo_gitInfo[0]
+        var accesstr = ret.out.state.repo_gitInfo ? ret.out.state.repo_gitInfo[0]:""
 
         var msgary = { "-1": "Session Timeout", "0": `Hibernate (${accesstr})`, "1": `Normal (${accesstr})` }
         var clrary = { "-1": "red", "0": "yellow", "1": "green" }
