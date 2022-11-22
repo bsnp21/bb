@@ -405,10 +405,11 @@
     }
 
     function remeber_ui() {
-        var paths = $("#repopath").val()
+        var paths = $("#repopath").val().trim().replace(/\s/g, "")
         var codes = $("#passcode").val()
         localStorage.setItem("repopath", paths)
         localStorage.setItem("passcode", codes)
+
         var usr = { repopath: paths, passcode: codes };
         return usr
     }

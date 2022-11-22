@@ -659,6 +659,7 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 
 
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
+    username = username.replace(/\s/g, "")
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
