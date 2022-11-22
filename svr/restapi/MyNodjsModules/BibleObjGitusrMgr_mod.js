@@ -286,8 +286,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     this.m_BaseGitUser.Set_Gitusr(repopath)
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-    //if(info[""]) return {err:info[""]};
-    if (info.err) {console.log(info); return info}
+    if (info.err) { console.log(info); return info }
     if (undefined != info.obj[repopath.toLowerCase()]) {
         return { err: ["user alreay exists. ", repopath] }
     }
@@ -340,7 +339,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-    if (info.err) {console.log(info); return info}
+    if (info.err) { console.log(info); return info }
     //if(info[""]) return {err:info[""]};
     if (!info.obj[repopath.toLowerCase()]) {
         return { err: ["not exist: ", repopath] }
