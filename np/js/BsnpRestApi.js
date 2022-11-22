@@ -244,7 +244,9 @@ BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
     return this.ajaxion("ApiUsrAccount_login", par, function (ret) {
         if (ret.out.state.SSID) {
             _this.SSID = ret.out.state.SSID //for urlRedirectParam
-        }else console.error("missed SSID in ret.out.state.")
+        }else {
+            console.log("missed SSID in ret.out.state. login failed.")
+        }
         if (cbf) cbf(ret)
     })
 }

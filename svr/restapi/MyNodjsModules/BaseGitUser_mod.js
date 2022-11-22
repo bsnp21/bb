@@ -578,7 +578,8 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
         if (!lin) continue
         var ar = lin.split(/[\t|\s]+/)
         //console.log(i, ar)
-        usrsInfo[ar[0].slice(istart)] = ar.slice(1)
+        var sname = ar[0].slice(istart)
+        usrsInfo[sname.toLowerCase()] = ar.slice(1)  //case insensitive
     }
     //console.log("lines", lines)
     console.log("usrsInfo", usrsInfo)
