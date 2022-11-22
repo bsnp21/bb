@@ -672,25 +672,27 @@ BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, a
 
     var gh_repo_create = `
 # create my-project and clone 
-# sudo -S mkdir -p ${dir}
 echo ${dir}
 cd ${dir}
-###   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
+############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
 gh repo create ${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
 sudo -S chmod 777 ${username}
 sudo -S chmod 777 ${username}/.git/config
 ls -al
 #
-cd ${dir}/${username}
-sudo -S echo '${salts}' > .salts
-sudo -S git add .salts
-sudo -S git add *
-sudo -S git commit -m "${commit_msg}"
-sudo -S git branch -M main
-################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
-sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
-git push -u origin main   ##error for sudo
-
+if [ -d "${dir}/${username}" ]; then
+    cd ${dir}/${username}
+    sudo -S echo '${salts}' > .salts
+    sudo -S git add .salts
+    sudo -S git add *
+    sudo -S git commit -m "${commit_msg}"
+    sudo -S git branch -M main
+    ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
+    sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
+    git push -u origin main   ##error for sudo
+else 
+    echo ${dir}/${username} nonexisistance
+fi
     `
     //console.log(gh_repo_create)
     if (this.getFullPath_usr_git() !== this.getFullPath_usr_host(username)) {
