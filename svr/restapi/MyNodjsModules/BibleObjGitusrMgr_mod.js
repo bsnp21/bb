@@ -286,15 +286,15 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     this.m_BaseGitUser.Set_Gitusr(repopath)
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-    if(info[""]) return {err:info[""]};
-    if(info.err) return info.err
+    //if(info[""]) return {err:info[""]};
+    if (info.err) return info.log = console.log(info.err)
     if (undefined != info.obj[repopath.toLowerCase()]) {
         return { err: ["user alreay exists. ", repopath] }
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
     if (!res) return { err: ["failed to create.", repopath] }
-    if(res.err) return res;
+    if (res.err) return res;
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.repo_gitInfo = info.obj[repopath]
@@ -340,8 +340,8 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-    if(info.err) return info.err
-    if(info[""]) return {err:info[""]};
+    if (info.err) return info.log = console.log(info.err)
+    //if(info[""]) return {err:info[""]};
     if (!info.obj[repopath.toLowerCase()]) {
         return { err: ["not exist: ", repopath] }
     }
