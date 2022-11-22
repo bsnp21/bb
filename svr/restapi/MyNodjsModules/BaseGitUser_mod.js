@@ -571,7 +571,7 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var istart = this.m_acct.ownername.length + 1
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
-    if (str.indexOf("Command failed: gh repo list")) {
+    if (str.indexOf("gh:")) {
         return { err: str };
     }
     var lines = str.split(/[\r|\n]/)
