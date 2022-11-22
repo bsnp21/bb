@@ -572,8 +572,8 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
     if (str.indexOf("gh")) {
-        console.log("=============gh not work")
-        return { err: str };
+        console.log("=============gh not work",str)
+        return { err: str, obj:{} };
     }
     console.log("=============gh works")
     var lines = str.split(/[\r|\n]/)
