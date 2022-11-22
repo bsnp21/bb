@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>sign-in</title>
+    <title>Create</title>
     <base target="xxx_blank" />
     <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
@@ -120,6 +120,9 @@
         .inputxt {
             width: 100%;
         }
+        #SignOnCreate{
+            float: right;
+        }
     </style>
 </head>
 
@@ -194,7 +197,7 @@
                             note="https://github.com/bsnp21/pub_test.git"></input>
                     </td>
                     <td class="clearout">
-                        <br>X
+                        <br><br>X
                     </td>
                 </tr>
 
@@ -205,18 +208,18 @@
                         <input type="radio" name="a" id="private" value="private"></input><label for="private">Private</label>
                     </td>
                     <td class="clearout">
-                        <br>
+                    
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="2"><br>
                         <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
-                        <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
-                        <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a>
+                        <a class="signinBtn" id="loginAsUser2" title="login to account" disabled>Log-in</a>
+                        <a id="Check_Status"></a>
                         <button id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create &nbsp;&nbsp;&nbsp;</button>
                         <br>
-                        <font color='red'><a id="errmsg"></a></font>
+                        <font color='red'><a id="errmsg">status...</a></font>
 
                     </td>
                 </tr>
@@ -249,8 +252,6 @@
 <script>
     $(function () {
 
-        //PageUti.Repositories_History("#account_history", 1)
-        //PageUti.Repositories_History("#account_history", -1)
 
         init_by_url_params()
 
@@ -270,6 +271,8 @@
                 window.open(ur, '_self');
             }, failure)
         })
+
+        $("#loginAsUser2").attr("href", `./mySignin.htm${window.location.search}`)
         $("#loginAsUser").on("click", function () {
             login_acct(function (rob) {
                 //window.open(ur, '_self');
@@ -277,7 +280,7 @@
             })
         })
 
-        $("#Check_Status").on("click", function () {
+        $("#Check_Status, #errmsg").on("click", function () {
             //$(this).toggle("slow")
             $("#output").html("--")
             var paths = $("#repopath").val()

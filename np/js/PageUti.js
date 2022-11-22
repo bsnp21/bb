@@ -19,8 +19,9 @@ var PageUti = {
                 trs += `<tr class='${clsn}'><td>${nam}</td><td>${str}</td></tr>`
             })
         }
+        var accesstr = ret.out.state.repoInfo[0]
 
-        var msgary = { "-1": "Sign-in Time Off", "0": "In Hibernate Mode.", "1": "Normal Mode" }
+        var msgary = { "-1": "Session Timeout", "0": `Hibernate (${accesstr})`, "1": `Normal (${accesstr})` }
         var clrary = { "-1": "red", "0": "yellow", "1": "green" }
 
         var caps = ""

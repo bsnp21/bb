@@ -120,6 +120,16 @@
         .inputxt {
             width: 100%;
         }
+
+        #SignOnCreate{
+            float:right;
+        }
+        .successed {
+            color:green;
+        }
+        .failed{
+            color:red;
+        }
     </style>
 </head>
 
@@ -176,13 +186,13 @@
 
 
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2"><br>
                         <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
                         <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
-                        <a id="Check_Status">&nbsp;&nbsp;&nbsp; Status </a>
-                        <a id="SignOnCreate" href="">&nbsp;&nbsp;&nbsp; Create </a>
+                        <a id="Check_Status"></a>
+                        <a id="SignOnCreate" href="">  Create </a>
                         <br>
-                        <font color='red'><a id="errmsg"></a></font>
+                        <font color=''><a id="errmsg">status..</a></font>
 
                     </td>
                 </tr>
@@ -243,14 +253,15 @@
             })
         })
 
-        $("#Check_Status").on("click", function () {
+        $("#Check_Status, #errmsg").on("click", function () {
             //$(this).toggle("slow")
+            $("#errmsg").removeClass("successed failed")
             $("#output").html("--")
             var paths = $("#repopath").val()
             login_acct(function (rob) {
                 var tb = PageUti.Repo_fstat_table(rob)
-                var a = `<font color="green">Success: ${paths} </font>`
-                $("#errmsg").html(a)
+                var a = `Success: ${paths}`
+                $("#errmsg").html(a).addClass("successed")
                 $("#output").html(tb)
                 //$("#errmsg").html(a+tb)
                 //$("#input_area, #account_history_table").hide()
@@ -323,7 +334,7 @@
             console.log(rob)
             $("#txtarea").val(JSON.stringify(rob, null, 4))
             if (rob.out.err) {
-                $("#errmsg").html(rob.out.err)
+                $("#errmsg").html(rob.out.err).addClass("failed")
             }
             else {
                 var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
