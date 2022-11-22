@@ -569,6 +569,8 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
+            console.log("destroy====par:",inp.par)
+
             userProject.m_BaseGitUser.Check_proj_state()
             if (0 === inp.out.state.bRepositable) {
                 //case push failed. Don't delete
