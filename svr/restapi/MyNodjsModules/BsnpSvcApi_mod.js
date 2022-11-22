@@ -571,6 +571,7 @@ var ApiJsonp_BibleObj = {
 
             console.log("destroy====par:", inp.par)
             if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 1) {
+                console.log("enter destroy====par:")
                 reponame = inp.par.gh_repo_delete_name
                 if (reponame === "self") reponame = userProject.m_BaseGitUser.m_sponser.m_reponame;
                 console.log("to delete:" + username)
@@ -578,6 +579,7 @@ var ApiJsonp_BibleObj = {
                 //userProject.Session_delete(inp.SSID)
                 return
             }
+            return
 
             userProject.m_BaseGitUser.Check_proj_state()
             if (0 === inp.out.state.bRepositable) {
