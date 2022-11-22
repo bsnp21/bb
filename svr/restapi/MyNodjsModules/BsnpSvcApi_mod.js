@@ -240,7 +240,7 @@ var ApiJsonp_BibleObj = {
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
+            
 
             console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
             console.log("-----:binp.par.bibOj", inp.par.bibOj)
