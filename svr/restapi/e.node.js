@@ -59,41 +59,41 @@ transporter.sendMail(mailOptions, function(error, info){
 
 ///////////
 
-var validator = require("email-validator");
-var emailExistence = require("email-existence");
-var emailCheck = require('email-check');
-
-const myArgs = process.argv.slice(2);
-
-var emails = ["test@gmail.com", "xyzzzzzzzzzzzzz@gmail.com"]
-emails.push(myArgs[0])
-var ret = validator.validate("test@gmail.com"); // true
-console.log(ret)
-emails.forEach(function (email) {
-    console.log(email, validator.validate(email))
-
-    emailCheck(email,{
-        timeout:5000
-    })
-        .then(function (res) {
-            // Returns "true" if the email address exists, "false" if it doesn't.
-            console.log("check",email, res);
-        })
-        .catch(function (err) {
-            console.log(email, err);
-            if (err.message === 'refuse') {
-                // The MX server is refusing requests from your IP address.
-            } else {
-                // Decide what to do with other errors.
-            }
-        });
-
-    ///
-    emailExistence.check(email, function(error, response){
-        console.log(email, 'res: '+response);
-    });
-
-})
+// var validator = require("email-validator");
+// var emailExistence = require("email-existence");
+// var emailCheck = require('email-check');
+// 
+// const myArgs = process.argv.slice(2);
+// 
+// var emails = ["test@gmail.com", "xyzzzzzzzzzzzzz@gmail.com"]
+// emails.push(myArgs[0])
+// var ret = validator.validate("test@gmail.com"); // true
+// console.log(ret)
+// emails.forEach(function (email) {
+//     console.log(email, validator.validate(email))
+// 
+//     emailCheck(email,{
+//         timeout:5000
+//     })
+//         .then(function (res) {
+//             // Returns "true" if the email address exists, "false" if it doesn't.
+//             console.log("check",email, res);
+//         })
+//         .catch(function (err) {
+//             console.log(email, err);
+//             if (err.message === 'refuse') {
+//                 // The MX server is refusing requests from your IP address.
+//             } else {
+//                 // Decide what to do with other errors.
+//             }
+//         });
+// 
+//     ///
+//     emailExistence.check(email, function(error, response){
+//         console.log(email, 'res: '+response);
+//     });
+// 
+// })
 
 
 console.log('myArgs: ', myArgs);
