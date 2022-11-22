@@ -80,7 +80,8 @@
                 usr.ttl = $("#ttl").val()
 
                 var api = new BsnpRestApi()
-                api.ApiUsrReposData_signin(usr, function (rob, err) {
+                api.SSID="-"
+                api.ApiUsrAccount_login(usr, function (rob, err) {
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
 
@@ -348,8 +349,8 @@
 
         <li>
             <h3>Repository</h3>
-            repopath:<input id="repopath" value="https://wdingsoft@bitbucket.org/bsnp21/guest_02.git"></input><br>
-            passcode:<input id="passcode" value="gSzk" val2="TPgFNnz" v3="9v5wGF5eN"
+            repopath:<input id="repopath" value="p1"></input><br>
+            passcode:<input id="passcode" value="a" val2="TPgFNnz" v3="9v5wGF5eN"
                 onclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
             <a onclick="$(this).next().val(1)">TTL:</a> <input id="ttl" value="9999"></input>
             <pre id="usrobj"></pre>
@@ -360,7 +361,7 @@
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()
-                    api.ApiUsrReposData_signin(usr, function (ret, err){});
+                    api.ApiUsrAccount_login(usr, function (ret, err){});
                 </pre>
             <a id="addur_ssid">add SSID on url param</a>
             <pre class="outp" id="ret_signin"></pre>

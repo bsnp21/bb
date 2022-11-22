@@ -178,7 +178,7 @@ BsnpRestApi.prototype.urlRedirectParam = function (parm) {
         spar += "&SSID=" + this.SSID
     }
     var username = this.urlParams.get("username")
-    if (parm.username) username = parm.username
+    if (parm && parm.username) username = parm.username //overwrite by url. 
     if (username) {
         spar += "&username=" + parm.username
     }
