@@ -570,10 +570,11 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             console.log("destroy====par:", inp.par)
-            if (inp.par.gh_repo_delete === 1) {
-                var username = userProject.m_BaseGitUser.m_sponser.m_reponame;
+            if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 1) {
+                reponame = inp.par.gh_repo_delete_name
+                if (reponame === "self") reponame = userProject.m_BaseGitUser.m_sponser.m_reponame;
                 console.log("to delete:" + username)
-                inp.out.destroy_res = userProject.m_BaseGitUser.execSync_cmd_git(`gh repo delete ${username}`)
+                inp.out.destroy_res = userProject.m_BaseGitUser.execSync_cmd_git(`gh repo delete ${username} --confirm`)
                 //userProject.Session_delete(inp.SSID)
                 return
             }
