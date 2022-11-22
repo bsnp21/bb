@@ -32,7 +32,7 @@ var sver = "gmail"
 var transporter = nodemailer.createTransport({
   service: sver,
   auth: {
-    user: 'wdinge'+'@'+sver+'.com',
+    user: 'wdingsoft'+'@'+sver+'.com',
     pass: 'Matthew'+'2237!'
   }
 });
