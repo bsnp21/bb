@@ -363,7 +363,6 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
         console.log("*****timeout, failed ssid")
         return { err: "nonexist | timeout" }
     }
-    NCache.Set(ssid, usr, 3600 * 24 * 180)
 
     this.m_BaseGitUser.Set_Gitusr(usr.repopath)
 
@@ -408,6 +407,7 @@ BibleObjGitusrMgr.prototype.Session_get_usr = function (ssid) {
     }
 
     var usr = NCache.Get(ssid)
+    NCache.Set(ssid, usr, 3600 * 24 * 180) //180days
     return usr;
 }
 BibleObjGitusrMgr.prototype.Session_create = function (usr) {
