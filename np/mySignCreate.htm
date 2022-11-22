@@ -285,7 +285,8 @@
         $("#loginAsUser").attr("href", `./mySignin.htm${window.location.search}`)
         $("#loginAsUser").on("click", function () {
             var ur = `./mySignin.htm${window.location.search}`
-            return window.open(ur, "_self")
+             window.open(ur, "_self")
+             return ;
             login_acct(function (rob) {
                 //window.open(ur, '_self');
                 return true; //contine;
