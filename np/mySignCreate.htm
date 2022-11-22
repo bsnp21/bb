@@ -407,14 +407,6 @@
     function remeber_ui() {
         var paths = $("#repopath").val()
         var codes = $("#passcode").val()
-        var reg = new RegExp(/[\s]/)
-        if (paths.match(/\s/) || codes.match(/\s/)) {
-            alert("space is not allowed in username and password.")
-            paths = paths.replace(/\s/g, "")
-            codes = codes.replace(/\s/g, "")
-            $("#repopath").val(paths)
-            $("#passcode").val(codes)
-        }
         localStorage.setItem("repopath", paths)
         localStorage.setItem("passcode", codes)
         var usr = { repopath: paths, passcode: codes };
