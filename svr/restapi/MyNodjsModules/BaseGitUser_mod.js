@@ -571,6 +571,9 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var istart = this.m_acct.ownername.length + 1
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
+    if (str.indexOf("Command failed: gh repo list")) {
+        return { err: str };
+    }
     var lines = str.split(/[\r|\n]/)
     var usrsInfo = {}
     for (var i = 0; i < lines.length; i++) {
@@ -583,7 +586,7 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     }
     //console.log("lines", lines)
     console.log("usrsInfo", usrsInfo)
-    return usrsInfo
+    return { obj: usrsInfo }
 }
 GitSponsor.prototype.Get_repoInfo = function (repopath) {
     var usrsinfo = this.gh_repo_list_all_obj()
@@ -660,10 +663,10 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 
 
 BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
-    if(username.match(/\s/g)) return { err: ["username has spaces.", username, console.log("username has spaces.")] }
-    if(passcode.match(/\s/g)) return { err: ["passcode has spaces.", passcode, console.log("passcode has spaces.")] }
-    if(!username.match(/^([a-zA-Z0-9\.\-\_]+)$/))return { err: ["username has illegal characters.", username, console.log("username has illegal chars.")] }
-    if(!passcode.match(/^([a-zA-Z0-9\.\-\_]+)$/))return { err: ["passcode has illegal characters.", passcode, console.log("passcode has illegal chars.")] }
+    if (username.match(/\s/g)) return { err: ["username has spaces.", username, console.log("username has spaces.")] }
+    if (passcode.match(/\s/g)) return { err: ["passcode has spaces.", passcode, console.log("passcode has spaces.")] }
+    if (!username.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["username has illegal characters.", username, console.log("username has illegal chars.")] }
+    if (!passcode.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["passcode has illegal characters.", passcode, console.log("passcode has illegal chars.")] }
 
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""

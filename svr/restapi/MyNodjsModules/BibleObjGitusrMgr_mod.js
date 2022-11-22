@@ -286,7 +286,8 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     this.m_BaseGitUser.Set_Gitusr(repopath)
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-    if (undefined != info[repopath.toLowerCase()]) {
+    if(info.err) return info.err;
+    if (undefined != info.obj[repopath.toLowerCase()]) {
         return { err: ["user alreay exists. ", repopath] }
     }
 
@@ -295,8 +296,8 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     if(res.err) return res;
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repo_gitInfo = info[repopath]
-    ret.ghrepolistTot = Object.keys(info).length;
+    ret.repo_gitInfo = info.obj[repopath]
+    ret.ghrepolistTot = Object.keys(info.obj).length;
     return { ok: ret }
 }
 
@@ -338,7 +339,8 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-    if (!info[repopath.toLowerCase()]) {
+    if(info.err) return info.err
+    if (!info.obj[repopath.toLowerCase()]) {
         return { err: ["not exist: ", repopath] }
     }
 
@@ -352,8 +354,8 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var ssid = this.Session_create(usrObj)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repo_gitInfo = info[repopath]
-    ret.ghrepolistTot = Object.keys(info).length;
+    ret.repo_gitInfo = info.obj[repopath]
+    ret.ghrepolistTot = Object.keys(info.obj).length;
     return { ok: ret, SSID: ssid } //must be SSID capitalized ret.
 }
 
