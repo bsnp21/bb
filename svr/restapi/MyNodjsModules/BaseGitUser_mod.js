@@ -682,7 +682,8 @@ sudo -S chmod 777 ${username}/.git/config
 sudo -S echo '${salts}' > ${username}/.salts
 #
 cd ${dir}/${username}
-sudo -S git add ${username}/.salts
+sudo -S echo '${salts}' > .salts
+sudo -S git add .salts
 sudo -S git add *
 sudo -S git commit -m "${commit_msg}"
 sudo -S git branch -M main
