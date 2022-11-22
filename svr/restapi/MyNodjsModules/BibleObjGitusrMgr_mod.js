@@ -139,7 +139,7 @@ NCache.Init = function () {
         inp.out = BaseGUti.default_inp_out_obj()
         inp.SSID = key
         var userProject = new BibleObjGitusrMgr()
-        if (inp.gitusr = userProject.m_BaseGitUser.Set_Gitusr(val.repopath)) {
+        if (inp.gitusr = userProject.m_BaseGitUser.Set_gitusr(val.repopath)) {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
@@ -293,7 +293,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     var vld = this.validate_reponame(repopath)
     if (vld.err) return vld;
 
-    this.m_BaseGitUser.Set_Gitusr(repopath)
+    this.m_BaseGitUser.Set_gitusr(repopath)
 
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
     if (info.err) { console.log(info); return info }
@@ -340,7 +340,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
         console.log("*****failed: sdfadfasjiasf")
         return null
     }
-    return this.m_BaseGitUser.Set_Gitusr(usr.repopath)
+    return this.m_BaseGitUser.Set_gitusr(usr.repopath)
 }
 BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     repopath = repopath.toLowerCase()
@@ -349,7 +349,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
 
 
-    this.m_BaseGitUser.Set_Gitusr(repopath)
+    this.m_BaseGitUser.Set_gitusr(repopath)
 
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
@@ -383,7 +383,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
         return { err: "nonexist | timeout" }
     }
 
-    this.m_BaseGitUser.Set_Gitusr(usr.repopath)
+    this.m_BaseGitUser.Set_gitusr(usr.repopath)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
     return { ok: ret }

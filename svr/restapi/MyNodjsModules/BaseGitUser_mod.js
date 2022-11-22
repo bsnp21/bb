@@ -724,7 +724,8 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
 }
 
 
-BaseGitUser.prototype.Set_Gitusr = function (reponame) {
+BaseGitUser.prototype.Set_gitusr = function (reponame) {
+    reponame = reponame.toLowerCase()
 
     this.m_sponser = new GitSponsor(reponame)
 
