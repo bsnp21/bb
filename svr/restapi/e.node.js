@@ -96,5 +96,5 @@ transporter.sendMail(mailOptions, function(error, info){
 // })
 
 
-console.log('myArgs: ', myArgs);
+//console.log('myArgs: ', myArgs);
 
