@@ -242,31 +242,33 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
 
-            console.log("-----:bMyojDir>0", inp.par.fnames, typeof inp.par.fnames)
-            console.log("-----:binp.par.bibOj", inp.par.bibOj)
+            var par = inp.par, log="";
+            console.log("-----:bMyojDir>0", par.fnames, typeof par.fnames)
+            console.log("-----:binp.par.bibOj", par.bibOj)
             var TbcObj = {};
-            if ("object" === typeof inp.par.fnames && inp.par.bibOj) {//['NIV','ESV']
-                console.log("inp.par.fnames:", inp.par.fnames)
-                for (var i = 0; i < inp.par.fnames.length; i++) {
-                    var trn = inp.par.fnames[i];
+            if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
+                console.log("par.fnames:", par.fnames)
+                for (var i = 0; i < par.fnames.length; i++) {
+                    var trn = par.fnames[i];
                     var jsfname = userProject.m_BaseGitUser.get_pfxname(trn, "cpyIfNonexistance")
                     console.log("load:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) {
-                        inp.out.desc += ":noexist:" + trn
+                        log += ":noexist:" + trn
                         console.log("not exist..............", jsfname)
                         continue
                     }
-                    var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
+                    var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
                     TbcObj[trn] = bcObj;
-                    inp.out.desc += ":" + trn
+                    log += ":" + trn
                 }
-                inp.out.desc += ":success"
+                log += ":success"
             }
             //console.log(TbcObj)
             var bcvT = {}
             BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
             inp.out.data = bcvT
+            inp.out.log = log
             //console.log(bcvT)
         })
     },
