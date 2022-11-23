@@ -584,11 +584,13 @@ var ApiJsonp_BibleObj = {
 
             if (inp.par.git_cmd_ary && inp.par.git_cmd_ary.length > 0) {
                 console.log("enter => inp.par.git_cmd_ary:")
-                for(var i=0; i<inp.par.git_cmd_ary.length;i++){
+                inp.out.destroy_git_ary = []
+                for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
-                    userProject.m_BaseGitUser.execSync_cmd_git(cmd)
+                    var str = userProject.m_BaseGitUser.execSync_cmd_git(cmd)
+                    inp.out.destroy_git_res.push(cmd + ":"str)
                 }
-                return 
+                return
             }
 
             userProject.m_BaseGitUser.Check_proj_state()
