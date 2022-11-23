@@ -370,7 +370,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     var usr = this.Session_get_usr(ssid)
     if (!usr) {
         console.log("*****timeout, failed ssid")
-        return { err: "nonexist | timeout" }
+        return { err: "session nonexist|timeout" }
     }
 
     this.m_BaseGitUser.Set_gitusr(usr.repopath)
