@@ -599,7 +599,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             console.log("ApiUsrRepos_toolkids==>par:", inp.par)
-            inp.out.state_before_cmd = userProject.Check_proj_state()
+            inp.out.state_before_cmd = userProject.m_BaseGitUser.Check_proj_state()
 
             if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
                 console.log("enter destroy ===>par:")
@@ -611,7 +611,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd) // must manually do it with sudo for gh auth
                 inp.out.reposlist = userProject.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
                 //userProject.Session_delete(inp.SSID)
-                inp.out.state = userProject.Check_proj_state()
+                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
             }
 
@@ -623,9 +623,9 @@ var ApiJsonp_BibleObj = {
                     var art = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/)
                     inp.out.olog[cmd] = art
                 }
+                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
             }
-            inp.out.state = userProject.Check_proj_state()
 
         })
 
