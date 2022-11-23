@@ -1053,7 +1053,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     var totalsize = 0
     var iAlertLevel = 0
     BaseGUti.GetFilesAryFromDir(accdir, true, function (fname) {
-        if(accdir.match(/\/\.git$/)) return
+        
         var ret = path.parse(fname);
         var ext = ret.ext
         var nam = ret.base.replace(/_json\.js$/, "")
@@ -1072,7 +1072,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
             iAlertLevel = 2
             str += "*"
         }
-        fstat[nam] = str
+        fstat[fname] = str
     });
 
     stat.fstat = fstat
