@@ -1042,7 +1042,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     BaseGUti.GetFilesAryFromDir(accdir, true, function (fname) {
         if (fname.match(/\.git/)) return
         var ret = path.parse(fname);
-        console.log(fname, ret)
+        //console.log(fname, ret)
         if (ret.dir.match(/\.git$/)) return
         var ext = ret.ext
         var nam = ret.base.replace(accdir, "")
