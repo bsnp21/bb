@@ -203,7 +203,7 @@ NCache.Set = function (key, val, ttl) {
     } else {
         val = this.myCache.get(key)
     }
-    if(null == val) return;
+    if (null == val) return;
     val.tms = (new Date()).getTime() //timestampe for last access.
     val.ttl = ttl
     this.myCache.set(key, val, ttl) //restart ttl -- reborn again.
@@ -298,17 +298,14 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos()
     if (info.err) { console.log(info); return info }
-    if (undefined != info.obj[repopath]) {
-        return { err: ["user alreay exists. ", repopath] }
-    }
 
     var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
     if (!res) return { err: ["failed to create.", repopath] }
     if (res.err) return res;
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repo_gitInfo = info.obj[repopath]
-    ret.ghrepolistTot = Object.keys(info.obj).length;
+    ret.gh_api_repos_info = info
+    ret.ghrepolistTot = 0;
     return { ok: ret }
 }
 
@@ -354,10 +351,6 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos()
     if (info.err) { console.log(info); return info }
-    //if(info[""]) return {err:info[""]};
-    if (!info.obj[repopath]) {
-        return { err: ["not exist: ", repopath] }
-    }
 
     this.m_BaseGitUser.Deploy_proj()
 
@@ -370,8 +363,8 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var ssid = this.Session_create(usrObj)
 
     var ret = this.m_BaseGitUser.Check_proj_state()
-    ret.repo_gitInfo = info.obj[repopath]
-    ret.ghrepolistTot = Object.keys(info.obj).length;
+    ret.gh_api_repos_info = info
+    ret.ghrepolistTot = 0;
     return { ok: ret, SSID: ssid } //must be SSID capitalized ret.
 }
 
