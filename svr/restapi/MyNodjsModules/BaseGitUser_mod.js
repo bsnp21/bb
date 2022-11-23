@@ -571,9 +571,9 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var istart = this.m_acct.ownername.length + 1
     var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
-    if (str.indexOf("Command failed")>=0) {
-        console.log("=============gh not work:",str)
-        return { err: [str], obj:{} };
+    if (str.indexOf("Command failed") >= 0) {
+        console.log("=============gh is not installed or not work:", str)
+        return { err: [str], obj: {} };
     }
     console.log("=============gh works")
     var lines = str.split(/[\r|\n]/)
@@ -590,12 +590,113 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     console.log("usrsInfo", usrsInfo)
     return { obj: usrsInfo }
 }
-GitSponsor.prototype.Get_repoInfo = function (repopath) {
-    var usrsinfo = this.gh_repo_list_all_obj()
-    if (repopath in usrsinfo) {
-        return usrsinfo[repopath];
+GitSponsor.prototype.gh_repo_view_json = function () {
+    var viewItems = ["assignableUsers",
+        "codeOfConduct",
+        "contactLinks",
+        "createdAt",
+        "defaultBranchRef",
+        "deleteBranchOnMerge",
+        "description",
+        "diskUsage",
+        "forkCount",
+        "fundingLinks",
+        "hasIssuesEnabled",
+        "hasProjectsEnabled",
+        "hasWikiEnabled",
+        "homepageUrl",
+        "id",
+        "isArchived",
+        "isBlankIssuesEnabled",
+        "isEmpty",
+        "isFork",
+        "isInOrganization",
+        "isMirror",
+        "isPrivate",
+        "isSecurityPolicyEnabled",
+        "isTemplate",
+        "isUserConfigurationRepository",
+        "issueTemplates",
+        "issues",
+        "labels",
+        "languages",
+        "latestRelease",
+        "licenseInfo",
+        "mentionableUsers",
+        "mergeCommitAllowed",
+        "milestones",
+        "mirrorUrl",
+        "name",
+        "nameWithOwner",
+        "openGraphImageUrl",
+        "owner",
+        "parent",
+        "primaryLanguage",
+        "projects",
+        "pullRequestTemplates",
+        "pullRequests",
+        "pushedAt",
+        "rebaseMergeAllowed",
+        "repositoryTopics",
+        "securityPolicyUrl",
+        "squashMergeAllowed",
+        "sshUrl",
+        "stargazerCount",
+        "templateRepository",
+        "updatedAt",
+        "url",
+        "usesCustomOpenGraphImage",
+        "viewerCanAdminister",
+        "viewerDefaultCommitEmail",
+        "viewerDefaultMergeMethod",
+        "viewerHasStarred",
+        "viewerPermission",
+        "viewerPossibleCommitEmails",
+        "viewerSubscription",
+        "watchers"]
+    var allitems = viewItems.join(",")
+    var ghcmd = `gh repo view ${this.m_acct.ownername}/${this.m_reponame} --json isPrivate,diskUsage,createdAt,pushedAt,updatedAt,homepageUrl,name,owner,nameWithOwner,parent,securityPolicyUrl,sshUrl,url,viewerPermission,viewerPossibleCommitEmails`
+    var ghcmd = `gh repo view ${this.m_acct.ownername}/${this.m_reponame} --json ${allitems}`
+    var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
+    console.log("gh_repo_view_json:", str)
+    //GraphQL: Could not resolve to a Repository with the name 'bsnpghrepolist/p1zz'. (repository)
+    if (str.indexOf("GraphQL") >= 0) {
+        console.log("=============gh not work nor installed:", str)
+        return { err: str.split(/[\r|\n]/) };
     }
-    return false
+    console.log("=============gh works")
+    var lines = str.split(/[\r|\n]/)
+    var usrsInfo = {}
+    for (var i = 0; i < lines.length; i++) {
+        var lin = lines[i]
+        if (!lin) continue
+        var ar = lin.split(/[\t|\s]+/)
+        //console.log(i, ar)
+        var sname = ar[0].slice(istart)
+        usrsInfo[sname.toLowerCase()] = ar.slice(1)  //case insensitive
+    }
+    //console.log("lines", lines)
+    console.log("usrsInfo", usrsInfo)
+    return { obj: usrsInfo }
+}
+GitSponsor.prototype.gh_api_repos = function () {
+    var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
+    var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
+    console.log("gh_api_repos:", str)
+    var ret = {
+        "message": "Not Found",
+        "documentation_url": "https://docs.github.com/rest/reference/repos#get-a-repository"
+    }
+    try {
+        ret = JSON.parse(str)
+    } catch (err) {
+        ret.catcherr = err
+    }
+    if(ret.message && ret.message==="Not Found"){
+        ret.err="gh_api_repos failed"
+    }
+    console.log("ret", ret)
+    return ret
 }
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
