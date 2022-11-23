@@ -970,7 +970,7 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
     var commit_msg = this.getFullPath_usr_git(".salts")
-    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr, console.log("accesstr must be public|private.")] }
+    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
 
     var username = this.m_sponser.m_reponame
     var gh_repo_create = `
