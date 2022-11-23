@@ -242,7 +242,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
 
-            var par = inp.par, log="";
+            var par = inp.par, olog=[];
             console.log("-----:bMyojDir>0", par.fnames, typeof par.fnames)
             console.log("-----:binp.par.bibOj", par.bibOj)
             var TbcObj = {};
@@ -254,21 +254,21 @@ var ApiJsonp_BibleObj = {
                     console.log("load:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) {
-                        log += ":noexist:" + trn
+                        olog.push(jsfname + ":noexist:" + trn)
                         console.log("not exist..............", jsfname)
                         continue
                     }
                     var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
                     TbcObj[trn] = bcObj;
-                    log += ":" + trn
+                    olog.push( ":" + trn)
                 }
-                log += ":success"
+                olog.push(":success")
             }
             //console.log(TbcObj)
             var bcvT = {}
             BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
             inp.out.data = bcvT
-            inp.out.log = log
+            inp.out.olog = olog
             //console.log(bcvT)
         })
     },
