@@ -290,7 +290,8 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     var ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (!ghinfo.err) {
         console.log(ghinfo);
-        return { err: ["already exist.", repopath], ghinfo: ghinfo };
+        var state = this.m_BaseGitUser.Check_proj_state()
+        return { err: ["already exist.", repopath], state: state, ghinfo: ghinfo };
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(passcode, hintword, accesstr)
@@ -343,7 +344,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     console.log("========__Proj_parse_usr_login__")
     var ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (ghinfo.err) {
-        console.log(ghinfo); 
+        console.log(ghinfo);
         return { err: ["not exist", repopath], ghinfo: ghinfo }
     }
 
@@ -368,7 +369,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     var usr = this.Session_get_usr(ssid)
     if (!usr) {
         console.log("*****timeout, failed ssid")
-        return { err: ["session nonexist|timeout",ssid] }
+        return { err: ["session nonexist|timeout", ssid] }
     }
 
     this.m_BaseGitUser.Set_gitusr(usr.repopath)
@@ -419,7 +420,7 @@ BibleObjGitusrMgr.prototype.Session_get_usr = function (ssid) {
 }
 BibleObjGitusrMgr.prototype.Session_create = function (usr) {
 
-    var ssid = (new Date()).getTime()+this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
+    var ssid = (new Date()).getTime() + this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
     var ssid_b64 = ssid;//Buffer.from(ssid).toString("base64") //=btoa()
     var ttl = NCache.m_TTL //default.
 

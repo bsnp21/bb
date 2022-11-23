@@ -532,7 +532,7 @@ var BaseGUti = {
     default_inp_out_obj: function () {
         return {
             data: null, desc: "", err: null,
-            state: {  bEditable: -1, bRepostoryDirExist: -1 }
+            state: { bEditable: -1, bRepostoryDirExist: -1 }
         }
     },
 
@@ -1020,14 +1020,16 @@ fi
 
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
-    var stat = { };//this.m_inp.out.state
-  
+    var stat = {};//this.m_inp.out.state
+    if (!fs.existsSync(this.getFullPath_usr_git())) {
+        return stat;
+    }
 
     var dir = this.getFullPath_usr_myoj()
-  
+
 
     var dir = this.getFullPath_usr_dat()
-   
+
 
     var dir = this.getFullPath_usr_git("/.git/config")
     stat.bRepostoryDirExist = fs.existsSync(dir)
@@ -1038,10 +1040,10 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     var totalsize = 0
     var iAlertLevel = 0
     BaseGUti.GetFilesAryFromDir(accdir, true, function (fname) {
-        if(fname.match(/\.git/)) return
+        if (fname.match(/\.git/)) return
         var ret = path.parse(fname);
         console.log(fname, ret)
-        if(ret.dir.match(/\.git$/)) return
+        if (ret.dir.match(/\.git$/)) return
         var ext = ret.ext
         var nam = ret.base.replace(accdir, "")
         //console.log("ret:",ret)
@@ -1055,7 +1057,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
             str += "*"
         }
         if (fMB >= 90.0) { ////** Github: 100 MB per file, 1 GB per repo, svr:10GB
-           
+
             iAlertLevel = 2
             str += "*"
         }

@@ -501,9 +501,7 @@ var ApiJsonp_BibleObj = {
         if (ret) {
             userProject.m_BaseGitUser.Deploy_proj()
 
-            if (inp.out.state.bEditable === 1) {
-                inp.out.state.SSID = userProject.Session_create()
-            }
+           
         }
 
         var sret = JSON.stringify(inp, null, 4)
