@@ -590,7 +590,7 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     console.log("usrsInfo", usrsInfo)
     return { obj: usrsInfo }
 }
-GitSponsor.prototype.gh_repo_view_json = function () {
+GitSponsor.prototype.gh_repo_view_json__________ = function () {
     var viewItems = ["assignableUsers",
         "codeOfConduct",
         "contactLinks",
@@ -689,8 +689,8 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     }
     try {
         ret = JSON.parse(str)
-    } catch (err) {
-        ret.catcherr = err
+    } catch {
+        ret.catcherr = "err json"
     }
     if (ret.message && ret.message === "Not Found") {
         ret.err = "gh_api_repos_nameWithOwner failed"
