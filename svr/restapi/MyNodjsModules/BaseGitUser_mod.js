@@ -692,10 +692,63 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     } catch (err) {
         ret.catcherr = err
     }
-    if(ret.message && ret.message==="Not Found"){
-        ret.err="gh_api_repos_nameWithOwner failed"
+    if (ret.message && ret.message === "Not Found") {
+        ret.err = "gh_api_repos_nameWithOwner failed"
     }
     console.log("ret", ret)
+    return ret
+}
+
+GitSponsor.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
+    if (username.match(/\s/g)) return { err: ["username has spaces.", username, console.log("username has spaces.")] }
+    if (passcode.match(/\s/g)) return { err: ["passcode has spaces.", passcode, console.log("passcode has spaces.")] }
+    if (!username.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["username has illegal characters.", username, console.log("username has illegal chars.")] }
+    if (!passcode.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["passcode has illegal characters.", passcode, console.log("passcode has illegal chars.")] }
+
+    var dir = this.getFullPath_usr_host()
+    if (!hintword) hintword = ""
+    var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
+    var commit_msg = this.getFullPath_usr_git(".salts")
+    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr, console.log("accesstr must be public|private.")] }
+
+    var gh_repo_create = `
+# create my-project and clone 
+echo ${dir}
+cd ${dir}
+############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
+#######################################################################################################
+gh repo create ${this.m_acct.ownername}/${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
+#######################################################################################################
+if [ -d "${dir}/${username}" ]; then
+    sudo -S chmod 777 ${username}
+    sudo -S chmod 777 ${username}/.git/config
+    sudo -S cp ${username}/.git/config ${username}/.git/config_bak
+    sudo -S cat  ${username}/.git/config
+    ls -al
+    #####################################
+    cd ${dir}/${username}
+    sudo -S echo '${salts}' > .salts
+    sudo -S git add .salts
+    sudo -S git add *
+    sudo -S git commit -m "test:${commit_msg}"
+    sudo -S git branch -M main
+    ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
+    sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
+    git push -u origin main   ##error for sudo
+    sudo -S cat  ./.git/config
+else 
+    echo ${dir}/${username} nonexisistance
+fi
+    `
+    //console.log(gh_repo_create)
+    if (this.getFullPath_usr_git() !== this.getFullPath_usr_host(username)) {
+        console.log(this.getFullPath_usr_git() + " is not the same with: " + this.getFullPath_usr_host(username))
+    }
+
+    console.log("git_gh_repo_createne_cmd...")
+    var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
+    //console.log("ret", ret)
+
     return ret
 }
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
@@ -765,58 +818,6 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 }
 
 
-BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
-    if (username.match(/\s/g)) return { err: ["username has spaces.", username, console.log("username has spaces.")] }
-    if (passcode.match(/\s/g)) return { err: ["passcode has spaces.", passcode, console.log("passcode has spaces.")] }
-    if (!username.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["username has illegal characters.", username, console.log("username has illegal chars.")] }
-    if (!passcode.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["passcode has illegal characters.", passcode, console.log("passcode has illegal chars.")] }
-
-    var dir = this.getFullPath_usr_host()
-    if (!hintword) hintword = ""
-    var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
-    var commit_msg = this.getFullPath_usr_git(".salts")
-    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr, console.log("accesstr must be public|private.")] }
-
-    var gh_repo_create = `
-# create my-project and clone 
-echo ${dir}
-cd ${dir}
-############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
-#######################################################################################################
-gh repo create ${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
-#######################################################################################################
-if [ -d "${dir}/${username}" ]; then
-    sudo -S chmod 777 ${username}
-    sudo -S chmod 777 ${username}/.git/config
-    sudo -S cp ${username}/.git/config ${username}/.git/config_bak
-    sudo -S cat  ${username}/.git/config
-    ls -al
-    #####################################
-    cd ${dir}/${username}
-    sudo -S echo '${salts}' > .salts
-    sudo -S git add .salts
-    sudo -S git add *
-    sudo -S git commit -m "test:${commit_msg}"
-    sudo -S git branch -M main
-    ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
-    sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
-    git push -u origin main   ##error for sudo
-    sudo -S cat  ./.git/config
-else 
-    echo ${dir}/${username} nonexisistance
-fi
-    `
-    //console.log(gh_repo_create)
-    if (this.getFullPath_usr_git() !== this.getFullPath_usr_host(username)) {
-        console.log(this.getFullPath_usr_git() + " is not the same with: " + this.getFullPath_usr_host(username))
-    }
-
-    console.log("git_gh_repo_createne_cmd...")
-    var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
-    //console.log("ret", ret)
-
-    return ret
-}
 BaseGitUser.prototype.get_repo_salts = function (u) {
     var fname = this.getFullPath_usr_git(".salts")
     if (!fs.existsSync(fname)) {
@@ -829,15 +830,25 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     return ar
 }
 
-
+BaseGitUser.prototype.validate_reponame = function (reponame) {
+    //The repository name must start with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes.
+    if (reponame.length >= 120) {
+        return { err: ["invalide name length."] }
+    }
+    if (!reponame.match(/^[a-z][a-z0-9\_]+$/)) return { err: ["illegal name."] }
+    return {}
+}
 BaseGitUser.prototype.Set_gitusr = function (reponame) {
+    if (!reponame) return { err: "reponame is null." }
     reponame = reponame.toLowerCase()
+    var vld = this.validate_reponame(reponame)
+    if (vld.err) return vld;
 
     this.m_sponser = new GitSponsor(reponame)
 
     this.m_projDirs = this._prepare_proj_data_dirs()
 
-    return true;
+    return { ok: "ok" };
 }
 BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     //const WorkingRootNodeName = "ddir"

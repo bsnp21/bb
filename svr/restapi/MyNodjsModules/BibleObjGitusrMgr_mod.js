@@ -280,27 +280,21 @@ var BibleObjGitusrMgr = function () {
 
 
 
-BibleObjGitusrMgr.prototype.validate_reponame = function (reponame) {
-    //The repository name must start with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes.
-    if (reponame.length >= 120) {
-        return { err: ["invalide name length."] }
-    }
-    if (!reponame.match(/^[a-z][a-z0-9\_]+$/)) return { err: ["illegal name."] }
-    return {}
-}
-BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
-    if(!repopath) return {err: "null repopath"}
-    repopath = repopath.toLowerCase()
-    console.log("========Proj_usr_account_create", repopath, passcode, hintword)
-    var vld = this.validate_reponame(repopath)
-    if (vld.err) return vld;
 
-    this.m_BaseGitUser.Set_gitusr(repopath)
+BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
+    console.log("========Proj_usr_account_create", repopath, passcode, hintword)
+    
+    var sgu = this.m_BaseGitUser.Set_gitusr(repopath)
+    if(sgu.err) return sgu
 
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (!info.err) { console.log(info); return info.err=["already exist.", repopath] }
+    if (!info.err) { 
+        console.log(info);  
+        info.err=["already exist.", repopath] ;
+        return info;
+    }
 
-    var res = this.m_BaseGitUser.gh_repo_create(repopath, passcode, hintword, accesstr)
+    var res = this.m_BaseGitUser.m_sponser.gh_repo_create(passcode, hintword, accesstr)
     if (!res) return { err: ["failed to create.", repopath] }
     if (res.err) return res;
 
@@ -344,11 +338,10 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
 BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     if(!repopath) return {err: "null repopath"}
     repopath = repopath.toLowerCase()
-    var vld = this.validate_reponame(repopath)
-    if (vld.err) return vld;
 
 
-    this.m_BaseGitUser.Set_gitusr(repopath)
+    var res = this.m_BaseGitUser.Set_gitusr(repopath)
+    if(res.err) return res;
 
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
