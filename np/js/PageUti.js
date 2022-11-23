@@ -19,7 +19,7 @@ var PageUti = {
                 trs += `<tr class='${clsn}'><td>${nam}</td><td>${str}</td></tr>`
             })
         }
-        var accesstr = ret.out.ghinfo.visibility;
+        var accesstr = (ret.out.ghinfo)?(ret.out.ghinfo.visibility):("");
         var alertclrary =  ["lightblue", "yellow", "red"]
         var accesclrary =  {"public":"lightgreen", "private": "lightgray"}
         
