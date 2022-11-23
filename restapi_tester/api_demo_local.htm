@@ -43,6 +43,11 @@
             background-color: red;
         }
 
+        .hili_ssid_parm {
+            background-color: blanchedalmond;
+            padding: 10px;
+        }
+
         pre {
             border: 1px solid black;
             background-color: lightgray;
@@ -62,61 +67,11 @@
 
 
         $(function () {
-            var usrObj = {}
-
-            $("#LoginHd").on("click", function () {
-                usrObj.repopath = $("#repopath").val()
-                usrObj.passcode = $("#passcode").val()
-                usrObj.hintword = $("#hintword").val()
-                usrObj.ttl = $("#ttl").val()
-                $("#usrobj").html("var usrObj=" + JSON.stringify(usrObj, null, 4))
-            })
-
-            $("#api_signin_ip").on("click", function () {
-
-                $("#ret_signin").html("")
-                $("#addur_ssid").attr("href", null).text("add SSID on url.")
-
-                $(this).addClass("hili")
-                var api = new BsnpRestApi()
-                api.ApiUsrAccount_login(usrObj, function (rob, err) {
-                    $("#api_signin_ip").removeClass("hili")
-                    console.log(rob)
-
-                    $("#ret_signin").html(`ret = ${JSON.stringify(rob, null, 4)}`)
-                    if (err) {
-                        console.log(rob, ur)
-                        alert("sorry, sign in failed.")
-                    } else {
-                        var ur = `${api.urlRedirectParam()}`
-                        //alert("ok=\n" + ur)
-                        $("#addur_ssid").attr("href", `${ur}`).text(ur);
-
-                        console.log(rob, ur)
-
-                    }
-                })
-            })
-
-            $("#sign_out").on("click", function () {
-                if (!confirm("Are you sure to sign out? \n\n (it could be destroyed permenantly).")) return;
-
-                $(this).addClass("hili")
-                var api = new BsnpRestApi()
-                api.ajaxion(RestApi.ApiUsrReposData_close, {}, function (ret) {
-                    //$("body").attr("onbeforeunload", null)
-                    $("#sign_out").removeClass("hili").next().append(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
-                    var urs = window.location.origin + window.location.pathname;
-                    if (confirm("reset page?")) window.open(urs, "_self")
-                })
-            })
-
 
             gen_api_sam()
 
             gen_BibleNames()
             gen_bibOjStdKeys()
-
 
         })
 
@@ -126,7 +81,7 @@
                 ApiUsrAccount_login: [{ repopath: "p1", passcode: "a" }],
                 ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiUsrAccount_logout: [{}],
-                
+
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
                 ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
@@ -191,7 +146,7 @@
                 ApiUsrReposData_close: [{ gh_repo_delete_name: "xy01" }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] }, { git_cmd_ary: ["git commit -m 'svr' "] }, { git_cmd_ary: ["git push"] }],
             }
 
-            
+
             if (window.location.href.indexOf("SSID") > 0) $("body").removeClass("url_parm_ip").addClass("url_parm_ssid")
             $(".api_test_sect").hide()
 
@@ -234,7 +189,7 @@
                         }
                         if (ret.out && ret.out.state && ret.out.state.SSID) {
                             var ur = `${api.urlRedirectParam()}`
-                            $("#addur_ssid").attr("href", `${ur}`).text(ur);
+                            $("#addur_ssid").attr("href", `${ur}`).text(ur).addClass("hili_ssid_parm");
                         }
 
                     })
@@ -247,6 +202,8 @@
                 $(this).next().slideToggle()
             })
         }
+
+
         function gen_BibleNames() {
             var trs = ""
             var ar = Object.keys(CNST.FnameOfBibleObj).concat(["./dat/MostRecentVerses", "./dat/MyBiblicalDiary"])
@@ -267,18 +224,6 @@
             $("#bibOjStdKeys").html(lis)
 
         }
-
-
-        function get_test_list(urls) {
-            var str = `<ol>
-                        <li>Add to url params: <a href='?ip=${urls}'>?ip=${urls}</a><br></li>
-                        <li>validatation check: <a href='${urls}'>${urls}</a></li>
-                        <li>validatation check: <a href='${urls}/get_OTK'>${urls}/get_OTK</a></li>
-                        </ol><br>
-                        `
-            return str;
-        }
-
 
     </script>
 
