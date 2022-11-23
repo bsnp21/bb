@@ -1058,7 +1058,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
         console.log(fname, ret)
         if(ret.dir.match(/\.git$/)) return
         var ext = ret.ext
-        var nam = ret.base.replace(/_json\.js$/, "")
+        var nam = ret.base.replace(accdir, "")
         //console.log("ret:",ret)
         var sta = fs.statSync(fname)
         var fMB = (sta.size / 1000000).toFixed(2)
