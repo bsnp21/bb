@@ -137,6 +137,9 @@ var ApiUti = {
         return { CUID: cuid, pkb64: pkb64 }
     },
     Set_output: function (pout, ret) {
+        Object.keys(ret).forEach(function(key){
+            pout[key]=ret[k]
+        })
         if (ret.err) {
             pout.err = ret.err;// //) 
             return false;
