@@ -588,7 +588,7 @@ var ApiJsonp_BibleObj = {
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
                     var str = userProject.m_BaseGitUser.execSync_cmd_git(cmd)
-                    inp.out.destroy_git_res.push(cmd + ":"str)
+                    inp.out.destroy_git_res.push(cmd + ":" + str)
                 }
                 return
             }
