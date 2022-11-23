@@ -575,7 +575,7 @@ var ApiJsonp_BibleObj = {
             if (fs.existsSync(gitdir)) {
                 inp.out.olog["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *").split("\r\n")
                 inp.out.olog["git commit"] = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`).split("\r\n")
-                inp.out.olog["git push"] = userProject.m_BaseGitUser.git_push().split("\r\n")
+                inp.out.olog["git push"] = userProject.m_BaseGitUser.git_push()
             }
             inp.out.olog[`rm -rf ${gitdir}`] = userProject.m_BaseGitUser.execSync_cmd_git(`rm -rf ${gitdir}`).split("\r\n") //BaseGUti.execSync_Cmd(proj_destroy).toString()
             inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
