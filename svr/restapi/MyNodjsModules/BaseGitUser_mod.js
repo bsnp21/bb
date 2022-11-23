@@ -1353,7 +1353,7 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
 
 
     if (!fs.existsSync(this.getFullPath_usr_git())) {
-        return null
+        return "NotExistGitDir=" + this.getFullPath_usr_git()
     }
 
     //console.log("proj", proj)
@@ -1366,7 +1366,6 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     console.log("\n----git_cmd start:>", scmd)
     var res = BaseGUti.execSync_Cmd(scmd)
     console.log("\n----git_cmd end.")
-    if (!res) res = ""
 
     return res
 }
