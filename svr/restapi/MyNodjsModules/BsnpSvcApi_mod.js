@@ -570,7 +570,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             inp.out.log = {}
-            inp.out.log[beforeDel] = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.log["beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
             if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_git())) {
                 inp.out.log["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
                 inp.out.log["git commit"] = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`)
