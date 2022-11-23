@@ -964,7 +964,7 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
 
 
 
-BaseGitUser.prototype.gh_repo_create = function (username, passcode, hintword, accesstr) {
+BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
 
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
