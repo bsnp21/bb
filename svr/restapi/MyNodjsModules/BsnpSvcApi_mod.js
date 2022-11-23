@@ -218,14 +218,14 @@ var ApiJsonp_BibleObj = {
             var TbcvObj = {};
             if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
-                    var fcod = inp.par.fnames[i];
-                    var jsfname = userProject.m_BaseGitUser.get_pfxname(fcod)
+                    var fnameID = inp.par.fnames[i];
+                    var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID)
                     console.log("jsfname:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) continue
                     var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
-                    TbcvObj[fcod] = bcObj;
-                    inp.out.desc += ":" + fcod
+                    TbcvObj[fnameID] = bcObj;
+                    inp.out.desc += ":" + fnameID
                 }
             }
             var bcvT = {}
@@ -249,18 +249,18 @@ var ApiJsonp_BibleObj = {
             if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
                 console.log("par.fnames:", par.fnames)
                 for (var i = 0; i < par.fnames.length; i++) {
-                    var fcod = par.fnames[i];
-                    var jsfname = userProject.m_BaseGitUser.get_pfxname(fcod, "cpyIfNonexistance")
+                    var fnameID = par.fnames[i];
+                    var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpyIfNonexistance")
                     console.log("load:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) {
-                        olog.push(jsfname + ":noexist:" + fcod)
+                        olog.push(jsfname + ":noexist:" + fnameID)
                         console.log("not exist..............", jsfname)
                         continue
                     }
                     var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
-                    TbcObj[fcod] = bcObj;
-                    olog.push( "loaded:" + fcod)
+                    TbcObj[fnameID] = bcObj;
+                    olog.push( "loaded:" + fnameID)
                 }
                 olog.push(":success")
             }
