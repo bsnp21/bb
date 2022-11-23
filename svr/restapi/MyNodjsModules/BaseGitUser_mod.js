@@ -1053,6 +1053,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     var totalsize = 0
     var iAlertLevel = 0
     BaseGUti.GetFilesAryFromDir(accdir, true, function (fname) {
+        if(fname.match(/\.git/)) return
         var ret = path.parse(fname);
         console.log(fname, ret)
         if(ret.dir.match(/\.git$/)) return
