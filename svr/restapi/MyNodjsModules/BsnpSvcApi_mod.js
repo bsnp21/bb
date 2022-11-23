@@ -621,7 +621,9 @@ var ApiJsonp_BibleObj = {
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
                     var arr = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/)
-                    inp.out.olog.push({cmd:arr})
+                    var obj={}
+                    obj[cmd]=arr
+                    inp.out.olog.push(obj)
                 }
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
