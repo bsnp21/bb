@@ -573,11 +573,11 @@ var ApiJsonp_BibleObj = {
             inp.out.olog["state_beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
             var gitdir = userProject.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
-                inp.out.olog["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *").split(/\r|\n/)
-                inp.out.olog["git commit"] = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`).split(/\r|\n/)
+                inp.out.olog["git add *"] = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *").split(/\r|\n/)
+                inp.out.olog["git commit"] = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`).split(/\r|\n/)
                 inp.out.olog["git push"] = userProject.m_BaseGitUser.git_push()
             }
-            inp.out.olog[`rm -rf ${gitdir}`] = userProject.m_BaseGitUser.execSync_cmd_git(`rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
+            inp.out.olog[`rm -rf ${gitdir}`] = userProject.m_BaseGitUser.execSync_gitdir_cmd(`rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
             inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
             inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID)
         })
@@ -607,7 +607,7 @@ var ApiJsonp_BibleObj = {
                 console.log("to delete:" + reponame)
                 inp.out.destroy_res = {}
                 var cmd = `sudo gh repo delete ${reponame} --confirm`
-                inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_cmd_git(cmd) // must manually do it with sudo for gh auth
+                inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd) // must manually do it with sudo for gh auth
                 inp.out.reposlist = userProject.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
                 //userProject.Session_delete(inp.SSID)
                 return
@@ -618,7 +618,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.destroy_git_res = {}
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
-                    var str = userProject.m_BaseGitUser.execSync_cmd_git(cmd)
+                    var str = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd)
                     inp.out.destroy_git_res[cmd] = str
                 }
                 return
@@ -630,8 +630,8 @@ var ApiJsonp_BibleObj = {
                 console.log("git dir not exit.")
 
             } else {
-                var res2 = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
-                var res3 = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`)
+                var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *")
+                var res3 = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`)
                 var res4 = userProject.m_BaseGitUser.git_push()
 
                 var res5 = userProject.m_BaseGitUser.Proj_detele()
@@ -660,7 +660,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var ret = userProject.m_BaseGitUser.Check_proj_state()
-            var res2 = userProject.m_BaseGitUser.execSync_cmd_git("git status -sb")
+            var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git status -sb")
             if (res2 && res2.stdout) {
                 inp.out.state.git_status_sb = res2.stdout
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
@@ -691,8 +691,8 @@ var ApiJsonp_BibleObj = {
             //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
             //await userProject.git_add_commit_push("push hard.", "");//real push hard.
 
-            var res2 = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
-            var res3 = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
+            var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *")
+            var res3 = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
             var res4 = userProject.m_BaseGitUser.git_push()
 
             userProject.m_BaseGitUser.Check_proj_state()
@@ -736,7 +736,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var ret = userProject.m_BaseGitUser.Check_proj_state()
-            var rso = userProject.m_BaseGitUser.execSync_cmd_git()
+            var rso = userProject.m_BaseGitUser.execSync_gitdir_cmd()
             console.log("\n\n*cmd-res", rso)
             userProject.m_BaseGitUser.Check_proj_state()
         })

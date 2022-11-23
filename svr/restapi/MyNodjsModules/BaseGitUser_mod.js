@@ -1276,13 +1276,13 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
 }
 
 BaseGitUser.prototype.git_pull = function (cbf) {
-    var ret = this.execSync_cmd_git("GIT_TERMINAL_PROMPT=0 git pull")
+    var ret = this.execSync_gitdir_cmd("GIT_TERMINAL_PROMPT=0 git pull")
     return ret
 }
 
 BaseGitUser.prototype.git_push = async function () {
 
-    var ret = this.execSync_cmd_git("git push").toString()
+    var ret = this.execSync_gitdir_cmd("git push").toString()
     if (null !== ret) {
         console.log("\n*** test git push:", ret)
         if (ret.match(/failed/i)) {
@@ -1308,7 +1308,7 @@ BaseGitUser.prototype.git_push_test = function () {
     echo lll | sudo -S  git commit -m '${logname}'
     echo lll | sudo -S  git push
     `
-    var ret = this.execSync_cmd_git(cmd).toString()
+    var ret = this.execSync_gitdir_cmd(cmd).toString()
     if (null !== ret) {
         console.log("\n*** test git push:", dir, ret)
         if (ret.match(/failed/i)) {
@@ -1322,7 +1322,7 @@ BaseGitUser.prototype.git_push_test = function () {
 
     return ret
 }
-BaseGitUser.prototype.execSync_cmd_git = function (gitcmd) {
+BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     var _THIS = this
 
 
