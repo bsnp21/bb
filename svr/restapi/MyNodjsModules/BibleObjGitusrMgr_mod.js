@@ -346,7 +346,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (info.err) {
         console.log(info); 
-        return { err: ["already exist", repopath], info: info }
+        return { err: ["not exist", repopath, info.err], info: info }
     }
 
     this.m_BaseGitUser.Deploy_proj()
