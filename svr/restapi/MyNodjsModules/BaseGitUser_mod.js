@@ -781,16 +781,16 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
 BaseGitUser.prototype.validate_reponame = function (reponame) {
     //The repository name must start with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes.
     if (reponame.length >= 120) {
-        return { err: ["invalide name length."] }
+        return { err: ["invalide name length.", reponame] }
     }
-    if (!reponame.match(/^[a-z][a-z0-9\_]+$/)) return { err: ["illegal name."] }
+    if (!reponame.match(/^[a-z][a-z0-9\_]+$/)) return { err: ["illegal name.", reponame] }
 
     if (reponame.match(/\s/g)) return { err: ["reponame has spaces.", reponame, console.log("reponame has spaces.")] }
     //if (passcode.match(/\s/g)) return { err: ["passcode has spaces.", passcode, console.log("passcode has spaces.")] }
-    if (!reponame.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["username has illegal characters.", reponame, console.log("username has illegal chars.")] }
+    if (!reponame.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["username has illegal characters.", reponame] }
     //if (!passcode.match(/^([a-zA-Z0-9\.\-\_]+)$/)) return { err: ["passcode has illegal characters.", passcode, console.log("passcode has illegal chars.")] }
 
-    return {}
+    return { ok: ["legal name.", reponame] }
 }
 BaseGitUser.prototype.Set_gitusr = function (reponame) {
     if (!reponame) return { err: "reponame is null." }
@@ -805,7 +805,7 @@ BaseGitUser.prototype.Set_gitusr = function (reponame) {
 
     this.m_projDirs = this._prepare_proj_data_dirs()
 
-    return { vld: vld};
+    return { vld: vld };
 }
 BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     //const WorkingRootNodeName = "ddir"
