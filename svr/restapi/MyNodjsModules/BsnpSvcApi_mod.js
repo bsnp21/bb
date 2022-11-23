@@ -569,17 +569,17 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.log = {}
-            inp.out.log["state_beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.olog = {}
+            inp.out.olog["state_beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
             var gitdir = userProject.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
-                inp.out.log["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
-                inp.out.log["git commit"] = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`)
-                inp.out.log["git push"] = userProject.m_BaseGitUser.git_push()
+                inp.out.olog["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
+                inp.out.olog["git commit"] = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`)
+                inp.out.olog["git push"] = userProject.m_BaseGitUser.git_push()
             }
-            inp.out.log[`rm -rf ${gitdir}`] = userProject.m_BaseGitUser.execSync_cmd_git(`rm -rf ${gitdir}`) //BaseGUti.execSync_Cmd(proj_destroy).toString()
+            inp.out.olog[`rm -rf ${gitdir}`] = userProject.m_BaseGitUser.execSync_cmd_git(`rm -rf ${gitdir}`) //BaseGUti.execSync_Cmd(proj_destroy).toString()
             inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
-            inp.out.log["destroySSID"] = userProject.Session_delete(inp.SSID)
+            inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID)
         })
 
         // var sret = JSON.stringify(inp, null, 4)
