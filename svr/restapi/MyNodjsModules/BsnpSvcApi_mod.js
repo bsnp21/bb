@@ -570,7 +570,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             inp.out.log = {}
-            inp.out.log["beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.log["state_beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
             var gitdir = userProject.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
                 inp.out.log["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
@@ -578,7 +578,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.log["git push"] = userProject.m_BaseGitUser.git_push()
             }
             inp.out.log[`rm -rf ${gitdir}`] = userProject.m_BaseGitUser.execSync_cmd_git(`rm -rf ${gitdir}`) //BaseGUti.execSync_Cmd(proj_destroy).toString()
-            inp.out.log["afterDel"] = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
             inp.out.log["destroySSID"] = userProject.Session_delete(inp.SSID)
         })
 
