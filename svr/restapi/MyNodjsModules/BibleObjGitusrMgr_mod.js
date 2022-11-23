@@ -143,7 +143,7 @@ NCache.Init = function () {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
-            if (1 === inp.out.state.bRepositable) {
+            if (1 === inp.out.state.bRepostoryDirExist) {
                 //
                 console.log("on del:git dir exist. push before to delete it")
                 var res2 = userProject.execSync_cmd_git("git add *")

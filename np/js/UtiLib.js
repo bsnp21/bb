@@ -88,7 +88,7 @@ var Uti = {
         $("#menuContainer, #passcode, #repopath").removeClass("menuContainer_red").removeClass("menuContainer_yellow").removeClass("menuContainer_green")
         if (ret.out.state) {
 
-            if (ret.out.state.bRepositable <= 0) {
+            if (ret.out.state.bRepostoryDirExist <= 0) {
                 $("#menuContainer, #passcode").addClass("menuContainer_yellow")
             } else {
                 $("#menuContainer").addClass("menuContainer_green")
@@ -106,10 +106,10 @@ var Uti = {
         }
         var sta = ret.out.state
         if (sta) {
-            var colr1 = (sta && 1 === sta.bRepositable) ? "lightgreen" : "yellow"
-            var msg1 = `bRepositable:${sta.bRepositable}`
-            var colr2 = (sta && 1 === sta.bRepositable) ? "lightgreen" : "yellow"
-            var msg2 = `bRepositable:${sta.bRepositable}`
+            var colr1 = (sta && 1 === sta.bRepostoryDirExist) ? "lightgreen" : "yellow"
+            var msg1 = `bRepostoryDirExist:${sta.bRepostoryDirExist}`
+            var colr2 = (sta && 1 === sta.bRepostoryDirExist) ? "lightgreen" : "yellow"
+            var msg2 = `bRepostoryDirExist:${sta.bRepostoryDirExist}`
             var desc = ret.out.save_res.desc
 
             $(eid).html(`<font color='${colr1}'>${msg1}</font>, <font color='${colr2}'>${msg2}</font>, <br><a>${desc}</a>`)

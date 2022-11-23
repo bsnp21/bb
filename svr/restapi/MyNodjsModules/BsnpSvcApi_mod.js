@@ -243,7 +243,7 @@ var ApiJsonp_BibleObj = {
 
 
             var par = inp.par, olog=[];
-            console.log("-----:bMyojDir>0", par.fnames, typeof par.fnames)
+            console.log("-----:fnames", par.fnames, typeof par.fnames)
             console.log("-----:binp.par.bibOj", par.bibOj)
             var TbcObj = {};
             if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
@@ -539,7 +539,7 @@ var ApiJsonp_BibleObj = {
         //    inp.out.state.SSID = null;
         //    if (inp.out.state.bEditable) {
         //        if (null === userProject.m_BaseGitUser.git_push_test()) {
-        //            //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
+        //            //inp.out.state.bEditable =  inp.out.state. = 0
         //            //console.log("git_push_test failed.!!!!!")
         //            inp.out.state.FailedTest = "git_push_test failed.!!!!!."
         //            userProject.m_BaseGitUser.Proj_detele()
@@ -627,7 +627,7 @@ var ApiJsonp_BibleObj = {
             }
 
             userProject.m_BaseGitUser.Check_proj_state()
-            if (0 === inp.out.state.bRepositable) {
+            if (0) {
                 //case push failed. Don't delete
                 console.log("git dir not exit.")
 

@@ -25,8 +25,8 @@ var PageUti = {
         var clrary = { "-1": "red", "0": "yellow", "1": "green" }
 
         var caps = ""
-        if (undefined !== ret.out.state.bRepositable) {
-            var idx = "" + ret.out.state.bRepositable
+        if (undefined !== ret.out.state.bRepostoryDirExist) {
+            var idx = "" + ret.out.state.bRepostoryDirExist
             caps = `<a style='background-color:${clrary[idx]};color:black;'>${msgary[idx]}</a>`
         }
 
@@ -149,12 +149,12 @@ var PageUti = {
             var colr = (sta && 1 === sta.bEditable) ? "lightgreen" : "red"
             var msg = `<font color='${colr}'>bEditable=${sta.bEditable}</font>`
 
-            var colr = (sta && 1 === sta.bRepositable) ? "lightgreen" : "yellow"
-            msg += `,<font color='${colr}'>bRepositable=${sta.bRepositable}</font>`
-            if (1 === sta.bEditable && 1 === sta.bRepositable) {
+            var colr = (sta && 1 === sta.bRepostoryDirExist) ? "lightgreen" : "yellow"
+            msg += `,<font color='${colr}'>bRepostoryDirExist=${sta.bRepostoryDirExist}</font>`
+            if (1 === sta.bEditable && 1 === sta.bRepostoryDirExist) {
                 msg = "<font color='lightgreen'> Repository works normally</font>"
             }
-            if (sta.bEditable < 1 && sta.bRepositable < 1) {
+            if (sta.bEditable < 1 && sta.bRepostoryDirExist < 1) {
                 msg = "<font color='red'>Session timeout. Sign-in again.</font>"
             }
         }

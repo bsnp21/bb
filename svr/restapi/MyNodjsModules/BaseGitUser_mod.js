@@ -532,7 +532,7 @@ var BaseGUti = {
     default_inp_out_obj: function () {
         return {
             data: null, desc: "", err: null,
-            state: { bGitDir: -1, bMyojDir: -1, bDatDir: -1, bEditable: -1, bRepositable: -1 }
+            state: {  bEditable: -1, bRepostoryDirExist: -1 }
         }
     },
 
@@ -1020,33 +1020,18 @@ fi
 
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
-    var stat = { bRepositable: 0 };//this.m_inp.out.state
-    //inp.out.state = { bGitDir: -1, bMyojDir: -1, bEditable: -1, bRepositable: -1 }
-
+    var stat = { };//this.m_inp.out.state
+  
 
     var dir = this.getFullPath_usr_myoj()
-    stat.bMyojDir = (fs.existsSync(dir)) ? 1 : 0
+  
 
     var dir = this.getFullPath_usr_dat()
-    stat.bDatDir = (fs.existsSync(dir)) ? 1 : 0
+   
 
     var dir = this.getFullPath_usr_git("/.git/config")
-    stat.bGitDir = (fs.existsSync(dir)) ? 1 : 0
+    stat.bRepostoryDirExist = fs.existsSync(dir)
 
-    stat.bEditable = (1 === stat.bMyojDir && 1 === stat.bDatDir && 1 === stat.bGitDir) ? 1 : 0
-    //stat.bRepositable = stat.bGitDir
-
-    ///// stat.missedFiles = this.run_makingup_missing_files(false)
-    //var configtxt = this.load_git_config()
-
-    //console.log("Check_proj_state ----------")
-    /////// git status
-    //stat.bEditable = stat.bGitDir * stat.bMyojDir * stat.bDatDir
-    //this.m_inp.out.state.bRepositable = 0
-    //if (configtxt.length > 0) {
-    //if clone with password ok, it would ok for pull/push 
-    stat.bRepositable = 1
-    //}
 
     var accdir = this.getFullPath_usr_git()
     var fstat = {}
@@ -1070,7 +1055,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
             str += "*"
         }
         if (fMB >= 90.0) { ////** Github: 100 MB per file, 1 GB per repo, svr:10GB
-            stat.bMyojDir = 0
+           
             iAlertLevel = 2
             str += "*"
         }
