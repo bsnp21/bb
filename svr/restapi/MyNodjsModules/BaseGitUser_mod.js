@@ -1351,7 +1351,6 @@ BaseGitUser.prototype.git_push_test = function () {
 BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     var _THIS = this
 
-
     if (!fs.existsSync(this.getFullPath_usr_git())) {
         return "NotExistGitDir=" + this.getFullPath_usr_git()
     }
@@ -1361,7 +1360,8 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     var scmd = `
     #!/bin/sh
     cd ${this.getFullPath_usr_git()}
-     echo lll |sudo -S ${gitcmd}
+     #echo lll |sudo -S ${gitcmd}
+     ${gitcmd}
     `
     console.log("\n----git_cmd start:>", scmd)
     var res = BaseGUti.execSync_Cmd(scmd)
