@@ -608,7 +608,7 @@ var ApiJsonp_BibleObj = {
                 console.log("to delete:" + reponame)
                 inp.out.destroy_res = {}
                 var cmd = `sudo gh repo delete ${reponame} --confirm`
-                inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd) // must manually do it with sudo for gh auth
+                inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
                 inp.out.reposlist = userProject.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
                 //userProject.Session_delete(inp.SSID)
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
