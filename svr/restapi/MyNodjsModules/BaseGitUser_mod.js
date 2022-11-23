@@ -1020,7 +1020,7 @@ fi
 
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
-    var stat = { bRepostoryDirExist: false, fstat: {} }; //this.m_inp.out.state
+    var stat = { bRepostoryDirExist: false }; //this.m_inp.out.state
     if (!fs.existsSync(this.getFullPath_usr_git())) {
         return stat;
     }
