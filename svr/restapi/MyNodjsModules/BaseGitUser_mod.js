@@ -690,7 +690,7 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     try {
         ret = JSON.parse(str)
     } catch {
-        ret.catcherr = "err json"
+        ret.catcherr = "err json str."
     }
     if (ret.message && ret.message === "Not Found") {
         ret.err = "gh_api_repos_nameWithOwner failed"
@@ -796,7 +796,7 @@ BaseGitUser.prototype.Set_gitusr = function (reponame) {
     if (!reponame) return { err: "reponame is null." }
     reponame = reponame.toLowerCase()
 
- 
+
 
     var vld = this.validate_reponame(reponame)
     if (vld.err) return vld;

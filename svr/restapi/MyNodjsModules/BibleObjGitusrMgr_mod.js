@@ -290,8 +290,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (!info.err) {
         console.log(info);
-        info.err = ["already exist.", repopath];
-        return info;
+        return { err: ["already exist.", repopath], info: info };
     }
 
     var res = this.m_BaseGitUser.gh_repo_create(passcode, hintword, accesstr)
@@ -345,7 +344,10 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     console.log("========__Proj_parse_usr_login__")
     var info = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (info.err) { console.log(info); return info }
+    if (info.err) {
+        console.log(info); 
+        return { err: ["already exist", repopath], info: info }
+    }
 
     this.m_BaseGitUser.Deploy_proj()
 
@@ -357,9 +359,10 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var usrObj = { repopath: repopath, passcode: passcode }
     var ssid = this.Session_create(usrObj)
 
-    var sta = this.m_BaseGitUser.Check_proj_state()
+    var state = this.m_BaseGitUser.Check_proj_state()
+    state.SSID = ssid
 
-    return { state: sta, SSID: ssid, info: info, sgu: sgu } //must be SSID capitalized ret.
+    return { state: state, info: info, sgu: sgu } //must be SSID capitalized ret.
 }
 
 BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
