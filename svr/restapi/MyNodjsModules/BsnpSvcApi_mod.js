@@ -598,10 +598,11 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            console.log("destroy====par:", inp.par)
+            console.log("ApiUsrRepos_toolkids==>par:", inp.par)
+            inp.out.state_before_cmd = userProject.Check_proj_state()
 
             if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
-                console.log("enter destroy====par:")
+                console.log("enter destroy ===>par:")
                 var reponame = inp.par.gh_repo_delete_name
                 if (reponame === "self") reponame = userProject.m_BaseGitUser.m_sponser.m_reponame;
                 console.log("to delete:" + reponame)
@@ -610,36 +611,22 @@ var ApiJsonp_BibleObj = {
                 inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd) // must manually do it with sudo for gh auth
                 inp.out.reposlist = userProject.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
                 //userProject.Session_delete(inp.SSID)
+                inp.out.state = userProject.Check_proj_state()
                 return
             }
 
             if (inp.par.git_cmd_ary && inp.par.git_cmd_ary.length > 0) {
                 console.log("enter => inp.par.git_cmd_ary:")
-                inp.out.destroy_git_res = {}
+                inp.out.olog = {}
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
-                    var str = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd)
-                    inp.out.destroy_git_res[cmd] = str
+                    var art = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/)
+                    inp.out.olog[cmd] = art
                 }
                 return
             }
+            inp.out.state = userProject.Check_proj_state()
 
-            userProject.m_BaseGitUser.Check_proj_state()
-            if (0) {
-                //case push failed. Don't delete
-                console.log("git dir not exit.")
-
-            } else {
-                var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *")
-                var res3 = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`)
-                var res4 = userProject.m_BaseGitUser.git_push()
-
-                var res5 = userProject.m_BaseGitUser.Proj_detele()
-            }
-
-            //userProject.Check_proj_state()ub_1
-
-            userProject.Session_delete(inp.SSID)
         })
 
         // var sret = JSON.stringify(inp, null, 4)
