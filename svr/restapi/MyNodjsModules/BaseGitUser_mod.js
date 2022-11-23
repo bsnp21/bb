@@ -1074,7 +1074,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
             iAlertLevel = 2
             str += "*"
         }
-        fstat[fname.replace(accdir, "")] = str
+        fstat[fname.replace(accdir, "").trim("/")] = str
     });
 
     stat.fstat = fstat
