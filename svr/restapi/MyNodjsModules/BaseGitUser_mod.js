@@ -1048,7 +1048,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     stat.bRepositable = 1
     //}
 
-    var accdir = this.getFullPath_usr_acct()
+    var accdir = this.getFullPath_usr_git()
     var fstat = {}
     var totalsize = 0
     var iAlertLevel = 0
