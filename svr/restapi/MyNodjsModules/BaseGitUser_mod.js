@@ -1008,10 +1008,10 @@ fi
     }
 
     console.log("git_gh_repo_createne_cmd...")
-    var ret = BaseGUti.execSync_Cmd(gh_repo_create).toString()
+    var str = BaseGUti.execSync_Cmd(gh_repo_create).toString().split(/\r|\n/)
     //console.log("ret", ret)
 
-    return ret
+    return str
 }
 
 
