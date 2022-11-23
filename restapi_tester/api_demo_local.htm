@@ -58,14 +58,14 @@
 
 
         $(function () {
+            var usrObj = {}
 
-            $("#passcode").on("click", function () {
-                var usr = {}
-                usr.repopath = $("#repopath").val()
-                usr.passcode = $("#passcode").val()
-                usr.ttl = $("#ttl").val()
-
-                $("#usrobj").html("var usr=" + JSON.stringify(usr, null, 4))
+            $("#LoginHd").on("click", function () {
+                usrObj.repopath = $("#repopath").val()
+                usrObj.passcode = $("#passcode").val()
+                usrObj.hintword = $("#hintword").val()
+                usrObj.ttl = $("#ttl").val()
+                $("#usrobj").html("var usrObj=" + JSON.stringify(usrObj, null, 4))
             })
 
             $("#api_signin_ip").on("click", function () {
@@ -74,14 +74,8 @@
                 $("#addur_ssid").attr("href", null).text("add SSID on url.")
 
                 $(this).addClass("hili")
-                var usr = {}
-                usr.repopath = $("#repopath").val()
-                usr.passcode = $("#passcode").val()
-                usr.ttl = $("#ttl").val()
-
                 var api = new BsnpRestApi()
-                api.SSID = "-"
-                api.ApiUsrAccount_login(usr, function (rob, err) {
+                api.ApiUsrAccount_login(usrObj, function (rob, err) {
                     $("#api_signin_ip").removeClass("hili")
                     console.log(rob)
 
@@ -358,13 +352,14 @@
             <h3>Repository</h3>
             repopath:<input id="repopath" value="p1"></input><br>
             passcode:<input id="passcode" value="a" val2="TPgFNnz" v3="9v5wGF5eN"
-                onclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
+                xonclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
+            hintword:<input id="hintword" value="asa"></input><br>
             <a onclick="$(this).next().val(1)">TTL:</a> <input id="ttl" value="9999"></input>
             <pre id="usrobj"></pre>
         </li>
 
         <li>
-            <h3 id="">Login</h3>
+            <h3 id="LoginHd">Login</h3>
 
             <pre id="api_signin_ip">
                     var api = new BsnpRestApi()
