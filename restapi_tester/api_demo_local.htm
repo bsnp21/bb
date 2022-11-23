@@ -144,9 +144,11 @@
                 ],
 
                 ApiUsrRepos_toolkids: [{ gh_repo_delete_name: "xy01" }, { git_cmd_ary: ["gh repo list --limit 10000"] }, { git_cmd_ary: ["gh repo delete pub1 --confirm", "gh repo list --limit 10000"] },
-                { git_cmd_ary: ["gh api repos/bsnpghrepolist/p1 --jsaon name"] }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] }, 
-                { gh_repo_list_tot_diskUsage: 1 }, 
-                { git_cmd_ary: ["git commit -m 'svr' "] }, { git_cmd_ary: ["git push"] }],
+                { git_cmd_ary: ["gh api repos/bsnpghrepolist/p1 --jsaon name"] }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] },
+                { gh_repo_list_tot_diskUsage: 1 },
+                { git_cmd_ary: ["git commit -m 'svr' "] }, { git_cmd_ary: ["git push"] },
+                { git_cmd_ary: ["ls -al ../"] }, { git_cmd_ary: ["rm -rf  ../xyz"] },
+                ],
             }
 
 

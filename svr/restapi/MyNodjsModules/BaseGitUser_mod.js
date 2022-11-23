@@ -1366,6 +1366,7 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     console.log("\n----git_cmd start:>", scmd)
     var res = BaseGUti.execSync_Cmd(scmd)
     console.log("\n----git_cmd end.")
+    if (!res) res = ""
 
     return res
 }
