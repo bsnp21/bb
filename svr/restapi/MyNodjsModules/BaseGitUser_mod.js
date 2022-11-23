@@ -679,10 +679,10 @@ GitSponsor.prototype.gh_repo_view_json = function () {
     console.log("usrsInfo", usrsInfo)
     return { obj: usrsInfo }
 }
-GitSponsor.prototype.gh_api_repos = function () {
+GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
     var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
-    console.log("gh_api_repos:", str)
+    console.log("gh_api_repos_nameWithOwner:", str)
     var ret = {
         "message": "Not Found",
         "documentation_url": "https://docs.github.com/rest/reference/repos#get-a-repository"
@@ -693,7 +693,7 @@ GitSponsor.prototype.gh_api_repos = function () {
         ret.catcherr = err
     }
     if(ret.message && ret.message==="Not Found"){
-        ret.err="gh_api_repos failed"
+        ret.err="gh_api_repos_nameWithOwner failed"
     }
     console.log("ret", ret)
     return ret
