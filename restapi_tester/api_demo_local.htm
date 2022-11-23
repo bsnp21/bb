@@ -127,6 +127,7 @@
             var sample_apiPar = {
                 ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiUsrAccount_login: [{ repopath: "p1", passcode: "a" }],
+                ApiUsrAccount_logout:[{}],
                 ApiUsrReposData_close: [{ gh_repo_delete_name: "xy01" }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] }, { git_cmd_ary: [ "git commit -m 'svr' "] }, { git_cmd_ary: ["git push"] }],
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],

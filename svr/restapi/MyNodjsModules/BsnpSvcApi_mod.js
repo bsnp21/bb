@@ -319,9 +319,10 @@ var ApiJsonp_BibleObj = {
             save_res.len = karyObj.txt.length
             save_res.dlt = dlt
             save_res.desc = `${tagName} saved.`
+
             inp.out.save_res = save_res
 
-            userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
+            inp.out.git_res = userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
@@ -539,7 +540,7 @@ var ApiJsonp_BibleObj = {
         //            //inp.out.state.bEditable =  inp.out.state.bRepositable = 0
         //            //console.log("git_push_test failed.!!!!!")
         //            inp.out.state.FailedTest = "git_push_test failed.!!!!!."
-        //            userProject.m_BaseGitUser.Destroy_proj()
+        //            userProject.m_BaseGitUser.Proj_detele()
         //        } else {
         //            inp.out.state.SSID = userProject.Session_create()
         //            console.log("Session_create ==", inp.out.state.SSID)
@@ -560,6 +561,33 @@ var ApiJsonp_BibleObj = {
             ApiUti.Set_output(inp.out, ret)
             console.log(inp)
         })
+    },
+    ApiUsrAccount_logout: async function (req, res) {
+
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+            var userProject = new BibleObjGitusrMgr()
+            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
+            inp.out.log = {}
+            inp.out.log[beforeDel] = userProject.m_BaseGitUser.Check_proj_state()
+            if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_git())) {
+                inp.out.log["git add *"] = userProject.m_BaseGitUser.execSync_cmd_git("git add *")
+                inp.out.log["git commit"] = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`)
+                inp.out.log["git push"] = userProject.m_BaseGitUser.git_push()
+            }
+            inp.out.log["destroy"] = userProject.m_BaseGitUser.Proj_detele()
+            inp.out.log["afterDel"] = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.log["destroySSID"] = userProject.Session_delete(inp.SSID)
+        })
+
+        // var sret = JSON.stringify(inp, null, 4)
+        // var sid = ""
+        // 
+        // console.log("oup is ", inp.out)
+        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
+        // res.write(`Jsonpster.Response(${sret},${sid});`);
+        // res.end();
     },
 
     ApiUsrReposData_close: async function (req, res) {
@@ -605,7 +633,7 @@ var ApiJsonp_BibleObj = {
                 var res3 = userProject.m_BaseGitUser.execSync_cmd_git(`git commit -m "before del. repodesc"`)
                 var res4 = userProject.m_BaseGitUser.git_push()
 
-                var res5 = userProject.m_BaseGitUser.Destroy_proj()
+                var res5 = userProject.m_BaseGitUser.Proj_detele()
             }
 
             //userProject.Check_proj_state()ub_1

@@ -2119,8 +2119,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
         var api = new BsnpRestApi()
         var url = `./mySignIn.htm${window.location.search}`
-        api.ajaxion(RestApi.ApiUsrReposData_close, {
-
+        api.ajaxion(RestApi.ApiUsrAccount_logout, {
         }, function (ret) {
             $("body").attr("onbeforeunload", null)
             window.open(url, "_self")

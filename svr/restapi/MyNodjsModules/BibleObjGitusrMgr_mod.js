@@ -150,7 +150,7 @@ NCache.Init = function () {
                 var res3 = userProject.execSync_cmd_git(`git commit -m "on del in Cache"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.m_BaseGitUser.Destroy_proj()
+                var res5 = userProject.m_BaseGitUser.Proj_detele()
             }
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)

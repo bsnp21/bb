@@ -1029,7 +1029,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
 }
 
 
-BaseGitUser.prototype.Destroy_proj = function () {
+BaseGitUser.prototype.Proj_detele = function () {
     var inp = { out: {} };//this.m_inp
 
     var gitdir = this.getFullPath_usr_git()
@@ -1042,7 +1042,6 @@ BaseGitUser.prototype.Destroy_proj = function () {
         inp.out.desc += "destroyed git dir: " + gitdir
     }
 
-    this.Check_proj_state()
 
     //this.Session_delete()
     return inp
