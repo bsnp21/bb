@@ -289,6 +289,7 @@ BibleObjGitusrMgr.prototype.validate_reponame = function (reponame) {
     return {}
 }
 BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
+    if(!repopath) return {err: "null repopath"}
     repopath = repopath.toLowerCase()
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
     var vld = this.validate_reponame(repopath)
@@ -341,6 +342,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
     return this.m_BaseGitUser.Set_gitusr(usr.repopath)
 }
 BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
+    if(!repopath) return {err: "null repopath"}
     repopath = repopath.toLowerCase()
     var vld = this.validate_reponame(repopath)
     if (vld.err) return vld;
