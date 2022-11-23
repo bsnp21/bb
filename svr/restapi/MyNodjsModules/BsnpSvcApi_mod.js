@@ -591,7 +591,7 @@ var ApiJsonp_BibleObj = {
         // res.end();
     },
 
-    ApiUsrReposData_close: async function (req, res) {
+    ApiUsrRepos_toolkids: async function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()

@@ -103,7 +103,7 @@
 
                 $(this).addClass("hili")
                 var api = new BsnpRestApi()
-                api.ajaxion(RestApi.ApiUsrReposData_close, {}, function (ret) {
+                api.ajaxion(RestApi.ApiUsrRepos_toolkids, {}, function (ret) {
                     //$("body").attr("onbeforeunload", null)
                     $("#sign_out").removeClass("hili").next().append(`<pre>${JSON.stringify(ret, null, 4)}</pre>`)
                     var urs = window.location.origin + window.location.pathname;
@@ -369,7 +369,7 @@
         <li>
             <h3>Sign out</h3>
             <pre id="sign_out">
-                api.ApiUsrReposData_close({}, (ret)=>{})
+                api.ApiUsrRepos_toolkids({}, (ret)=>{})
             </pre><a>..</a>
         </li>
         <li>

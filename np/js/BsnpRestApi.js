@@ -104,7 +104,7 @@ var RestApi_uPar_Validate = {
             data: ""
         })
     },
-    "ApiUsrReposData_close": function () { },
+    "ApiUsrRepos_toolkids": function () { },
     "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
@@ -259,8 +259,8 @@ BsnpRestApi.prototype.ApiUsrAccount_logout = function (par, cbf) {
     return this.ajaxion("ApiUsrAccount_logout", par, cbf)
 }
 
-BsnpRestApi.prototype.ApiUsrReposData_close = function (par, cbf) {
-    return this.ajaxion("ApiUsrReposData_close", par, cbf)
+BsnpRestApi.prototype.ApiUsrRepos_toolkids = function (par, cbf) {
+    return this.ajaxion("ApiUsrRepos_toolkids", par, cbf)
 }
 
 BsnpRestApi.prototype.ApiBibleObj_load_by_bibOj = function (par, cbf) {

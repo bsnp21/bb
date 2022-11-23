@@ -19,15 +19,14 @@ var PageUti = {
                 trs += `<tr class='${clsn}'><td>${nam}</td><td>${str}</td></tr>`
             })
         }
-        var accesstr = ret.out.state.repo_gitInfo ? ret.out.state.repo_gitInfo[0]:""
-
-        var msgary = { "-1": "Session Timeout", "0": `Hibernate (${accesstr})`, "1": `Normal (${accesstr})` }
-        var clrary = { "-1": "red", "0": "yellow", "1": "green" }
-
+        var accesstr = ret.out.ghinfo.visibility;
+        var alertclrary =  ["lightblue", "yellow", "red"]
+        var accesclrary =  {"public":"lightgreen", "private": "lightgray"}
+        
         var caps = ""
         if (undefined !== ret.out.state.bRepostoryDirExist) {
-            var idx = "" + ret.out.state.bRepostoryDirExist
-            caps = `<a style='background-color:${clrary[idx]};color:black;'>${msgary[idx]}</a>`
+            var idx =  ret.out.state.repo_alertLevel
+            caps = `<a style='background-color:${accesclrary[accesstr]};color:black;'>${accesstr}</a><br><a style='background-color:${alertclrary[idx]};color:black;'>${ret.out.state.repo_usage}</a><br> `
         }
 
         var tbs = `<table border='1'><caption>${caps}</caption><thead><tr><th>NoteFile</th><th>MemUsage</th></tr></thead>${trs}</table>`
@@ -107,7 +106,7 @@ var PageUti = {
     },
     repo_destroy: function (bForce) {
         var api = new BsnpRestApi()
-        api.ajaxion(RestApi.ApiUsrReposData_close, {
+        api.ajaxion(RestApi.ApiUsrRepos_toolkids, {
 
         }, function (ret) {
             $("#otb").html("<font color='green'>Repos is undocked.</font>")
