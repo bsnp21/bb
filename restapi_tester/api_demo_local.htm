@@ -2,7 +2,7 @@
 
 <HEAD>
     <TITLE>test</TITLE>
-    <base target="_blank" />
+    <base target="_self" />
     <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
     <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
 
@@ -27,8 +27,12 @@
 
 
     <style>
-        body {
+        .url_parm_ip {
             background-color: aqua;
+        }
+
+        .url_parm_ssid {
+            background-color: blanchedalmond;
         }
 
         input {
@@ -119,10 +123,10 @@
 
         function gen_api_sam() {
             var sample_apiPar = {
-                ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiUsrAccount_login: [{ repopath: "p1", passcode: "a" }],
-                ApiUsrAccount_logout:[{}],
-                ApiUsrReposData_close: [{ gh_repo_delete_name: "xy01" }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] }, { git_cmd_ary: [ "git commit -m 'svr' "] }, { git_cmd_ary: ["git push"] }],
+                ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
+                ApiUsrAccount_logout: [{}],
+                
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
                 ApiBibleObj_write_Usr_BkcChpVrs_txt: [{ fnames: ['e_v_CUVS_enn2'], inpObj: { Gen: { '1': { '1': 'in the beginning' } } } }],
                 ApiBibleObj_search_txt: [{ fnames: ['NIV', 'e_Note'], bibOj: { Gen: {} }, Search: { File: "NIV", Strn: "Melchizedek" } }],
@@ -183,7 +187,14 @@
                     }
                 },
                 ],
+
+                ApiUsrReposData_close: [{ gh_repo_delete_name: "xy01" }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] }, { git_cmd_ary: ["git commit -m 'svr' "] }, { git_cmd_ary: ["git push"] }],
             }
+
+            
+            if (window.location.href.indexOf("SSID") > 0) $("body").removeClass("url_parm_ip").addClass("url_parm_ssid")
+            $(".api_test_sect").hide()
+
 
             var lis = ""
             for (key in sample_apiPar) {
@@ -193,7 +204,12 @@
                 })
                 lis += `<li><h4>RestApi.${key}</h4>${sam}</li>`
             }
-            $("#apiIdStr").html(lis)
+
+            if (window.location.href.indexOf("ip") > 0) {
+                $("body").addClass("url_parm_ip")
+                $(".api_test_sect").show()
+                $("#apiIdStr").html(lis)
+            }
 
             $(".run_sam").on("click", function () {
                 var txt = $(this).prev().text().substr(8)
@@ -216,6 +232,11 @@
                         if (ret.out.err) {
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
+                        if (ret.out && ret.out.state && ret.out.state.SSID) {
+                            var ur = `${api.urlRedirectParam()}`
+                            $("#addur_ssid").attr("href", `${ur}`).text(ur);
+                        }
+
                     })
             })
             $(".xcloseup").on("click", function () {
@@ -279,10 +300,6 @@
 
 
             <pre>
-        <!-------------------------------------------------------------------------------->
-        &lt;script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
-        &lt;script language="javascript" src="../jq/jquery.js"></script>
-    
         <!------------------------------------api----------------------------------------->
        
         &lt;script src="https://bsnp21.github.io/bb/np/js/BsnpRestApi.js"></script>
@@ -340,53 +357,21 @@
                 </tr>
             </table>
 
-
-
-
-
         </li>
 
 
-
-        <li>
-            <h3>Repository</h3>
-            repopath:<input id="repopath" value="p1"></input><br>
-            passcode:<input id="passcode" value="a" val2="TPgFNnz" v3="9v5wGF5eN"
-                xonclick="$(this).val('gSzk'+'TPgFNnz'+'9v5wGF5eN')"></input><br>
-            hintword:<input id="hintword" value="asa"></input><br>
-            <a onclick="$(this).next().val(1)">TTL:</a> <input id="ttl" value="9999"></input>
-            <pre id="usrobj"></pre>
-        </li>
-
-        <li>
-            <h3 id="LoginHd">Login</h3>
-
-            <pre id="api_signin_ip">
-                    var api = new BsnpRestApi()
-                    api.ApiUsrAccount_login(usr, function (ret, err){});
-                </pre>
-            <a id="addur_ssid">add SSID on url param</a>
-            <pre class="outp" id="ret_signin"></pre>
-            <br>
-        </li>
-
-        <li>
-            <h3>Sign out</h3>
-            <pre id="sign_out">
-                api.ApiUsrReposData_close({}, (ret)=>{})
-            </pre><a>..</a>
-        </li>
-        <li>
+        <li class="api_test_sect">
             <h3>BsnpRestApi.ajaxion </h3>
+            <a id="addur_ssid">add SSID on url param for page after login</a>
             <ol id="apiIdStr">
             </ol>
         </li>
-        <li>
+        <li class="api_test_sect">
             <h3>Available fnames or Research.File </h3>
             <ol id="BibleNames">
             </ol>
         </li>
-        <li>
+        <li class="api_test_sect">
             <h3>bibOj std keys</h3>
             <ol id="bibOjStdKeys"></ol>
         </li>
