@@ -568,8 +568,9 @@ GitSponsor.prototype.set_reponame = function (reponame) {
     this.m_reponame = reponame
 }
 GitSponsor.prototype.gh_repo_list_all_obj = function () {
+    var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
     var istart = this.m_acct.ownername.length + 1
-    var str = BaseGUti.execSync_Cmd("gh repo list").toString()// --json nameWithOwner|url
+    var str = BaseGUti.execSync_Cmd(`gh repo list --limit ${MAX_SIZE}`).toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
     if (str.indexOf("Command failed") >= 0) {
         console.log("=============gh is not installed or not work:", str)
@@ -589,6 +590,31 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     //console.log("lines", lines)
     console.log("usrsInfo", usrsInfo)
     return { obj: usrsInfo }
+}//gh repo list --json diskUsage --limit 10
+
+GitSponsor.prototype.gh_repo_list_tot_diskUsage = function () {
+    var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
+    var str = BaseGUti.execSync_Cmd(`gh repo list --json diskUsage --limit ${MAX_SIZE}`).toString()// --json nameWithOwner|url
+    console.log("gh repo list:", str)
+    if (str.indexOf("Command failed") >= 0) {
+        console.log("=============gh is not installed or not work:", str)
+        return { err: [str], obj: {} };
+    }
+    console.log("=============gh works")
+    var robj = {}
+    try {
+        var objAry = JSON.parse(str)
+        var tot_repos = objAry.length
+        var tot_diskUsage = 0
+        for (var i = 0; i < tot_repos; i++) {
+            tot_diskUsage += objAry[i].diskUsage
+        }
+        robj.tot_usrNumber = tot_repos
+        robj.tot_diskUsage = tot_diskUsage
+    } catch {
+        robj.err = ["failed json str"]
+    }
+    return robj
 }
 GitSponsor.prototype.gh_repo_view_json__________ = function () {
     var viewItems = ["assignableUsers",

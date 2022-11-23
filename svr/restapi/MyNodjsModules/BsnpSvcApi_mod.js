@@ -137,8 +137,8 @@ var ApiUti = {
         return { CUID: cuid, pkb64: pkb64 }
     },
     Output_append: function (pout, ret) {
-        Object.keys(ret).forEach(function(key){
-            pout[key]=ret[key]
+        Object.keys(ret).forEach(function (key) {
+            pout[key] = ret[key]
         })
         if (ret.err) {
             return false;
@@ -242,7 +242,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
 
-            var par = inp.par, olog=[];
+            var par = inp.par, olog = [];
             console.log("-----:fnames", par.fnames, typeof par.fnames)
             console.log("-----:binp.par.bibOj", par.bibOj)
             var TbcObj = {};
@@ -260,7 +260,7 @@ var ApiJsonp_BibleObj = {
                     }
                     var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
                     TbcObj[fnameID] = bcObj;
-                    olog.push( "loaded:" + fnameID)
+                    olog.push("loaded:" + fnameID)
                 }
                 olog.push(":success")
             }
@@ -501,7 +501,7 @@ var ApiJsonp_BibleObj = {
         if (ret) {
             userProject.m_BaseGitUser.Deploy_proj()
 
-           
+
         }
 
         var sret = JSON.stringify(inp, null, 4)
@@ -614,6 +614,10 @@ var ApiJsonp_BibleObj = {
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
             }
+            if (inp.par.gh_repo_list_tot_diskUsage) {
+                inp.out.gh_repo_list_tot_diskUsage = userProject.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
+                return
+            }
 
             if (inp.par.git_cmd_ary && inp.par.git_cmd_ary.length > 0) {
                 console.log("enter => inp.par.git_cmd_ary:")
@@ -621,13 +625,14 @@ var ApiJsonp_BibleObj = {
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
                     var arr = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
-                    var obj={}
-                    obj[cmd]=arr
+                    var obj = {}
+                    obj[cmd] = arr
                     inp.out.olog.push(obj)
                 }
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
             }
+
 
         })
 
