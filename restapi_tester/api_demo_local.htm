@@ -125,7 +125,7 @@
 
         function gen_api_sam() {
             var sample_apiPar = {
-                ApiUsrAccount_create: [{ repopath: "p1", passcode: "a", hintword: "aas", accesstr: "public" }],
+                ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiUsrAccount_login: [{ repopath: "p1", passcode: "a" }],
                 ApiUsrReposData_destroy: [{ gh_repo_delete_name: "xy01" }, { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] }, { git_cmd_ary: ["git push"] }],
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' } } } }],
