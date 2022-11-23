@@ -107,7 +107,7 @@ var PageUti = {
     },
     repo_destroy: function (bForce) {
         var api = new BsnpRestApi()
-        api.ajaxion(RestApi.ApiUsrReposData_destroy, {
+        api.ajaxion(RestApi.ApiUsrReposData_close, {
 
         }, function (ret) {
             $("#otb").html("<font color='green'>Repos is undocked.</font>")

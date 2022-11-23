@@ -562,7 +562,7 @@ var ApiJsonp_BibleObj = {
         })
     },
 
-    ApiUsrReposData_destroy: async function (req, res) {
+    ApiUsrReposData_close: async function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
