@@ -422,7 +422,7 @@ BibleObjGitusrMgr.prototype.Session_get_usr = function (ssid) {
 BibleObjGitusrMgr.prototype.Session_create = function (usr) {
 
     var ssid = (new Date()).getTime()+this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
-    var ssid_b64 = Buffer.from(ssid).toString("base64") //=btoa()
+    var ssid_b64 = ssid;//Buffer.from(ssid).toString("base64") //=btoa()
     var ttl = NCache.m_TTL //default.
 
     NCache.Set(ssid_b64, usr, ttl)
