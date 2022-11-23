@@ -805,7 +805,7 @@ BaseGitUser.prototype.Set_gitusr = function (reponame) {
 
     this.m_projDirs = this._prepare_proj_data_dirs()
 
-    return { ok: "ok" };
+    return { vld: vld};
 }
 BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     //const WorkingRootNodeName = "ddir"
