@@ -260,7 +260,7 @@ var ApiJsonp_BibleObj = {
                     }
                     var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
                     TbcObj[trn] = bcObj;
-                    olog.push( ":" + trn)
+                    olog.push( "loaded:" + trn)
                 }
                 olog.push(":success")
             }
