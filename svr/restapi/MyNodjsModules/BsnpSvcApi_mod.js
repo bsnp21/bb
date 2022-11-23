@@ -570,7 +570,8 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Set_output(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             console.log("destroy====par:", inp.par)
-            if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 1) {
+
+            if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
                 console.log("enter destroy====par:")
                 var reponame = inp.par.gh_repo_delete_name
                 if (reponame === "self") reponame = userProject.m_BaseGitUser.m_sponser.m_reponame;
@@ -580,7 +581,15 @@ var ApiJsonp_BibleObj = {
                 //userProject.Session_delete(inp.SSID)
                 return
             }
-            return
+
+            if (inp.par.git_cmd_ary && inp.par.git_cmd_ary.length > 0) {
+                console.log("enter => inp.par.git_cmd_ary:")
+                for(var i=0; i<inp.par.git_cmd_ary.length;i++){
+                    var cmd = inp.par.git_cmd_ary[i]
+                    userProject.m_BaseGitUser.execSync_cmd_git(cmd)
+                }
+                return 
+            }
 
             userProject.m_BaseGitUser.Check_proj_state()
             if (0 === inp.out.state.bRepositable) {
