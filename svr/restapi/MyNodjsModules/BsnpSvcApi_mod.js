@@ -620,7 +620,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.olog = []
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
-                    var arr = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/).replace(/[\t]/g, "\s\s\s\s")
+                    var arr = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).replace(/[\t]/g, "\s\s\s\s").split(/\r|\n/)
                     var obj={}
                     obj[cmd]=arr
                     inp.out.olog.push(obj)
