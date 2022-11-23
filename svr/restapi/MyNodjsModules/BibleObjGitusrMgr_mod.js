@@ -301,7 +301,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     var ret = this.m_BaseGitUser.Check_proj_state()
     ret.gh_api_repos_info = info
     ret.ghrepolistTot = 0;
-    return { state: ret, gh_repo_create: res, sgu: sgu, info: info }
+    return { state: ret, sgu: sgu, info_before_creation: info, gh_repo_create: res }
 }
 
 
