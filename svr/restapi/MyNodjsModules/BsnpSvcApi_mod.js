@@ -364,13 +364,13 @@ var ApiJsonp_BibleObj = {
                 return;
             }
 
-            var karyObj = BaseGUti.inpObj_to_karyObj(inp.par.inpObj)
-            if (karyObj.kary.length !== 4) {
-                save_res.desc = `err inpObj: ${JSON.stringify(karyObj)}`
-                return
-            }
+            //var karyObj = BaseGUti.inpObj_to_karyObj(inp.par.inpObj)
+            //if (karyObj.kary.length !== 4) {
+            //    save_res.desc = `err inpObj: ${JSON.stringify(karyObj)}`
+            //    return
+            //}
             console.log("inp.par.inpObj", inp.par.inpObj)
-            console.log("karyObj", karyObj)
+            //console.log("karyObj", karyObj)
             console.log("bio.obj", bio.obj)
 
             BaseGUti.FetchObj_UntilEnd(bio.obj, inp.par.inpObj,
@@ -383,18 +383,18 @@ var ApiJsonp_BibleObj = {
                 })
             console.log("2 bio.obj", bio.obj)
 
-            var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
-            if (!pChp[karyObj.vrs]) {
-                pChp[karyObj.vrs] = ""
-            }
-
-            var dlt = karyObj.txt.length - pChp[karyObj.vrs].length
-            if (pChp[karyObj.vrs] === karyObj.txt) {
-                console.log("Not to save: the new txt is same as original txt-----.dlt=", dlt)
-            } else {
-                console.log("Save: new txt differs original txt-----.dlt=", dlt)
-                pChp[karyObj.vrs] = karyObj.txt
-            }
+            //var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
+            //if (!pChp[karyObj.vrs]) {
+            //    pChp[karyObj.vrs] = ""
+            //}
+//
+            //var dlt = karyObj.txt.length - pChp[karyObj.vrs].length
+            //if (pChp[karyObj.vrs] === karyObj.txt) {
+            //    console.log("Not to save: the new txt is same as original txt-----.dlt=", dlt)
+            //} else {
+            //    console.log("Save: new txt differs original txt-----.dlt=", dlt)
+            //    pChp[karyObj.vrs] = karyObj.txt
+            //}
             bio.writeback()
 
             ////
