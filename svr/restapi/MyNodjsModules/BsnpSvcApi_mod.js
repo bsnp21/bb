@@ -308,8 +308,12 @@ var ApiJsonp_BibleObj = {
                             BaseGUti.Walk_of_entries(carryObj,
                                 function (bkc, chp, vrs, emptyobj) {//at the end of object tree.
                                     if ("object" === typeof (emptyobj)) {
-                                        if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs]))
-                                        carryObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
+                                        if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs])) {
+                                            carryObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
+                                        }
+                                        else {
+                                            carryObj[bkc][chp][vrs][fnameID] = ""
+                                        }
                                     } else {
                                         carryObj[bkc][chp][vrs][fnameID] = ""
                                         console.log("============ Error, Walk_of_entries=", bkc, chp, vrs, emptyobj)
