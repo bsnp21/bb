@@ -349,7 +349,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
 
-            inp.out.olog={}
+            inp.out.olog = {}
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
             var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
@@ -369,8 +369,19 @@ var ApiJsonp_BibleObj = {
                 save_res.desc = `err inpObj: ${JSON.stringify(karyObj)}`
                 return
             }
-            console.log(karyObj)
-            var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs]
+            console.log("inp.par.inpObj", inp.par.inpObj)
+            console.log("karyObj", karyObj)
+
+            BaseGUti.FetchObj_UntilEnd(bio.obj, inp.par.inpObj,
+                function (carObj, srcObj, carProperty) {//at the end of object tree.
+                    if ("string" === typeof (carObj[carProperty])) {
+                        carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy or src.
+                    } else {
+                        console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
+                    }
+                })
+
+            var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
             if (!pChp[karyObj.vrs]) {
                 pChp[karyObj.vrs] = ""
             }
