@@ -383,8 +383,6 @@ var ApiJsonp_BibleObj = {
                 })
             console.log("2 bio.obj", bio.obj)
 
-            bio.obj = inp.par.inpObj
-
             var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
             if (!pChp[karyObj.vrs]) {
                 pChp[karyObj.vrs] = ""
@@ -392,12 +390,12 @@ var ApiJsonp_BibleObj = {
 
             var dlt = karyObj.txt.length - pChp[karyObj.vrs].length
             if (pChp[karyObj.vrs] === karyObj.txt) {
-                console.log("Not to save: the new txt is same as original txt-----.")
+                console.log("Not to save: the new txt is same as original txt-----.dlt=", dlt)
             } else {
                 console.log("Save: new txt differs original txt-----.dlt=", dlt)
                 pChp[karyObj.vrs] = karyObj.txt
-                bio.writeback()
             }
+            bio.writeback()
 
             ////
             var tagName = `${doc}~${karyObj.bkc}${karyObj.chp}:${karyObj.vrs}`
