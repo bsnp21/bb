@@ -952,7 +952,9 @@ BaseGitUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
             #cd -`
         var ret = BaseGUti.execSync_Cmd(cp_template_cmd).toString()
         console.log("getFullPath_usr_acct", cp_template_cmd, ret)
+        return ret
     }
+    return ""
 }
 BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
