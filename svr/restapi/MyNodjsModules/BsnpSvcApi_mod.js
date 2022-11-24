@@ -149,6 +149,9 @@ var ApiUti = {
 }
 
 
+
+
+
 var inp_struct_base = {
     usr: {
         repopath: "",
@@ -208,7 +211,6 @@ var ApiJsonp_BibleObj = {
         //});
     },
     ApiBibleObj_search_txt: function (req, res) {
-
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
             //if (!inp.usr.f_path) inp.usr.f_path = ""
@@ -235,7 +237,6 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
-
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
@@ -490,29 +491,7 @@ var ApiJsonp_BibleObj = {
     ///////////////////////////////////
 
 
-    ________ApiUsrReposData_create___test_only: async function (req, res) {
-        console.log("ApiUsrReposData_create")
-        if (!req || !res) {
-            return inp_struct_account_setup
-        }
-        var inp = ApiUti.Parse_GET_req_to_inp(req)
-        var userProject = new BibleObjGitusrMgr()
-        var ret = userProject.Proj_parse_usr_signin(inp)
-        if (ret) {
-            userProject.m_BaseGitUser.Deploy_proj()
 
-
-        }
-
-        var sret = JSON.stringify(inp, null, 4)
-        var sid = ""
-
-        console.log("oup is ", inp.out)
-
-        res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        res.write(`Jsonpster.Response(${sret},${sid});`);
-        res.end();
-    },
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
@@ -645,6 +624,14 @@ var ApiJsonp_BibleObj = {
         // res.end();
     },
 
+
+
+
+
+
+
+
+    
     ApiUsrReposData_status: function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
@@ -761,6 +748,30 @@ var ApiJsonp_BibleObj = {
 
         res.writeHead(200, { 'Content-Type': 'text/javascript' });
         res.write(`api: test_https_work, it works ok.`);
+        res.end();
+    },
+
+    ________ApiUsrReposData_create___test_only: async function (req, res) {
+        console.log("ApiUsrReposData_create")
+        if (!req || !res) {
+            return inp_struct_account_setup
+        }
+        var inp = ApiUti.Parse_GET_req_to_inp(req)
+        var userProject = new BibleObjGitusrMgr()
+        var ret = userProject.Proj_parse_usr_signin(inp)
+        if (ret) {
+            userProject.m_BaseGitUser.Deploy_proj()
+
+
+        }
+
+        var sret = JSON.stringify(inp, null, 4)
+        var sid = ""
+
+        console.log("oup is ", inp.out)
+
+        res.writeHead(200, { 'Content-Type': 'text/javascript' });
+        res.write(`Jsonpster.Response(${sret},${sid});`);
         res.end();
     },
 }//// BibleRestApi ////
