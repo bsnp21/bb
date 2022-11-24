@@ -349,11 +349,12 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
 
+            inp.out.olog={}
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
             var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
                 IfUsrNotExist: function (stdpfname, usrpfname) {
-                    inp.out.destroy_res["cpIfUsrNotExist"] = userProject.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                    inp.out.olog["cpIfUsrNotExist"] = userProject.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
                     return usrpfname;
                 }
             })
@@ -391,9 +392,9 @@ var ApiJsonp_BibleObj = {
             save_res.dlt = dlt
             save_res.desc = `${tagName} saved.`
 
-            inp.out.save_res = save_res
+            inp.out.olog.save_res = save_res
 
-            inp.out.git_res = userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
+            inp.out.olog.git_res = userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
