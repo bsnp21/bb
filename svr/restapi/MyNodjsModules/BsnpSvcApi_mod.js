@@ -242,34 +242,36 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-
-            var par = inp.par, olog = [];
-            console.log("-----:fnames", par.fnames, typeof par.fnames)
-            console.log("-----:binp.par.bibOj", par.bibOj)
-            var TbcObj = {};
-            if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
-                console.log("par.fnames:", par.fnames)
-                for (var i = 0; i < par.fnames.length; i++) {
-                    var fnameID = par.fnames[i];
-                    var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpyIfNonexistance")
-                    console.log("load:", jsfname)
-                    var bib = BaseGUti.loadObj_by_fname(jsfname);
-                    if (!bib.obj) {
-                        olog.push(jsfname + ":noexist:" + fnameID)
-                        console.log("not exist..............", jsfname)
-                        continue
+            function way1() {
+                var par = inp.par, olog = [];
+                console.log("-----:fnames", par.fnames, typeof par.fnames)
+                console.log("-----:binp.par.bibOj", par.bibOj)
+                var TbcObj = {};
+                if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
+                    console.log("par.fnames:", par.fnames)
+                    for (var i = 0; i < par.fnames.length; i++) {
+                        var fnameID = par.fnames[i];
+                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpyIfNonexistance")
+                        console.log("load:", jsfname)
+                        var bib = BaseGUti.loadObj_by_fname(jsfname);
+                        if (!bib.obj) {
+                            olog.push(jsfname + ":noexist:" + fnameID)
+                            console.log("not exist..............", jsfname)
+                            continue
+                        }
+                        var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
+                        TbcObj[fnameID] = bcObj;
+                        olog.push("loaded:" + fnameID)
                     }
-                    var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
-                    TbcObj[fnameID] = bcObj;
-                    olog.push("loaded:" + fnameID)
+                    olog.push(":success")
                 }
-                olog.push(":success")
+                //console.log(TbcObj)
+                var bcvT = {}
+                BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
+                inp.out.data = bcvT
+                inp.out.olog = olog
             }
-            //console.log(TbcObj)
-            var bcvT = {}
-            BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
-            inp.out.data = bcvT
-            inp.out.olog = olog
+            way1()
             //console.log(bcvT)
         })
     },
@@ -631,7 +633,7 @@ var ApiJsonp_BibleObj = {
 
 
 
-    
+
     ApiUsrReposData_status: function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
