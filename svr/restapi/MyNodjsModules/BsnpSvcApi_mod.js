@@ -324,7 +324,6 @@ var ApiJsonp_BibleObj = {
                     }
                     olog.push(":success")
                 }
-                //console.log(TbcObj)
                 inp.out.data = carryObj
                 inp.out.olog = olog
             }
