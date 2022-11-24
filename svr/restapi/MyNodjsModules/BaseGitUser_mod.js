@@ -21,98 +21,6 @@ const WorkingRootNodeName = "ddir"
 
 var BaseGUti = {
 
-    GetEmptyObj: function (obj) {
-        function _iterate(obj, shellOfObj) {
-            for (var sproperty in obj) {
-                if (obj.hasOwnProperty(sproperty)) {
-                    var tps = typeof obj[sproperty]
-                    var bary = Array.isArray(obj[sproperty])
-                    if (tps === "object" && !bary) {
-                        shellOfObj[sproperty] = {}
-                        _iterate(obj[sproperty], shellOfObj[sproperty]);
-                    } else {
-                        shellOfObj[sproperty] = 0
-                    }
-                }
-            }
-        }
-        var structObj = {}
-        _iterate(obj, structObj)
-        return structObj
-    },
-
-    FetchObj_UntilEnd: function (retObj, SrcObj, cbfEndNode, cbfMissingSrc) {
-        function _iterate(carObj, srcObj) {
-            if (!srcObj) return carObj;
-            for (var carProperty in carObj) {
-                console.log("carProperty=", carProperty)
-                if (srcObj.hasOwnProperty(carProperty)) {
-                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
-                        _iterate(carObj[carProperty], srcObj[carProperty]);
-                    } else {
-                        //carObj[carProperty] = srcObj[carProperty]
-                        if (cbfEndNode) cbfEndNode(carObj, srcObj, carProperty)
-                    }
-                } else {
-                    //delete carObj[carProperty]
-                    if (cbfMissingSrc) cbfMissingSrc(carObj, carProperty)
-                }
-            }
-        }
-        _iterate(retObj, SrcObj)
-        return retObj
-    },
-    FetchObjDat: function (datObj, SrcObj) {
-        function _iterate(carObj, srcObj) {
-            if (!srcObj) return;
-            for (var carProperty in carObj) {
-                console.log("carProperty=", carProperty)
-                //if (carObj.hasOwnProperty(carProperty)) {
-                if (srcObj.hasOwnProperty(carProperty)) {
-                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
-                        _iterate(carObj[carProperty], srcObj[carProperty]);
-                    } else {
-                        carObj[carProperty] = srcObj[carProperty]
-                    }
-                } else {
-                    delete carObj[carProperty]
-                }
-                //}
-            }
-        }
-        _iterate(datObj, SrcObj)
-        return datObj
-    },
-    FlushObjDat: function (datObj, targObj) {
-        function _iterate(carObj, tarObj) {
-            if (!tarObj) return;
-            for (var carProperty in carObj) {
-                console.log("carProperty=", carProperty)
-                if (carObj.hasOwnProperty(carProperty)) {
-                    if (tarObj.hasOwnProperty(carProperty)) {//match keys
-                        if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
-                            _iterate(carObj[carProperty], tarObj[carProperty]); //non-arry obj. 
-                        } else {
-                            if (null === carObj[carProperty]) { //to delete key in targetObj.
-                                delete tarObj[carProperty]
-                            } else {  //flush update target obj.
-                                tarObj[carProperty] = carObj[carProperty]
-                            }
-                        }
-                    } else {//mismatch keys
-                        if (null === carObj[carProperty]) {
-                            //nothing to delete. 
-                        } else {//add new key to targetObj.
-                            tarObj[carProperty] = carObj[carProperty]
-                        }
-                    }
-                }
-            }
-        }
-        _iterate(datObj, targObj)
-        return targObj
-    },
-
 
 
     GetFilesAryFromDir: function (startPath, deep, cb) {//startPath, filter
@@ -250,6 +158,107 @@ var BaseGUti = {
 
 
 
+
+    GetEmptyObj: function (obj) {
+        function _iterate(obj, shellOfObj) {
+            for (var sproperty in obj) {
+                if (obj.hasOwnProperty(sproperty)) {
+                    var tps = typeof obj[sproperty]
+                    var bary = Array.isArray(obj[sproperty])
+                    if (tps === "object" && !bary) {
+                        shellOfObj[sproperty] = {}
+                        _iterate(obj[sproperty], shellOfObj[sproperty]);
+                    } else {
+                        shellOfObj[sproperty] = 0
+                    }
+                }
+            }
+        }
+        var structObj = {}
+        _iterate(obj, structObj)
+        return structObj
+    },
+
+    Walk_of_entries:function(bcvR,cbf){
+        for (const [bkc, chpObj] of Object.entries(bcvR)) {
+            for (const [chp, vrsObj] of Object.entries(chpObj)) {
+                for (const [vrs, vrsAry] of Object.entries(vrsObj)) {
+                    if(cbf)cbf(bkc, chp, vrs, vrsAry)
+                }
+            }
+        }
+    },
+    FetchObj_UntilEnd: function (retObj, SrcObj, cbfEndNode, cbfMissingSrc) {
+        function _iterate(carObj, srcObj) {
+            if (!srcObj) return carObj;
+            for (var carProperty in carObj) {
+                console.log("carProperty=", carProperty)
+                if (srcObj.hasOwnProperty(carProperty)) {
+                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                        _iterate(carObj[carProperty], srcObj[carProperty]);
+                    } else {
+                        //carObj[carProperty] = srcObj[carProperty]
+                        if (cbfEndNode) cbfEndNode(carObj, srcObj, carProperty)
+                    }
+                } else {
+                    //delete carObj[carProperty]
+                    if (cbfMissingSrc) cbfMissingSrc(carObj, carProperty)
+                }
+            }
+        }
+        _iterate(retObj, SrcObj)
+        return retObj
+    },
+    FetchObjDat: function (datObj, SrcObj) {
+        function _iterate(carObj, srcObj) {
+            if (!srcObj) return;
+            for (var carProperty in carObj) {
+                console.log("carProperty=", carProperty)
+                //if (carObj.hasOwnProperty(carProperty)) {
+                if (srcObj.hasOwnProperty(carProperty)) {
+                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                        _iterate(carObj[carProperty], srcObj[carProperty]);
+                    } else {
+                        carObj[carProperty] = srcObj[carProperty]
+                    }
+                } else {
+                    delete carObj[carProperty]
+                }
+                //}
+            }
+        }
+        _iterate(datObj, SrcObj)
+        return datObj
+    },
+    FlushObjDat: function (datObj, targObj) {
+        function _iterate(carObj, tarObj) {
+            if (!tarObj) return;
+            for (var carProperty in carObj) {
+                console.log("carProperty=", carProperty)
+                if (carObj.hasOwnProperty(carProperty)) {
+                    if (tarObj.hasOwnProperty(carProperty)) {//match keys
+                        if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                            _iterate(carObj[carProperty], tarObj[carProperty]); //non-arry obj. 
+                        } else {
+                            if (null === carObj[carProperty]) { //to delete key in targetObj.
+                                delete tarObj[carProperty]
+                            } else {  //flush update target obj.
+                                tarObj[carProperty] = carObj[carProperty]
+                            }
+                        }
+                    } else {//mismatch keys
+                        if (null === carObj[carProperty]) {
+                            //nothing to delete. 
+                        } else {//add new key to targetObj.
+                            tarObj[carProperty] = carObj[carProperty]
+                        }
+                    }
+                }
+            }
+        }
+        _iterate(datObj, targObj)
+        return targObj
+    },
 
     copy_biobj: function (BibleObj, oj) {
         //console.log("copy_biobj oj", JSON.stringify(oj, null, 4))
@@ -953,6 +962,10 @@ BaseGitUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
 }
+BaseGitUser.prototype.getFullPath_sys_stdlib_BibleStruct = function (subpath) {
+    var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleStruct`
+    return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
+}
 BaseGitUser.prototype.getFullPath_root_sys = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}${subpath.replace(/^[\/]/, "")}`
@@ -1000,8 +1013,6 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
 
     return dest_pfname
 }
-
-
 
 
 //////////////////////////////////////////

@@ -271,7 +271,59 @@ var ApiJsonp_BibleObj = {
                 inp.out.data = bcvT
                 inp.out.olog = olog
             }
-            way1()
+            function way2() {
+                var par = inp.par, olog = [];
+                console.log("-----:fnames", par.fnames, typeof par.fnames)
+                console.log("-----:binp.par.bibOj", par.bibOj)
+
+                var carryObj = JSON.parse(JSON.stringify(par.bibOj))
+                var sMaxStructFile = userProject.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
+                var bibMaxStruct = BaseGUti.loadObj_by_fname(sMaxStructFile);
+                BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
+                    function (carObj, srcObj, carProperty) {
+                        carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy fr src.
+                    }, function (carObj, carProperty) { //missing src of object. 
+                        //noop
+                    })
+                BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
+                    function (carObj, srcObj, carProperty) {//at the end of object tree.
+                        if ("string" === typeof (carObj[carProperty])) {
+                            carObj[carProperty] = {} //at the end of object tree, change string to arr to prepare to load different version of txt.
+                        } else {
+                            console.log("============ Error, carProperty=", carProperty, carObj[carProperty])
+                        }
+                    })
+
+                if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
+                    console.log("par.fnames:", par.fnames)
+                    for (var i = 0; i < par.fnames.length; i++) {
+                        var fnameID = par.fnames[i];
+                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpyIfNonexistance")
+                        console.log("load:", jsfname)
+                        var bib = BaseGUti.loadObj_by_fname(jsfname);
+                        if (!bib.obj) {
+                            olog.push(jsfname + ":noexist:" + fnameID)
+                            console.log("not exist..............", jsfname)
+                            BaseGUti.Walk_of_entries(carryObj,
+                                function (bkc, chp, vrs, emptyobj) {//at the end of object tree.
+                                    if ("object" === typeof (emptyobj)) {
+                                        if (bib.obj[bkc] && bib.obj[cbkc][chp] && "string" === typeof (bib.obj[cbkc][chp][vrs]))
+                                            carObj[cbkc][chp][vrs][fnameID] = bib.obj[cbkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
+                                    } else {
+                                        console.log("============ Error, Walk_of_entries=", bkc, chp, vrs, emptyobj)
+                                        olog.push([jsfname, fnameID, bkc, chp, vrs,])
+                                    }
+                                })
+                        }
+                    }
+                    olog.push(":success")
+                }
+                //console.log(TbcObj)
+                inp.out.data = carObj
+                inp.out.olog = olog
+            }
+            //way1()
+            way2()
             //console.log(bcvT)
         })
     },
