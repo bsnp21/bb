@@ -302,9 +302,9 @@ var ApiJsonp_BibleObj = {
                         var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpyIfNonexistance")
                         console.log("load:", jsfname)
                         var bib = BaseGUti.loadObj_by_fname(jsfname);
-                        if (!bib.obj) {
-                            olog.push(jsfname + ":noexist:" + fnameID)
-                            console.log("not exist..............", jsfname)
+                        if (bib.obj) {
+                            olog.push(jsfname + "::" + fnameID)
+                            console.log("exist..............", jsfname)
                             BaseGUti.Walk_of_entries(carryObj,
                                 function (bkc, chp, vrs, emptyobj) {//at the end of object tree.
                                     if ("object" === typeof (emptyobj)) {
