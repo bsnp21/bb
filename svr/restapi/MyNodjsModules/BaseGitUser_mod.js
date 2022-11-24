@@ -190,7 +190,7 @@ var BaseGUti = {
     },
     FetchObj_UntilEnd: function (retObj, SrcObj, cbfEndNode, cbfMissingSrc) {
         function _iterate(carObj, srcObj) {
-            if (!srcObj) return carObj;
+            
             for (var carProperty in carObj) {
                 console.log("carProperty=", carProperty)
                 if (srcObj.hasOwnProperty(carProperty)) {
@@ -206,6 +206,11 @@ var BaseGUti = {
                 }
             }
         }
+        if (Object.keys(retObj) === 0) {
+            retObj = SrcObj
+            return retObj
+        }
+        if (!SrcObj) return retObj;
         _iterate(retObj, SrcObj)
         return retObj
     },
