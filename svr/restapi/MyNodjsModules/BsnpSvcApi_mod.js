@@ -398,12 +398,12 @@ var ApiJsonp_BibleObj = {
             bio.writeback()
 
             ////
-            var tagName = `${doc}~${karyObj.bkc}${karyObj.chp}:${karyObj.vrs}`
+            //var tagName = `${doc}~${karyObj.bkc}${karyObj.chp}:${karyObj.vrs}`
             var save_res = {}
             save_res.saved_size = "" + karyObj.txt.length + ",dlt:" + dlt
             save_res.len = karyObj.txt.length
             save_res.dlt = dlt
-            save_res.desc = `${tagName} saved.`
+            //save_res.desc = `${tagName} saved.`
 
             inp.out.olog.save_res = save_res
 
