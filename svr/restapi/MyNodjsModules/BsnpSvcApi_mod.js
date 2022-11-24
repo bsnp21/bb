@@ -373,13 +373,16 @@ var ApiJsonp_BibleObj = {
             //console.log("karyObj", karyObj)
             console.log("bio.obj", bio.obj)
 
-            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, 
-                function (carProperty, carObj, srcObj) {//at the end of object tree.
+            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj,
+                function (carProperty, carObj, targObj) {//at the end of object tree.
                     if ("string" === typeof (carObj[carProperty])) {
-                        srcObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+                        targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
+                },
+                function (carProperty, carObj, targObj) {//at the end of object tree.
+                    targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                 })
             console.log("2 bio.obj", bio.obj)
 
