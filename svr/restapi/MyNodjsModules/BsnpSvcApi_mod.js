@@ -271,6 +271,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.data = bcvT
                 inp.out.olog = olog
             }
+            //////////////
             function way2() {
                 var par = inp.par, olog = [];
                 console.log("-----:fnames", par.fnames, typeof par.fnames)
@@ -310,8 +311,9 @@ var ApiJsonp_BibleObj = {
                                         if (bib.obj[bkc] && bib.obj[cbkc][chp] && "string" === typeof (bib.obj[cbkc][chp][vrs]))
                                             carObj[cbkc][chp][vrs][fnameID] = bib.obj[cbkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
                                     } else {
+                                        carObj[cbkc][chp][vrs][fnameID] = ""
                                         console.log("============ Error, Walk_of_entries=", bkc, chp, vrs, emptyobj)
-                                        olog.push([jsfname, fnameID, bkc, chp, vrs,])
+                                        olog.push([jsfname, fnameID, bkc, chp, vrs])
                                     }
                                 })
                         }
@@ -319,7 +321,7 @@ var ApiJsonp_BibleObj = {
                     olog.push(":success")
                 }
                 //console.log(TbcObj)
-                inp.out.data = carObj
+                inp.out.data = carryObj
                 inp.out.olog = olog
             }
             //way1()
