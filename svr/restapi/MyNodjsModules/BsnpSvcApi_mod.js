@@ -281,17 +281,21 @@ var ApiJsonp_BibleObj = {
                 var sMaxStructFile = userProject.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
                 var bibMaxStruct = BaseGUti.loadObj_by_fname(sMaxStructFile);
                 BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
-                    function (carProperty, carObj, srcObj) {
-                        carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy fr src.
-                    }, function (carObj, carProperty) { //missing src of object. 
-                        //noop
+                    {
+                        FetchNodeEnd: function (carProperty, carObj, srcObj) {
+                            carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy fr src.
+                        }, SrcNodeNotOwnProperty: function (carProperty, carObj, srcObj) { //missing src of object. 
+                            //noop
+                        }
                     })
                 BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
-                    function (carProperty, carObj, srcObj) {//at the end of object tree.
-                        if ("string" === typeof (carObj[carProperty])) {
-                            carObj[carProperty] = {} //at the end of object tree, change string to arr to prepare to load different version of txt.
-                        } else {
-                            console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
+                    {
+                        FetchNodeEnd: function (carProperty, carObj, srcObj) {//at the end of object tree.
+                            if ("string" === typeof (carObj[carProperty])) {
+                                carObj[carProperty] = {} //at the end of object tree, change string to arr to prepare to load different version of txt.
+                            } else {
+                                console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
+                            }
                         }
                     })
 
@@ -373,17 +377,18 @@ var ApiJsonp_BibleObj = {
             //console.log("karyObj", karyObj)
             console.log("bio.obj", bio.obj)
 
-            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj,
-                function (carProperty, carObj, targObj) {//at the end of object tree.
+            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, {
+                SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
                     if ("string" === typeof (carObj[carProperty])) {
                         targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
                 },
-                function (carProperty, carObj, targObj) {//at the end of object tree.
+                TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
                     targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
-                })
+                }
+            })
             console.log("2 bio.obj", bio.obj)
 
             //var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
@@ -517,7 +522,21 @@ var ApiJsonp_BibleObj = {
             console.log("jsfname=", jsfname)
             var ret = BaseGUti.loadObj_by_fname(jsfname)
             if (ret.obj) {
-                BaseGUti.FlushObjDat(par.data, ret.obj)
+                BaseGUti.FlushObj_UntilEnd(par.data, ret.obj, {
+                    SrcNodeEnd: function (carProperty, carObj, tarObj) {
+                        if (null === carObj[carProperty]) { //to delete key in targetObj.
+                            delete tarObj[carProperty]
+                        } else {  //flush update target obj.
+                            tarObj[carProperty] = carObj[carProperty]
+                        }
+                    }, TargNodeNotOwnProperty: function (carProperty, carObj, tarObj) {
+                        if (null === carObj[carProperty]) {
+                            //nothing to delete. 
+                        } else {//add new key to targetObj.
+                            tarObj[carProperty] = carObj[carProperty]
+                        }
+                    }
+                })
                 console.log("ret", ret)
                 ret.writeback()
             } else {
