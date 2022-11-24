@@ -251,7 +251,7 @@ var ApiJsonp_BibleObj = {
                     console.log("par.fnames:", par.fnames)
                     for (var i = 0; i < par.fnames.length; i++) {
                         var fnameID = par.fnames[i];
-                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpIfNonexistance")
+                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID)
                         console.log("load:", jsfname)
                         var bib = BaseGUti.loadObj_by_fname(jsfname);
                         if (!bib.obj) {
@@ -291,7 +291,7 @@ var ApiJsonp_BibleObj = {
                         if ("string" === typeof (carObj[carProperty])) {
                             carObj[carProperty] = {} //at the end of object tree, change string to arr to prepare to load different version of txt.
                         } else {
-                            console.log("============ Error, carProperty=", carProperty, carObj[carProperty])
+                            console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                         }
                     })
 
@@ -299,9 +299,11 @@ var ApiJsonp_BibleObj = {
                     console.log("par.fnames:", par.fnames)
                     for (var i = 0; i < par.fnames.length; i++) {
                         var fnameID = par.fnames[i];
-                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, {IfUsrNotExist:function(stdpfname, usrpfname) {
-                            return stdpfname;
-                        }})
+                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, {
+                            IfUsrNotExist: function (stdpfname, usrpfname) {
+                                return stdpfname;
+                            }
+                        })
                         console.log("load:", jsfname)
                         var bib = BaseGUti.loadObj_by_fname(jsfname);
                         if (bib.obj) {
@@ -349,7 +351,12 @@ var ApiJsonp_BibleObj = {
 
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
-            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
+            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
+                IfUsrNotExist: function (stdpfname, usrpfname) {
+                    inp.out.destroy_res["cpIfUsrNotExist"] = userProject.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                    return usrpfname;
+                }
+            })
             var bio = BaseGUti.loadObj_by_fname(jsfname);
             if (!bio.obj) {
                 save_res.desc = `load(${doc},${jsfname})=null`
