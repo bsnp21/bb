@@ -383,6 +383,8 @@ var ApiJsonp_BibleObj = {
                 })
             console.log("2 bio.obj", bio.obj)
 
+            bio.obj = inp.par.inpObj
+
             var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
             if (!pChp[karyObj.vrs]) {
                 pChp[karyObj.vrs] = ""
