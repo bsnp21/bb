@@ -281,13 +281,13 @@ var ApiJsonp_BibleObj = {
                 var sMaxStructFile = userProject.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
                 var bibMaxStruct = BaseGUti.loadObj_by_fname(sMaxStructFile);
                 BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
-                    function (carObj, srcObj, carProperty) {
+                    function (carProperty, carObj, srcObj) {
                         carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy fr src.
                     }, function (carObj, carProperty) { //missing src of object. 
                         //noop
                     })
                 BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
-                    function (carObj, srcObj, carProperty) {//at the end of object tree.
+                    function (carProperty, carObj, srcObj) {//at the end of object tree.
                         if ("string" === typeof (carObj[carProperty])) {
                             carObj[carProperty] = {} //at the end of object tree, change string to arr to prepare to load different version of txt.
                         } else {
@@ -373,10 +373,10 @@ var ApiJsonp_BibleObj = {
             //console.log("karyObj", karyObj)
             console.log("bio.obj", bio.obj)
 
-            BaseGUti.FetchObj_UntilEnd(bio.obj, inp.par.inpObj,
-                function (carObj, srcObj, carProperty) {//at the end of object tree.
+            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, 
+                function (carProperty, carObj, srcObj) {//at the end of object tree.
                     if ("string" === typeof (carObj[carProperty])) {
-                        carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy or src.
+                        srcObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
@@ -387,7 +387,7 @@ var ApiJsonp_BibleObj = {
             //if (!pChp[karyObj.vrs]) {
             //    pChp[karyObj.vrs] = ""
             //}
-//
+            //
             //var dlt = karyObj.txt.length - pChp[karyObj.vrs].length
             //if (pChp[karyObj.vrs] === karyObj.txt) {
             //    console.log("Not to save: the new txt is same as original txt-----.dlt=", dlt)

@@ -188,9 +188,8 @@ var BaseGUti = {
             }
         }
     },
-    FetchObj_UntilEnd: function (retObj, SrcObj, cbfEndNode, cbfMissingSrc) {
+    FetchObj_UntilEnd: function (retObj, SrcObj, cbfEndNode, cbfSrcObjHasNoProptey) {
         function _iterate(carObj, srcObj) {
-            
             for (var carProperty in carObj) {
                 console.log("carProperty=", carProperty)
                 if (srcObj.hasOwnProperty(carProperty)) {
@@ -198,17 +197,17 @@ var BaseGUti = {
                         _iterate(carObj[carProperty], srcObj[carProperty]);
                     } else {
                         //carObj[carProperty] = srcObj[carProperty]
-                        if (cbfEndNode) cbfEndNode(carObj, srcObj, carProperty)
+                        if (cbfEndNode) cbfEndNode(carProperty, carObj, srcObj)
                     }
                 } else {
                     //delete carObj[carProperty]
-                    if (cbfMissingSrc) cbfMissingSrc(carObj, carProperty)
+                    if (cbfSrcObjHasNoProptey) cbfSrcObjHasNoProptey(carProperty, carObj, srcObj)
                 }
             }
         }
         console.log("fetchObj:", retObj)
         if (Object.keys(retObj).length === 0) {
-            Object.keys(SrcObj).forEach(function(key){
+            Object.keys(SrcObj).forEach(function (key) {
                 retObj[key] = SrcObj[key]
             })
             console.log("fetchObj has no keys, then fetchAll", retObj)
@@ -263,6 +262,37 @@ var BaseGUti = {
                         }
                     }
                 }
+            }
+        }
+        _iterate(datObj, targObj)
+        return targObj
+    },
+    FlushObj_UntilEnd: function (datObj, targObj, cbfAtEndNode, cbfIfTargNotExist) {
+        function _iterate(carObj, tarObj) {
+            if (!tarObj) return;
+            for (var carProperty in carObj) {
+                console.log("carProperty=", carProperty)
+                //if (carObj.hasOwnProperty(carProperty)) {
+                if (tarObj.hasOwnProperty(carProperty)) {//match keys
+                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                        _iterate(carObj[carProperty], tarObj[carProperty]); //non-arry obj. 
+                    } else {
+                        if (cbfAtEndNode) cbfAtEndNode(carProperty, carObj, tarObj)
+                        //  if (null === carObj[carProperty]) { //to delete key in targetObj.
+                        //      delete tarObj[carProperty]
+                        //  } else {  //flush update target obj.
+                        //      tarObj[carProperty] = carObj[carProperty]
+                        //  }
+                    }
+                } else {//mismatch keys
+                    if (cbfIfTargNotExist) cbfIfTargNotExist(carProperty, carObj, tarObj)
+                    //  if (null === carObj[carProperty]) {
+                    //      //nothing to delete. 
+                    //  } else {//add new key to targetObj.
+                    //      tarObj[carProperty] = carObj[carProperty]
+                    //  }
+                }
+                //}
             }
         }
         _iterate(datObj, targObj)
