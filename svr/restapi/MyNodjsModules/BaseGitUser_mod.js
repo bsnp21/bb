@@ -208,6 +208,7 @@ var BaseGUti = {
         }
         if (Object.keys(retObj) === 0) {
             retObj = SrcObj
+            console.log("fetchObj has no keys, then fetchAll", retObj)
             return retObj
         }
         if (!SrcObj) return retObj;
