@@ -309,9 +309,9 @@ var ApiJsonp_BibleObj = {
                                 function (bkc, chp, vrs, emptyobj) {//at the end of object tree.
                                     if ("object" === typeof (emptyobj)) {
                                         if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs]))
-                                            carObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
+                                        carryObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
                                     } else {
-                                        carObj[bkc][chp][vrs][fnameID] = ""
+                                        carryObj[bkc][chp][vrs][fnameID] = ""
                                         console.log("============ Error, Walk_of_entries=", bkc, chp, vrs, emptyobj)
                                         olog.push([jsfname, fnameID, bkc, chp, vrs])
                                     }
