@@ -107,19 +107,19 @@
         var test = {
                 FetchObjDat: function (datObj, SrcObj) {
                     function _iterate(carObj, srcObj) {
-                        for (var sproperty in carObj) {
-                            console.log("sproperty=", sproperty)
-                            if (carObj.hasOwnProperty(sproperty)) {
-                                if (srcObj.hasOwnProperty(sproperty)) {
-                                    if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
-                                        _iterate(carObj[sproperty], srcObj[sproperty]);
+                        for (var carProperty in carObj) {
+                            console.log("carProperty=", carProperty)
+                            //if (carObj.hasOwnProperty(carProperty)) {
+                                if (srcObj.hasOwnProperty(carProperty)) {
+                                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                                        _iterate(carObj[carProperty], srcObj[carProperty]);
                                     } else {
-                                        carObj[sproperty] = srcObj[sproperty]
+                                        carObj[carProperty] = srcObj[carProperty]
                                     }
                                 } else {
-                                    delete carObj[sproperty]
+                                    delete carObj[carProperty]
                                 }
-                            }
+                            //}
                         }
                     }
                     _iterate(datObj, SrcObj)
@@ -127,24 +127,24 @@
                 },
                 FlushObjDat: function (datObj, targObj) {
                     function _iterate(carObj, tarObj) {
-                        for (var sproperty in carObj) {
-                            console.log("sproperty=", sproperty)
-                            if (carObj.hasOwnProperty(sproperty)) {
-                                if (tarObj.hasOwnProperty(sproperty)) {//match keys
-                                    if (carObj[sproperty] && "object" === typeof (carObj[sproperty]) && !Array.isArray(carObj[sproperty]) && Object.keys(carObj[sproperty]).length > 0) {
-                                        _iterate(carObj[sproperty], tarObj[sproperty]); //non-arry obj. 
+                        for (var carProperty in carObj) {
+                            console.log("carProperty=", carProperty)
+                            if (carObj.hasOwnProperty(carProperty)) {
+                                if (tarObj.hasOwnProperty(carProperty)) {//match keys
+                                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                                        _iterate(carObj[carProperty], tarObj[carProperty]); //non-arry obj. 
                                     } else {
-                                        if (null === carObj[sproperty]) { //to delete key in targetObj.
-                                            delete tarObj[sproperty]
+                                        if (null === carObj[carProperty]) { //to delete key in targetObj.
+                                            delete tarObj[carProperty]
                                         } else {  //flush update target obj.
-                                            tarObj[sproperty] = carObj[sproperty]
+                                            tarObj[carProperty] = carObj[carProperty]
                                         }
                                     }
                                 } else {//mismatch keys
-                                    if (null === carObj[sproperty]) {
+                                    if (null === carObj[carProperty]) {
                                         //nothing to delete. 
                                     } else {//add new key to targetObj.
-                                        tarObj[sproperty] = carObj[sproperty]
+                                        tarObj[carProperty] = carObj[carProperty]
                                     }
                                 }
                             }
