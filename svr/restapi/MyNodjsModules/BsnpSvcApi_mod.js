@@ -399,13 +399,13 @@ var ApiJsonp_BibleObj = {
 
             ////
             //var tagName = `${doc}~${karyObj.bkc}${karyObj.chp}:${karyObj.vrs}`
-            var save_res = {}
-            save_res.saved_size = "" + karyObj.txt.length + ",dlt:" + dlt
-            save_res.len = karyObj.txt.length
-            save_res.dlt = dlt
+            //var save_res = {}
+            //save_res.saved_size = "" + karyObj.txt.length + ",dlt:" + dlt
+            //save_res.len = karyObj.txt.length
+            //save_res.dlt = dlt
             //save_res.desc = `${tagName} saved.`
 
-            inp.out.olog.save_res = save_res
+            //inp.out.olog.save_res = save_res
 
             inp.out.olog.git_res = userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
         })
