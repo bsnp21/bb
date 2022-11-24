@@ -371,6 +371,7 @@ var ApiJsonp_BibleObj = {
             }
             console.log("inp.par.inpObj", inp.par.inpObj)
             console.log("karyObj", karyObj)
+            console.log("bio.obj", bio.obj)
 
             BaseGUti.FetchObj_UntilEnd(bio.obj, inp.par.inpObj,
                 function (carObj, srcObj, carProperty) {//at the end of object tree.
@@ -380,6 +381,7 @@ var ApiJsonp_BibleObj = {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
                 })
+            console.log("2 bio.obj", bio.obj)
 
             var pChp = bio.obj[karyObj.bkc][karyObj.chp];//[karyObj.vrs] ///
             if (!pChp[karyObj.vrs]) {
