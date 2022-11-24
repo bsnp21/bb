@@ -179,11 +179,11 @@ var BaseGUti = {
         return structObj
     },
 
-    Walk_of_entries:function(bcvR,cbf){
+    Walk_of_entries: function (bcvR, cbf) {
         for (const [bkc, chpObj] of Object.entries(bcvR)) {
             for (const [chp, vrsObj] of Object.entries(chpObj)) {
                 for (const [vrs, vrsAry] of Object.entries(vrsObj)) {
-                    if(cbf)cbf(bkc, chp, vrs, vrsAry)
+                    if (cbf) cbf(bkc, chp, vrs, vrsAry)
                 }
             }
         }
@@ -949,7 +949,6 @@ BaseGitUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
             echo 'lll' | sudo -S chmod -R 777 ${ret.dir}
             echo 'lll' | sudo -S cp  ${std}  ${fullpathname}
             echo 'lll' | sudo -S chmod -R 777 ${fullpathname}
-            ###### echo 'lll' | sudo -S cp -aR  ${this.m_projDirs.root_sys}bible_obj_lib/jsdb/UsrDataTemplate/*  ${acctDir}/.
             #cd -`
         var ret = BaseGUti.execSync_Cmd(cp_template_cmd).toString()
         console.log("getFullPath_usr_acct", cp_template_cmd, ret)
@@ -958,6 +957,22 @@ BaseGitUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
 BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 }
+BaseGitUser.prototype.getFullPath_usr_acct_file_StdChoice_IfNotExist = function (subpath, cbf) {
+    var usrpfname = this.getFullPath_usr_acct(subpath)
+    var stdpfname = this.getFullPath_sys_stdlib_template(subpath)
+    if (!fs.existsSync(stdpfname)) {
+        return console.log("************ FATAL error: std file not exist.", stdpfname)
+    }
+    if (!fs.existsSync(usrpfname)) {
+        if (cbf) {
+            return cbf(stdpfname, usrpfname) //usr make decision between the two. 
+        } else {
+            return stdpfname;
+        }
+    }
+    return usrpfname;
+}
+
 BaseGitUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
@@ -987,7 +1002,39 @@ BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
     //var fnam = DocCode.replace(/^e_/, "my")  //:myNode_json.js
     return `${DocCode}_json.js`
 }
-BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
+BaseGitUser.prototype.get_pfxname = function (DocCode, par) {
+    var cbf = par ? (par.IfUsrNotExist ? par.IfUsrNotExist : null) : null
+    //full path rw executable
+    //var DocCode = inp.par.fnames[0]
+    if (!DocCode) return ""
+    var dest_pfname = "", subDir = ""
+    switch (DocCode[0]) {
+        case "_": //: _myNode,
+        case "e": //: e_Node,
+            {
+                var fnam = this.get_DocCode_Fname(DocCode)
+                subDir = `/myoj/${fnam}`
+                //dest_pfname = this.getFullPath_usr_myoj(`${fnam}`, cpyIfNonsistance)
+                dest_pfname = this.getFullPath_usr_acct_file_StdChoice_IfNotExist(subDir, cbf)
+
+            }
+            break
+        case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
+            {
+                var fnam = DocCode.slice(6)
+                subDir = `/dat/${fnam}`
+                //dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, cpyIfNonsistance)
+                dest_pfname = this.getFullPath_usr_acct_file_StdChoice_IfNotExist(subDir, cbf)
+            }
+            break;
+        default: //: NIV, CUVS, NIV_Jw  
+            dest_pfname = this.getFullPath_sys_stdlib_BibleObj(`${DocCode}.json.js`);
+            break;
+    }
+
+    return dest_pfname
+}
+BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsistance) {
     //full path rw executable
     //var DocCode = inp.par.fnames[0]
     if (!DocCode) return ""
@@ -997,6 +1044,7 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
         case "e": //: e_Node,
             {
                 var fnam = this.get_DocCode_Fname(DocCode)
+                subDir = `/myoj/${fnam}`
                 dest_pfname = this.getFullPath_usr_myoj(`${fnam}`, cpyIfNonsistance)
             }
             break
@@ -1011,9 +1059,10 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, cpyIfNonsistance) {
             break;
     }
 
+    this.getFullPath_usr_acct_file_StdChoice_IfNotExist
+
     return dest_pfname
 }
-
 
 //////////////////////////////////////////
 

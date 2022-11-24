@@ -299,7 +299,9 @@ var ApiJsonp_BibleObj = {
                     console.log("par.fnames:", par.fnames)
                     for (var i = 0; i < par.fnames.length; i++) {
                         var fnameID = par.fnames[i];
-                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, "cpIfNonexistance")
+                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, {IfUsrNotExist:function(stdpfname, usrpfname) {
+                            return stdpfname;
+                        }})
                         console.log("load:", jsfname)
                         var bib = BaseGUti.loadObj_by_fname(jsfname);
                         if (bib.obj) {
