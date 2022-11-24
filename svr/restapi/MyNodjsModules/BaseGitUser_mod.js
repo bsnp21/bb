@@ -208,7 +208,9 @@ var BaseGUti = {
         }
         console.log("fetchObj:", retObj)
         if (Object.keys(retObj).length === 0) {
-            retObj = SrcObj
+            Object.keys(SrcObj).forEach(function(key){
+                retObj[key] = SrcObj[key]
+            })
             console.log("fetchObj has no keys, then fetchAll", retObj)
             return retObj
         }
