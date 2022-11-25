@@ -579,9 +579,9 @@ var ApiJsonp_BibleObj = {
                 inp.out.olog["git commit"] = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`).split(/\r|\n/)
                 inp.out.olog["git push"] = userProject.m_BaseGitUser.git_push()
             }
-            inp.out.olog[`sudo rm -rf ${gitdir}`] = BaseGUti.execSync_Cmd(`sudo rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
-            inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+            //inp.out.olog[`sudo rm -rf ${gitdir}`] = BaseGUti.execSync_Cmd(`sudo rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
             inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID)
+            inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
         })
 
         // var sret = JSON.stringify(inp, null, 4)
