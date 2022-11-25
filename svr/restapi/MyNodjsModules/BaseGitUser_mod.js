@@ -598,7 +598,7 @@ var BaseGUti = {
 
     default_inp_out_obj: function () {
         return {
-            SSID: null, data: null, desc: "", err: null,
+            SSID: "", data: null, desc: "", err: null,
             state: { bEditable: -1, bRepostoryDirExist: -1 }
         }
     },
