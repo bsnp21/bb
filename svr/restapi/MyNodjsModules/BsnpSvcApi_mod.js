@@ -576,8 +576,8 @@ var ApiJsonp_BibleObj = {
             var gitdir = userProject.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
                 inp.out.olog["git add *"] = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *").split(/\r|\n/)
-                inp.out.olog["git_commit_m"] = userProject.m_BaseGitUser.git_commit_m() //.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`).split(/\r|\n/)
-                inp.out.olog["git_push"] = userProject.m_BaseGitUser.git_push() //.execSync_gitdir_cmd("sudo git push").split(/\r|\n/)
+                inp.out.olog["git_commit_m"] = userProject.m_BaseGitUser.git_commit_m().split(/\r|\n/) //.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`).split(/\r|\n/)
+                inp.out.olog["git_push"] = userProject.m_BaseGitUser.git_push().split(/\r|\n/) //.execSync_gitdir_cmd("sudo git push").split(/\r|\n/)
             }
             //inp.out.olog[`sudo rm -rf ${gitdir}`] = BaseGUti.execSync_Cmd(`sudo rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
             inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID)
