@@ -933,7 +933,7 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     fi
     `
         var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
-        console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot))
+        console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot), ret)
     }
 
 
