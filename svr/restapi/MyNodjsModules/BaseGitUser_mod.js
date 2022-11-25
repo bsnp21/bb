@@ -1438,7 +1438,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     return ret
 }
 
-BaseGitUser.prototype.git_push = async function () {
+BaseGitUser.prototype.git_push =  function () {
 
     var ret = this.execSync_gitdir_cmd("git push").toString()
     if (null !== ret) {
