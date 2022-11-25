@@ -1146,8 +1146,8 @@ gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}    #
 BaseGitUser.prototype.write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword]) 
     var fname = this.getFullPath_usr_git(".salts")
-    fs.writeFileSync(fname, salts, "utf8")
-    return str
+    var ret = fs.writeFileSync(fname, salts, "utf8")
+    return ret
 }
 
 BaseGitUser.prototype.gh_repo_create__and_more____ = function (passcode, hintword, accesstr) {
