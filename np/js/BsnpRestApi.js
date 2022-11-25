@@ -193,8 +193,8 @@ BsnpRestApi.prototype.signin = function (usr, cbf) { // usr = {repopath:"", pass
     BsnpRestUti.ajax_get(`${this.svrurl}/Get_OTK`, {}, function (otk) {
         var inp = _this._get_encrypt_usr_inp(otk, usr)
         BsnpRestUti.ajax_post(`${_this.svrurl}/ApiUsrReposData_signin`, inp, function (ret) {
-            if (ret.out.state.SSID) {
-                _this.SSID = ret.out.state.SSID //for urlRedirectParam
+            if (ret.out.SSID) {
+                _this.SSID = ret.out.SSID //for urlRedirectParam
             }
             cbf(ret, !_this.SSID)
         })
@@ -246,8 +246,8 @@ BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
     var _this = this
     _this.SSID = "-" //create/login do not need ssid. others need.
     return this.ajaxion("ApiUsrAccount_login", par, function (ret) {
-        if (ret.out.state.SSID) {
-            _this.SSID = ret.out.state.SSID //for urlRedirectParam
+        if (ret.out.SSID) {
+            _this.SSID = ret.out.SSID //for urlRedirectParam
         } else {
             console.log("missed SSID in ret.out.state. login failed.")
         }

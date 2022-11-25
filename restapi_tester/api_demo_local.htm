@@ -213,7 +213,7 @@
                         if (ret.out.err) {
                             alert("load failed ret.out.err= " + ret.out.err)
                         }
-                        if (ret.out && ret.out.state && ret.out.state.SSID) {
+                        if (ret.out && ret.out.SSID) {
                             var ur = `${api.urlRedirectParam()}`
                             $("#addur_ssid").attr("href", `${ur}`).text(ur).addClass("hili_ssid_parm");
                         }

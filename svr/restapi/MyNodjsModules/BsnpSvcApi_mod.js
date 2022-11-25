@@ -583,31 +583,7 @@ var ApiJsonp_BibleObj = {
         })
     },
     ApiUsrReposData_signin: function (req, res) {
-        //console.log("ApiUsrReposData_signin")
-        //if (!req || !res) {
-        //    return inp_struct_account_setup
-        //}
-        //ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
-        //    //: unlimited write size. 
-        //    var userProject = new BibleObjGitusrMgr()
-        //    //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
-        //    var ret = userProject.Proj_parse_usr_signin(inp)
-        //    if (!ApiUti.Output_append(inp.out, ret)) return console.log(inp, "\n\n----Proj_parse_usr_signin sign in failed.")
-        //
-        //
-        //    inp.out.state.SSID = null;
-        //    if (inp.out.state.bEditable) {
-        //        if (null === userProject.m_BaseGitUser.git_push_test()) {
-        //            //inp.out.state.bEditable =  inp.out.state. = 0
-        //            //console.log("git_push_test failed.!!!!!")
-        //            inp.out.state.FailedTest = "git_push_test failed.!!!!!."
-        //            userProject.m_BaseGitUser.Proj_detele()
-        //        } else {
-        //            inp.out.state.SSID = userProject.Session_create()
-        //            console.log("Session_create ==", inp.out.state.SSID)
-        //        }
-        //    }
-        //})
+     
     },
     ApiUsrAccount_login: function (req, res) {
         console.log("ApiUsrAccount_login")
