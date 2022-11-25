@@ -330,44 +330,35 @@ BibleObjGitusrMgr.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid
     console.log(usrObj)
     return usrObj
 }
-BibleObjGitusrMgr.prototype.Proj_parse_usr_signin = function (inp) {
-    console.log("========Proj_parse_usr_signin")
-
-    var usr = this._decipher_usr_by_key_stored_in_cuid(inp.CUID, inp.cipherusrs)
-    if (!usr) {
-        console.log("*****failed: sdfadfasjiasf")
-        return null
-    }
-    return this.m_BaseGitUser.Set_gitusr(usr.repopath)
-}
 BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     if (!repopath) return { err: "null repopath" }
     repopath = repopath.toLowerCase()
 
-
-    var sgu = this.m_BaseGitUser.Set_gitusr(repopath)
-    if (sgu.err) return sgu;
+    var robj = this.m_BaseGitUser.Set_gitusr(repopath)
+    if (robj.err) return robj;
 
     console.log("========__Proj_parse_usr_login__")
-    var ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (ghinfo.err) {
-        console.log(ghinfo);
-        return { err: ["not exist", repopath], ghinfo: ghinfo }
+    robj.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    if (robj.ghinfo.err) {
+        robj.err = ["not exist", repopath]
+        console.log(robj);
+        return robj
     }
 
-    this.m_BaseGitUser.Deploy_proj()
+    robj.deploy = this.m_BaseGitUser.Deploy_proj()
 
-    var ar = this.m_BaseGitUser.get_repo_salts()
-    if (ar.indexOf(passcode) < 0) {
-        return { err: ["password error. Hint: ", ar[1]] }
+    robj.saltary = this.m_BaseGitUser.get_repo_salts()
+    if (robj.saltary.indexOf(passcode) < 0) {
+        robj.err = ["password error. Hint: ", robj.saltary[1]] 
+        return robj
     }
 
     var usrObj = { repopath: repopath, passcode: passcode }
-    var ssid = this.Session_create(usrObj)
+    robj.SSID = this.Session_create(usrObj)
 
-    var state = this.m_BaseGitUser.Check_proj_state()
+    robj.state = this.m_BaseGitUser.Check_proj_state()
 
-    return { SSID: ssid, state: state, sgu: sgu, ghinfo: ghinfo } //must be SSID capitalized ret.
+    return robj //must be SSID capitalized ret.
 }
 
 BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {

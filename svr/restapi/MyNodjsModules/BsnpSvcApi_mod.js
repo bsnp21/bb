@@ -558,7 +558,7 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var userProject = new BibleObjGitusrMgr()
-            //console.log(inp, "\n\n---Proj_parse_usr_signin.start*************")
+            //console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
             var ret = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
             ApiUti.Output_append(inp.out, ret)
             console.log(inp)
