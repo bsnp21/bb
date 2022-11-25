@@ -1290,21 +1290,18 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
 
 BaseGitUser.prototype.Proj_detele = function () {
-    var inp = { out: {} };//this.m_inp
 
     var gitdir = this.getFullPath_usr_git()
     //var password = "lll" //dev mac
     var proj_destroy = `
       sudo -S rm -rf ${gitdir}
     `
+    var ret = ""
     if (fs.existsSync(`${gitdir}`)) {
-        inp.out.exec_git_cmd_result = BaseGUti.execSync_Cmd(proj_destroy).toString()
-        inp.out.desc += "destroyed git dir: " + gitdir
+        ret = BaseGUti.execSync_Cmd(proj_destroy).toString()
     }
-
-
     //this.Session_delete()
-    return inp
+    return ret
 }
 
 
