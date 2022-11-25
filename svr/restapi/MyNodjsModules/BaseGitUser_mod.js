@@ -1122,7 +1122,7 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     var rob = {}
     rob.gh_repo_create_only = this.gh_repo_create_only(accesstr)
-    rob.git_pull = this.git_pull()
+    rob.git_clone = this.git_clone()
     rob.write_salts = this.write_salts(passcode, hintword)
     rob.git_commit_push = this.git_add_commit_push_Sync()
     return rob
@@ -1281,7 +1281,6 @@ BaseGitUser.prototype.git_clone = function () {
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
         echo 'lll' | sudo -S chown ubuntu:ubuntu  -R ${git_root} 
         #echo 'lll' | sudo -S chmod  777 -R ${git_root} 
-        git s
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
