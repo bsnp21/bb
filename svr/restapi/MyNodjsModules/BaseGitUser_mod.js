@@ -1401,7 +1401,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
      
 
     if(bSync){
-        return BaseGUti.execSync_Cmd(command)
+        return BaseGUti.execSync_Cmd(command).split(/[\r|\n]/)
     }
 
     try {
