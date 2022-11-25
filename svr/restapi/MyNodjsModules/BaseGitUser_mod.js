@@ -1147,7 +1147,7 @@ BaseGitUser.prototype.write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword]) 
     var fname = this.getFullPath_usr_git(".salts")
     var ret = fs.writeFileSync(fname, salts, "utf8")
-    return ret
+    return salts + ret
 }
 
 BaseGitUser.prototype.gh_repo_create__and_more____ = function (passcode, hintword, accesstr) {
