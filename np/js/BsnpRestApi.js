@@ -84,11 +84,10 @@ var BsnpRestUti = {
 }
 var RestApi_uPar_Validate = {
     "Get_OTK": function (upar) { },
-    "Jsonpster": "Jsonpster",
     "ApiUsrAccount_login": function (usr) { },
     "ApiUsrAccount_logout": function (usr) { },
     "ApiUsrAccount_create": function (usr) { },
-    "ApiUsrReposData_signin": function (usr) { },
+    
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
     "ApiBibleObj_write_Usr_BkcChpVrs_txt": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], inpObj: {} }) },
@@ -239,9 +238,7 @@ BsnpRestApi.prototype.ApiUsrAccount_create = function (par, cbf) {
     _this.SSID = "-" //create/login do not need ssid. others need.
     return this.ajaxion("ApiUsrAccount_create", par, cbf)
 }
-BsnpRestApi.prototype.ApiUsrReposData_signin = function (par, cbf) {
-    return this.signin(par, cbf)
-}
+
 BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
     var _this = this
     _this.SSID = "-" //create/login do not need ssid. others need.

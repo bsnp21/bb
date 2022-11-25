@@ -455,18 +455,7 @@ var Uti = {
     },
 
 
-    after_page_transit_load_allusrs_bcv: function (cbf) {
-
-        var myNotes = localStorage.getItem("myNote")
-
-        Jsonpster.inp = JSON.parse(myNotes).inp
-        Jsonpster.api = RestApi.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt
-        console.log("Jsonpster:", Jsonpster.inp)
-        Jsonpster.RunAjaxPost_Signed(function (ret) {
-            console.log("ret", ret)
-            if (cbf) cbf(ret)
-        })
-    },
+  
 
 
 
@@ -487,14 +476,7 @@ var Uti = {
         return
     },
     jq_post: function () {
-        $.post(Jsonpster.getUrl(),
-            {
-                name: "Donald Duck",
-                city: "Duckburg"
-            },
-            function (data, status) {
-                alert("Data: " + data + "\nStatus: " + status);
-            });
+   
     }
 
 

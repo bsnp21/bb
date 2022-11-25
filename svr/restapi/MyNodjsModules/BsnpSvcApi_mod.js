@@ -177,39 +177,6 @@ var ApiJsonp_BibleObj = {
         res.send(otk);
         res.end();
     },
-    Jsonpster: function (req, res) {
-        ////////////////////////////////////////////
-        //app.get("/Jsonpster", (req, res) => {
-        console.log("res.req.headers.host=", res.req.headers.host);
-
-        var inp = ApiUti.Parse_GET_req_to_inp(req)
-        var userProject = new BibleObjGitusrMgr()
-        var pkb64 = ""
-        if (inp && inp.CUID) {
-            var kpf = userProject.genKeyPair(inp.CUID)
-            if (kpf) {
-                pkb64 = kpf.pkb64
-            }
-        }
-
-        //////////////
-        var RestApi = {}
-        Object.keys(this).forEach(function (key) {
-            RestApi[key] = key; //, inp: ApiJsonp_BibleObj[key]() };
-        })
-        var jstr_RestApi = `var RestApi = ${JSON.stringify(RestApi, null, 4)}`
-        var structall = JSON.stringify(inp_struct_all)
-        var SvrUrl = `http://${res.req.headers.host}/`
-        if (res.req.headers.host.indexOf("7778") < 0) {
-            SvrUrl = `https://${res.req.headers.host}/`
-        }
-        console.log("SvrUrl=", SvrUrl)
-
-        console.log(jstr_RestApi);
-        res.send(jstr_RestApi);
-        res.end();
-        //});
-    },
     ApiBibleObj_search_txt: function (req, res) {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var userProject = new BibleObjGitusrMgr()
@@ -397,7 +364,7 @@ var ApiJsonp_BibleObj = {
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        //res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         //res.end();
     },
 
@@ -477,7 +444,7 @@ var ApiJsonp_BibleObj = {
         // var sret = JSON.stringify(inp)
         // var sid = ""
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        // res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         // res.end();
     },
 
@@ -560,7 +527,7 @@ var ApiJsonp_BibleObj = {
         //var sret = JSON.stringify(inp)
         //var sid = ""
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        //res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         //res.end();
     },
 
@@ -582,9 +549,7 @@ var ApiJsonp_BibleObj = {
             ApiUti.Output_append(inp.out, ret)
         })
     },
-    ApiUsrReposData_signin: function (req, res) {
-     
-    },
+    
     ApiUsrAccount_login: function (req, res) {
         console.log("ApiUsrAccount_login")
         if (!req || !res) {
@@ -624,7 +589,7 @@ var ApiJsonp_BibleObj = {
         // 
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        // res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         // res.end();
     },
 
@@ -669,6 +634,19 @@ var ApiJsonp_BibleObj = {
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
             }
+            if (inp.par.user_cmd_ary && inp.par.user_cmd_ary.length > 0) {
+                console.log("enter => inp.par.user_cmd_ary:")
+                inp.out.olog = []
+                for (var i = 0; i < inp.par.user_cmd_ary.length; i++) {
+                    var cmd = inp.par.user_cmd_ary[i]
+                    var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
+                    var obj = {}
+                    obj[cmd] = arr
+                    inp.out.olog.push(obj)
+                }
+                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+                return
+            }
 
 
         })
@@ -678,7 +656,7 @@ var ApiJsonp_BibleObj = {
         // 
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        // res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         // res.end();
     },
 
@@ -714,7 +692,7 @@ var ApiJsonp_BibleObj = {
         // 
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        // res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         // res.end();
     },
 
@@ -741,7 +719,7 @@ var ApiJsonp_BibleObj = {
 
         //console.log("oup is ", inp.out)
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        //res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         //res.end();
     },
 
@@ -763,7 +741,7 @@ var ApiJsonp_BibleObj = {
         //
         //console.log("oup is ", inp.out)
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        //res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         //res.end();
     },
 
@@ -784,7 +762,7 @@ var ApiJsonp_BibleObj = {
         // var sid = ""
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        // res.write(`Jsonpster.Response(${sret},${sid});`);
+        
         // res.end();
     },
 
@@ -829,7 +807,7 @@ var ApiJsonp_BibleObj = {
         console.log("oup is ", inp.out)
 
         res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        res.write(`Jsonpster.Response(${sret},${sid});`);
+        res.write(`.Response(${sret},${sid});`);
         res.end();
     },
 }//// BibleRestApi ////

@@ -122,11 +122,7 @@
             $("title").text("*" + scap)
 
             console.log("load_allusrs_bcv", pster)
-            // Jsonpster.inp = JSON.parse(document.m_myNotes).inp
-            // Jsonpster.inp.SSID = MyStorage.SSID() //first time for new page to load AjxPOST
-            // Jsonpster.api = RestApi.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt.str
-            // console.log("inp:", pster.inp)
-            // Jsonpster.RunAjaxPost(function (ret) {
+    
             console.log("ret", ret)
             var res = ret.out.data
             $("#repodesc").text(ret.out.repodesc)
@@ -166,22 +162,7 @@
             })
         })
 
-        //$("#runCmd").on("click", function () {
-        //    search_reposdesc.addonTop($("#Search_repodesc").val())
-        //    Uti.Jsonpster_crossloader(3, function () {
-        //        Uti.after_page_transit_load_allusrs_bcv(function (ret) {
-        //            show_loaded_allusrs_bcv(ret)
-        //        })
-        //    })
-        //})
-
-
-        //Uti.Jsonpster_crossloader(2, function () {
-        //    Uti.after_page_transit_load_allusrs_bcv(function (ret) {
-        //        show_loaded_allusrs_bcv(ret)
-        //    })
-        //})
-
+   
 
 
     })

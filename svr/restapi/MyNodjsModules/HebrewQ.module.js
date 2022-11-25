@@ -83,7 +83,7 @@ HebrewQ.prototype.HebrewRestApi = function (app) {
       var inpObj = SvcUti.GetApiInputParamObj(req);
       var ret = SvcRestApi[api](inpObj);
       res.writeHead(200, { 'Content-Type': 'text/javascript' });
-      res.write("Jsonpster.Response(" + ret + ");");
+      res.write(".Response(" + ret + ");");
       res.end();
     });
   });

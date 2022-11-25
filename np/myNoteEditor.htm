@@ -478,17 +478,7 @@ ${scmd}
                 var str = prompt("Input a verse number: ", "Gen1:1")
                 pster.bcv = str ? str : ""
             }
-            // //localStorage.setItem("myNote", "")
-            // console.log("Storage myNode", pster)
-            // var e = document.createElement("script");
-            // e.src = `${pster.url}Jsonpster/`;
-            // document.body.appendChild(e);
-            // 
-            // setTimeout(() => {
-            //
-            //for (const [bkn, chpObj] of Object.entries(pster.inp.par.inpObj)) {
-            //    for (const [chp, vrsObj] of Object.entries(chpObj)) {
-            //        for (const [vrs, txt] of Object.entries(vrsObj)) {
+          
             CKEDITOR.instances.editor1.setData(pster.txt)
             var theData = ckEditor.getData();
             document.m_iEdiDataLen = theData.length;

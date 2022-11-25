@@ -44,7 +44,7 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 var uploadObj = new Upload_Object();
 uploadObj.upload_page(app);
 
-//// for BibleObjApi  with Jsonpster ////////
+//// for BibleObjApi  with  ////////
 //var bii = new BibleObj();"../../../../"
 BibleObjJsonpApi.init(app);
 
@@ -80,7 +80,7 @@ app.get("/", (req, res) => {
   //res.send("<script>alert(\'ss\');</script>");
   var obj = { samp: 'ffa' };
   var s = JSON.stringify(res.req.headers);
-  res.send("restapi Jsonpster. clientSite:" + s);
+  res.send("restapi . clientSite:" + s);
 });
 
 app.listen(MASTER_SVR.http.port, () => {
