@@ -284,19 +284,26 @@ var BibleObjGitusrMgr = function () {
 BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
 
-    var sgu = this.m_BaseGitUser.Set_gitusr(repopath)
-    if (sgu.err) return sgu
 
-    var ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (!ghinfo.err) {
-        console.log(ghinfo);
-        var state = this.m_BaseGitUser.Check_proj_state()
-        return { err: ["already exist.", repopath], state: state, ghinfo: ghinfo };
+    var robj = this.m_BaseGitUser.Set_gitusr(repopath)
+    if (robj.err) return robj
+
+    robj.state_orign = this.m_BaseGitUser.Check_proj_state()
+    robj.diskUsage = this.m_BaseGitUser.gh_repo_list_tot_diskUsage()
+
+    robj.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    if (!robj.ghinfo.err) {
+        console.log(robj.ghinfo);
+        robj.ghinfo.err = ["already exist.", repopath]
+        return robj;
     }
 
-    var res = this.m_BaseGitUser.gh_repo_create(passcode, hintword, accesstr)
-    if (!res) return { err: ["failed to create.", repopath] }
-    if (res.err) return res;
+    robj.gh_repo_create = this.m_BaseGitUser.gh_repo_create(passcode, hintword, accesstr)
+    if (!robj.gh_repo_create) {
+        robj.err = ["failed to create.", repopath]
+        return robj
+    }
+    if (robj.gh_repo_create.err) return robj;
 
     var state = this.m_BaseGitUser.Check_proj_state()
     return { state: state, sgu: sgu, info_before_creation: ghinfo, gh_repo_create: res }
