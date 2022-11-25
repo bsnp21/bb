@@ -942,7 +942,14 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     if (fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
 
+    
     this.m_std_bible_obj_lib_template = `${absSvcRoot}bible_obj_lib/jsdb/UsrDataTemplate`
+    if(!fs.existsSync(this.m_std_bible_obj_lib_template)){
+        var clone_https = 'https://github.com/wdingbox/bible_obj_lib.git'
+        var clone_lib = `echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${clone_https}  ${absSvcRoot}bible_obj_lib`
+        var ret = BaseGUti.execSync_Cmd(clone_lib).toString()
+        console.log("-m_std_bible_obj_lib_template:", ret)
+    }
 
     return projDirs
 }
