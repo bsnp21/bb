@@ -1124,7 +1124,7 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     rob.gh_repo_create_only = this.gh_repo_create_only(accesstr)
     rob.git_clone = this.git_clone()
     rob.write_salts = this.write_salts(passcode, hintword)
-    rob.git_commit_push = this.git_add_commit_push_Sync(true)
+    rob.git_add_commit_push_Sync = this.git_add_commit_push_Sync(true)
     return rob
 }
 BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
@@ -1426,7 +1426,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo '=>git add .*'
     echo 'lll'|  sudo -S git add *
     echo '=>git commit'
-    echo 'lll'|  sudo -S git commit -m "Sync:${bSync}. repodesc:${"git_add_commit_push_Sync"}"
+    echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
     echo '=>git push'
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     echo '=>git status'
