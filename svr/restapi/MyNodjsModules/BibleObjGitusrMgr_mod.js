@@ -305,9 +305,9 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     }
     if (robj.gh_repo_create.err) return robj;
 
-    robj.state = this.m_BaseGitUser.Check_proj_state()
+    robj.state_after_created = this.m_BaseGitUser.Check_proj_state()
     robj.proj_detele = this.m_BaseGitUser.Proj_detele()
-    robj.state_after_delete = this.m_BaseGitUser.Check_proj_state()
+    robj.state_after_deleted = this.m_BaseGitUser.Check_proj_state()
     return robj
 }
 
