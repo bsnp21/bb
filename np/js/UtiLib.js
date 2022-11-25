@@ -440,7 +440,7 @@ var Uti = {
 
     open_child_window: function (htm_fname, cbf) {
         const urlParams = new URLSearchParams(window.location.search);
-        ip = urlParams.get('ip');
+        ip = urlParams.get('sip');
         var parm = (ip) ? `ip=${ip}` : ""
         window.open(`./${htm_fname}?${parm}`)
 

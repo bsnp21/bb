@@ -2059,9 +2059,9 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     })
     $("#account_reSignIn").on("click", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        var ip = urlParams.get('ip'), username=urlParams.get('username');
+        var ip = urlParams.get('sip'), username=urlParams.get('username');
 
-        window.open(`./mySignIn.htm?ip=${ip}&username=${username}`, "_target")
+        window.open(`./mySignIn.htm?sip=${ip}&username=${username}`, "_target")
     })
 
     $("#myExt_Diary").on("click", function () {

@@ -3,7 +3,7 @@
 	<base target="_blank" />
 	<script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
 	<title></title>
-	<meta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?ip=34.227.20.213:7775">
+	<meta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?sip=34.227.20.213:7775">
 	</meta>
 </head>
 
@@ -13,7 +13,7 @@
 		var pos = url.indexOf("?")
 		var par = url.substr(pos)
 		if (pos < 0) {
-			par = `0;url=./np/mySignIn.htm?ip=${config_websvr_data.ip}:${config_websvr_data.http_port}`
+			par = `0;url=./np/mySignIn.htm?sip=${config_websvr_data.ip}:${config_websvr_data.http_port}`
 			//alert("no param:"+par)
 		}else{
 			par = `0;url=./np/mySignIn.htm${par}`
@@ -21,7 +21,7 @@
 		var ms = document.getElementsByTagName('meta');
 		ms[0].content = par
 	</script>
-	<xmeta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?ip=34.227.20.213:7775">
+	<xmeta http-equiv="Refresh" xxxx_content="0;url=./np/mySignIn.htm?sip=34.227.20.213:7775">
 	</xmeta>
 </body>
 

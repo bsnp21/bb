@@ -138,10 +138,10 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
             ip = window.location.hostname
         }
         if (!ip) {
-            return alert("not localhost or missed in url with ?ip=x.x.x.x")
+            return alert("not localhost or missed in url with ?sip=x.x.x.x")
         }
         if ("undefined" === ip) {
-            return alert("not localhost or missed in url with ?ip=undefined")
+            return alert("not localhost or missed in url with ?sip=undefined")
         }
 
         if (ip.indexOf(":") < 0) return alert(ip += ":7778 ---missed port")
@@ -157,13 +157,13 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
     }
 
     this.urlParams = new URLSearchParams(window.location.search);
-    var ip = this.urlParams.get('ip');
+    var ip = this.urlParams.get('sip');
     this.svrurl = test_ip(ip)
     this.SSID = this.urlParams.get('SSID');
 
 
-    //other param form url param ?ip=0.0.0.0:778&#Gen2:7
-    var idx = window.location.href.indexOf("#") //case: ?ip=1.1.1.1#Gen1:1
+    //other param form url param ?sip=0.0.0.0:778&#Gen2:7
+    var idx = window.location.href.indexOf("#") //case: ?sip=1.1.1.1#Gen1:1
     var bcv = ""
     if (idx >= 0) {
         //ip = window.location.href.substr(0, idx)
@@ -173,7 +173,7 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
     }
 }
 BsnpRestApi.prototype.urlRedirectParam = function (parm) {
-    var spar = `?ip=${this.svrurl}`
+    var spar = `?sip=${this.svrurl}`
     if (this.SSID && this.SSID.length > 1) {
         spar += "&SSID=" + this.SSID
     }
