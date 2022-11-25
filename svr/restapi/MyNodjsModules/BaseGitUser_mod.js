@@ -866,8 +866,11 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
     if (!txt) return []
-    var ar = JSON.parse(txt)
-    return ar
+    try{
+        return JSON.parse(txt)
+    }catch{
+        return ["a","a"]
+    }
 }
 
 BaseGitUser.prototype.validate_reponame = function (reponame) {

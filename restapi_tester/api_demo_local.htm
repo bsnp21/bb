@@ -169,7 +169,7 @@
                     { gh_repo_list_tot_diskUsage: {} },
                     { trepass_cmd_ary: ["gh repo list --limit 10000 --json name,diskUsage --source bsnpghrepolist"] },
                     { trepass_cmd_ary: ["gh repo delete bsnpghrepolist/pub001 --confirm", "gh repo list --limit 10000"] },
-                    { trepass_cmd_ary: ["gh api repos/bsnpghrepolist/p1 --jsaon name"] },
+                    { trepass_cmd_ary: ["gh api repos/bsnpghrepolist/p1"] },
                     { trepass_cmd_ary: ["ls -al"] },
                     { git_cmd_ary: ["git add *", "git commit -m 'svr' ", "git push"] },
                     { git_cmd_ary: ["git commit -m 'svr' "] },
