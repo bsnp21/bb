@@ -1123,8 +1123,10 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     var rob = {}
     rob.gh_repo_create_only = this.gh_repo_create_only(accesstr)
     rob.git_clone = this.git_clone()
-    rob.write_salts = this.write_salts(passcode, hintword)
+    rob.git_dir_write_salts = this.git_dir_write_salts(passcode, hintword)
     rob.git_add_commit_push_Sync = this.git_add_commit_push_Sync(true)
+    rob.state_just_created = this.m_BaseGitUser.Check_proj_state()
+    rob.git_dir_remove = this.git_dir_remove()
     return rob
 }
 BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
@@ -1143,7 +1145,7 @@ gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}    #
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
     return str
 }
-BaseGitUser.prototype.write_salts = function (passcode, hintword) {
+BaseGitUser.prototype.git_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword]) 
     var fname = this.getFullPath_usr_git(".salts")
     var ret = fs.writeFileSync(fname, salts, "utf8")
@@ -1324,7 +1326,7 @@ BaseGitUser.prototype.Deploy_proj = function () {
 }
 
 
-BaseGitUser.prototype.Proj_detele = function () {
+BaseGitUser.prototype.git_dir_remove = function () {
 
     var gitdir = this.getFullPath_usr_git()
     //var password = "lll" //dev mac
@@ -1461,7 +1463,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     var gitdir = this.getFullPath_usr_git()
     var cmd =`
     cd ${gitdir}
-    GIT_TERMINAL_PROMPT=0 git pull
+    sudo GIT_TERMINAL_PROMPT=0 git pull
     `
     var ret = this.execSync_gitdir_cmd(cmd).toString()
     return ret

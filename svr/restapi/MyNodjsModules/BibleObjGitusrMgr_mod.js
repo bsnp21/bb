@@ -150,7 +150,7 @@ NCache.Init = function () {
                 var res3 = userProject.execSync_gitdir_cmd(`git commit -m "on del in Cache"`)
                 var res4 = userProject.git_push()
 
-                var res5 = userProject.m_BaseGitUser.Proj_detele()
+                var res5 = userProject.m_BaseGitUser.git_dir_remove()
             }
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)
@@ -307,7 +307,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
     robj.state_after_created = this.m_BaseGitUser.Check_proj_state()
     robj.git_add_commit_push_Sync = this.m_BaseGitUser.git_add_commit_push_Sync(true)
-    robj.proj_detele = this.m_BaseGitUser.Proj_detele()
+    robj.proj_detele = this.m_BaseGitUser.git_dir_remove()
     robj.state_after_deleted = this.m_BaseGitUser.Check_proj_state()
     return robj
 }

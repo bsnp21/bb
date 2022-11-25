@@ -581,7 +581,7 @@ var ApiJsonp_BibleObj = {
                 //inp.out.olog["git_push"] = userProject.m_BaseGitUser.git_push().split(/\r|\n/) //.execSync_gitdir_cmd("sudo git push").split(/\r|\n/)
             }
             //inp.out.olog[`sudo rm -rf ${gitdir}`] = BaseGUti.execSync_Cmd(`sudo rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
-            inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID)
+            inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
         })
 
