@@ -1125,7 +1125,7 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     rob.git_clone = this.git_clone()
     rob.git_dir_write_salts = this.git_dir_write_salts(passcode, hintword)
     rob.git_add_commit_push_Sync = this.git_add_commit_push_Sync(true)
-    rob.state_just_created = this.m_BaseGitUser.Check_proj_state()
+    rob.state_just_created = this.Check_proj_state()
     rob.git_dir_remove = this.git_dir_remove()
     return rob
 }
