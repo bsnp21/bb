@@ -1119,10 +1119,38 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 
 
 
-
-
-
 BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
+    var rob = {}
+    rob.gh_repo_create_only = this.gh_repo_create_only(accesstr)
+    rob.git_pull = this.git_pull()
+    rob.write_salts = this.write_salts(passcode, hintword)
+    rob.git_commit_push = this.git_add_commit_push_Sync()
+    return rob
+}
+BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
+
+    var usrdir = this.getFullPath_usr_host()
+    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
+
+    var username = this.m_sponser.m_reponame
+    var gh_repo_create = `
+# create my-project and clone 
+############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
+#######################################################################################################
+gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}    ## must remove sudo for third pary github account. 
+#######################################################################################################
+`
+    var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
+    return str
+}
+BaseGitUser.prototype.write_salts = function (passcode, hintword) {
+    var salts = JSON.stringify([passcode, hintword]) 
+    var fname = this.getFullPath_usr_git(".salts")
+    fs.writeFileSync(fname, salts, "utf8")
+    return str
+}
+
+BaseGitUser.prototype.gh_repo_create__and_more____ = function (passcode, hintword, accesstr) {
 
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
@@ -1140,7 +1168,7 @@ cd ${dir}
 gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
 #######################################################################################################
 if [ -d "${dir}/${username}" ]; then
-    sudo -S chmod 777 ${username}
+    sudo -S chmod 777 -R ${username}
     sudo -S chmod 777 ${username}/.git/config
     sudo -S cp ${username}/.git/config ${username}/.git/config_bak
     sudo -S cat  ${username}/.git/config
@@ -1251,8 +1279,8 @@ BaseGitUser.prototype.git_clone = function () {
     else 
         echo "${git_root}/.git/config does not exist, so to clone"
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
-        echo 'lll' | sudo -S chmod  777 -R ${git_root} 
         echo 'lll' | sudo -S chown ubuntu:ubuntu  -R ${git_root} 
+        #echo 'lll' | sudo -S chmod  777 -R ${git_root} 
         git s
     fi
     `
@@ -1396,6 +1424,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo '=>git diff'
     echo 'lll'|  sudo -S git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.
     echo '=>git add *'
+    echo '=>git add .*'
     echo 'lll'|  sudo -S git add *
     echo '=>git commit'
     echo 'lll'|  sudo -S git commit -m "Sync:${bSync}. repodesc:${"git_add_commit_push_Sync"}"
@@ -1406,7 +1435,6 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo '=>git status -sb'
     echo 'lll'|  sudo -S git status -sb
     `
-
 
     if (bSync) {
         return BaseGUti.execSync_Cmd(command).split(/[\r|\n]/)
@@ -1428,11 +1456,6 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     } catch (err) {
         console.log(err)
     }
-
-    console.log('exec_command END.')
-    setTimeout(function () {
-        console.log('exec_command ENDED Mark.', gitdir)
-    }, 10000)
 }
 
 BaseGitUser.prototype.git_pull = function (cbf) {
