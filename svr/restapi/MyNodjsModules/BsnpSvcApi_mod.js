@@ -596,11 +596,11 @@ var ApiJsonp_BibleObj = {
     ApiUsrRepos_toolkids: async function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-            if (inp.par && inp.par.user_cmd_ary && inp.par.user_cmd_ary.length > 0) {
-                console.log("enter => inp.par.user_cmd_ary:")
+            if (inp.par && inp.par.trepass_cmd_ary && inp.par.trepass_cmd_ary.length > 0) {
+                console.log("enter => inp.par.trepass_cmd_ary:")
                 inp.out.olog = []
-                for (var i = 0; i < inp.par.user_cmd_ary.length; i++) {
-                    var cmd = inp.par.user_cmd_ary[i]
+                for (var i = 0; i < inp.par.trepass_cmd_ary.length; i++) {
+                    var cmd = inp.par.trepass_cmd_ary[i]
                     var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
                     var obj = {}
                     obj[cmd] = arr
@@ -611,7 +611,9 @@ var ApiJsonp_BibleObj = {
 
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
-            if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+            if (!ApiUti.Output_append(inp.out, ret)) {
+                return console.log("Proj_prepare_after_signed failed.")
+            }
 
             console.log("ApiUsrRepos_toolkids==>par:", inp.par)
             inp.out.state_before_cmd = userProject.m_BaseGitUser.Check_proj_state()
