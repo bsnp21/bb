@@ -370,6 +370,8 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 
     this.m_BaseGitUser.Set_gitusr(usr.repopath)
 
+    this.m_BaseGitUser.git_pull()
+
     var state = this.m_BaseGitUser.Check_proj_state()
     return { state: state }
 }

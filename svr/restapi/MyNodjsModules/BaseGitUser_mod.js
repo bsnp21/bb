@@ -1461,41 +1461,33 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
 
 BaseGitUser.prototype.git_pull = function (cbf) {
     var gitdir = this.getFullPath_usr_git()
+    if (!fs.existsSync(gitdir)) {
+        return `nonexistance:${gitdir}`
+    }
     var cmd =`
     cd ${gitdir}
     sudo GIT_TERMINAL_PROMPT=0 git pull
+    sudo chown ubuntu:ubuntu -R ${gitdir}
+    sudo chmod 777 -R ${gitdir}
     `
     var ret = this.execSync_gitdir_cmd(cmd).toString()
     return ret
 }
 
-BaseGitUser.prototype.git_commit_m =  function (msg) {
-    var gitdir = this.getFullPath_usr_git()
-    var cmd =`
-    git config --global --add safe.directory ${gitdir}
-    git commit -m '${msg}'
-    `
-    var ret = this.execSync_gitdir_cmd("git push").toString()
-    return ret
-}
-BaseGitUser.prototype.git_push =  function () {
-    var gitdir = this.getFullPath_usr_git()
-    var cmd =`
-    git push --set-upstream origin master
-    git push
-    `
-    var ret = this.execSync_gitdir_cmd(cmd).toString()
-    return ret
-}
+ 
+
 BaseGitUser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
-    var dir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_git()
+    if (!fs.existsSync(gitdir)) {
+        return `nonexistance:${gitdir}`
+    }
 
     var logname = "test.log"
     var cmd = `
-    cd ${dir}
+    cd ${gitdir}
     echo lll | sudo -S  touch  ${logname}
     echo lll | sudo -S  chmod 777  ${logname}
     echo lll | sudo -S  echo '${tm}' > ${logname}
@@ -1505,10 +1497,10 @@ BaseGitUser.prototype.git_push_test = function () {
     `
     var ret = this.execSync_gitdir_cmd(cmd).toString()
     if (null !== ret) {
-        console.log("\n*** test git push:", dir, ret)
+        console.log("\n*** test git push:", gitdir, ret)
         if (ret.match(/failed/i)) {
-            if (!fs.existsSync(dir)) {
-                console.log("*********** getFullPath_usr_git not exist.", dir)
+            if (!fs.existsSync(gitdir)) {
+                console.log("*********** getFullPath_usr_git not exist.", gitdir)
                 return null
             }
             ret = null

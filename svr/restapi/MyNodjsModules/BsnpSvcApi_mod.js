@@ -502,10 +502,6 @@ var ApiJsonp_BibleObj = {
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            if (0) {
-                await userProject.m_BaseGitUser.git_pull(function (bSuccess) {
-                })
-            }
             var par = inp.par;
             var doc = par.fnames[0]
             var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
@@ -576,11 +572,7 @@ var ApiJsonp_BibleObj = {
             var gitdir = userProject.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
                 inp.out.olog["git_add_commit_push_Sync"] = userProject.m_BaseGitUser.git_add_commit_push_Sync(true)
-                //inp.out.olog["git add *"] = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *").split(/\r|\n/)
-                //inp.out.olog["git_commit_m"] = userProject.m_BaseGitUser.git_commit_m().split(/\r|\n/) //.execSync_gitdir_cmd(`git commit -m "before del. repodesc"`).split(/\r|\n/)
-                //inp.out.olog["git_push"] = userProject.m_BaseGitUser.git_push().split(/\r|\n/) //.execSync_gitdir_cmd("sudo git push").split(/\r|\n/)
             }
-            //inp.out.olog[`sudo rm -rf ${gitdir}`] = BaseGUti.execSync_Cmd(`sudo rm -rf ${gitdir}`).split(/\r|\n/) //BaseGUti.execSync_Cmd(proj_destroy).toString()
             inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
         })
@@ -714,7 +706,7 @@ var ApiJsonp_BibleObj = {
 
             var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *")
             var res3 = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
-            var res4 = userProject.m_BaseGitUser.git_push()
+            //var res4 = userProject.m_BaseGitUser.git_push()
 
             userProject.m_BaseGitUser.Check_proj_state()
         })
