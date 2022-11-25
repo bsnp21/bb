@@ -866,10 +866,10 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
     if (!txt) return []
-    try{
+    try {
         return JSON.parse(txt)
-    }catch{
-        return ["a","a"]
+    } catch {
+        return ["a", "a"]
     }
 }
 
@@ -1061,7 +1061,8 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, par) {
         case "_": //: _myNode,
         case "e": //: e_Node,
             {
-                var fnam = this.get_DocCode_Fname(DocCode)
+                var fnam = DocCode
+                if (!fnam.match(/_json\.js$/)) fnam += "_json.js"
                 subDir = `/myoj/${fnam}`
                 //dest_pfname = this.getFullPath_usr_myoj(`${fnam}`, cpyIfNonsistance)
                 dest_pfname = this.getFullPath_usr_acct_file_StdChoice_IfNotExist(subDir, cbf)
@@ -1071,6 +1072,7 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, par) {
         case ".": //-: ./dat/MostRecentVerses; //not used MyBiblicalDiary
             {
                 var fnam = DocCode.slice(6)
+                if (!fnam.match(/_json\.js$/)) fnam += "_json.js"
                 subDir = `/dat/${fnam}`
                 //dest_pfname = this.getFullPath_usr_dat(`${fnam}_json.js`, cpyIfNonsistance)
                 dest_pfname = this.getFullPath_usr_acct_file_StdChoice_IfNotExist(subDir, cbf)
@@ -1402,24 +1404,25 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo '=>git status -sb'
     echo 'lll'|  sudo -S git status -sb
     `
-     
 
-    if(bSync){
+
+    if (bSync) {
         return BaseGUti.execSync_Cmd(command).split(/[\r|\n]/)
     }
 
     try {
         {
-        exec(command, (err, stdout, stderr) => {
-            console.log('\n-exec_Cmd errorr:')
-            console.log(err)
-            console.log('\n-exec_Cmd stderr:',)
-            console.log(stderr)
-            console.log('\n-exec_Cmd stdout:')
-            console.log(stdout)
-            console.log('\n-exec_Cmd end.')
+            exec(command, (err, stdout, stderr) => {
+                console.log('\n-exec_Cmd errorr:')
+                console.log(err)
+                console.log('\n-exec_Cmd stderr:',)
+                console.log(stderr)
+                console.log('\n-exec_Cmd stdout:')
+                console.log(stdout)
+                console.log('\n-exec_Cmd end.')
 
-        })};
+            })
+        };
     } catch (err) {
         console.log(err)
     }
