@@ -1160,7 +1160,7 @@ fi
     }
 
     console.log("git_gh_repo_createne_cmd...")
-    var str = BaseGUti.execSync_Cmd(gh_repo_create).toString().split(/\r|\n/)
+    var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
     //console.log("ret", ret)
 
     return str
@@ -1369,7 +1369,7 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 }
 
 
-BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
+BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
     var inp = {};//this.m_inp
     var gitdir = this.getFullPath_usr_git()
@@ -1390,7 +1390,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
     echo '=>git add *'
     echo 'lll'|  sudo -S git add *
     echo '=>git commit'
-    echo 'lll'|  sudo -S git commit -m "Sync:${msg}. repodesc:${"git_add_commit_push_Sync"}"
+    echo 'lll'|  sudo -S git commit -m "Sync:${bSync}. repodesc:${"git_add_commit_push_Sync"}"
     echo '=>git push'
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     echo '=>git status'
@@ -1398,12 +1398,14 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
     echo '=>git status -sb'
     echo 'lll'|  sudo -S git status -sb
     `
-    console.log('exec_command:', command)
-    console.log('exec_command start:')
+     
+
+    if(bSync){
+        return BaseGUti.execSync_Cmd(command)
+    }
 
     try {
-        //e.g. command = "ls"
-
+        {
         exec(command, (err, stdout, stderr) => {
             console.log('\n-exec_Cmd errorr:')
             console.log(err)
@@ -1413,7 +1415,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (msg) {
             console.log(stdout)
             console.log('\n-exec_Cmd end.')
 
-        });
+        })};
     } catch (err) {
         console.log(err)
     }
