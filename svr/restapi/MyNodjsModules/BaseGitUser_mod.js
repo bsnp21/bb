@@ -677,7 +677,7 @@ GitSponsor.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner)
             tot_diskUsage += objAry[i].diskUsage
         }
         robj.tot_reposNumber = tot_repos
-        robj.tot_diskUsgByte = tot_diskUsage
+        robj.tot_diskUsageKB = tot_diskUsage //https://docs.github.com/en/graphql/reference/objects#repository
     } catch {
         robj.err = ["failed json str"]
     }
