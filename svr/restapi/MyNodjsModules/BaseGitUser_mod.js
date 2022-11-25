@@ -661,15 +661,14 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
 
 GitSponsor.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner) {
     var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
-    if(!github_accountowner) github_accountowner = this.m_acct.ownername
+    if (!github_accountowner) github_accountowner = this.m_acct.ownername
     var str = BaseGUti.execSync_Cmd(`gh repo list --source ${github_accountowner} --json diskUsage --limit ${MAX_SIZE}`).toString()// --json nameWithOwner|url
     console.log("gh repo list:", str)
     if (str.indexOf("Command failed") >= 0) {
-        console.log("=============gh is not installed or not work:", str)
+        console.log("============= gh is not installed or not work:", str)
         return { err: [str], obj: {} };
     }
-    console.log("=============gh works")
-    var robj = {}
+    var robj = { ownername: github_accountowner }
     try {
         var objAry = JSON.parse(str)
         var tot_repos = objAry.length
@@ -677,8 +676,8 @@ GitSponsor.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner)
         for (var i = 0; i < tot_repos; i++) {
             tot_diskUsage += objAry[i].diskUsage
         }
-        robj.tot_usrNumber = tot_repos
-        robj.tot_diskUsage = tot_diskUsage
+        robj.tot_reposNumber = tot_repos
+        robj.tot_diskUsgByte = tot_diskUsage
     } catch {
         robj.err = ["failed json str"]
     }
@@ -758,7 +757,6 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
         console.log("=============gh not work nor installed:", str)
         return { err: str.split(/[\r|\n]/) };
     }
-    console.log("=============gh works")
     var lines = str.split(/[\r|\n]/)
     var usrsInfo = {}
     for (var i = 0; i < lines.length; i++) {
@@ -943,9 +941,9 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     if (fs.existsSync(ghroot)) this.ghRoot = ghroot
     else console.log(`********** Fatal Error creating ghroot: ${ghroot}.`)
 
-    
+
     this.m_std_bible_obj_lib_template = `${absSvcRoot}bible_obj_lib/jsdb/UsrDataTemplate`
-    if(!fs.existsSync(this.m_std_bible_obj_lib_template)){
+    if (!fs.existsSync(this.m_std_bible_obj_lib_template)) {
         var clone_https = 'https://github.com/wdingbox/bible_obj_lib.git'
         var clone_lib = `echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${clone_https}  ${absSvcRoot}bible_obj_lib`
         var ret = BaseGUti.execSync_Cmd(clone_lib).toString()
