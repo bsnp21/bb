@@ -1438,8 +1438,22 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     return ret
 }
 
-BaseGitUser.prototype.git_push =  function () {
+BaseGitUser.prototype.git_commit_m =  function (msg) {
+    var gitdir = this.getFullPath_usr_git()
+    var cmd =`
+    git config --global --add safe.directory ${gitdir}
+    git commit -m '${msg}'
+    `
     var ret = this.execSync_gitdir_cmd("git push").toString()
+    return ret
+}
+BaseGitUser.prototype.git_push =  function () {
+    var gitdir = this.getFullPath_usr_git()
+    var cmd =`
+    git push --set-upstream origin master
+    git push
+    `
+    var ret = this.execSync_gitdir_cmd(cmd).toString()
     return ret
 }
 BaseGitUser.prototype.git_push_test = function () {
