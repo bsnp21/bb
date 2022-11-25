@@ -143,15 +143,11 @@ NCache.Init = function () {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
-            if (1 === inp.out.state.bRepostoryDirExist) {
-                //
+            if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_git())) {
                 console.log("on del:git dir exist. push before to delete it")
-                var res2 = userProject.execSync_gitdir_cmd("git add *")
-                var res3 = userProject.execSync_gitdir_cmd(`git commit -m "on del in Cache"`)
-                var res4 = userProject.git_push()
-
-                var res5 = userProject.m_BaseGitUser.git_dir_remove()
+                userProject.git_add_commit_push_Sync(true)
             }
+            userProject.m_BaseGitUser.git_dir_remove()
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)
     }
