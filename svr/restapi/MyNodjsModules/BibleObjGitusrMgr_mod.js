@@ -145,7 +145,7 @@ NCache.Init = function () {
             console.log(inp.out.state)
             if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_git())) {
                 console.log("on del:git dir exist. push before to delete it")
-                userProject.git_add_commit_push_Sync(true)
+                userProject.m_BaseGitUser.git_add_commit_push_Sync(true)
             }
             userProject.m_BaseGitUser.git_dir_remove()
         }
