@@ -360,7 +360,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     var state = this.m_BaseGitUser.Check_proj_state()
 
-    return { SSID: ssid, state: state, sgu: sgu, ghinfo: ghinfo } //must be SSID capitalized ret.
+    return { SSID: ssid, state: {}, sgu: sgu, ghinfo: ghinfo } //must be SSID capitalized ret.
 }
 
 BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
