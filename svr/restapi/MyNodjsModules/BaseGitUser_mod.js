@@ -927,6 +927,7 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
     else 
         echo "${endpath} does not exist, create it one-time-for-all: ${endpath}"
         echo 'lll' | sudo -S mkdir -p ${endpath}
+        echo 'lll' | sudo -S chown -R ubuntu:ubuntu ${endpath}
         echo 'lll' | sudo -S chmod -R 777 ${startPath}
         echo 'lll' | sudo -S ls -al ${endpath}
     fi
