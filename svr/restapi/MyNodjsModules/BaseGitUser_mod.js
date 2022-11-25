@@ -1459,7 +1459,12 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
 }
 
 BaseGitUser.prototype.git_pull = function (cbf) {
-    var ret = this.execSync_gitdir_cmd("GIT_TERMINAL_PROMPT=0 git pull")
+    var gitdir = this.getFullPath_usr_git()
+    var cmd =`
+    cd ${gitdir}
+    GIT_TERMINAL_PROMPT=0 git pull
+    `
+    var ret = this.execSync_gitdir_cmd(cmd).toString()
     return ret
 }
 
