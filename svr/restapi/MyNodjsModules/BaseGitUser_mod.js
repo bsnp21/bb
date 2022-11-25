@@ -1124,7 +1124,7 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     rob.gh_repo_create_only = this.gh_repo_create_only(accesstr)
     rob.git_clone = this.git_clone()
     rob.write_salts = this.write_salts(passcode, hintword)
-    rob.git_commit_push = this.git_add_commit_push_Sync()
+    rob.git_commit_push = this.git_add_commit_push_Sync(true)
     return rob
 }
 BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
