@@ -2018,7 +2018,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
         ////
         //const urlParams = new URLSearchParams(window.location.search);
-        //const ip = urlParams.get('ip');
+        //const ip = urlParams.get('sip');
         var htm = ""
         ret.biblical_order_splitted_ary.forEach(function (v, i) {
             hist.m_tbodies.RecentAccessed.addnew2table(v)
