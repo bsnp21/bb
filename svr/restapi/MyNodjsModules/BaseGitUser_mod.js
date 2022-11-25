@@ -1492,8 +1492,7 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     var scmd = `
     #!/bin/sh
     cd ${this.getFullPath_usr_git()}
-     #echo lll |sudo -S ${gitcmd}
-     ${gitcmd}
+    ${gitcmd}
     `
     console.log("\n----git_cmd start:>", scmd)
     var res = BaseGUti.execSync_Cmd(scmd)
