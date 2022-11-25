@@ -1439,15 +1439,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
 }
 
 BaseGitUser.prototype.git_push =  function () {
-
     var ret = this.execSync_gitdir_cmd("git push").toString()
-    if (null !== ret) {
-        console.log("\n*** test git push:", ret)
-        if (ret.match(/failed/i)) {
-            ret = null
-        }
-    }
-
     return ret
 }
 BaseGitUser.prototype.git_push_test = function () {

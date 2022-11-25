@@ -342,7 +342,7 @@ var ApiJsonp_BibleObj = {
             //}
             console.log("inp.par.inpObj", inp.par.inpObj)
             //console.log("karyObj", karyObj)
-            console.log("bio.obj", bio.obj)
+            //console.log("bio.obj", bio.obj)
 
             BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, {
                 SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
