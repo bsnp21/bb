@@ -204,10 +204,8 @@ var BibleInputMenuContainer = `
                            <option value="Safari">
                        </datalist>
                        </input>
-                       <a id='clear_Tab_MostRecent_BCV_caps'>X</a>
-                       
                        <button class='docSwitchRecent ColorRecentMarks' title='RecentAccessed' id='RecentTouch_Btn'>Rx</button>
-                       <button class='docSwitchRecent' title="MemoryRequired" id='MemoryVerse_Btn'>Mr</button><br>
+                       <button class='docSwitchRecent' title="MemoryRequired" id='MemoryVerse_Btn'>Mr</button><a id='clear_Tab_MostRecent_BCV_caps'>X</a><br>
                        
                     </div>
             
