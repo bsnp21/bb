@@ -923,16 +923,15 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
 
     function make_path_777(startPath, endpath) {
         var cmd_ghroot = `
-    #!/bin/sh
+    #!/bin/sh 
     if [ -d "${endpath}" ]; then
         echo "${endpath} already has been created."
-        echo 'lll' | sudo -S ls -al ${endpath}
     else 
         echo "${endpath} does not exist, create it one-time-for-all: ${endpath}"
         echo 'lll' | sudo -S mkdir -p ${endpath}
         echo 'lll' | sudo -S chown -R ubuntu:ubuntu ${endpath}
         echo 'lll' | sudo -S chmod -R 777 ${startPath}
-        echo 'lll' | sudo -S ls -al ${endpath}
+        ls -al ${endpath}
     fi
     `
         var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
@@ -1466,6 +1465,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     }
     var cmd =`
     cd ${gitdir}
+    pwd
     sudo GIT_TERMINAL_PROMPT=0 git pull
     sudo chown ubuntu:ubuntu -R ${gitdir}
     sudo chmod 777 -R ${gitdir}
