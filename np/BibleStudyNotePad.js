@@ -2388,7 +2388,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
         var username = api.urlParams.get("username")
         $("#SignOut_repopathname").text(username)
         $("#repopath").val(username)
-        //$("#passcode").val(obj.passcode)
+      
 
         Uti.Msg("RestApi=", RestApi);
 

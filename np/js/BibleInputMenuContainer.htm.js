@@ -369,8 +369,6 @@ var BibleInputMenuContainer = `
                     <br>
                     <input id="repopath" value='' placeholder='username' readonly></input>
                     <br>
-                    
-                    <input id="passcode" type="password" value='' readonly></input><a onclick="$('#passcode').val('')"></a>
                     <br>
                     <a id="respdesc_history">ShareID</a>: 
                     <br>

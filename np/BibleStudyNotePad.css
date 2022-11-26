@@ -90,7 +90,7 @@ body {
     }
    
 
-    #repopath, #repodesc, #passcode{
+    #repopath, #repodesc{
         width:100%;
     }
     #repository_assitance,  .StorageRepo_Signout{
