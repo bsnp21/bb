@@ -2043,10 +2043,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         })
     })
 
-    $("#account_default").on("click", function () {
-        $("#repopath").val("https://github.com/bsnp21/pub_test01.git")
-        $("#passcode").val("")
-    })
+   
     $("#share_public").on("click", function () {
         var tx = $("#repodesc").val('*')
         //var d = new Date()

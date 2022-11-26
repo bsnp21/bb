@@ -363,7 +363,7 @@ var BibleInputMenuContainer = `
                     <td>
                     <a id="account_history">Username</a>: 
                     <div id="repository_assitance">
-                    <a id="Format_Check" xxid="account_default"></a> | 
+                    
                     
                     </div>
                     <br>
