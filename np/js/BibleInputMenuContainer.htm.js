@@ -361,18 +361,18 @@ var BibleInputMenuContainer = `
                 
                 <tr>
                     <td>
-                    <a id="account_history">Repository</a>: 
+                    <a id="account_history">Username</a>: 
                     <div id="repository_assitance">
-                    <a id="Format_Check" xxid="account_default">Format</a> | 
+                    <a id="Format_Check" xxid="account_default"></a> | 
                     
                     </div>
                     <br>
-                    <textarea id="repopath" value='https://github.com/bsnp21/pub_test01.git' placeholder='https://github.com/bsnp21/pub_test01.git' readonly></textarea>
+                    <input id="repopath" value='' placeholder='username' readonly></input>
                     <br>
                     
                     <a id="passcode_toggler">Password:</a> 
                     <span id="repository_description">
-                    <a></a> 
+                    <a>x</a> 
                     </span><br>
                     <input id="passcode" type="password" value='' readonly></input><a onclick="$('#passcode').val('')"></a>
                     <br>
@@ -383,7 +383,7 @@ var BibleInputMenuContainer = `
                     <br>
                     <input id="repodesc" value='' placeholder='' ></input>
                     <br>
-                    <lable>Timeout(s):<lable> <input id="cacheTTL" type='number' min='1' max='100000000' maxlength='8' size='8' unit='s' placeholder='123'></input> <a id='idatetiemstampe'></a>
+                      <a id='idatetiemstampe'></a>
                     <br>
                     
                     <button id="account_updateStatus">UpdateStatus</button>

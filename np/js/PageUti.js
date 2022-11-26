@@ -117,9 +117,8 @@ var PageUti = {
         $(showid).html("<font>start checking...</font>")
 
         var uiv = $("#repodesc").val();//MyStorage.Repositories().repos_store_get().repodesc
-        var ttl = MyStorage.cacheTTL() //from localStorage
         var par = {}
-        par.aux = { Update_repodesc: uiv, cacheTTL: ttl }//aux need to be fixed in svr.
+        par.aux = { Update_repodesc: uiv }//aux need to be fixed in svr.
 
 
         var api = new BsnpRestApi()

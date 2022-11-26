@@ -19,16 +19,7 @@ var MyStorage = {
 
 
 
-            $("#cacheTTL").val(MyStorage.cacheTTL())
-            $("#cacheTTL").bind("click change keyup blur", function () {
-                var v = $(this).val()
-                var size = parseInt($(this).attr("maxlength"))
-                if (v.length >= size) {
-                    v = v.substr(0, size)
-                    $(this).val(v)
-                }
-                MyStorage.cacheTTL(v)
-            })
+
 
 
 
@@ -365,19 +356,7 @@ var MyStorage = {
             localStorage.setItem("FontSize", v)
         }
     },
-    cacheTTL: function (v) {
-        const defaultVal = 99999999 //max in seconds = 1157 days
-        if (undefined === v) {//get 
-            var vs = parseInt(localStorage.getItem("cacheTTL"));
-            if (!vs) vs = defaultVal
-            return vs
-        } else {//set
-            v = parseInt(v)
-            if (!Number.isInteger(v) || isNaN(v)) return alert(`not Number.isInteger(${v})`)
-            if (v < 1) v = 1
-            localStorage.setItem("cacheTTL", v)
-        }
-    },
+
 
 
     setCustomCatAry: function (obj) {

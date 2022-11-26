@@ -2088,14 +2088,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         //MyStorage.Repositories().repos_app_update()
     })
 
-    //$("#cacheTTL").on("change, keyup, click, blur", function () {
-    //    MyStorage.cacheTTL($(this).val())
-    //})
-
-
-    //  $("#passcode").bind("focus", function () {
-    //      PageUti.Repositories_History("#outConfig", -1)
-    //  })
+   
 
     $("#passcode_toggler").on("click", function () {
         var tx = $("#passcode").attr("type")
