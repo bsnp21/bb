@@ -285,7 +285,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     if (robj.err) return robj
 
     robj.state_orign = this.m_BaseGitUser.Check_proj_state()
-    robj.diskUsage = this.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
+    robj.sponsorDiskUsage = this.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
 
     robj.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (!robj.ghinfo.err) {
