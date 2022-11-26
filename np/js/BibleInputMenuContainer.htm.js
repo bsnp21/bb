@@ -370,7 +370,7 @@ var BibleInputMenuContainer = `
                     <input id="repopath" value='' placeholder='username' readonly></input>
                     <br>
                     
-                    <a id="passcode_toggler">Password:</a> 
+                   
                     <span id="repository_description">
                     <a>x</a> 
                     </span><br>

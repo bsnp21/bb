@@ -2082,14 +2082,6 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
    
 
-    $("#passcode_toggler").on("click", function () {
-        var tx = $("#passcode").attr("type")
-        console.log(tx, btoa(tx), atob(btoa(tx)))
-        if (tx === "password") tx = "text"
-        else tx = "password"
-        $("#passcode").attr("type", tx)
-    })
-
     $("#Storage_clear").on("change", function () {
         MyStorage.clear();
         var _THIS = this
