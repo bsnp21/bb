@@ -132,6 +132,10 @@
         .failed {
             color: red;
         }
+
+        input[readonly] {
+            background-color: lightgray;
+        }
     </style>
 </head>
 
@@ -165,7 +169,7 @@
                     <td>
                         <a id="">Username:</a> (<font color='red'>required</font>)<br>
                         <input id="repopath" class="inputxt" value="" placeholder="username"
-                            note="https://github.com/bsnp21/pub_test.git"  maxlength="125"></input>
+                            note="https://github.com/bsnp21/pub_test.git" maxlength="125"></input>
                     </td>
                     <td class="clearout">
                         <br>X
@@ -179,7 +183,8 @@
                     <td>
                         <br>
                         <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)<br>
-                        <input id="passcode" type="password" maxlength="120" class="inputxt" value=""  maxlength="125"></input>
+                        <input id="passcode" type="password" maxlength="120" class="inputxt" value=""
+                            maxlength="125"></input>
                     </td>
                     <td class="clearout">
                         <br><br>X
@@ -190,7 +195,7 @@
                 <tr>
                     <td colspan="2"><br>
                         <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
-                        <button class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</button>
+                        <button class="signinBtn" id="loginAsUser" title="login to account" >Log-in</button>
                         <a id="Check_Status"></a>
                         <a id="SignOnCreate" href=""> Create </a>
                         <br><br>
@@ -228,7 +233,7 @@
     $(function () {
 
 
-        init_by_url_params()
+
 
 
         $(".clearout").on("click", function () {
@@ -279,9 +284,11 @@
         })
 
         $("#footer").slideToggle()
-        $("#toggle_txtarea").on("click", function(){
+        $("#toggle_txtarea").on("click", function () {
             $("#footer").slideToggle()
         })
+
+        trigger_guest_auto_login()
     })
     function sign_in(success, failed) {
         $(".signinBtn").attr("disabled", true)
@@ -371,21 +378,22 @@
         return usr
     }
 
-    function init_by_url_params() {
+    function trigger_guest_auto_login() {
         const urlParams = new URLSearchParams(window.location.search);
-        const rep = urlParams.get('rep');
-        const pat = urlParams.get('pat');
-        const opt = urlParams.get('opt');
+        const guest_auto_login = urlParams.get('guest_auto_login');
 
-        var repo = localStorage.getItem("repopath")
-        var pass = localStorage.getItem("passcode")
-        //if (rep && pat) {
-        if (repo) $("#repopath").val(repo)
-        if (pass) $("#passcode").val(pass)
         //} 
-        if (opt === 'run') {
+        if (guest_auto_login) {
             setTimeout(function () {
-                $("#signInAsUsers").trigger("click")
+
+
+                $("#repopath").val("guest").attr("readonly", "true")
+                $("#passcode").val("guest").attr("readonly", "true")
+                $("#loginAsUser").trigger("click")
+                $(".signinBtn").attr("disabled", true)
+
+
+                //$("#errmsg").trigger("click")
             }, 1000)
         }
     }
