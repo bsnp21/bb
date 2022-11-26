@@ -1141,7 +1141,7 @@ BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
 gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}    ## must remove sudo for third pary github account. 
 #######################################################################################################
 sudo -S git branch -M main
-sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
+sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(true)}
 sudo -S git push -u origin main   ##error for sudo
 `
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
