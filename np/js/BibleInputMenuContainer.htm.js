@@ -368,16 +368,10 @@ var BibleInputMenuContainer = `
                     </div>
                     <br>
                     <input id="repopath" value='' placeholder='username' readonly></input>
-                    <br>
-                    <br>
-                    <a id="respdesc_history">ShareID</a>: 
-                    <br>
-                    <input id="repodesc" value='' placeholder='' ></input>
-                    <br>
                       <a id='idatetiemstampe'></a>
                     <br>
                     
-                    <button id="account_updateStatus">UpdateStatus</button>
+                
                     <div id="account_set_info"></div>
                     </td>
                     

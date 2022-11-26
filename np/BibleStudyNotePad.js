@@ -2045,9 +2045,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
 
     $("#share_private").on("click", function () {
-        var tx = $("#repodesc").val('')
-        //var d = new Date()
-        //$("#repodesc").val(d.toISOString().substr(0, 10) + "," + d.toLocaleTimeString() + ". " + tx)
+      
     })
     $("#account_reSignIn").on("click", function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -2065,20 +2063,8 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
                 
 
 
-    $("#account_updateStatus").on("click", function () {
-        MyStorage.Repositories().repos_app_update()
-        PageUti.repo_status("#account_set_info")
-        $("#idatetiemstampe").text((new Date()).toString())
-    })
+  
 
-    //  Readonly now.
-    //  $("#repopath").bind("focus", function () {
-    //      PageUti.Repositories_History("#outConfig", 1)
-    //  })
-    $("#repodesc").on("focus", function () {
-        //PageUti.Repositories_History("#account_set_info", 2)
-        //MyStorage.Repositories().repos_app_update()
-    })
 
    
 
