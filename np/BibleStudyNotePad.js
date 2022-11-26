@@ -2043,12 +2043,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         })
     })
 
-   
-    $("#share_public").on("click", function () {
-        var tx = $("#repodesc").val('*')
-        //var d = new Date()
-        //$("#repodesc").val(d.toISOString().substr(0, 10) + "," + d.toLocaleTimeString() + ". " + tx)
-    })
+
     $("#share_private").on("click", function () {
         var tx = $("#repodesc").val('')
         //var d = new Date()

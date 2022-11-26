@@ -378,7 +378,7 @@ var BibleInputMenuContainer = `
                     <br>
                     <a id="respdesc_history">ShareID</a>: 
                     <span id="repository_description">
-                    <a id="share_public">public</a> | <a id="share_private">private</a> 
+                    
                     </span>
                     <br>
                     <input id="repodesc" value='' placeholder='' ></input>
