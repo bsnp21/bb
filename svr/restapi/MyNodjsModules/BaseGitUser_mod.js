@@ -1415,24 +1415,17 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
 
     //password = "lll" //dev mac
     var command = `
-    #!/bin/bash
+    #!/bin/bash  ###git_add_commit_push_Sync
     set -x #echo on
-    echo '=>cd ${gitdir}'
     cd  ${gitdir}
-    echo '=>git status'
+    pwd
     echo 'lll'|  sudo -S git status
-    echo '=>git diff'
     echo 'lll'|  sudo -S git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.
-    echo '=>git add *'
-    echo '=>git add .*'
     echo 'lll'|  sudo -S git add *
-    echo '=>git commit'
+    echo 'lll'|  sudo -S git add .*
     echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
-    echo '=>git push'
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
-    echo '=>git status'
     echo 'lll'| sudo -S git status
-    echo '=>git status -sb'
     echo 'lll'|  sudo -S git status -sb
     `
 
