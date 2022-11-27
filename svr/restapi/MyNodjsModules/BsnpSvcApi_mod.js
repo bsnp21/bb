@@ -364,7 +364,7 @@ var ApiJsonp_BibleObj = {
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         //res.end();
     },
 
@@ -444,7 +444,7 @@ var ApiJsonp_BibleObj = {
         // var sret = JSON.stringify(inp)
         // var sid = ""
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         // res.end();
     },
 
@@ -492,7 +492,7 @@ var ApiJsonp_BibleObj = {
             inp.out.state.save = save_res
 
             //
-            userProject.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
+            inp.out["git_add_commit_push_Sync"] = userProject.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
         })
     },
     ApiUsrDat_load: async function (req, res) {
@@ -523,7 +523,7 @@ var ApiJsonp_BibleObj = {
         //var sret = JSON.stringify(inp)
         //var sid = ""
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         //res.end();
     },
 
@@ -545,7 +545,7 @@ var ApiJsonp_BibleObj = {
             ApiUti.Output_append(inp.out, ret)
         })
     },
-    
+
     ApiUsrAccount_login: function (req, res) {
         console.log("ApiUsrAccount_login")
         if (!req || !res) {
@@ -582,7 +582,7 @@ var ApiJsonp_BibleObj = {
         // 
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         // res.end();
     },
 
@@ -642,7 +642,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
                 return
             }
-            
+
 
 
         })
@@ -652,7 +652,7 @@ var ApiJsonp_BibleObj = {
         // 
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         // res.end();
     },
 
@@ -688,7 +688,7 @@ var ApiJsonp_BibleObj = {
         // 
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         // res.end();
     },
 
@@ -715,7 +715,7 @@ var ApiJsonp_BibleObj = {
 
         //console.log("oup is ", inp.out)
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         //res.end();
     },
 
@@ -737,7 +737,7 @@ var ApiJsonp_BibleObj = {
         //
         //console.log("oup is ", inp.out)
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         //res.end();
     },
 
@@ -758,7 +758,7 @@ var ApiJsonp_BibleObj = {
         // var sid = ""
         // console.log("oup is ", inp.out)
         // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        
+
         // res.end();
     },
 
