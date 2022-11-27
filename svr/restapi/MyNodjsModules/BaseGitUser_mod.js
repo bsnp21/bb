@@ -1138,7 +1138,7 @@ BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
 # create my-project and clone 
 ############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
 #######################################################################################################
-gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}    ## must remove sudo for third pary github account. 
+gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr} --clone   ## must remove sudo for third pary github account. 
 #######################################################################################################
 sudo -S git branch -M main
 sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(true)}
