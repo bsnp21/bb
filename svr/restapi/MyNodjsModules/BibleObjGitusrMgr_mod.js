@@ -97,7 +97,7 @@ SvrUsrsBCV.prototype.gen_crossnet_files_of = function (docpathfilname, cbf) {
 
 
 
-var NCache = JSON.parse(fs.readFileSync("../config/nCache_cfg.json", "utf8")) ;//60000 //seconds.
+var NCache = JSON.parse(fs.readFileSync("./config/nCache_cfg.json", "utf8")) ;//60000 //seconds.
 
 NCache.myCache = new NodeCache({ checkperiod: NCache.m_checkperiod }); //checkperiod default is 600s.
 NCache.Init = function () {
