@@ -97,11 +97,7 @@ SvrUsrsBCV.prototype.gen_crossnet_files_of = function (docpathfilname, cbf) {
 
 
 
-var NCache = {}
-NCache.m_checkperiod = 60 //s.
-NCache.m_TTL = NCache.m_checkperiod * 6 //360 seconds (default)
-NCache.m_MFT = 300  //MaxForgivenTimesToKeepCache== ttl * 300.
-NCache.m_MAX = 3600 * 200  //about a week
+var NCache = JSON.parse(fs.readFileSync("../config/nCache_cfg.json", "utf8")) ;//60000 //seconds.
 
 NCache.myCache = new NodeCache({ checkperiod: NCache.m_checkperiod }); //checkperiod default is 600s.
 NCache.Init = function () {
@@ -118,7 +114,7 @@ NCache.Init = function () {
 
 
     function _destroy_git_proj(key, val) {
-        console.log(`\n\n\n\n\n\n\n\n\n\non del, NCache.m_checkperiod=${NCache.m_checkperiod},m_TTL=${NCache.m_TTL}, m_MFT=${NCache.m_MFT}`)
+        console.log(`\n\n\n\n\n\n\n\n\n\non del, NCache.m_checkperiod=${NCache.m_checkperiod},m_TTL=${NCache.m_TTL}`)
         // ... do something ...
         //
         console.log(`on del:key=${key}, \n-val=${JSON.stringify(val)} `)
@@ -153,36 +149,6 @@ NCache.Init = function () {
     }
 
 
-    function _MaxForgivenTimes(key, val) {
-        if ("object" !== typeof val) {
-            return console.log("on expired, must dies!~~~~~~~~~~~~", key)
-        }
-
-        if (key.match(/^CUID\d+\.\d+/)) {//key=CUID16129027802800.6753972926962513, 
-            return console.log("on expired, must dies!~~~~~~~~~~~~", key)
-        }
-
-        var tms = val.tms, ttl = val.ttl
-        if (!tms || !ttl) {
-            return console.log("on expired, invalid must die.", ttl, tms, key)
-        }
-
-        var cur = (new Date()).getTime() //(ms)
-        var dlt = (cur - tms) / 1000.0 //(s)
-        var max = ttl * NCache.m_MFT
-        if (max > NCache.m_MAX) {
-            max = NCache.m_MAX
-        }
-
-        console.log(`on expired,MFT=${NCache.m_MFT}, ttl=${ttl}, dlt=${dlt}, key=${key}`)
-        if (dlt < max) {
-            console.log("on expired, keep alive!", key)
-            NCache.myCache.set(key, val, ttl) //keep it.
-        } else {
-            console.log("on expired, ~~~~~~~~~ die ~~~~~~~", key)
-        }
-        console.log("on expired end!\n\n\n\n\n\n\n")
-    }
 
     NCache.myCache.on("del", function (key, val) {
         _destroy_git_proj(key, val)
