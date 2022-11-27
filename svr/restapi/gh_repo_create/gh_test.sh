@@ -21,5 +21,5 @@ if [ -d "$1" ]; then
     git push -u origin main   ##error for sudo
     sudo -S cat  ./.git/config
 else 
-    $1 nonexisistance
+    echo $1 nonexisistance
 fi
