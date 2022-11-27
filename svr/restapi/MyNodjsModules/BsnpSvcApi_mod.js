@@ -467,8 +467,10 @@ var ApiJsonp_BibleObj = {
                 IfUsrNotExist: function (stdfile, usrfile) {
                     var base = path.parse(usrfile)
                     BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`) 
-                    BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`) 
                     BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`) 
+                    BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`) 
+                    BaseGUti.execSync_Cmd(`sudo cp ${stdfile} ${usrfile}`) 
+
                     return usrfile
                 }
             })
