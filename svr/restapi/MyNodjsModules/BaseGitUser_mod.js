@@ -1138,12 +1138,8 @@ BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
 # create my-project and clone 
 ############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
 #######################################################################################################
-gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr} --clone   ## must remove sudo for third pary github account. 
+gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   ## must remove sudo for third pary github account. 
 #######################################################################################################
-sudo -S git branch -M main
-sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(true)}
-sudo -S git push
-#sudo -S git push -u origin main   ##error for sudo
 `
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
     return str
@@ -1285,7 +1281,7 @@ BaseGitUser.prototype.git_clone = function () {
         echo "${git_root}/.git/config does not exist, so to clone"
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
         echo 'lll' | sudo -S chown ubuntu:ubuntu  -R ${git_root} 
-        #echo 'lll' | sudo -S chmod  777 -R ${git_root} 
+        echo 'lll' | sudo -S chmod  777 -R ${git_root} 
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
