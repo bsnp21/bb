@@ -1273,7 +1273,7 @@ BaseGitUser.prototype.git_clone = function () {
     var clone_https = this.m_sponser.git_repo_user_url_private(true)
 
     var git_clone_cmd = `
-    #!/bin/sh
+    #!/bin/sh     # git_clone()
     if [ -f "${git_cfg}" ]; then
         echo "${git_cfg} exists."
         echo 'lll' | sudo -S chmod  777 ${git_cfg}
@@ -1293,11 +1293,11 @@ BaseGitUser.prototype.Deploy_proj = function () {
     console.log("********************************************* Deploy_proj  1")
 
     var cfgf = this.getFullPath_usr_git("/.git/config")
-    if (!fs.existsSync(cfgf)) {
-        this.git_clone() //always sucess even passwd is wrong.
-    } else {
-        this.git_pull()
+    if (fs.existsSync(cfgf)) {
+        return this.git_pull()
     }
+
+    var ret = this.git_clone() //always sucess even passwd is wrong.
 
     var old_txt = fs.readFileSync(cfgf, "utf8")
     console.log("old_cfg :", old_txt)
@@ -1313,14 +1313,6 @@ BaseGitUser.prototype.Deploy_proj = function () {
 
     this.git_push_test()
 
-    var dir = this.getFullPath_usr_acct()
-    if (fs.existsSync(dir)) {
-        //BaseGUti.execSync_Cmd(`echo 'lll' |sudo -S chmod -R 777 ${dir}`)
-    }
-
-    var ret = this.Check_proj_state()
-
-    //console.log("Deploy_proj ---------- rgfd")
     return ret
 }
 

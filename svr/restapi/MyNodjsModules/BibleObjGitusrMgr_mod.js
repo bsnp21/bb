@@ -334,12 +334,13 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
         return { err: ["session nonexist|timeout", ssid] }
     }
 
-    this.m_BaseGitUser.Set_gitusr(usr.repopath)
+    var robj = this.m_BaseGitUser.Set_gitusr(usr.repopath)
+    if (robj.err) return robj;
 
-    this.m_BaseGitUser.git_pull()
+    robj.deploy_proj = this.m_BaseGitUser.Deploy_proj()
 
-    var state = this.m_BaseGitUser.Check_proj_state()
-    return { state: state }
+    robj.state = this.m_BaseGitUser.Check_proj_state()
+    return robj
 }
 
 
