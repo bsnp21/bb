@@ -463,7 +463,15 @@ var ApiJsonp_BibleObj = {
             var par = inp.par
             var save_res = { desc: "ok" }
             var doc = par.fnames[0]
-            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, "cpIfNonexistance")
+            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
+                IfUsrNotExist: function (stdfile, usrfile) {
+                    var base = path.parse(usrfile)
+                    BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`) 
+                    BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`) 
+                    BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`) 
+                    return usrfile
+                }
+            })
             console.log("jsfname=", jsfname)
             var ret = BaseGUti.loadObj_by_fname(jsfname)
             if (ret.obj) {

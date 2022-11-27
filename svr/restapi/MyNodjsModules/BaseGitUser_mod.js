@@ -1145,7 +1145,7 @@ gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   ##
     return str
 }
 BaseGitUser.prototype.git_dir_write_salts = function (passcode, hintword) {
-    var salts = JSON.stringify([passcode, hintword]) 
+    var salts = JSON.stringify([passcode, hintword])
     var fname = this.getFullPath_usr_git(".salts")
     var ret = fs.writeFileSync(fname, salts, "utf8")
     return salts + ret
@@ -1407,10 +1407,9 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 
 BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
-    var inp = {};//this.m_inp
     var gitdir = this.getFullPath_usr_git()
     if (!fs.existsSync(gitdir)) {
-        return console.log("gitdir not exists.");
+        return console.log("gitdir not exists=" + gitdir);
     }
 
     //password = "lll" //dev mac
@@ -1456,7 +1455,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     if (!fs.existsSync(gitdir)) {
         return `nonexistance:${gitdir}`
     }
-    var cmd =`
+    var cmd = `
     cd ${gitdir}
     pwd
     sudo GIT_TERMINAL_PROMPT=0 git pull
@@ -1467,7 +1466,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     return ret
 }
 
- 
+
 
 BaseGitUser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
