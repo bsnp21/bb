@@ -328,15 +328,14 @@ var BibleInputMenuContainer = `
                             <button onclick="g_obt.incFontSize(2);" title='font-size plus'>+</button>
                       <a id='idatetiemstampe'></a>
                     <br>
-                    <input type="radio" id="Storage_clear" title='clear up storage'>Clear</input>
-                            
-                            <a id="Storage_local_repos_exchange"></a>
-                    <br>
-                    <select id="LanguageSel" default_val="English">
+                    <input type="radio" id="Storage_clear" title='clear up storage'>Clear localStorage</input>        
+                    <a id="Storage_local_repos_exchange"></a>
+
+                        <select id="LanguageSel" default_val="English">
                                 <option value='English'>English</option>
                                 <option value='Chinese'>Chinese</option>
                                 <option value='India'>India</option>
-                            </select>
+                        </select>
                 
                     <div id="account_set_info"></div>
                     </td>
