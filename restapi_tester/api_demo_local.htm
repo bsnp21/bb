@@ -61,6 +61,9 @@
 
             background-color: antiquewhite;
         }
+        textarea{
+            height: 500px;
+        }
     </style>
     <script>
 
@@ -382,8 +385,40 @@
             <h3 class="samHeader">bibOj std keys</h3>
             <ol id="bibOjStdKeys"></ol>
         </li>
+
+        <li class="api_test_sect">
+            <h3 class="samHeader">gen auto delete cmdary</h3>
+            <div>
+                <textarea id="inputx"></textarea>
+                <button onclick="auto_gen_cmdary()">start</button>
+                <textarea id="outext"></textarea>
+                <script>
+                    function auto_gen_cmdary() {
+                        var val = $("#inputx").val()
+                        var ary = JSON.parse(val)
+                        var cmdary = []
+                        ary.forEach(function (str) {
+                            var repostr = str.split(" ")[0].trim()
+                            if(repostr.length===0) return
+                            cmdary.push(`gh repo delete ${repostr} --confirm`)
+                        })
+                        $("#outext").val(JSON.stringify(cmdary, null, 4))
+                    }
+                </script>
+            </div>
+
+        </li>
     </ol>
 
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <hr>
 </BODY>
 
 </HTML>
