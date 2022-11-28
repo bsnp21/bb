@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
 
     <script src="https://bsnp21.github.io/home/js/quotestr.js"></script>
-    <link rel="stylesheet" href="https://bsnp21.github.io/home/css/index.css">
+    <link rel="stylesheet" href="./myPage/css/mySign.css">
     </link>
 
 
@@ -29,296 +29,53 @@
     <script src="./js/MyStorage.js"></script>
 
     <script src="./js/BsnpRestApi.js"></script>
+    <script src="./myPage/mySignin_htm.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
     <!-------------------------------------------->
 
     <!-------------------------------------------->
     <style>
-        body {
-            background-color: aliceblue;
-            margin: 0px 0px 0px 0px;
-            padding: 0px 0px 0px 0px;
-            width: 100%;
-        }
 
-        form {
-            background-color: rgb(204, 177, 161);
-
-
-            margin: 0px 10px 0px 10px;
-            padding: 1px 10px 0px 10px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 250px;
-        }
-
-        .centered_elem {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: rgb(204, 177, 161);
-
-            text-align: center;
-            margin: 0px 10px 0px 10px;
-            padding: 0px 10px 10px 10px;
-        }
-
-        .center,
-        table {
-
-            margin-left: auto;
-            margin-right: auto;
-
-        }
-
-
-        xtable {
-            padding: 10px 10px 10px 10px;
-            margin: 10px 10px 10px 10px;
-            /*font-size:xx-large;*/
-        }
-
-        .white_space_nowrap {
-            white-space: nowrap;
-        }
-
-        textarea,
-        .txarea {
-            width: 100%;
-        }
-
-        textarea,
-        input {
-            font-size: large;
-        }
-
-        .HiliFocused {
-            background-color: #e7f1ad;
-        }
-
-        .deleted_repo {
-            text-decoration: line-through;
-        }
-
-        .help_label {
-            float: right;
-        }
-
-        .helpinfo,
-        #FormatOfRepository {
-            display: none;
-            margin-left: 1px;
-        }
-
-        .centeredtxt {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-            width: 70%;
-        }
-
-        .inputxt {
-            width: 100%;
-        }
-
-        #SignOnCreate {
-            float: right;
-        }
-
-        .successed {
-            color: green;
-        }
-
-        .failed {
-            color: red;
-        }
     </style>
+    <script>
+
+        $(function () {
+
+            var mySignPage = new MySignBasePage()
+            mySignPage.set_Create_Page()
+            $("body").html(mySignPage.gen_htm())
+
+
+        })
+    </script>
 </head>
 
 <body>
 
-    <h2 style="text-align: center;margin-top: 10px;"><a href="https://bsnp21.github.io/home/">Bible Study Note Pad</a>
-    </h2>
-
-    <h3 id="Enter" style="text-align: center;margin-top: 10px;" id="SignupPage">Sign-up Page</h3> <div style="text-align: center;margin-top: 10px;" id="usrstot">.</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div id="input_area">
-        <form action="">
-
-            <br>
-
-
-            <table xborder="1">
-                <tr>
-                    <td>
-                        <a id="">Username:</a> (<font color='red'>required</font>)<br>
-                        <input id="repopath" class="inputxt" value="" placeholder="username"
-                            note="https://github.com/bsnp21/pub_test.git"  maxlength="125"></input>
-                    </td>
-                    <td class="clearout">
-                        <br>X
-                    </td>
-                </tr>
-
-
-
-
-                <tr>
-                    <td>
-                        <br>
-                        <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)<br>
-                        <input id="passcode" type="password" maxlength="120" class="inputxt" value=""  maxlength="125"></input>
-                    </td>
-                    <td class="clearout">
-                        <br><br>X
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <br>
-                        <a for="editor1" id="label_password">Comfirm Password</a> : (<a
-                            style="color:red;" id="passcode2_required">required</a>)<br>
-                        <input id="passcode2" type="password" maxlength="120" class="inputxt" value=""  maxlength="125"></input>
-                    </td>
-                    <td class="clearout">
-                        <br><br>X
-                    </td>
-                </tr>
-
-
-                <tr>
-                    <td><br>
-                        <a id="">Password Hints:</a> (<font color=''>optional</font>)<br>
-                        <input id="hintword" class="inputxt" value="" placeholder="password hints"
-                            note="https://github.com/bsnp21/pub_test.git"></input>
-                    </td>
-                    <td class="clearout">
-                        <br><br>X
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><br>
-                        <input type="radio" name="a" checked="true" value="public" id="public"></input><label
-                            for="public">public (free)</label>
-                        <input type="radio" name="a" id="private" value="private"></input><label
-                            for="private">Private</label>
-                    </td>
-                    <td class="clearout">
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2"><br>
-                        <!--button class="signinBtn" id="signInAsUsers" title="sign-n to endorse" disabled>Sign-in</button------>
-                        <a class="signinBtn" id="loginAsUser" title="login to account" disabled>Log-in</a>
-                        <a id="Check_Status"></a>
-                        <button id="SignOnCreate">&nbsp;&nbsp;&nbsp; Create &nbsp;&nbsp;&nbsp;</button>
-                        <br>
-                        
-                        <br>
-                        <font color=''><a id="errmsg">status...</a></font>
-
-                    </td>
-                </tr>
-            </table>
-
-            <br>
-        </form>
-
-        <div id="output" style="text-align: center;margin-top: 10px;">.----.</div>
-    </div>
-
-
-
-
-    <hr id="toggle_txtarea">
-    
-    <div id="footer" style="text-align: center;margin-top: 50px;">
-        <textarea id="txtarea" rows="25"></textarea>
-    </div>
 
 </body>
 
 </html>
-<script>
 
-    $(function () {
-
-    })
-</script>
 <script>
     $(function () {
 
 
-        init_by_url_params()
+        //init_by_url_params()
 
-        
+        mySignin_init()
 
-        $(".clearout").on("click", function () {
-            $(this).prev().find("input").val("")
-        })
-        $("#label_password").on("click", function () {
-            var type = $("#passcode").attr("type") === "password" ? "text" : "password"
-            $("#passcode").attr("type", type)
-        })
-
-        $(".signinBtn").removeAttr("disabled")
-
-        $("#signInAsUsers").on("click", function () {
-            sign_in(function (rob, ur) {
-                window.open(ur, '_self');
-            }, failure)
-        })
 
         $("#loginAsUser").attr("href", `./mySignin.htm${window.location.search}`)
         $("#loginAsUser").on("click", function () {
             var ur = `./mySignIn.htm${window.location.search}`
-             window.open(ur, "_self")
-             return ;
-            login_acct(function (rob) {
-                //window.open(ur, '_self');
-                return true; //contine;
-            })
+            window.open(ur, "_self")
+            return;
         })
 
-        $("#Check_Status, #errmsg").on("click", function () {
-            //$(this).toggle("slow")
-            $("#errmsg").removeClass("successed failed")
-            $("#output").html("--")
-            var paths = $("#repopath").val()
-            login_acct(function (rob) {
-                var tb = PageUti.Repo_fstat_table(rob)
-                var a = `Success: ${paths}`
 
-                if(rob.out.sponsorDiskUsage){
-                    $("#usrstot").text(rob.out.sponsorDiskUsage.tot_reposNumber)
-                }
 
-                
-                $("#errmsg").html(a).addClass("successed")
-                $("#output").html(tb)
-                //$("#errmsg").html(a+tb)
-                //$("#input_area, #account_history_table").hide()
-                return false;//stop next open.
-            })
-        })
-
-        $("#passcode2_required").on("click",function(){
+        $("#passcode2_required").on("click", function () {
             $("#passcode2").val($("#passcode").val())
         })
         $("#SignOnCreate").on("click", function (evt) {
@@ -332,121 +89,16 @@
 
             //var paths = $("#repopath").val()
             create_acct(function (rob) {
-                if(rob.out.sponsorDiskUsage){
-                    $("#usrstot").text("UsrsTot:"+rob.out.sponsorDiskUsage.tot_reposNumber)
+                if (rob.out.sponsorDiskUsage) {
+                    $("#usrstot").text("UsrsTot:" + rob.out.sponsorDiskUsage.tot_reposNumber)
                 }
             })
         })
 
-        // $("#footer").slideToggle()
-        $("#toggle_txtarea").on("click", function () {
-            $("#footer").slideToggle()
-        })
+
     })
-    function sign_in(success, failed) {
-        $(".signinBtn").attr("disabled", true)
-        $("#errmsg").text("runing ...")
-
-        var api = new BsnpRestApi()
-        var usr = remeber_ui();   //
-        usr.ttl = 9999999
-        api.signin(usr, function (rob, err) {
-            $(".signinBtn").removeAttr("disabled")
-            console.log(rob)
-            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
-            if (err) {
-                failure(rob, ur)
-            } else {
-                success(rob, ur)
-            }
-        })
-    }
-    function create_acct(cbf) {
-        $(".signinBtn").attr("disabled", true)
-        $("#errmsg").text("runing ...")
-        $("#output").html("")
-
-        var api = new BsnpRestApi()
-        var usr = remeber_ui();   //
-        usr.hintword = $("#hintword").val().trim()
-        usr.accesstr = $("input[type='radio']:checked").val().trim()
-        //alert($("input[type='radio']:checked").val())
-
-        api.ApiUsrAccount_create(usr, function (rob) {
-            $(".signinBtn").removeAttr("disabled")
-            console.log(rob)
-            $("#txtarea").val(JSON.stringify(rob, null, 4))
-            if (rob.out.err) {
-                $("#errmsg").html(rob.out.err).addClass("failed")
-            } else {
-                var tb = PageUti.Repo_fstat_table(rob)
-                var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
-                $("#errmsg").html(a)
-                $("#output").html(tb)
-            }
-
-            cbf(rob)
-        })
-    }
-    function login_acct(cbf) {
-        $(".signinBtn").attr("disabled", true)
-        $("#errmsg").text("runing ...")
-
-        var api = new BsnpRestApi()
-        var usr = remeber_ui();   //
-
-        api.ApiUsrAccount_login(usr, function (rob) {
-            $(".signinBtn").removeAttr("disabled")
-            console.log(rob)
-            $("#txtarea").val(JSON.stringify(rob, null, 4))
-            if (rob.out.err) {
-                $("#errmsg").html(rob.out.err).addClass("failed")
-            }
-            else {
-                var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
-                if (cbf && !cbf(rob)) {
-                    return
-                }
-                window.open(ur, "_self")
-            }
 
 
-        })
-    }
-    $("#errmsg").on("click", function () {
-        $("*[disabled").removeAttr("disabled")
-        //$("#CheckIn").show("slow")
-    })
-    function failure() {
-        $("#errmsg").text("failed to sign in.")
-    }
 
-    function remeber_ui() {
-        var paths = $("#repopath").val()
-        var codes = $("#passcode").val()
-        localStorage.setItem("repopath", paths)
-        localStorage.setItem("passcode", codes)
-        var usr = { repopath: paths, passcode: codes };
-        return usr
-    }
-
-    function init_by_url_params() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const rep = urlParams.get('rep');
-        const pat = urlParams.get('pat');
-        const opt = urlParams.get('opt');
-
-        var repo = localStorage.getItem("repopath")
-        var pass = localStorage.getItem("passcode")
-        //if (rep && pat) {
-        if (repo) $("#repopath").val(repo)
-        if (pass) $("#passcode").val(pass)
-        //} 
-        if (opt === 'run') {
-            setTimeout(function () {
-                $("#signInAsUsers").trigger("click")
-            }, 1000)
-        }
-    }
 
 </script>

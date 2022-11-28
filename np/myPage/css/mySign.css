@@ -1,0 +1,106 @@
+body {
+    background-color: aliceblue;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+}
+
+form {
+    background-color: rgb(204, 177, 161);
+
+
+    margin: 0px 10px 0px 10px;
+    padding: 1px 10px 0px 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+.centered_elem {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(204, 177, 161);
+
+    text-align: center;
+    margin: 0px 10px 0px 10px;
+    padding: 0px 10px 10px 10px;
+}
+
+.center,
+table {
+
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+xtable {
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    /*font-size:xx-large;*/
+}
+
+.white_space_nowrap {
+    white-space: nowrap;
+}
+
+textarea,
+.txarea {
+    width: 100%;
+}
+
+textarea,
+input {
+    font-size: large;
+}
+
+.HiliFocused {
+    background-color: #e7f1ad;
+}
+
+.deleted_repo {
+    text-decoration: line-through;
+}
+
+.help_label {
+    float: right;
+}
+
+.helpinfo,
+#FormatOfRepository {
+    display: none;
+    margin-left: 1px;
+}
+
+.centeredtxt {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.inputxt {
+    width: 100%;
+}
+
+#SignOnCreate {
+    float: right;
+}
+
+.successed {
+    color: green;
+}
+
+.failed {
+    color: red;
+}
+
+input[readonly] {
+    background-color: lightgray;
+}
+
+.ShowDebug{
+    visibility: hidden;
+}
