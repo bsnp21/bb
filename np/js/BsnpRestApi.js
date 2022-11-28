@@ -172,18 +172,11 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
         console.log("ip,pcv:", ip, bcv)
     }
 }
-BsnpRestApi.prototype.urlRedirectParam = function (parm) {
+BsnpRestApi.prototype.urlRedirectParam = function () {
     var spar = `?sip=${this.svrurl}`
     if (this.SSID && this.SSID.length > 1) {
         spar += "&SSID=" + this.SSID
     }
-    var username = this.urlParams.get("username")
-    if (parm && parm.username) username = parm.username //overwrite by url. 
-    if (username) {
-        spar += "&username=" + parm.username
-    }
-
-
     return spar
 }
 BsnpRestApi.prototype.signin = function (usr, cbf) { // usr = {repopath:"", passcode:"", ttl:9999}

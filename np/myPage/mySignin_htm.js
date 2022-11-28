@@ -134,24 +134,7 @@ MySignBasePage.prototype.gen_htm = function () {
 }
 
 
-function sign_in(success, failed) {
-    $(".signinBtn").attr("disabled", true)
-    $("#errmsg").text("runing ...")
 
-    var api = new BsnpRestApi()
-    var usr = remeber_ui();   //
-    usr.ttl = 9999999
-    api.signin(usr, function (rob, err) {
-        $(".signinBtn").removeAttr("disabled")
-        console.log(rob)
-        var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
-        if (err) {
-            failure(rob, ur)
-        } else {
-            success(rob, ur)
-        }
-    })
-}
 function create_acct(cbf) {
     $(".signinBtn").attr("disabled", true)
     $("#errmsg").text("runing ...")
@@ -194,7 +177,7 @@ function login_acct(cbf) {
             $("#errmsg").html(rob.out.err).addClass("failed")
         }
         else {
-            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam({ username: usr.repopath })}`
+            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
             if (cbf && !cbf(rob)) {
                 return
             }

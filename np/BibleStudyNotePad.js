@@ -2049,9 +2049,8 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     })
     $("#account_reSignIn").on("click", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        var ip = urlParams.get('sip'), username=urlParams.get('username');
-
-        window.open(`./mySignIn.htm?sip=${ip}&username=${username}`, "_target")
+        var ip = urlParams.get('sip')
+        window.open(`./mySignIn.htm?sip=${ip}`, "_target")
     })
 
     $("#myExt_Diary").on("click", function () {
@@ -2371,9 +2370,9 @@ AppInstancesManager.prototype.init_load_storage = function () {
     function _init_load_repo() {
         Uti.Msg("start ...", "" + window.location.href);
         var api = new BsnpRestApi()
-        var username = api.urlParams.get("username")
+        var username = api.urlParams.get("SSID").slice(13)
         $("#SignOut_repopathname").text(username)
-        $("#repopath").val(username)
+        //$("#repopath").val(username)
       
 
         Uti.Msg("RestApi=", RestApi);
