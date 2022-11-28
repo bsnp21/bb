@@ -107,7 +107,7 @@ MySignBasePage.prototype.gen_htm = function () {
                     
                     <${this.CreateTag}  id="SignOnCreate" href=""> Create </${this.CreateTag} >
                     <br><br>
-                    <font color=''><a id="errmsg">status...</a></font>
+                    <font color=''><a id="errmsg">status</a></font>
 
                 </td>
             </tr>
