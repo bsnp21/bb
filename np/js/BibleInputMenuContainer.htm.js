@@ -142,7 +142,7 @@ var BibleInputMenuContainer = `
             <a sid='grp_Keyboard'>Keyboard</a> |
             <a sid='grp_Cluster'>Cluster</a> |
             <a sid='grp_Search'>Search</a> |
-            <a sid='grp_Config'>Config</a> |
+           
             <a sid='grp_SignOut' id="SignOut_repopathname">Reponame...</a>
     
             </div>
@@ -297,48 +297,7 @@ var BibleInputMenuContainer = `
 
             <!----------------------------->
 
-            <div class="GrpMenu" id="grp_Config"  style="float:left;display:none;">
-                
-             
-                <table id='' border="1" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <td>desc</td>
-                            <td>Setting</td>
-                        </tr>
-                    </thead>
-                    <tbody id="">
-                        
-                       
-                        <tr>
-                            <td>Font</td>
-                            <td>Size:
-                            <button onclick="g_obt.incFontSize(-2);" title='font-size minus'>-</button>
-                            <a id='fontsize'></a>
-                            <button onclick="g_obt.incFontSize(2);" title='font-size plus'>+</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lang</td>
-                            <td><select id="LanguageSel" default_val="English">
-                                <option value='English'>English</option>
-                                <option value='Chinese'>Chinese</option>
-                                <option value='India'>India</option>
-                            </select></td>
-                        </tr>
-                        <tr>
-                            <td>Storage</td>
-                            <td>
-                            <input type="radio" id="Storage_clear" title='clear up storage'>Clear</input>
-                            
-                            <a id="Storage_local_repos_exchange"></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div id="StorageRepo_save_res"></div>
-                
-            </div> 
+            
 
             <!----------------------------->
 
@@ -359,16 +318,25 @@ var BibleInputMenuContainer = `
                 
                 <tr>
                     <td>
-                    <a id="account_history">Username</a>: 
-                    <div id="repository_assitance">
-                    
-                    
-                    </div>
-                    <br>
+                    <a id="account_history">Username:</a>
+                  
                     <input id="repopath" value='' placeholder='username' readonly></input>
+
+                    FontSize:
+                            <button onclick="g_obt.incFontSize(-2);" title='font-size minus'>-</button>
+                            <a id='fontsize'></a>
+                            <button onclick="g_obt.incFontSize(2);" title='font-size plus'>+</button>
                       <a id='idatetiemstampe'></a>
                     <br>
-                    
+                    <input type="radio" id="Storage_clear" title='clear up storage'>Clear</input>
+                            
+                            <a id="Storage_local_repos_exchange"></a>
+                    <br>
+                    <select id="LanguageSel" default_val="English">
+                                <option value='English'>English</option>
+                                <option value='Chinese'>Chinese</option>
+                                <option value='India'>India</option>
+                            </select>
                 
                     <div id="account_set_info"></div>
                     </td>

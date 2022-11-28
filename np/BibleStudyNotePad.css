@@ -100,7 +100,7 @@ body {
     width: 100%;
 }
 
-#repository_assitance,
+
 .StorageRepo_Signout {
     float: right;
 }
@@ -293,8 +293,13 @@ a.tx[contenteditable] {
 
 
 #HorizMenuBar {
-    display: inline;
-    white-space: nowrap;
+    
+    xdisplay: inline;
+    xwhite-space: nowrap;
+   
+ 
+   
+    width:100%;
 }
 
 a[sid] {
@@ -311,6 +316,13 @@ a[sid] {
     border-top-width: 2px;
     border-top-style: solid;
     border-top-color: rgb(103, 247, 67);
+
+    
+  
+    padding-left: 5px;
+    padding-right: 5px;
+    float: right;
+    right:15px;
 }
 
 .trRecentBCV {
