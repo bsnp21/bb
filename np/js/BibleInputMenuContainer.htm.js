@@ -310,7 +310,7 @@ var BibleInputMenuContainer = `
                 <a href='https://bsnp21.github.io/home/' owner='williamwding' email='yahoo.com' xxxhref='https://wdingbox.github.io/ham12/'>Home</a> |
                 <a id="account_reSignIn" title='more user sign in without destroying current repositoary'>SignIn</a> |
                 <a id='NewPage' target='_blank' href="${window.location.href}" title='clone browser'>Clone</a> | 
-                <a id='myExt_Diary' target='_blank' xxhref="./myExt_Diary.htm${window.location.search}&repo=${$('#repopath').val()}" title='Diary'>Calendar</a> | 
+                <a id='myExt_Diary' target='_blank' xxhref="./myExt_Diary.htm${window.location.search}" title='Diary'>Calendar</a> | 
 
                 
                 <button class="StorageRepo_Signout">Sign Out</button>

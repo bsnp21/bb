@@ -248,7 +248,7 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
         function init_menu() {
             var app = new BsnpRestApi()
-            $("#menu_container_toggler").text(app.urlParams.get("repo"))
+            $("#menu_container_toggler").text(app.urlParams.get("SSID").slice(13))
             $("#menu_container_toggler").on("click", function () {
                 $("#menu_container").slideToggle()
             })

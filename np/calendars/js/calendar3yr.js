@@ -377,7 +377,6 @@ var calendar3yr = {
         //$("#year").html(yr)
         $(`${eid} caption`).text(yr);
         $(`${eid} caption`).on("click", function () {
-            var notesObj = storage.get_notesObj()
             var y4 = $(this).text().trim()
             var _THIS = this
             $(".hili_run_start, .hili_run_stop").removeClass("hili_run_start").removeClass("hili_run_stop")
@@ -391,18 +390,10 @@ var calendar3yr = {
                         if (yobj && "object" === typeof (yobj)) {
                             for ([mmdd, txt] of Object.entries(yobj)) {
                                 var id = y4 + mmdd
-                                var sdiff = ""
-                                if (id in notesObj) {
-                                    var storedtxt = notesObj[id]
-                                    if (storedtxt != txt) {
-                                        sdiff = "diff_note"
-                                        txt = storedtxt
-                                    }
-                                }
-                                $(`#${id}`).html(txt).addClass(sdiff)
+                                $(`#${id}`).html(txt)
                             }
                         } else {
-                            alert("loaded err.")
+                            console.error("inital loaded data is empty.")
                         }
                     })
                 }
@@ -646,7 +637,7 @@ var calendar3yr = {
         })
 
         var api = new BsnpRestApi()
-        $("#menuPanelToggler").text(api.urlParams.get("repo"))
+        $("#menuPanelToggler").text(api.urlParams.get("SSID").slice(13))
         $("#DiarySite").attr("href", `../myExt_Diary.htm${window.location.search}`)
     },
     post_gen: function () {

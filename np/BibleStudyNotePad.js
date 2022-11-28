@@ -2055,10 +2055,10 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     $("#myExt_Diary").on("click", function () {
         var repo = $("#repopath").val()
-        $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}&repo=${repo}`)
+        $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}`)
     })
-    //<a id='myExt_Diary' target='_blank' href="./myExt_Diary.htm${window.location.search+"&repo="}" title='Diary'>Diary</a> | 
-
+   
+    
                 
 
 
