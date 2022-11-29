@@ -45,7 +45,9 @@ var option = {
     repo: 'https://github.com/bsnpghrepolist/repo.git'
 
 }
-ghpages.publish('dist', option, function (err) { });
+ghpages.publish('dist', option, function (err) { 
+    console.log(err)
+});
 
 
 //console.log('myArgs: ', myArgs);
