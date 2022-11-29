@@ -1264,7 +1264,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
         var datname = fname.replace(accdir, "").slice(1)
         if (datname.match(/_json.js/)) {
             var url = _THIS.m_sponser.git_gh_pages_published_url(datname)
-            str2 = `<a href='<${url}'>${str}</a>`
+            str2 = `<a href='${url}'>${str}</a>`
         }
         fstat[datname] = str2
     });
