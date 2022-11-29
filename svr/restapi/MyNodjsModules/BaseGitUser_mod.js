@@ -1418,10 +1418,10 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo 'lll'|  sudo -S git add .salts
     echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
     echo 'lll'|  sudo -S git branch -M main default
-    echo 'lll'|  sudo -S git push origin HEAD:main
-    echo 'lll'|  sudo -S git push origin HEAD
-    echo 'lll'|  sudo -S git push --set-upstream origin main
-    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push --set-upstream origin main
     echo 'lll'| sudo -S git status
     echo 'lll'|  sudo -S git status -sb
     `
