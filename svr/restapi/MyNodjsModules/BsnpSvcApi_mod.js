@@ -456,6 +456,7 @@ var ApiJsonp_BibleObj = {
             return inp_struct_base
         }
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+            inp.out.olog = {}
             //: unlimited write size. 
             var userProject = new BibleObjGitusrMgr()
             var ret = userProject.Proj_prepare_after_signed(inp.SSID)
