@@ -360,8 +360,9 @@ BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
     rob.dir = this.m_BaseGitUser.getFullPath_usr_acct()
     rob.repourl = this.m_BaseGitUser.m_sponser.git_repo_user_url_private(false)
     rob.published_url_sample = `https://bsnpghrepolist.github.io/${rob.reponame}/myoj/e_Note_json.js`
-    ghpages.publish(rob.dir, { repo: rob.repourl }, function (err) {
+    rob.published_ret = ghpages.publish(rob.dir, { repo: rob.repourl }, function (err) {
         rob.gh_pages_publish_err = err
+        console.log("gh_pages_publish err=",err)
     });
     return rob
 }
