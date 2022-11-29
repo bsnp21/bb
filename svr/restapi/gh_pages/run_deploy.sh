@@ -2,7 +2,7 @@
 
 echo reponame=$1
 cd $1
-echo "--">account/README.md
+echo "./myoj/e_Note(e_Note.json)">account/README.md
 npm init -y 
 npm i gh-pages
 # modify package.json
