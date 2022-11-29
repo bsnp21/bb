@@ -795,12 +795,11 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
 
 GitSponsor.prototype.git_gh_pages_published_url = function (subpathname) {
     if (subpathname) {
-        subpathname = subpathname.replace(/account\//, "")
         subpathname = subpathname.replace(/^\/{0,2}/, "")
     }
     else subpathname = ""
     var published = `https://bsnpghrepolist.github.io/${this.m_reponame}/${subpathname}`
-    return published
+    return published.replace("/account/", "/")
 }
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
