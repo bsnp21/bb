@@ -359,6 +359,7 @@ var ApiJsonp_BibleObj = {
             console.log("2 bio.obj", bio.obj)
 
             bio.writeback()
+            inp.out.olog.gh_pages_publish = userProject.gh_pages_publish()
 
             inp.out.olog.git_res = userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
         })
@@ -466,10 +467,10 @@ var ApiJsonp_BibleObj = {
             var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
                 IfUsrNotExist: function (stdfile, usrfile) {
                     var base = path.parse(usrfile)
-                    BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`) 
-                    BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`) 
-                    BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`) 
-                    BaseGUti.execSync_Cmd(`sudo cp ${stdfile} ${usrfile}`) 
+                    BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`)
+                    BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`)
+                    BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`)
+                    BaseGUti.execSync_Cmd(`sudo cp ${stdfile} ${usrfile}`)
 
                     return usrfile
                 }
@@ -494,6 +495,7 @@ var ApiJsonp_BibleObj = {
                 })
                 console.log("ret", ret)
                 ret.writeback()
+                inp.out.olog.gh_pages_publish = userProject.gh_pages_publish()
             } else {
                 save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
                 //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname

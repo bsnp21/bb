@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <title>regexp</title>
+    <base target="_blank" />
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+
+    <link rel="stylesheet" Xhref="./BibleStudyNotePad.css?v=2020dec21b">
+    </link>
+
+    <!-------------------------------------------->
+    <!---- Insert this before scripts import; then restor back later -->
+    <script>//if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <!-------------- jq --------------------->
+    <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
+    <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
+    <script xxxxxxxsrc="http://localhost:7878/assets/ckeditor/adapters/jq/jquery-2_1_3.min.js"
+        note="selfseversite"></script>
+    <!-------------- ckeditor only--------------------->
+
+
+    <!-------------------------------------------->
+    <style>
+        body {
+            background-color: aliceblue;
+        }
+
+        table {
+            padding: 10px 10px 10px 10px;
+            margin: 10px 10px 10px 10px;
+            /*font-size:xx-large;*/
+        }
+
+        textarea,
+        input {
+            width: 100%;
+            font-size: xx-large;
+        }
+
+        .hili {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <form action="" method="post">
+
+        <label>String:</label>
+        <textarea id="destr" list="hist_data" value=""
+            placeholder="test string">/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/wdingpub01/account/dat/a_json.js</textarea>
+
+        <label>RegExp: </label>
+        <textarea id="regex" value="">((.+)\/(\w+)\/account)\/((myoj)|(dat))_json\.js$</textarea>
+
+        <label>Replace: </label>
+        <textarea id="repls"><a href="#$1">$1</a></textarea>
+
+
+    </form>
+    <p>
+        <button onclick="test_Match();">Match</button>
+        <button onclick="localStorage.clear();">ClearStorage</button>
+
+    </p>
+
+
+
+
+    <div id="footer">
+        <hr>
+        <div id="otable_destr"></div>
+        <div id="otable_regex"></div>
+        <div id="otable_repls"></div>
+        <textarea id="outx" rows="25"></textarea>
+    </div>
+
+
+
+
+
+    <script>
+
+
+        function test_Match() {
+            var str = $("#destr").val()
+            var reg = $("#regex").val()
+            var rpl = $("#repls").val()
+            console.log(str)
+
+            var ret = txt = str
+
+
+
+            try {
+                var mat = txt.match(reg)
+                if (mat) {
+                    $("#outx").val(JSON.stringify(mat, null, 4))
+                    console.log("mat:", mat)
+                } else {
+                    $("#outx").val("no match")
+                }
+            } catch (err) {
+                $("#outx").val(err)
+            }
+
+        }
+
+
+        $(function () {
+
+
+        })
+
+    </script>
+</body>
+
+</html>
+<script>
+
+</script>
+<script>
+
+</script>

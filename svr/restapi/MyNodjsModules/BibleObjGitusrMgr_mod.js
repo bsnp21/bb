@@ -97,7 +97,7 @@ SvrUsrsBCV.prototype.gen_crossnet_files_of = function (docpathfilname, cbf) {
 
 
 
-var NCache = JSON.parse(fs.readFileSync("./config/nCache_cfg.json", "utf8")) ;//60000 //seconds.
+var NCache = JSON.parse(fs.readFileSync("./config/nCache_cfg.json", "utf8"));//60000 //seconds.
 
 NCache.myCache = new NodeCache({ checkperiod: NCache.m_checkperiod }); //checkperiod default is 600s.
 NCache.Init = function () {
@@ -314,7 +314,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
     if (robj.saltary.indexOf(passcode) < 0) {
-        robj.err = ["password error. Hint: ", robj.saltary[1]] 
+        robj.err = ["password error. Hint: ", robj.saltary[1]]
         return robj
     }
 
@@ -344,7 +344,22 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 }
 
 
-
+BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
+    var rob = {}
+    rob.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    if (rob.ghinfo.visibility !== "public") {
+        rob.err= "cannot publish private repo." 
+        return rob
+    }
+    rob.reponame = this.m_BaseGitUser.m_sponser.m_reponame;
+    rob.dir = this.m_BaseGitUser.getFullPath_usr_acct()
+    rob.repourl = this.m_BaseGitUser.git_repo_user_url_private(false)
+    rob.published_url_sample = `https://bsnpghrepolist.github.io/${rob.reponame}/myoj/e_Note_json.js`
+    ghpages.publish(rob.dir, { repo: rob.repourl }, function (err) {
+        rob.gh_pages_publish_err = err
+    });
+    return rob
+}
 
 
 BibleObjGitusrMgr.prototype.___session_get_github_owner = function (docfile) {
