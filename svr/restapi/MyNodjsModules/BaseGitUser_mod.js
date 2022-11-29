@@ -794,7 +794,10 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
 }
 
 GitSponsor.prototype.git_gh_pages_published_url = function (subpathname) {
-    if (subpathname) subpathname = subpathname.replace(/^\//, "")
+    if (subpathname) {
+        subpathname = subpathname.replace(/(dat)|(myoj)/, "")  
+        subpathname = subpathname.replace(/^\/{0,2}/, "")
+    }
     else subpathname = ""
     var published = `https://bsnpghrepolist.github.io/${this.m_reponame}/${subpathname}`
     return published
