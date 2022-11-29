@@ -32,7 +32,7 @@ if(!reponame){
 }
 
 
-
+//https://www.npmjs.com/package/gh-pages
 var ghpages = require('gh-pages');
 
 
