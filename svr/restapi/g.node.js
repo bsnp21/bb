@@ -42,9 +42,11 @@ var option = {
  * with, set the URL for the repository in the `repo` option.  This usage will
  * push all files in the `src` config to the `gh-pages` branch of the `repo`.
  */
-    repo: 'https://github.com/bsnpghrepolist/repo.git'
+    repo: `https://github.com/bsnpghrepolist/${repo}.git`
 
 }
+var dir = `/~/${repo}/account`
+if(fs.existsSync(dir)) return console.log(`${dir} not exist.`)
 ghpages.publish('dist', option, function (err) { 
     console.log(err)
 });
