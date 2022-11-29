@@ -359,9 +359,9 @@ var ApiJsonp_BibleObj = {
             console.log("2 bio.obj", bio.obj)
 
             bio.writeback()
-            inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
-
+            
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
+            inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
