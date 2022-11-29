@@ -1219,6 +1219,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     if (!fs.existsSync(this.getFullPath_usr_git())) {
         return stat;
     }
+    var _THIS = this
 
     var dir = this.getFullPath_usr_myoj()
 
@@ -1261,8 +1262,8 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 
         var str2 = str
         var datname = fname.replace(accdir, "").slice(1)
-        if(datname.match(/_json.js/)){
-            var url= this.m_sponser.git_gh_pages_published_url(datname)
+        if (datname.match(/_json.js/)) {
+            var url = _THIS.m_sponser.git_gh_pages_published_url(datname)
             str2 = `<a href='<${url}'>${str}</a>`
         }
         fstat[datname] = str2
