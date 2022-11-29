@@ -46,7 +46,7 @@ var option = {
 
 }
 var dir = `/home/ubuntu/${repo}/account`
-if(fs.existsSync(dir)) return console.log(`${dir} not exist.`)
+if(!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
 
 ghpages.publish(dir, option, function (err) { 
     console.log(err)
