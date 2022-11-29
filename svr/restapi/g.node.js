@@ -25,9 +25,9 @@ var cheerio = require("cheerio"); //>> npm install cheerio
 /////////////////////////////////////////////////////////////////
 
 
-var repo = process.argv.length === 3 ? process.argv[2]: ""
-if(!repo){
-    console.log("no repo argument.")
+var reponame = process.argv.length === 3 ? process.argv[2]: ""
+if(!reponame){
+    console.log("no reponame argument.")
     return
 }
 
@@ -42,14 +42,15 @@ var option = {
  * with, set the URL for the repository in the `repo` option.  This usage will
  * push all files in the `src` config to the `gh-pages` branch of the `repo`.
  */
-    repo: `https://github.com/bsnpghrepolist/${repo}.git`
+    repo: `https://github.com/bsnpghrepolist/${reponame}.git`
 
 }
-var dir = `/home/ubuntu/${repo}/account`
+var dir = `/home/ubuntu/${reponame}/account`
 if(!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
 
 ghpages.publish(dir, option, function (err) { 
-    console.log(err)
+    console.log(err, `https://bsnpghrepolist.github.io/${reponame}/myoj/e_Note_json.js`)
+
 });
 
 
