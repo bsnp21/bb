@@ -179,16 +179,16 @@ var ApiJsonp_BibleObj = {
     },
     ApiBibleObj_search_txt: function (req, res) {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var userProject = new BibleObjGitusrMgr()
+            var gituserMgr = new BibleObjGitusrMgr()
             //if (!inp.usr.f_path) inp.usr.f_path = ""
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var TbcvObj = {};
             if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
                 for (var i = 0; i < inp.par.fnames.length; i++) {
                     var fnameID = inp.par.fnames[i];
-                    var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID)
+                    var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
                     console.log("jsfname:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
                     if (!bib.obj) continue
@@ -205,8 +205,8 @@ var ApiJsonp_BibleObj = {
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             function way1() {
@@ -218,7 +218,7 @@ var ApiJsonp_BibleObj = {
                     console.log("par.fnames:", par.fnames)
                     for (var i = 0; i < par.fnames.length; i++) {
                         var fnameID = par.fnames[i];
-                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID)
+                        var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
                         console.log("load:", jsfname)
                         var bib = BaseGUti.loadObj_by_fname(jsfname);
                         if (!bib.obj) {
@@ -245,7 +245,7 @@ var ApiJsonp_BibleObj = {
                 console.log("-----:binp.par.bibOj", par.bibOj)
 
                 var carryObj = JSON.parse(JSON.stringify(par.bibOj))
-                var sMaxStructFile = userProject.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
+                var sMaxStructFile = gituserMgr.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
                 var bibMaxStruct = BaseGUti.loadObj_by_fname(sMaxStructFile);
                 BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
                     {
@@ -270,7 +270,7 @@ var ApiJsonp_BibleObj = {
                     console.log("par.fnames:", par.fnames)
                     for (var i = 0; i < par.fnames.length; i++) {
                         var fnameID = par.fnames[i];
-                        var jsfname = userProject.m_BaseGitUser.get_pfxname(fnameID, {
+                        var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID, {
                             IfUsrNotExist: function (stdpfname, usrpfname) {
                                 return stdpfname;
                             }
@@ -315,17 +315,17 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
             var save_res = { desc: "to save" }
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
 
             inp.out.olog = {}
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
-            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
+            var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
                 IfUsrNotExist: function (stdpfname, usrpfname) {
-                    inp.out.olog["cpIfUsrNotExist"] = userProject.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                    inp.out.olog["cpIfUsrNotExist"] = gituserMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
                     return usrpfname;
                 }
             })
@@ -359,9 +359,9 @@ var ApiJsonp_BibleObj = {
             console.log("2 bio.obj", bio.obj)
 
             bio.writeback()
-            inp.out.olog.gh_pages_publish = userProject.gh_pages_publish()
+            inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
 
-            inp.out.olog.git_res = userProject.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
+            inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
@@ -374,8 +374,8 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             console.log(inp.par.aux)
@@ -390,8 +390,8 @@ var ApiJsonp_BibleObj = {
 
             var doc = inp.par.fnames[0]
 
-            var docpathfilname = userProject.m_BaseGitUser.get_pfxname(doc)
-            var outfil = userProject.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
+            var docpathfilname = gituserMgr.m_BaseGitUser.get_pfxname(doc)
+            var outfil = gituserMgr.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
 
 
             //////----
@@ -413,7 +413,7 @@ var ApiJsonp_BibleObj = {
 
             /////--------------
             var retObj = {}
-            var owner = userProject.___session_get_github_owner(docpathfilname)
+            var owner = gituserMgr.___session_get_github_owner(docpathfilname)
             __load_to_obj(retObj, docpathfilname, owner, inp.usr.repodesc, inpObj)
             //console.log("jspfn:", jsfname)
             console.log("dcpfn:", docpathfilname)
@@ -422,16 +422,16 @@ var ApiJsonp_BibleObj = {
                 var jspfn = outfil.m_olis[i]
                 if (docpathfilname === jspfn) continue;
                 console.log("*docfname=", jspfn)
-                var others = userProject.___session_git_repodesc_load(jspfn)
+                var others = gituserMgr.___session_git_repodesc_load(jspfn)
                 if (!others) continue
                 if ("*" === shareID) {//no restriction
-                    var owner = userProject.___session_get_github_owner(jspfn)
+                    var owner = gituserMgr.___session_get_github_owner(jspfn)
                     __load_to_obj(retObj, jspfn, owner, others.repodesc, inpObj)
                     continue
                 }
                 console.log("*repodesc=", others.repodesc, shareID)
                 if (others.repodesc === shareID) {
-                    var owner = userProject.___session_get_github_owner(jspfn)
+                    var owner = gituserMgr.___session_get_github_owner(jspfn)
                     __load_to_obj(retObj, jspfn, owner, others.repodesc, inpObj)
                 }
             }
@@ -458,14 +458,14 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             inp.out.olog = {}
             //: unlimited write size. 
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var par = inp.par
             var save_res = { desc: "ok" }
             var doc = par.fnames[0]
-            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc, {
+            var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
                 IfUsrNotExist: function (stdfile, usrfile) {
                     var base = path.parse(usrfile)
                     BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`)
@@ -496,7 +496,7 @@ var ApiJsonp_BibleObj = {
                 })
                 console.log("ret", ret)
                 ret.writeback()
-                inp.out.olog.gh_pages_publish = userProject.gh_pages_publish()
+                inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
             } else {
                 save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
                 //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
@@ -505,19 +505,19 @@ var ApiJsonp_BibleObj = {
             inp.out.state.save = save_res
 
             //
-            inp.out["git_add_commit_push_Sync"] = userProject.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
+            inp.out["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
         })
     },
     ApiUsrDat_load: async function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var par = inp.par;
             var doc = par.fnames[0]
-            var jsfname = userProject.m_BaseGitUser.get_pfxname(doc)
+            var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc)
             var ret = BaseGUti.loadObj_by_fname(jsfname)
             var retObj = ret.obj  //get obj structure w/ keys.
             if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
@@ -553,8 +553,8 @@ var ApiJsonp_BibleObj = {
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
             ApiUti.Output_append(inp.out, ret)
         })
     },
@@ -566,9 +566,9 @@ var ApiJsonp_BibleObj = {
         }
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
-            var userProject = new BibleObjGitusrMgr()
+            var gituserMgr = new BibleObjGitusrMgr()
             //console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
-            var ret = userProject.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
+            var ret = gituserMgr.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
             ApiUti.Output_append(inp.out, ret)
             console.log(inp)
         })
@@ -576,18 +576,18 @@ var ApiJsonp_BibleObj = {
     ApiUsrAccount_logout: async function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             inp.out.olog = {}
-            inp.out.olog["state_beforeDel"] = userProject.m_BaseGitUser.Check_proj_state()
-            var gitdir = userProject.m_BaseGitUser.getFullPath_usr_git()
+            inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
+            var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
-                inp.out.olog["git_add_commit_push_Sync"] = userProject.m_BaseGitUser.git_add_commit_push_Sync(true)
+                inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(true)
             }
-            inp.out.olog["destroySSID"] = userProject.Session_delete(inp.SSID) //trig to delete usr dir. 
-            inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
+            inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
         })
 
         // var sret = JSON.stringify(inp, null, 4)
@@ -615,30 +615,30 @@ var ApiJsonp_BibleObj = {
                 return
             }
 
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) {
                 return console.log("Proj_prepare_after_signed failed.")
             }
 
             console.log("ApiUsrRepos_toolkids==>par:", inp.par)
-            inp.out.state_before_cmd = userProject.m_BaseGitUser.Check_proj_state()
+            inp.out.state_before_cmd = gituserMgr.m_BaseGitUser.Check_proj_state()
 
             if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
                 console.log("enter destroy ===>par:")
                 var reponame = inp.par.gh_repo_delete_name
-                if (reponame === "self") reponame = userProject.m_BaseGitUser.m_sponser.m_reponame;
+                if (reponame === "self") reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame;
                 console.log("to delete:" + reponame)
                 inp.out.destroy_res = {}
                 var cmd = `sudo gh repo delete ${reponame} --confirm`
-                inp.out.destroy_res[cmd] = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
-                inp.out.reposlist = userProject.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-                //userProject.Session_delete(inp.SSID)
-                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+                inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
+                inp.out.reposlist = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
+                //gituserMgr.Session_delete(inp.SSID)
+                inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
                 return
             }
             if (inp.par.gh_repo_list_tot_diskUsage) {
-                inp.out.gh_repo_list_tot_diskUsage = userProject.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
+                inp.out.gh_repo_list_tot_diskUsage = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
                 return
             }
 
@@ -647,12 +647,12 @@ var ApiJsonp_BibleObj = {
                 inp.out.olog = []
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
-                    var arr = userProject.m_BaseGitUser.execSync_gitdir_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
+                    var arr = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
                     var obj = {}
                     obj[cmd] = arr
                     inp.out.olog.push(obj)
                 }
-                inp.out.state = userProject.m_BaseGitUser.Check_proj_state()
+                inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
                 return
             }
 
@@ -681,17 +681,17 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
 
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            var ret = userProject.m_BaseGitUser.Check_proj_state()
-            var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git status -sb")
+            var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
+            var res2 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd("git status -sb")
             if (res2 && res2.stdout) {
                 inp.out.state.git_status_sb = res2.stdout
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
             }
-            userProject.m_BaseGitUser.Check_proj_state()
+            gituserMgr.m_BaseGitUser.Check_proj_state()
         })
 
 
@@ -710,18 +710,18 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
-            //await userProject.git_add_commit_push("push hard.", "");//real push hard.
+            //inp.out.state = gituserMgr.m_BaseGitUser.Deploy_proj()
+            //await gituserMgr.git_add_commit_push("push hard.", "");//real push hard.
 
-            var res2 = userProject.m_BaseGitUser.execSync_gitdir_cmd("git add *")
-            var res3 = userProject.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
-            //var res4 = userProject.m_BaseGitUser.git_push()
+            var res2 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd("git add *")
+            var res3 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
+            //var res4 = gituserMgr.m_BaseGitUser.git_push()
 
-            userProject.m_BaseGitUser.Check_proj_state()
+            gituserMgr.m_BaseGitUser.Check_proj_state()
         })
         //var sret = JSON.stringify(inp, null, 4)
         //var sid = ""
@@ -736,13 +736,13 @@ var ApiJsonp_BibleObj = {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
 
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            //inp.out.state = userProject.m_BaseGitUser.Deploy_proj()
-            userProject.m_BaseGitUser.git_pull();
-            userProject.m_BaseGitUser.Check_proj_state()
+            //inp.out.state = gituserMgr.m_BaseGitUser.Deploy_proj()
+            gituserMgr.m_BaseGitUser.git_pull();
+            gituserMgr.m_BaseGitUser.Check_proj_state()
 
         })
         //var sret = JSON.stringify(inp, null, 4)
@@ -757,14 +757,14 @@ var ApiJsonp_BibleObj = {
     ApiUsr_Cmdline_Exec: async function (req, res) {
 
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var userProject = new BibleObjGitusrMgr()
-            var ret = userProject.Proj_prepare_after_signed(inp.SSID)
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            var ret = userProject.m_BaseGitUser.Check_proj_state()
-            var rso = userProject.m_BaseGitUser.execSync_gitdir_cmd()
+            var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
+            var rso = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd()
             console.log("\n\n*cmd-res", rso)
-            userProject.m_BaseGitUser.Check_proj_state()
+            gituserMgr.m_BaseGitUser.Check_proj_state()
         })
 
         // var sret = JSON.stringify(inp, null, 4)
@@ -802,10 +802,10 @@ var ApiJsonp_BibleObj = {
             return inp_struct_account_setup
         }
         var inp = ApiUti.Parse_GET_req_to_inp(req)
-        var userProject = new BibleObjGitusrMgr()
-        var ret = userProject.Proj_parse_usr_signin(inp)
+        var gituserMgr = new BibleObjGitusrMgr()
+        var ret = gituserMgr.Proj_parse_usr_signin(inp)
         if (ret) {
-            userProject.m_BaseGitUser.Deploy_proj()
+            gituserMgr.m_BaseGitUser.Deploy_proj()
 
 
         }
