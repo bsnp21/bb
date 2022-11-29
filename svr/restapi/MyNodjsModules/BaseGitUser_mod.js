@@ -793,6 +793,12 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     return ret
 }
 
+GitSponsor.prototype.git_gh_pages_published_url = function (subpathname) {
+    if (subpathname) subpathname = subpathname.replace(/^\//, "")
+    else subpathname = ""
+    var published = `https://bsnpghrepolist.github.io/${this.m_reponame}/${subpathname}`
+    return published
+}
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
     //this.m_giturl = `https://${m_acct.ownername}:${m_acct.ownerpat}@github.com/${m_acct.ownername}/${this.m_repos}.git`
@@ -1150,7 +1156,7 @@ BaseGitUser.prototype.git_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword])
     var fname = this.getFullPath_usr_git(".salts")
     var ret = fs.writeFileSync(fname, salts, "utf8")
-    return salts 
+    return salts
 }
 
 BaseGitUser.prototype.gh_repo_create__and_more____ = function (passcode, hintword, accesstr) {
@@ -1237,19 +1243,22 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
         var nam = ret.base.replace(accdir, "")
         //console.log("ret:",ret)
         var sta = fs.statSync(fname)
-        var fMB = (sta.size / 1000000).toFixed(2)
         totalsize += sta.size
+        var fMB = (sta.size / 1000000).toFixed(2)
         var str = "" + fMB + "/100(MB)"
+        if (sta.size < 1000) str = sta.size + "(B)"
+        if (sta.size >= 1000 && sta.size < 1000 * 1000) str = (sta.size / 1000).toFixed(2) + "(KB)"
+        if (sta.size >= 1000 * 1000 && sta.size < 1000 * 1000 * 1000) str = (sta.size / 1000 / 1000).toFixed(2) + "(MB)"
+
         if (fMB >= 80.0) { ////** Github: 100 MB per file, 1 GB per repo, svr:10GB
-            var str = nam + ":" + fMB + "/100(MB)"
             iAlertLevel = 1
             str += "*"
         }
         if (fMB >= 90.0) { ////** Github: 100 MB per file, 1 GB per repo, svr:10GB
-
             iAlertLevel = 2
-            str += "*"
+            str += "**"
         }
+
         fstat[fname.replace(accdir, "").slice(1)] = str
     });
 
