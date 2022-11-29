@@ -496,7 +496,6 @@ var ApiJsonp_BibleObj = {
                 })
                 console.log("ret", ret)
                 ret.writeback()
-                inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
             } else {
                 save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
                 //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
@@ -506,6 +505,7 @@ var ApiJsonp_BibleObj = {
 
             //
             inp.out["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
+            inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
         })
     },
     ApiUsrDat_load: async function (req, res) {
