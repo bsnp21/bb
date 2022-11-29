@@ -45,7 +45,7 @@ var option = {
     repo: `https://github.com/bsnpghrepolist/${repo}.git`
 
 }
-var dir = `/~/${repo}/account`
+var dir = `~/${repo}/account`
 if(fs.existsSync(dir)) return console.log(`${dir} not exist.`)
 
 ghpages.publish(dir, option, function (err) { 
