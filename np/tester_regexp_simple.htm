@@ -52,20 +52,21 @@
 
     <form action="" method="post">
 
-        <label>String:</label>
+        <label>txt:</label>
         <textarea id="destr" list="hist_data" value=""
             placeholder="test string">/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/wdingpub01/account/dat/a_json.js</textarea>
 
-        <label>RegExp: </label>
+        <label>reg=new RegExp() </label>
         <textarea id="regex" value="">((.+)\/(\w+)\/account)\/((myoj)|(dat))_json\.js$</textarea>
 
-        <label>Replace: </label>
+        <label>repstr= </label>
         <textarea id="repls"><a href="#$1">$1</a></textarea>
 
 
     </form>
     <p>
-        <button onclick="test_Match();">Match</button>
+        <button onclick="test_Match();">txt.match(reg)</button>
+        <button onclick="test_replace();">txt.replace(reg, repstr)</button>
         <button onclick="localStorage.clear();">ClearStorage</button>
 
     </p>
@@ -95,11 +96,27 @@
             console.log(str)
 
             var ret = txt = str
-
-
-
             try {
                 var mat = txt.match(reg)
+                if (mat) {
+                    $("#outx").val(JSON.stringify(mat, null, 4))
+                    console.log("mat:", mat)
+                } else {
+                    $("#outx").val("no match")
+                }
+            } catch (err) {
+                $("#outx").val(err)
+            }
+
+        }
+        function test_replace(){
+            var str = $("#destr").val()
+            var reg = $("#regex").val()
+            var rpl = $("#repls").val()
+
+            var ret = txt = str
+            try {
+                var mat = txt.replace(reg, rpl)
                 if (mat) {
                     $("#outx").val(JSON.stringify(mat, null, 4))
                     console.log("mat:", mat)
