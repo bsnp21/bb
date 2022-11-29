@@ -43,7 +43,15 @@ function gh_pages_cmdline() {
      * with, set the URL for the repository in the `repo` option.  This usage will
      * push all files in the `src` config to the `gh-pages` branch of the `repo`.
      */
-        repo: `https://github.com/bsnpghrepolist/${reponame}.git`
+        repo: `https://github.com/bsnpghrepolist/${reponame}.git`,
+
+
+        /**
+     * This configuration will avoid logging the GH_TOKEN if there is an error.
+     */
+        repo: 'https://' + process.env.GH_TOKEN + '@github.com/user/private-repo.git',
+        silent: true
+
 
     }
     var dir = `/home/ubuntu/${reponame}/account`
