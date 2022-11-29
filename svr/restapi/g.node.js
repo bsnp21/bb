@@ -47,7 +47,8 @@ var option = {
 }
 var dir = `/~/${repo}/account`
 if(fs.existsSync(dir)) return console.log(`${dir} not exist.`)
-ghpages.publish('dist', option, function (err) { 
+
+ghpages.publish(dir, option, function (err) { 
     console.log(err)
 });
 
