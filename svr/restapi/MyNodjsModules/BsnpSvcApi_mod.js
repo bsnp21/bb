@@ -606,14 +606,18 @@ var ApiJsonp_BibleObj = {
         console.log("ApiUsrAccount_create")
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
-            ApiUti.Output_append(inp.out, ret)
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+            if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
             inp.out.olog = {}
             inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
             var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_git()
             if (fs.existsSync(gitdir)) {
                 inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(true)
             }
+            inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
+            inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
+            
             if(!inp.par.passcodeNew){
                 inp.out.err = ["missing new passcode."] 
                 return
