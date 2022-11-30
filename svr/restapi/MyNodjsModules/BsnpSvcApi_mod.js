@@ -419,7 +419,7 @@ var ApiJsonp_BibleObj = {
                     targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                 }
             })
-            console.log("3 bio.obj", bio.obj, bVisibility)
+            console.log("3 bio.obj", bio.obj, usrinfo)
             if (bUpdatedUsersList) {
                 bio.writeback()
                 inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
