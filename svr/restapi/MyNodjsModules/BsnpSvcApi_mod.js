@@ -608,6 +608,12 @@ var ApiJsonp_BibleObj = {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
             ApiUti.Output_append(inp.out, ret)
+            inp.out.olog = {}
+            inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
+            var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_git()
+            if (fs.existsSync(gitdir)) {
+                inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(true)
+            }
             if(!inp.par.passcodeNew){
                 inp.out.err = ["missing new passcode."] 
                 return
@@ -618,10 +624,10 @@ var ApiJsonp_BibleObj = {
             }
 
             gituserMgr.m_BaseGitUser.git_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
-            inp.out["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
+            inp.out,olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
 
             var cmd = `sudo gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
-            inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
+            inp.out.olog.destroy_res[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
             
            
         })
