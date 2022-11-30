@@ -615,9 +615,9 @@ var ApiJsonp_BibleObj = {
             if (fs.existsSync(gitdir)) {
                 inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(true)
             }
-            inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
+            //inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
-            
+
             if(!inp.par.passcodeNew){
                 inp.out.err = ["missing new passcode."] 
                 return
