@@ -1424,6 +1424,8 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists=" + gitdir);
     }
+    //git remote set-url origin new.git.url/herefffff
+    var repo_url = this.m_sponser.git_repo_user_url_private(true)
 
     //password = "lll" //dev mac
     /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
@@ -1438,7 +1440,9 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo 'lll'|  sudo -S git add *
     echo 'lll'|  sudo -S git add .salts
     echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
+    echo 'lll'|  sudo -S git remote set-url origin ${repo_url}
     echo 'lll'|  sudo -S git branch -M main default
+    echo 'lll'|  sudo -S git branch -M master main
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
