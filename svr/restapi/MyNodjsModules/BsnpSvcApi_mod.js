@@ -631,7 +631,7 @@ var ApiJsonp_BibleObj = {
             gituserMgr.m_BaseGitUser.git_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
             inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
 
-            return
+            //return
             var cmd = `sudo gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
             inp.out.olog.destroy_res[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
             
