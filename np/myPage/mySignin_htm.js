@@ -79,7 +79,7 @@ MySignBasePage.prototype.set_Login_Page = function () {
 MySignBasePage.prototype.gen_htm = function () {
     var mySignin_htm = `
 
-<h2 style="text-align: center;margin-top: 10px;"><a href="https://bsnp21.github.io/home/">Bible Study Note Pad</a>
+<h2 style="text-align: center;margin-top: 10px;"><a href="https://bsnp21.github.io/home/">Bible Study Note Plus</a>
 </h2>
 
 <h3 id="Enter" style="text-align: center;margin-top: 10px;">${this.sTitle}</h3>
@@ -179,7 +179,7 @@ function update_acct(cbf) {
             $("#errmsg").html(rob.out.err).addClass("failed")
         } else {
             var tb = PageUti.Repo_fstat_table(rob)
-            var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
+            var a = `<font color="green">Successfully updated:<br>${usr.repopath}</font></a>`
             $("#errmsg").html(a)
             $("#output_res").html(tb)
         }
@@ -206,7 +206,7 @@ function create_acct(cbf) {
             $("#errmsg").html(rob.out.err).addClass("failed")
         } else {
             var tb = PageUti.Repo_fstat_table(rob)
-            var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
+            var a = `<font color="green">Successfully created:<br>${usr.repopath}</font></a>`
             $("#errmsg").html(a)
             $("#output_res").html(tb)
         }
