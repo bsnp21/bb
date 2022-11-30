@@ -357,12 +357,12 @@ BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
         return rob
     }
     rob.reponame = this.m_BaseGitUser.m_sponser.m_reponame;
-    rob.dir = this.m_BaseGitUser.getFullPath_usr_git();//getFullPath_usr_acct()
+    rob.dir = this.m_BaseGitUser.getFullPath_usr_acct() //getFullPath_usr_git();//
     rob.repourl = this.m_BaseGitUser.m_sponser.git_repo_user_url_private(true)
     rob.published_url_sample = this.m_BaseGitUser.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
     rob.published_ret = ghpages.publish(rob.dir, {
         repo: rob.repourl,
-        silent: true,
+        silent: true
         //branch: 'gh-pages',  //default value.
     },
         function (err) {
