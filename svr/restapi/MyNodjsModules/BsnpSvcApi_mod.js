@@ -371,7 +371,11 @@ var ApiJsonp_BibleObj = {
             /////////////////////////////
 
             var reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-            var bAddedNewUserInList = false
+            var bUpdatedUsersList = false
+            var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner().visibility
+            var bVisibility = "private"
+            if (!usrinfo.err) bVisibility = usrinfo.visibility
+
 
             //////////////////////////////
 
@@ -393,10 +397,19 @@ var ApiJsonp_BibleObj = {
                 SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
                     if ("string" === typeof (carObj[carProperty])) {
                         var ary = targObj[carProperty].split(",")
-                        if (ary.indexOf(reponame) < 0) {
-                            ary.unshift(reponame)  // add new usrname.
-                            targObj[carProperty] = ary.join(",")
-                            bAddedNewUserInList = true
+                        var idx = ary.indexOf(reponame)
+                        if (idx < 0) {
+                            if (bVisibility === "public") {
+                                ary.unshift(reponame)  // add new public usrname.
+                                targObj[carProperty] = ary.join(",")
+                                bUpdatedUsersList = true
+                            }
+                        } else {
+                            if (bVisibility === "private") {
+                                ary = ary.splice(idx, 1) // remove the private user.
+                                targObj[carProperty] = ary.join(",")
+                                bUpdatedUsersList = true
+                            }
                         }
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
@@ -407,7 +420,7 @@ var ApiJsonp_BibleObj = {
                 }
             })
             console.log("3 bio.obj", bio.obj)
-            if (bAddedNewUserInList) {
+            if (bUpdatedUsersList) {
                 bio.writeback()
                 inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
             }
