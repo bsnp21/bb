@@ -1426,12 +1426,14 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     }
 
     //password = "lll" //dev mac
+    /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
     var command = `
     #!/bin/bash  ###git_add_commit_push_Sync
     set -x #echo on
     cd  ${gitdir}
     pwd
     echo 'lll'|  sudo -S git status
+    echo 'lll'|  sudo -S git branch
     echo 'lll'|  sudo -S git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.
     echo 'lll'|  sudo -S git add *
     echo 'lll'|  sudo -S git add .salts
@@ -1441,7 +1443,8 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push --set-upstream origin main
-    echo 'lll'| sudo -S git status
+    echo 'lll'|  sudo -S git status
+    echo 'lll'|  sudo -S git branch
     echo 'lll'|  sudo -S git status -sb
     `
 
