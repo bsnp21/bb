@@ -1441,7 +1441,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo 'lll'|  sudo -S git add .salts
     echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
     echo 'lll'|  sudo -S git remote set-url origin ${repo_url}
-    echo 'lll'|  sudo -S git branch -M main default   # error: refname refs/heads/main not found, fatal: Branch rename failed
+    # echo 'lll'|  sudo -S git branch -M main default   # error: refname refs/heads/main not found, fatal: Branch rename failed
     echo 'lll'|  sudo -S git branch -M master main
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD
