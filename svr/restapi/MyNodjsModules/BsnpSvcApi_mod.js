@@ -372,7 +372,7 @@ var ApiJsonp_BibleObj = {
 
             var reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
             var bUpdatedUsersList = false
-            var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner().visibility
+            var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
             var bVisibility = "private"
             if (!usrinfo.err) bVisibility = usrinfo.visibility
 
