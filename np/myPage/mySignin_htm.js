@@ -168,9 +168,10 @@ function update_acct(cbf) {
     var usr = remeber_ui();   //
     usr.hintword = $("#hintword").val().trim()
     usr.accesstr = $("input[type='radio']:checked").val().trim()
+    usr.passcodeNew = $("#passcodeNew").val().trim()
     //alert($("input[type='radio']:checked").val())
 
-    api.ApiUsrAccount_create(usr, function (rob) {
+    api.ApiUsrAccount_update(usr, function (rob) {
         $(".signinBtn").removeAttr("disabled")
         console.log(rob)
         $("#txtarea").val(JSON.stringify(rob, null, 4))
