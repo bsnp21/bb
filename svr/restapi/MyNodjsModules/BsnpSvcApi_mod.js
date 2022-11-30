@@ -608,7 +608,7 @@ var ApiJsonp_BibleObj = {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
             ApiUti.Output_append(inp.out, ret)
-            if(!np.par.passcodeNew){
+            if(!inp.par.passcodeNew){
                 inp.out.err = ["missing new passcode."] 
                 return
             }
