@@ -361,6 +361,7 @@ var ApiJsonp_BibleObj = {
             bio.writeback()
             var idxfile =gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm") 
             fs.writeFileSync(idxfile, "a", "utf8")
+            inp.out.olog.indexfile = idxfile
             
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
