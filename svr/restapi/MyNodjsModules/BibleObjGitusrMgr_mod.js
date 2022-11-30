@@ -363,7 +363,7 @@ BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
     rob.published_ret = ghpages.publish(rob.dir, {
         repo: rob.repourl,
         silent: true,
-        branch: 'gh-pages',  //default value.
+        //branch: 'gh-pages',  //default value.
     },
         function (err) {
             rob.gh_pages_publish_err = err
