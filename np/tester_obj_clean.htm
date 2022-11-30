@@ -1,0 +1,83 @@
+<HTML>
+
+<HEAD>
+    <TITLE>test</TITLE>
+    <base target="_blank" />
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+
+
+    <!--------->
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <script language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+    <script language="javascript" src="../jq/jquery.js"></script>
+
+    <!----------------------------------------------------------------------------->
+    <!------ api ---->
+    <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
+    <script src="../np/js/BsnpRestApi.js"></script>
+    <script src="../np/js/BsnpRestConst.js"></script>
+    <!----------------------------------------------------------------------------->
+
+
+    <style>
+        #srcObj,
+        #divFetch {
+            width: 100%;
+            height: 300px;
+        }
+
+        pre {
+            border: 1px solid black;
+            width: 400px;
+        }
+
+        .carObjFlush {
+            background-color: antiquewhite;
+        }
+
+        .carObjFetch {
+            background-color: aqua;
+        }
+    </style>
+    <script>
+        function start_simplify() {
+            var src = $("#srcObj").val()
+            var obj = JSON.parse(src.slice(src.indexOf("{")))
+            FlushObjDat(obj)
+            $("#divFetch").val(JSON.stringify(obj, null, 4))
+        }
+
+        function FlushObjDat(datObj) {
+            function _iterate(carObj) {
+                for (var carProperty in carObj) {
+                    console.log("carProperty=", carProperty)
+                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                        _iterate(carObj[carProperty]); //non-arry obj. 
+                    } else {
+                        //if ("" === carObj[carProperty]) { //to delete key in targetObj.
+                        delete carObj[carProperty]
+                        //}
+                    }
+                }
+            }
+            _iterate(datObj)
+        }
+    </script>
+
+
+
+</HEAD>
+
+<BODY>
+    obj=
+    <textarea id="srcObj" contenteditable=""></textarea>
+    <button onclick="start_simplify()">Simpliy</button>
+    <textarea id="divFetch"></textarea>
+
+</BODY>
+
+</HTML>

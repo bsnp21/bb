@@ -100,7 +100,39 @@ function fswatch_gh_pages_rename() {
     })
 }
 
-gh_pages_cmdline()
+//gh_pages_cmdline()
 //fswatch_gh_pages_rename()
 //console.log('myArgs: ', myArgs);
+let urls = "https://www.reddit.com/r/popular.jsonxxyy";
 
+function get_txt_fr_net(urls, cbf) {
+    let body = "";
+    https.get(urls, (res) => {
+
+        res.on("data", (chunk) => {
+            body += chunk;
+            //console.log(chunk)
+        });
+
+        res.on("end", (data) => {
+            try {
+                //let json = JSON.parse(body);
+                // do something with JSON
+                //console.log(body)
+                console.log("load")
+                if (cbf) cbf(body)
+            } catch (error) {
+                console.error(error.message);
+            };
+        });
+
+    }).on("error", (error) => {
+        console.error(error.message);
+    });
+    return body
+}
+urls = "https://bsnpghrepolist.github.io/wdingpub01/dat/MyBiblicalDiary_json.jss"
+var txt = get_txt_fr_net(urls, (dat) => {
+    console.log(dat)
+})
+console.log("load end")

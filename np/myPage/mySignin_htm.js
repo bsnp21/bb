@@ -103,7 +103,8 @@ MySignBasePage.prototype.gen_htm = function () {
             <tr>
                 <td colspan="2"><br>
                     
-                    <${this.LoginTag} class="signinBtn" id="loginAsUser" title="login to account" >Log-in</${this.LoginTag} >
+                    <${this.LoginTag} class="signinBtn" id="loginAsUser" title="login to account" >Log-in</${this.LoginTag}>
+                    <a id="accountChange"></a>
                     
                     <${this.CreateTag}  id="SignOnCreate" href=""> Create </${this.CreateTag} >
                     <br><br>

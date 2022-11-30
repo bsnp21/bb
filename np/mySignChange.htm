@@ -1,0 +1,101 @@
+<html>
+
+<head>
+    <title>Create</title>
+    <base targetx="xxx_blank" />
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+
+    <script src="https://bsnp21.github.io/home/js/quotestr.js"></script>
+    <link rel="stylesheet" href="./myPage/css/mySign.css">
+    </link>
+
+
+
+
+    <!-------------------------------------------->
+    <!---- Insert this before scripts import; then restor back later -->
+    <script>//if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <!-------------- jq --------------------->
+    <script ____src="./doc_files/jquery-2_1_3.min.js"></script>
+    <script src="https://wdingbox.github.io/ham12/jq/jquery-2_1_3.min.js"></script>
+
+
+    <script src="./js/BsnpRestConst.js"></script>
+    <script src="./js/UtiLib.js"></script>
+    <script src="./js/PageUti.js"></script>
+    <script src="./js/MyStorage.js"></script>
+
+    <script src="./js/BsnpRestApi.js"></script>
+    <script src="./myPage/mySignin_htm.js"></script>
+    <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
+    <!-------------------------------------------->
+
+    <!-------------------------------------------->
+    <style>
+
+    </style>
+    <script>
+
+        $(function () {
+
+            var mySignPage = new MySignBasePage()
+            mySignPage.set_Create_Page()
+            $("body").html(mySignPage.gen_htm())
+
+
+        })
+    </script>
+</head>
+
+<body>
+
+
+</body>
+
+</html>
+
+<script>
+    $(function () {
+
+        mySignin_init()
+
+
+        $("#loginAsUser").attr("href", `./mySignIn.htm${window.location.search}`)
+        $("#loginAsUser").on("click", function () {
+            var ur = `./mySignIn.htm${window.location.search}`
+            window.open(ur, "_self")
+            return;
+        })
+
+
+
+        $("#passcode2_required").on("click", function () {
+            $("#passcode2").val($("#passcode").val())
+        })
+        $("#SignOnCreate").on("click", function (evt) {
+            evt.preventDefault()
+            $("#errmsg").text("status").removeClass("successed failed")
+            var pswd = $("#passcode").val()
+            if (pswd.length === 0) return !alert("require password.")
+            if ($("#passcode2").val() != pswd) {
+                return !alert("password did not match.")
+            }
+
+            //var paths = $("#repopath").val()
+            create_acct(function (rob) {
+                if (rob.out.sponsorDiskUsage) {
+                    $("#usrstot").text("UsrsTot:" + rob.out.sponsorDiskUsage.tot_reposNumber)
+                }
+            })
+        })
+
+
+    })
+
+
+
+
+</script>
