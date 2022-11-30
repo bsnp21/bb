@@ -368,6 +368,10 @@ var ApiJsonp_BibleObj = {
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
 
+            /////////////////////////////
+
+            var reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+
             //////////////////////////////
 
             var adminMgr = new BibleObjGitusrMgr()
@@ -387,7 +391,11 @@ var ApiJsonp_BibleObj = {
             BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, {
                 SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
                     if ("string" === typeof (carObj[carProperty])) {
-                        targObj[carProperty] += "," + carObj[carProperty] //at the end of object tree, make a copy or src.
+                        var ary = targObj[carProperty].split(",")
+                        if (ary.indexOf(reponame) < 0) {
+                            ary.unshift(reponame)
+                        }
+                        targObj[carProperty] = ary.join(",") //at the end of object tree, make a copy or src.
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
