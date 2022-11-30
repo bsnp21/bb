@@ -371,6 +371,7 @@ var ApiJsonp_BibleObj = {
             /////////////////////////////
 
             var reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+            var bAddedNewUserInList = false
 
             //////////////////////////////
 
@@ -393,9 +394,10 @@ var ApiJsonp_BibleObj = {
                     if ("string" === typeof (carObj[carProperty])) {
                         var ary = targObj[carProperty].split(",")
                         if (ary.indexOf(reponame) < 0) {
-                            ary.unshift(reponame)
+                            ary.unshift(reponame)  // add new usrname.
+                            targObj[carProperty] = ary.join(",")
+                            bAddedNewUserInList = true
                         }
-                        targObj[carProperty] = ary.join(",") //at the end of object tree, make a copy or src.
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
@@ -405,9 +407,11 @@ var ApiJsonp_BibleObj = {
                 }
             })
             console.log("3 bio.obj", bio.obj)
-
-            bio.writeback()
-            inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
+            if (bAddedNewUserInList) {
+                bio.writeback()
+                inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
+            }
+            ///////////////////////////////////////////////////////////////////////////
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
