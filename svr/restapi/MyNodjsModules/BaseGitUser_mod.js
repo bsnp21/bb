@@ -1130,7 +1130,7 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 
 BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     var rob = {}
-    rob.gh_repo_create_only = this.gh_repo_create_only(accesstr)
+    rob.gh_repo_create_remote = this.gh_repo_create_remote(accesstr)
     rob.git_clone = this.git_clone()
     rob.git_dir_write_salts = this.git_dir_write_salts(passcode, hintword)
     rob.git_add_commit_push_Sync = this.git_add_commit_push_Sync(true)
@@ -1138,7 +1138,7 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     rob.git_dir_remove = this.git_dir_remove()
     return rob
 }
-BaseGitUser.prototype.gh_repo_create_only = function (accesstr) {
+BaseGitUser.prototype.gh_repo_create_remote = function (accesstr) {
 
     var usrdir = this.getFullPath_usr_host()
     if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
