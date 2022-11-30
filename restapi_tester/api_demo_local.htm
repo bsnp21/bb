@@ -83,6 +83,9 @@
             var sample_apiPar = {
                 ApiUsrAccount_login: [{ repopath: "guest", passcode: "guest" }],
                 ApiUsrAccount_logout: [{}],
+                ApiUsrAccount_update : [
+                    { repopath: "guest", passcode: "guest", passcodeNew: "guestNew", accesstr: "private"},
+                    { repopath: "guest", passcode: "guest", passcodeNew: "guestNew", accesstr: "public"}],
                 ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', "e_Note", 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' }, }, Mat: { 1: { 1: '' }, } } },
                 {

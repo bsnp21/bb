@@ -65,10 +65,12 @@
      
         $("#loginAsUser").on("click", function () {
             login_acct(function (rob) {
-                //window.open(ur, '_self');
+                window.open(`./BibleStudyNotePad.htm${rob.redirect_param}`, '_self');
                 return true; //contine;
             })
         })
+
+        
 
        
         $("#SignOnCreate").on("click", function (evt) {
@@ -76,6 +78,15 @@
             var ur = `./mySignCreate.htm${window.location.search}`
             $(this).attr("href", ur)
             return
+        })
+
+
+        $("#accountUpdate").on("click", function () {
+            $("#errmsg").text("status").removeClass("successed failed")
+            login_acct(function (rob) {
+                window.open(`./mySignUpdate.htm${rob.redirect_param}`, '_self');
+                return true; //contine;
+            })
         })
 
   

@@ -4,12 +4,26 @@ function MySignBasePage() {
     this.sTitle = "Login Page"
     this.LoginTag = "button"
     this.CreateTag = "a"
+    this.UpdateTag = "a"
     this.OtherParts = ""
+    this.part_NewPasswordInput = `
+<tr>
+    <td>
+        <br>
+        <a for="editor1" class="label_password">New Password</a> : (<a
+            style="color:red;" id="new_passoword">required</a>)<br>
+        <input id="passcodeNew" type="password" maxlength="120" class="inputxt" value=""  maxlength="125"></input>
+    </td>
+    <td class="clearout">
+        <br><br>X
+    </td>
+</tr> `
+
     this.part_CreateInput = `
 <tr>
 <td>
     <br>
-    <a for="editor1" id="label_password">Comfirm Password</a> : (<a
+    <a for="editor1" class="label_password">Comfirm Password</a> : (<a
         style="color:red;" id="passcode2_required">required</a>)<br>
     <input id="passcode2" type="password" maxlength="120" class="inputxt" value=""  maxlength="125"></input>
 </td>
@@ -43,15 +57,24 @@ function MySignBasePage() {
 
 `
 }
+MySignBasePage.prototype.set_Update_Page = function () {
+    this.sTitle = "Account Update Page"
+    this.LoginTag = "a"
+    this.CreateTag = "x"
+    this.UpdateTag = "button"
+    $("#SignOnCreate").hide()
+}
 
 MySignBasePage.prototype.set_Create_Page = function () {
     this.sTitle = "Create Account Page"
     this.LoginTag = "a"
     this.CreateTag = "button"
+    this.part_NewPasswordInput = ""
 }
 MySignBasePage.prototype.set_Login_Page = function () {
     this.sTitle = "Login Page"
     this.part_CreateInput = ""
+    this.part_NewPasswordInput = ""
 }
 MySignBasePage.prototype.gen_htm = function () {
     var mySignin_htm = `
@@ -90,7 +113,7 @@ MySignBasePage.prototype.gen_htm = function () {
             <tr>
                 <td>
                     <br>
-                    <a for="editor1" id="label_password">Password</a> : (<a style="color:red;">required</a>)<br>
+                    <a for="editor1" class="label_password">Password</a> : (<a style="color:red;">required</a>)<br>
                     <input id="passcode" type="password" maxlength="120" class="inputxt" value=""  maxlength="125"></input>
                 </td>
                 <td class="clearout">
@@ -98,13 +121,14 @@ MySignBasePage.prototype.gen_htm = function () {
                 </td>
             </tr>
 
+            ${this.part_NewPasswordInput}
             ${this.part_CreateInput}
 
             <tr>
                 <td colspan="2"><br>
                     
                     <${this.LoginTag} class="signinBtn" id="loginAsUser" title="login to account" >Log-in</${this.LoginTag}>
-                    <a id="accountChange"></a>
+                    <${this.UpdateTag} id="accountUpdate">Update</${this.UpdateTag}>
                     
                     <${this.CreateTag}  id="SignOnCreate" href=""> Create </${this.CreateTag} >
                     <br><br>
@@ -135,7 +159,33 @@ MySignBasePage.prototype.gen_htm = function () {
 }
 
 
+function update_acct(cbf) {
+    $(".signinBtn").attr("disabled", true)
+    $("#errmsg").text("runing ...")
+    $("#output_res").html("")
 
+    var api = new BsnpRestApi()
+    var usr = remeber_ui();   //
+    usr.hintword = $("#hintword").val().trim()
+    usr.accesstr = $("input[type='radio']:checked").val().trim()
+    //alert($("input[type='radio']:checked").val())
+
+    api.ApiUsrAccount_create(usr, function (rob) {
+        $(".signinBtn").removeAttr("disabled")
+        console.log(rob)
+        $("#txtarea").val(JSON.stringify(rob, null, 4))
+        if (rob.out.err) {
+            $("#errmsg").html(rob.out.err).addClass("failed")
+        } else {
+            var tb = PageUti.Repo_fstat_table(rob)
+            var a = `<font color="green">Successfully created<br>${usr.repopath}</font></a>`
+            $("#errmsg").html(a)
+            $("#output_res").html(tb)
+        }
+
+        cbf(rob)
+    })
+}
 function create_acct(cbf) {
     $(".signinBtn").attr("disabled", true)
     $("#errmsg").text("runing ...")
@@ -178,11 +228,12 @@ function login_acct(cbf) {
             $("#errmsg").html(rob.out.err).addClass("failed")
         }
         else {
-            var ur = `./BibleStudyNotePad.htm${api.urlRedirectParam()}`
+            var ur = `${api.urlRedirectParam()}`
+            rob.redirect_param = ur
             if (cbf && !cbf(rob)) {
                 return
             }
-            window.open(ur, "_self")
+            //window.open(ur, "_self")
         }
 
 
@@ -217,12 +268,12 @@ function mySignin_init() {
     $(".clearout").on("click", function () {
         $(this).prev().find("input").val("")
     })
-    $("#label_password").on("click", function () {
+    $(".label_password").on("click", function () {
         var styp = $("#passcode").attr("type")
         var type = styp === "password" ? "text" : "password"
         $(`input[type='${styp}']`).attr("type", type)
     })
-    $(`input[type='radio']`).on("click",function(){
+    $(`input[type='radio']`).on("click", function () {
         $("#errmsg").text($(this).attr("note"))
     })
 

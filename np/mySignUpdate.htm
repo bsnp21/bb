@@ -42,8 +42,9 @@
         $(function () {
 
             var mySignPage = new MySignBasePage()
-            mySignPage.set_Create_Page()
+            mySignPage.set_Update_Page()
             $("body").html(mySignPage.gen_htm())
+            $("#SignOnCreate").hide()
 
 
         })
@@ -75,17 +76,17 @@
         $("#passcode2_required").on("click", function () {
             $("#passcode2").val($("#passcode").val())
         })
-        $("#SignOnCreate").on("click", function (evt) {
+        $("#accountUpdate").on("click", function (evt) {
             evt.preventDefault()
             $("#errmsg").text("status").removeClass("successed failed")
-            var pswd = $("#passcode").val()
+            var pswd = $("#passcodeNew").val()
             if (pswd.length === 0) return !alert("require password.")
             if ($("#passcode2").val() != pswd) {
                 return !alert("password did not match.")
             }
 
             //var paths = $("#repopath").val()
-            create_acct(function (rob) {
+            update_acct(function (rob) {
                 if (rob.out.sponsorDiskUsage) {
                     $("#usrstot").text("UsrsTot:" + rob.out.sponsorDiskUsage.tot_reposNumber)
                 }

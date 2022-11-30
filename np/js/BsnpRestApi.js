@@ -87,7 +87,8 @@ var RestApi_uPar_Validate = {
     "ApiUsrAccount_login": function (usr) { },
     "ApiUsrAccount_logout": function (usr) { },
     "ApiUsrAccount_create": function (usr) { },
-    
+    "ApiUsrAccount_update": function (usr) { },
+
     "ApiBibleObj_search_txt": function (upar) { BsnpRestUti.walk_obj(upar, { Search: { Strn: "", File: "" }, bibOj: {} }) },
     "ApiBibleObj_load_by_bibOj": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], bibOj: {} }) },
     "ApiBibleObj_write_Usr_BkcChpVrs_txt": function (upar) { BsnpRestUti.walk_obj(upar, { fnames: [], inpObj: {} }) },
@@ -247,6 +248,9 @@ BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
 
 BsnpRestApi.prototype.ApiUsrAccount_logout = function (par, cbf) {
     return this.ajaxion("ApiUsrAccount_logout", par, cbf)
+}
+BsnpRestApi.prototype.ApiUsrAccount_update = function (par, cbf) {
+    return this.ajaxion("ApiUsrAccount_update", par, cbf)
 }
 
 BsnpRestApi.prototype.ApiUsrRepos_toolkids = function (par, cbf) {

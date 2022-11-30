@@ -85,8 +85,10 @@ input {
     width: 100%;
 }
 
-#SignOnCreate {
+#SignOnCreate, #accountUpdate {
     float: right;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .successed {
