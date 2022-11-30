@@ -622,6 +622,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.err = ["missing accesstr."] 
                 return
             }
+            return
 
             gituserMgr.m_BaseGitUser.git_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
             inp.out,olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
