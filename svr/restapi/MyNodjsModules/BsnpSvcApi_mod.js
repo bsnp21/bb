@@ -359,12 +359,47 @@ var ApiJsonp_BibleObj = {
             console.log("2 bio.obj", bio.obj)
 
             bio.writeback()
-            var idxfile =gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm") 
+
+            //// optional
+            var idxfile = gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm")
             fs.writeFileSync(idxfile, "a", "utf8")
             inp.out.olog.indexfile = idxfile
-            
+
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
+
+            //////////////////////////////
+
+            var adminMgr = new BibleObjGitusrMgr()
+            adminMgr.m_BaseGitUser.Set_gitusr("admin")
+            adminMgr.m_BaseGitUser.Deploy_proj()
+            var jsfname = adminMgr.m_BaseGitUser.get_pfxname(doc, {
+                IfUsrNotExist: function (stdpfname, usrpfname) {
+                    inp.out.olog["cpIfUsrNotExist2"] = adminMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                    return usrpfname;
+                }
+            })
+            var bio = BaseGUti.loadObj_by_fname(jsfname);
+            if (!bio.obj) {
+                save_res.desc2 = `load(${doc},${jsfname})=null`
+                return;
+            }
+            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, {
+                SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
+                    if ("string" === typeof (carObj[carProperty])) {
+                        targObj[carProperty] += "," + carObj[carProperty] //at the end of object tree, make a copy or src.
+                    } else {
+                        console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
+                    }
+                },
+                TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
+                    targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+                }
+            })
+            console.log("3 bio.obj", bio.obj)
+
+            bio.writeback()
+            inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
         })
 
         //res.writeHead(200, { 'Content-Type': 'text/javascript' });
@@ -553,7 +588,7 @@ var ApiJsonp_BibleObj = {
 
 
 
-    
+
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
@@ -618,12 +653,12 @@ var ApiJsonp_BibleObj = {
             //inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
 
-            if(!inp.par.passcodeNew){
-                inp.out.err = ["missing new passcode."] 
+            if (!inp.par.passcodeNew) {
+                inp.out.err = ["missing new passcode."]
                 return
             }
-            if(!inp.par.accesstr){
-                inp.out.err = ["missing accesstr."] 
+            if (!inp.par.accesstr) {
+                inp.out.err = ["missing accesstr."]
                 return
             }
             //return
@@ -634,8 +669,8 @@ var ApiJsonp_BibleObj = {
             //return
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
             inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
-            
-           
+
+
         })
     },
 
