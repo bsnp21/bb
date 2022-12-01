@@ -714,8 +714,8 @@ var ApiJsonp_BibleObj = {
 
             /////
             var doc = inp.par.fnames[0]
-            var biObj = JSON.parse(JSON.stringify(inp.par.inpObj))
-            inp.out.olog.fetchObj = biObj
+            var fetchObj = JSON.parse(JSON.stringify(inp.par.inpObj))
+            inp.out.olog.fetchObj = fetchObj
             var adminMgr = new BibleObjGitusrMgr()
             adminMgr.m_BaseGitUser.Set_gitusr("admin")
             adminMgr.m_BaseGitUser.Deploy_proj()
@@ -734,7 +734,7 @@ var ApiJsonp_BibleObj = {
             
 
             var ursList = []
-            BaseGUti.FetchObj_UntilEnd(biObj, bio.obj, {
+            BaseGUti.FetchObj_UntilEnd(fetchObj, bio.obj, {
                 FetchNodeEnd: function (carProperty, carObj, srcObj) {
                     if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
                         ursList = srcObj[carProperty].split(",")
@@ -761,7 +761,8 @@ var ApiJsonp_BibleObj = {
                     if (!uso.obj) {
                         return;
                     }
-                    BaseGUti.FetchObj_UntilEnd(biObj, uso, {
+                    fetchObj = JSON.parse(JSON.stringify(inp.par.inpObj))
+                    BaseGUti.FetchObj_UntilEnd(fetchObj, uso, {
                         FetchNodeEnd: function (carProperty, carObj, srcObj) {
                             if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
                                 retObj[usr] = srcObj[carProperty]
