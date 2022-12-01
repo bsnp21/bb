@@ -513,9 +513,9 @@ var BaseGUti = {
         }
 
         ret.set_fname_header = function () {
-            var basename = path.basename(this.fname, ".js").replace(".js","")
+            var basename = path.basename(this.fname).replace(".js", "")
             this.header = `var ${basename} = \n`
-            return 
+            return
         }
         ret.writeback = function () {
             var s2 = JSON.stringify(this.obj, null, 4);
