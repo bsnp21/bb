@@ -144,9 +144,11 @@ function gh_pages_test_muplitple_dest_by_argv2() {
     if (process.argv.length < 4) return console.log("missing owner repo")
 
     var ownername = process.argv[3]
-    var envs = process.env[`GH_TOKEN_${ownername}`]
-    console.log("env", envs)
+    var envKey = `GH_TOKEN_${ownername}`
+    var envs = process.env[]
     console.log("process.env", process.env)
+    console.log("env", envs)
+    console.log("envKey", envKey)
 
 
     var reponame = process.argv[3]
