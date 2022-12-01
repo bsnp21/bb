@@ -146,6 +146,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
     var ownername = process.argv[3]
     var envs = process.env[`GH_TOKEN_${ownername}`]
     console.log("env", envs)
+    console.log("process.env", process.env)
 
 
     var reponame = process.argv[3]
@@ -161,11 +162,13 @@ function gh_pages_test_muplitple_dest_by_argv2() {
         repo: `https://${envs}@github.com/${ownername}/${reponame}.git`
     }
     var dir = `/home/ubuntu/dist`
+
     if (!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
     console.log(option)
+    console.log("dist=",dir)
 
     if (process.argv.length === 4) return console.log("one more param to actually run.")
-    
+
     ghpages.publish(dir, option, function (err) {
         console.log("err=", err)
 
