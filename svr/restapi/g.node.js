@@ -159,8 +159,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
      */
         repo: 'https://' + process.env.GH_TOKEN + '@github.com/user/private-repo.git',
         silent: true,
-
-
+        dest:"account",
         repo: `https://${envs}@github.com/${ownername}/${reponame}.git`
     }
     var dir = `/home/ubuntu/dist`
