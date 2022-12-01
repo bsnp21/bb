@@ -191,7 +191,7 @@ var ApiJsonp_BibleObj = {
                     var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
                     console.log("jsfname:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
-                    if (!bib.obj) continue
+                    if (null===bib.obj) continue
                     var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
                     TbcvObj[fnameID] = bcObj;
                     inp.out.desc += ":" + fnameID
@@ -221,7 +221,7 @@ var ApiJsonp_BibleObj = {
                         var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
                         console.log("load:", jsfname)
                         var bib = BaseGUti.loadObj_by_fname(jsfname);
-                        if (!bib.obj) {
+                        if (null === bib.obj) {
                             olog.push(jsfname + ":noexist:" + fnameID)
                             console.log("not exist..............", jsfname)
                             continue
@@ -330,7 +330,7 @@ var ApiJsonp_BibleObj = {
                 }
             })
             var bio = BaseGUti.loadObj_by_fname(jsfname);
-            if (!bio.obj) {
+            if (null === bio.obj) {
                 save_res.desc = `load(${doc},${jsfname})=null`
                 return;
             }
@@ -389,7 +389,7 @@ var ApiJsonp_BibleObj = {
                 }
             })
             var bio = BaseGUti.loadObj_by_fname(jsfname);
-            if (!bio.obj) {
+            if (null === bio.obj) {
                 save_res.desc2 = `load(${doc},${jsfname})=null`
                 return;
             }
@@ -710,7 +710,7 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.olog={}
+            inp.out.olog = {}
 
             /////
             var doc = inp.par.fnames[0]
@@ -727,11 +727,11 @@ var ApiJsonp_BibleObj = {
             })
             var bio = BaseGUti.loadObj_by_fname(jsfname);
             inp.out.olog.admin_obj = bio.obj
-            if (bio.err) {
+            if (null === bio.obj) {
                 inp.out.olog.load_admin = `load(${doc},${jsfname})=null`
                 return;
             }
-            
+
 
             var ursList = []
             BaseGUti.FetchObj_UntilEnd(fetchObj, bio.obj, {
@@ -752,13 +752,13 @@ var ApiJsonp_BibleObj = {
                 if (usrinfo.visibility === "public") {
                     var jsfname = otherusrMgr.m_BaseGitUser.get_pfxname(doc, {
                         IfUsrNotExist: function (stdpfname, usrpfname) {
-                            inp.out.olog[usr+"_cpIfUsrNotExist2"] = otherusrMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                            inp.out.olog[usr + "_cpIfUsrNotExist2"] = otherusrMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
                             return usrpfname;
                         }
                     })
                     var uso = BaseGUti.loadObj_by_fname(jsfname);
-                    inp.out.olog[usr+"_obj"] = uso
-                    if (uso.err) {
+                    inp.out.olog[usr + "_obj"] = uso
+                    if (null === uso.obj) {
                         inp.out.olog[usr] = `load(${doc},${jsfname})=null`
                         return;
                     }
@@ -770,7 +770,7 @@ var ApiJsonp_BibleObj = {
                             }
                         }
                     })
-                }else{
+                } else {
                     inp.out.olog[usr] = usrinfo
                 }
             })
