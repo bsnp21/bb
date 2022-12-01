@@ -756,7 +756,7 @@ var ApiJsonp_BibleObj = {
                         }
                     })
                     var uso = BaseGUti.loadObj_by_fname(jsfname);
-                    inp.out.olog.usr = `load(${doc},${jsfname})=null`
+                    inp.out.olog[usr] = `load(${doc},${jsfname})=null`
                     if (!uso.obj) {
                         return;
                     }
