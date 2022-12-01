@@ -512,9 +512,14 @@ var BaseGUti = {
             }
         }
 
+        ret.set_fname_header = function () {
+            var basename = path.basename(__filename, "_json.js")
+            this.header = `var ${basename} = \n`
+            return 
+        }
         ret.writeback = function () {
             var s2 = JSON.stringify(this.obj, null, 4);
-            BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S chmod -R 777 ${this.fname}`)
+            BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S chmod 777 ${this.fname}`)
             fs.writeFileSync(this.fname, this.header + s2);
             ret.dlt_size = ret.header.length + s2.length - ret.fsize
         }

@@ -421,6 +421,7 @@ var ApiJsonp_BibleObj = {
             })
             console.log("3 bio.obj", bio.obj, bVisibility)
             if (bUpdatedUsersList) {
+                bio.set_fname_header()
                 bio.writeback()
                 inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
             }
