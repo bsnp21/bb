@@ -727,7 +727,7 @@ var ApiJsonp_BibleObj = {
             var bio = BaseGUti.loadObj_by_fname(jsfname);
             inp.out.olog.admin_obj = bio.obj
             if (!bio.obj) {
-                save_res.desc = `load(${doc},${jsfname})=null`
+                inp.out.olog.load_admin = `load(${doc},${jsfname})=null`
                 return;
             }
             
@@ -757,7 +757,7 @@ var ApiJsonp_BibleObj = {
                     })
                     var uso = BaseGUti.loadObj_by_fname(jsfname);
                     if (!uso.obj) {
-                        save_res.desc = `load(${doc},${jsfname})=null`
+                        inp.out.olog.usr = `load(${doc},${jsfname})=null`
                         return;
                     }
                     Uti.FetchObj_UntilEnd(biObj, uso, {
