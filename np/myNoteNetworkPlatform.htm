@@ -16,20 +16,16 @@
     <script xxxxxxxsrc="http://localhost:7878/assets/ckeditor/adapters/jq/jquery-2_1_3.min.js"
         note="selfseversite"></script>
     <!-------------- ckeditor only--------------------->
-    <script src="../../../assets/ckeditor/ckeditor.js"></script>
-    <script src="../../../assets/ckeditor/samples/old/sample.js"></script>
-    <link href="../../../assets/ckeditor/samples/old/sample.css" rel="stylesheet">
+    <script xxxxxxxxxxxsrc="../../../assets/ckeditor/ckeditor.js"></script>
 
 
-    <script ___src="http://localhost:7878/assets/ckeditor/ckeditor.js" note="selfseversite"></script>
-    <script ___src="http://localhost:7878/assets/ckeditor/samples/old/sample.js"></script>
     <!-------------------------------------------->
     <script src="./js/BsnpRestApi.js"></script>
     <script src="./js/BsnpRestConst.js"></script>
     <script src="./js/UtiLib.js"></script>
     <script src="./js/PageUti.js"></script>
     <script src="./js/MyStorage.js"></script>
-    <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
+    <script src="./BibleStudyNotePad.js?v=20.12.4" language="javascript"></script>
 
     <script language="javascript"
         src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
@@ -83,6 +79,22 @@
         .scorenum {
             float: right;
             white-space: nowrap;
+        }
+        .usrbar{
+            background-color: rgb(94, 135, 172);
+        }
+
+
+        .heart{
+            float: right;
+            padding: 0 10px 0 10px;
+        }
+
+        .heart_grey{
+            color: gray;
+        }
+        .heart_red{
+            color: red;
         }
     </style>
 </head>
@@ -143,32 +155,9 @@
         var bcv = param.get("BCV")
         $("#inpBCV").val(bcv)
 
-        var str = getvrs(bcv, e_Note_json)
+    
 
-        var ary = str.split(",")
-
-        var slst = ""
-        ary.forEach(function (key, i) {
-            slst += `<tr><td>${i}</td><td><span class='usrname'><button>${key}</button><a>+</a></span>
-                <div>..</div></td></tr>`
-        })
-
-        $("#allusrs").html(slst)
-        $(".usrname").on("click", function () {
-            var ret = jster_obj($(this).text())
-            var str = getvrs(bcv, obj)
-            $(this).next().html(str)
-        })
-
-        //var txt = 
-        //init_CKEditor()
-        //init_ui_cmd()
-        var search_reposdesc = MyStorage.MostRecentAryInStore("inpBCV")
-        $("#inpBCV").on("focus", function () {
-            search_reposdesc.gen_history_table("#account_history", function (s) {
-                $("#inpBCV").val(s)
-            })
-        })
+      
 
         var api = new BsnpRestApi()
         var retOj = Uti.parse_bcv(bcv, "")
@@ -177,16 +166,20 @@
         api.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(par, function (rob) {
             console.log(rob)
 
-            var slst = ""
-            Object.keys(rob.out.data).forEach(function (key, i) {
-                slst += `<tr><td>${i}</td><td><span class='usrname'><button>${key}</button><a>+</a></span>
-                <div>${rob.out.data[key]}</div></td></tr>`
-            })
-            $("#allusrs").html(slst)
+            gen_table(rob.out.data)
 
         })
-
-
-
     })
+    function gen_table(obj) {
+        var slst = ""
+        Object.keys(obj).forEach(function (key, i) {
+            slst += `<tr><td>${i}</td><td><div class='usrbar'><a>${key}</a><a class='heart'>&#9829;</a></div>
+                <div>${obj[key]}</div></td></tr>`
+        })
+        $("#allusrs").html(slst)
+        $(".heart").on("click",function(){
+            $(this).toggleClass("heart_red")
+        })
+
+    }
 </script>
