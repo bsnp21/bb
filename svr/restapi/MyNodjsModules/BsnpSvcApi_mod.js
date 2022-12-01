@@ -433,25 +433,12 @@ var ApiJsonp_BibleObj = {
         //res.end();
     },
 
-    /////
-    ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
-
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-        })
 
 
 
-        // var sret = JSON.stringify(inp)
-        // var sid = ""
-        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
 
-        // res.end();
-    },
+
+
 
 
     ///////////////////////////////////
@@ -714,7 +701,26 @@ var ApiJsonp_BibleObj = {
 
 
 
+    /////
+    ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
 
+        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+
+            var gituserMgr = new BibleObjGitusrMgr()
+            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+            if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
+        })
+
+
+
+        // var sret = JSON.stringify(inp)
+        // var sid = ""
+        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
+
+        // res.end();
+    },
+    
 
 
 
