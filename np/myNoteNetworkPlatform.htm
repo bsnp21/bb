@@ -148,7 +148,8 @@
 
         var slst = ""
         ary.forEach(function (key, i) {
-            slst += `<tr><td>${i}</td><td><span class='usrname'>${key}</span><div>..</div></td></tr>`
+            slst += `<tr><td>${i}</td><td><span class='usrname'><button>${key}</button><a>+</a></span>
+                <div>..</div></td></tr>`
         })
 
         $("#allusrs").html(slst)
@@ -169,6 +170,13 @@
             })
         })
 
+        var api = new BsnpRestApi()
+        var retOj = Uti.parse_bcv(bcv, "")
+        var par = {fnames:["e_Node"]}
+        par.inpOjb = retOj.bcvObj
+        api.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(par,function(rob){
+            console.log(rob)
+        })
 
 
 

@@ -710,6 +710,67 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
+            inp.out.olog={}
+
+            /////
+            var doc = inp.par.fnames[0]
+            var biObj = inp.par.inpObj
+            var adminMgr = new BibleObjGitusrMgr()
+            adminMgr.m_BaseGitUser.Set_gitusr("admin")
+            adminMgr.m_BaseGitUser.Deploy_proj()
+            var jsfname = adminMgr.m_BaseGitUser.get_pfxname(doc, {
+                IfUsrNotExist: function (stdpfname, usrpfname) {
+                    inp.out.olog["cpIfUsrNotExist2"] = adminMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                    return usrpfname;
+                }
+            })
+            var bio = BaseGUti.loadObj_by_fname(jsfname);
+            inp.out.olog.admin_obj = bio.obj
+            if (!bio.obj) {
+                save_res.desc = `load(${doc},${jsfname})=null`
+                return;
+            }
+            
+
+            var ursList = []
+            Uti.FetchObj_UntilEnd(biObj, bio.obj, {
+                FetchNodeEnd: function (carProperty, carObj, srcObj) {
+                    if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
+                        ursList = srcObj[carProperty].split(",")
+                    }
+                }
+            })
+            inp.out.olog.ursList = ursList
+            /////
+            var retObj = {}
+            ursList.forEach(function (usr) {
+                var otherusrMgr = new BibleObjGitusrMgr()
+                otherusrMgr.m_BaseGitUser.Set_gitusr(usr)
+                otherusrMgr.Deploy_proj()
+                var usrinfo = otherusrMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+                if (usrinfo.visibility === "public") {
+                    var jsfname = otherusrMgr.m_BaseGitUser.get_pfxname(doc, {
+                        IfUsrNotExist: function (stdpfname, usrpfname) {
+                            inp.out.olog["cpIfUsrNotExist2"] = otherusrMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                            return usrpfname;
+                        }
+                    })
+                    var uso = BaseGUti.loadObj_by_fname(jsfname);
+                    if (!uso.obj) {
+                        save_res.desc = `load(${doc},${jsfname})=null`
+                        return;
+                    }
+                    Uti.FetchObj_UntilEnd(biObj, uso, {
+                        FetchNodeEnd: function (carProperty, carObj, srcObj) {
+                            if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
+                                retObj[usr] = srcObj[carProperty]
+                            }
+                        }
+                    })
+                }
+            })
+            inp.out.data = retObj
+
         })
 
 
@@ -720,7 +781,7 @@ var ApiJsonp_BibleObj = {
 
         // res.end();
     },
-    
+
 
 
 

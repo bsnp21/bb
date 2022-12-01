@@ -105,12 +105,12 @@ var RestApi_uPar_Validate = {
         })
     },
     "ApiUsrRepos_toolkids": function () { },
+    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": function(){},
     "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
     "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
     "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
-    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt",
     "test_https_work": "test_https_work"
 }
 
@@ -275,6 +275,11 @@ BsnpRestApi.prototype.ApiUsrDat_load = function (par, cbf) {
 
 BsnpRestApi.prototype.ApiUsrDat_save = function (par, cbf) {
     return this.ajaxion("ApiUsrDat_save", par, cbf)
+}
+
+
+BsnpRestApi.prototype.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt = function (par, cbf) {
+    return this.ajaxion("ApiBibleObj_read_crossnetwork_BkcChpVrs_txt", par, cbf)
 }
 
 
