@@ -757,8 +757,9 @@ var ApiJsonp_BibleObj = {
                         }
                     })
                     var uso = BaseGUti.loadObj_by_fname(jsfname);
-                    inp.out.olog[usr] = `load(${doc},${jsfname})=null`
+                    inp.out.olog[usr+"_obj"] = uso
                     if (!uso.obj) {
+                        inp.out.olog[usr] = `load(${doc},${jsfname})=null`
                         return;
                     }
                     fetchObj = JSON.parse(JSON.stringify(inp.par.inpObj))
