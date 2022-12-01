@@ -714,7 +714,8 @@ var ApiJsonp_BibleObj = {
 
             /////
             var doc = inp.par.fnames[0]
-            var biObj = inp.par.inpObj
+            var biObj = JSON.parse(JSON.stringify(inp.par.inpObj))
+            inp.out.olog.fetchObj = biObj
             var adminMgr = new BibleObjGitusrMgr()
             adminMgr.m_BaseGitUser.Set_gitusr("admin")
             adminMgr.m_BaseGitUser.Deploy_proj()
@@ -751,7 +752,7 @@ var ApiJsonp_BibleObj = {
                 if (usrinfo.visibility === "public") {
                     var jsfname = otherusrMgr.m_BaseGitUser.get_pfxname(doc, {
                         IfUsrNotExist: function (stdpfname, usrpfname) {
-                            inp.out.olog["cpIfUsrNotExist2"] = otherusrMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                            inp.out.olog[usr+"_cpIfUsrNotExist2"] = otherusrMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
                             return usrpfname;
                         }
                     })
@@ -767,6 +768,8 @@ var ApiJsonp_BibleObj = {
                             }
                         }
                     })
+                }else{
+                    inp.out.olog[usr] = usrinfo
                 }
             })
             inp.out.data = retObj
