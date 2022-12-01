@@ -362,7 +362,7 @@ var ApiJsonp_BibleObj = {
 
             //// optional
             var idxfile = gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm")
-            fs.writeFileSync(idxfile, "a", "utf8")
+            fs.writeFileSync(idxfile, "a")
             inp.out.olog.indexfile = idxfile
 
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
@@ -406,7 +406,7 @@ var ApiJsonp_BibleObj = {
                             }
                         } else {
                             if (bVisibility === "private") {
-                                ary = ary.splice(idx, 1) // remove the private user.
+                                ary.splice(idx, 1) // remove the private user.
                                 targObj[carProperty] = ary.join(",")
                                 bUpdatedUsersList = true
                             }
