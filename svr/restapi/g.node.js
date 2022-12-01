@@ -144,6 +144,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
     if(process.argv.length < 4) return console.log("missing owner repo")
     
 
+    var reponame=""
 
     var option = {
         /**
