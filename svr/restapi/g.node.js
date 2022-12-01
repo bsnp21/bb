@@ -152,7 +152,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
      * with, set the URL for the repository in the `repo` option.  This usage will
      * push all files in the `src` config to the `gh-pages` branch of the `repo`.
      */
-        repo: `https://github.com/bsnpghrepolist/${reponame}.git`,
+        repo: `https://github.com/bsnpghrepolist/test.git`,
 
 
         /**
