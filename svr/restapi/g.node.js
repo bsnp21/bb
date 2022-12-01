@@ -133,7 +133,7 @@ function get_txt_fr_net(urls, cbf) {
 }
 urls = "https://bsnpghrepolist.github.io/wdingpub01/dat/MyBiblicalDiary_json.js"
 var txt = get_txt_fr_net(urls, (dat) => {
-    console.log(dat)
+    //console.log(dat)
 })
 console.log("load end")
 
@@ -173,4 +173,6 @@ function gh_pages_test_muplitple_dest_by_argv2() {
 
     });
 }
+
+
 gh_pages_test_muplitple_dest_by_argv2()
