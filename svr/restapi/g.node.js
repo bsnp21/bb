@@ -140,8 +140,8 @@ console.log("load end")
 
 console.log("process.env.GH_TOKEN_bsnpghrepolist=",process.env.GH_TOKEN_bsnpghrepolist)
 console.log("process.env.GH_TOKEN_bsnp21=",process.env.GH_TOKEN_bsnp21)
-function gh_pages_test_muplitple_dest_by_argv() {
-    if(process.argv.length !== 4) return console.log("missing owner repo")
+function gh_pages_test_muplitple_dest_by_argv2() {
+    if(process.argv.length < 4) return console.log("missing owner repo")
     
 
 
@@ -163,13 +163,14 @@ function gh_pages_test_muplitple_dest_by_argv() {
 
         repo: 'https://' + process.env[`GH_TOKEN_${process.argv[3]}`] + `@github.com/${process.argv[3]}/${process.argv[4]}.git`
     }
-    var dir = `/home/ubuntu/${process.argv[4]}/account`
+    var dir = `/home/ubuntu/test`
     if (!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
     console.log(option)
 
+    if(process.argv.length === 4) return console.log("one more param to actually run.")
     ghpages.publish(dir, option, function (err) {
         console.log(err, `https://bsnpghrepolist.github.io/${reponame}/myoj/e_Note_json.js`)
 
     });
 }
-gh_pages_test_muplitple_dest_by_argv()
+gh_pages_test_muplitple_dest_by_argv2()
