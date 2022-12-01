@@ -170,7 +170,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
 
     if(process.argv.length === 4) return console.log("one more param to actually run.")
     ghpages.publish(dir, option, function (err) {
-        console.log(err, `https://bsnpghrepolist.github.io/${reponame}/myoj/e_Note_json.js`)
+        console.log("err=", err)
 
     });
 }
