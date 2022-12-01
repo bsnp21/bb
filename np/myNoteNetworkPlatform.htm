@@ -30,6 +30,8 @@
     <script src="./js/MyStorage.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
 
+    <script language="javascript"
+        src="https://wdingbox.github.io/bible_obj_lib/jsdb/jsBibleStruct/All_Max_struct_json.js"></script>
     <script src="https://bsnpghrepolist.github.io/admin/account/myoj/e_Note_json.js"></script>
     <!----- Insert this line after script imports -->
     <script>//if (window.module) module = window.module;</script>
@@ -38,7 +40,7 @@
         #ctrpanel {
             z-index: 999999;
             position: absolute;
-            top:10px;
+            top: 10px;
             right: 10px;
             background-color: antiquewhite;
         }
@@ -111,43 +113,6 @@
     <script>
 
 
-        function show_loaded_allusrs_bcv(ret) {
-
-            var good = `<div class='minicon'><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 12px; height: 12px;"><g class="style-scope yt-icon"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z" class="style-scope yt-icon"></path></g></svg></div>`
-            var bad = `<div class='minicon'><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 12px; height: 12px;"><g class="style-scope yt-icon"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" class="style-scope yt-icon"></path></g></svg></div>`
-
-            var good = "+"
-            var bad = "-"
-            var goodnum = `<div class='scorenum'>0</div>`
-            var badnum = `<div class='scorenum'>0</div>`
-            var myNotes = localStorage.getItem("myNote")
-            var pster = JSON.parse(myNotes)
-            var inpOj = pster.inp.par.inpObj
-            var scap = Uti.parse_bcv(inpOj)
-            $("#scap").text(scap)
-            $("title").text("*" + scap)
-
-            console.log("load_allusrs_bcv", pster)
-    
-            console.log("ret", ret)
-            var res = ret.out.data
-            $("#repodesc").text(ret.out.repodesc)
-            var trs = ""
-            if (res) {
-                Object.keys(res).forEach(function (key) {
-                    var txt = res[key]
-                    console.log("key", key)
-                    console.log("txt", txt)
-                    var usrname = `<div class='minitxt'>${key}</div>`
-                    trs += `<tr><td><div class='editorinfo'>${usrname}${badnum}${bad}${goodnum}${good}</div><div>${txt}</div></td></tr>`
-                })
-
-            } else {
-                alert("sharing has issues.")
-            }
-            $("#allusrs").html(trs)
-            //})
-        }
     </script>
 </body>
 
@@ -158,22 +123,53 @@
     }
 </script>
 <script>
+    function getvrs(bcv, objSrc) {
+        var retOj = Uti.parse_bcv(bcv, "")
+        Uti.FetchObj_UntilEnd(retOj.bcvObj, objSrc)
+        var str = retOj.get_vrs()
+        return str
+    }
+    function jster_obj(usrname) {
+        var urls=`https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
+        var scst="<"+"script " + "src=\'" +urls+ "\'/>"
+        $("head").append(scst)
+        console.log(urls)
+    }
     $(function () {
         var urls = window.location.href;
         var param = new URLSearchParams(urls)
+        $("#usrname").text(param.get("SSID").slice(13))
         var bcv = param.get("BCV")
         $("#inpBCV").val(bcv)
-        var bcvp = Uti.parse_bcv(bcv)
+
+        var str = getvrs(bcv, e_Note_json)
+
+        var ary = str.split(",")
+
+        var slst = ""
+        ary.forEach(function (key, i) {
+            slst += `<tr><td>${i}</td><td><span class='usrname'>${key}</span><div>..</div></td></tr>`
+        })
+
+        $("#allusrs").html(slst)
+        $(".usrname").on("click", function () {
+            var ret = jster_obj($(this).text())
+            var str = getvrs(bcv, obj)
+            $(this).next().html(str)
+
+        })
+
+        //var txt = 
         //init_CKEditor()
         //init_ui_cmd()
         var search_reposdesc = MyStorage.MostRecentAryInStore("inpBCV")
         $("#inpBCV").on("focus", function () {
-            search_reposdesc.gen_history_table("#account_history", function(s){
+            search_reposdesc.gen_history_table("#account_history", function (s) {
                 $("#inpBCV").val(s)
             })
         })
 
-   
+
 
 
     })

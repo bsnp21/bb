@@ -65,6 +65,35 @@ var Utilib = {
 
 
 var Uti = {
+    FetchObj_UntilEnd: function (retObj, SrcObj, param) {
+        function _iterate(carObj, srcObj) {
+            for (var carProperty in carObj) {
+                if (srcObj.hasOwnProperty(carProperty)) {
+                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
+                        _iterate(carObj[carProperty], srcObj[carProperty]);
+                    } else {
+                        if (param && param.FetchNodeEnd) param.FetchNodeEnd(carProperty, carObj, srcObj)
+                        else carObj[carProperty] = srcObj[carProperty]
+                    }
+                } else {
+                    if (param && param.SrcNodeNotOwnProperty) param.SrcNodeNotOwnProperty(carProperty, carObj, srcObj)
+                    else delete carObj[carProperty]
+                }
+            }
+        }
+        //console.log("fetchObj:", retObj)
+        if (Object.keys(retObj).length === 0) {
+            Object.keys(SrcObj).forEach(function (key) {
+                retObj[key] = SrcObj[key]
+            })
+            //console.log("fetchObj has no keys, then fetchAll", retObj)
+            return retObj
+        }
+        if (!SrcObj) return retObj;
+        _iterate(retObj, SrcObj)
+        return retObj
+    },
+
     Msg_Idx: 0,
     Msg: function (...args) {
         var str = ""
@@ -243,6 +272,10 @@ var Uti = {
             } else {
                 return outOj[this.vol][this.chp][this.vrs][trn]
             }
+        }
+
+        ret.get_vrs=function(){
+            return this.bcvObj[ret.vol][ret.chp][ret.vrs]
         }
 
         return ret;
