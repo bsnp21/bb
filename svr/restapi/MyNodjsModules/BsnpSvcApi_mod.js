@@ -746,7 +746,7 @@ var ApiJsonp_BibleObj = {
             ursList.forEach(function (usr) {
                 var otherusrMgr = new BibleObjGitusrMgr()
                 otherusrMgr.m_BaseGitUser.Set_gitusr(usr)
-                otherusrMgr.Deploy_proj()
+                otherusrMgr.m_BaseGitUser.Deploy_proj()
                 var usrinfo = otherusrMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
                 if (usrinfo.visibility === "public") {
                     var jsfname = otherusrMgr.m_BaseGitUser.get_pfxname(doc, {
