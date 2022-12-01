@@ -712,9 +712,10 @@ var ApiJsonp_BibleObj = {
 
             inp.out.olog = {}
 
-            /////
+            //////////////////
             var doc = inp.par.fnames[0]
             var fetchObj = JSON.parse(JSON.stringify(inp.par.inpObj))
+            /////////////////
             inp.out.olog.fetchObj = fetchObj
             var adminMgr = new BibleObjGitusrMgr()
             adminMgr.m_BaseGitUser.Set_gitusr("admin")

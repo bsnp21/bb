@@ -131,8 +131,8 @@
         return str
     }
     function jster_obj(usrname) {
-        var urls=`https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
-        var scst="<"+"script " + "src=\'" +urls+ "\'/>"
+        var urls = `https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
+        var scst = "<" + "script " + "src=\'" + urls + "\'/>"
         $("head").append(scst)
         console.log(urls)
     }
@@ -158,7 +158,6 @@
             var ret = jster_obj($(this).text())
             var str = getvrs(bcv, obj)
             $(this).next().html(str)
-
         })
 
         //var txt = 
@@ -173,10 +172,18 @@
 
         var api = new BsnpRestApi()
         var retOj = Uti.parse_bcv(bcv, "")
-        var par = {fnames:["e_Note"]}
+        var par = { fnames: ["e_Note"] }
         par.inpObj = retOj.bcvObj
-        api.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(par,function(rob){
+        api.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(par, function (rob) {
             console.log(rob)
+
+            var slst = ""
+            Object.keys(rob.out.data).forEach(function (key, i) {
+                slst += `<tr><td>${i}</td><td><span class='usrname'><button>${key}</button><a>+</a></span>
+                <div>${rob.out.data[key]}</div></td></tr>`
+            })
+            $("#allusrs").html(slst)
+
         })
 
 
