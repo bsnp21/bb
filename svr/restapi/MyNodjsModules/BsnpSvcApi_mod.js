@@ -727,7 +727,7 @@ var ApiJsonp_BibleObj = {
             })
             var bio = BaseGUti.loadObj_by_fname(jsfname);
             inp.out.olog.admin_obj = bio.obj
-            if (!bio.obj) {
+            if (bio.err) {
                 inp.out.olog.load_admin = `load(${doc},${jsfname})=null`
                 return;
             }
@@ -758,7 +758,7 @@ var ApiJsonp_BibleObj = {
                     })
                     var uso = BaseGUti.loadObj_by_fname(jsfname);
                     inp.out.olog[usr+"_obj"] = uso
-                    if (!uso.obj) {
+                    if (uso.err) {
                         inp.out.olog[usr] = `load(${doc},${jsfname})=null`
                         return;
                     }
