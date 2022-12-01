@@ -198,11 +198,11 @@ var BaseGUti = {
                     if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
                         _iterate(carObj[carProperty], srcObj[carProperty]);
                     } else {
-                        if (param.FetchNodeEnd) param.FetchNodeEnd(carProperty, carObj, srcObj)
+                        if (param && param.FetchNodeEnd) param.FetchNodeEnd(carProperty, carObj, srcObj)
                         else carObj[carProperty] = srcObj[carProperty]
                     }
                 } else {
-                    if (param.SrcNodeNotOwnProperty) param.SrcNodeNotOwnProperty(carProperty, carObj, srcObj)
+                    if (param && param.SrcNodeNotOwnProperty) param.SrcNodeNotOwnProperty(carProperty, carObj, srcObj)
                     else delete carObj[carProperty]
                 }
             }
