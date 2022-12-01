@@ -733,7 +733,7 @@ var ApiJsonp_BibleObj = {
             
 
             var ursList = []
-            Uti.FetchObj_UntilEnd(biObj, bio.obj, {
+            BaseGUti.FetchObj_UntilEnd(biObj, bio.obj, {
                 FetchNodeEnd: function (carProperty, carObj, srcObj) {
                     if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
                         ursList = srcObj[carProperty].split(",")
@@ -760,7 +760,7 @@ var ApiJsonp_BibleObj = {
                         inp.out.olog.usr = `load(${doc},${jsfname})=null`
                         return;
                     }
-                    Uti.FetchObj_UntilEnd(biObj, uso, {
+                    BaseGUti.FetchObj_UntilEnd(biObj, uso, {
                         FetchNodeEnd: function (carProperty, carObj, srcObj) {
                             if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
                                 retObj[usr] = srcObj[carProperty]
