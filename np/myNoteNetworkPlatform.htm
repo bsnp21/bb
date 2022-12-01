@@ -173,7 +173,7 @@
 
         var api = new BsnpRestApi()
         var retOj = Uti.parse_bcv(bcv, "")
-        var par = {fnames:["e_Node"]}
+        var par = {fnames:["e_Note"]}
         par.inpOjb = retOj.bcvObj
         api.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(par,function(rob){
             console.log(rob)
