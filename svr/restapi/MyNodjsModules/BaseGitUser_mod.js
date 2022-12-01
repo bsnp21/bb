@@ -513,7 +513,7 @@ var BaseGUti = {
         }
 
         ret.set_fname_header = function () {
-            var basename = path.basename(this.fname, ".js")
+            var basename = path.basename(this.fname, ".js").replace(".js","")
             this.header = `var ${basename} = \n`
             return 
         }
