@@ -763,7 +763,7 @@ var ApiJsonp_BibleObj = {
                         return;
                     }
                     fetchObj = JSON.parse(JSON.stringify(inp.par.inpObj))
-                    BaseGUti.FetchObj_UntilEnd(fetchObj, uso, {
+                    BaseGUti.FetchObj_UntilEnd(fetchObj, uso.obj, {
                         FetchNodeEnd: function (carProperty, carObj, srcObj) {
                             if (typeof (srcObj[carProperty]) === "string" && srcObj[carProperty].length > 0) {
                                 retObj[usr] = srcObj[carProperty]
