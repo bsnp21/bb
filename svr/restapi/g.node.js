@@ -138,23 +138,19 @@ var txt = get_txt_fr_net(urls, (dat) => {
 console.log("load end")
 
 
-console.log("process.env.GH_TOKEN_bsnpghrepolist=",process.env.GH_TOKEN_bsnpghrepolist)
-console.log("process.env.GH_TOKEN_bsnp21=",process.env.GH_TOKEN_bsnp21)
+console.log("process.env.GH_TOKEN_bsnpghrepolist=", process.env.GH_TOKEN_bsnpghrepolist)
+console.log("process.env.GH_TOKEN_bsnp21=", process.env.GH_TOKEN_bsnp21)
 function gh_pages_test_muplitple_dest_by_argv2() {
-    if(process.argv.length < 4) return console.log("missing owner repo")
-    
+    if (process.argv.length < 4) return console.log("missing owner repo")
 
-    var reponame=""
+    var ownername = process.argv[3]
+    var envs = process.env[`GH_TOKEN_${ownername}`]
+    console.log("env", envs)
+
+
+    var reponame = process.argv[3]
 
     var option = {
-        /**
-     * If the current directory is not a clone of the repository you want to work
-     * with, set the URL for the repository in the `repo` option.  This usage will
-     * push all files in the `src` config to the `gh-pages` branch of the `repo`.
-     */
-        repo: `https://github.com/bsnpghrepolist/test.git`,
-
-
         /**
      * This configuration will avoid logging the GH_TOKEN if there is an error.
      */
@@ -162,13 +158,14 @@ function gh_pages_test_muplitple_dest_by_argv2() {
         silent: true,
 
 
-        repo: 'https://' + process.env[`GH_TOKEN_${process.argv[3]}`] + `@github.com/${process.argv[3]}/${process.argv[4]}.git`
+        repo: `https://${envs}@github.com/${ownername}/${reponame}.git`
     }
-    var dir = `/home/ubuntu/test`
+    var dir = `/home/ubuntu/dist`
     if (!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
     console.log(option)
 
-    if(process.argv.length === 4) return console.log("one more param to actually run.")
+    if (process.argv.length === 4) return console.log("one more param to actually run.")
+    
     ghpages.publish(dir, option, function (err) {
         console.log("err=", err)
 
