@@ -193,7 +193,6 @@ var BaseGUti = {
     FetchObj_UntilEnd: function (retObj, SrcObj, param) {
         function _iterate(carObj, srcObj) {
             for (var carProperty in carObj) {
-                console.log("carProperty=", carProperty)
                 if (srcObj.hasOwnProperty(carProperty)) {
                     if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
                         _iterate(carObj[carProperty], srcObj[carProperty]);
@@ -207,39 +206,19 @@ var BaseGUti = {
                 }
             }
         }
-        console.log("fetchObj:", retObj)
+        //console.log("fetchObj:", retObj)
         if (Object.keys(retObj).length === 0) {
             Object.keys(SrcObj).forEach(function (key) {
                 retObj[key] = SrcObj[key]
             })
-            console.log("fetchObj has no keys, then fetchAll", retObj)
+            //console.log("fetchObj has no keys, then fetchAll", retObj)
             return retObj
         }
         if (!SrcObj) return retObj;
         _iterate(retObj, SrcObj)
         return retObj
     },
-    FetchObjDat___: function (datObj, SrcObj) {
-        function _iterate(carObj, srcObj) {
-            if (!srcObj) return;
-            for (var carProperty in carObj) {
-                console.log("carProperty=", carProperty)
-                //if (carObj.hasOwnProperty(carProperty)) {
-                if (srcObj.hasOwnProperty(carProperty)) {
-                    if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
-                        _iterate(carObj[carProperty], srcObj[carProperty]);
-                    } else {
-                        carObj[carProperty] = srcObj[carProperty]
-                    }
-                } else {
-                    delete carObj[carProperty]
-                }
-                //}
-            }
-        }
-        _iterate(datObj, SrcObj)
-        return datObj
-    },
+ 
     FlushObjDat: function (datObj, targObj) {
         function _iterate(carObj, tarObj) {
             if (!tarObj) return;
