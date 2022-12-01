@@ -25,78 +25,6 @@ var { BaseGitUser, BaseGUti } = require("./BaseGitUser_mod");
 
 
 
-var SvrUsrsBCV = function (srcpath) {
-    this.m_rootDir = srcpath
-    this.output = {
-        m_olis: [],
-        m_totSize: 0,
-        m_totFiles: 0,
-        m_totPaths: 0
-    }
-}
-SvrUsrsBCV.prototype.get_paths = function (srcpath) {
-    return fs.readdirSync(srcpath).filter(function (file) {
-        if ("." === file[0]) return false;
-        return fs.statSync(path.join(srcpath, file)).isDirectory();
-    });
-}
-SvrUsrsBCV.prototype.get_files = function (srcpath) {
-    return fs.readdirSync(srcpath).filter(function (file) {
-        if ("." === file[0]) return false;
-        return fs.statSync(srcpath + '/' + file).isFile();
-    });
-}
-SvrUsrsBCV.prototype.getFary = function (srcPath, cbf) {
-    var fary = this.get_files(srcPath);
-    var dary = this.get_paths(srcPath);
-    this.output.m_totPaths += dary.length;
-    this.output.m_totFiles += fary.length;
-
-    for (var i = 0; i < dary.length; i++) {
-        var spath = dary[i];
-        //console.log(spath)
-        this.getFary(path.join(srcPath, spath), cbf);
-    }
-    for (var k = 0; k < fary.length; k++) {
-        var sfl = fary[k];
-        //console.log("path file :", srcPath, sfl)
-        //if (doc !== sfl) continue
-        var pathfile = path.join(srcPath, sfl);
-        var stats = fs.statSync(pathfile);
-        this.output.m_totSize += stats.size;
-
-        if (cbf) cbf(srcPath, sfl)
-    }
-}
-SvrUsrsBCV.prototype.decompose = function (docpathfilname) {
-    var ret = path.parse(docpathfilname)
-    //console.log(ret)
-    var ary = ret.dir.split("/")
-    var owner = `_${ary[6]}_${ary[7]}_${ary[8]}`
-    var compound = { owner: owner, base: ret.base }
-    //console.log("compound", compound)
-    return compound
-}
-SvrUsrsBCV.prototype.gen_crossnet_files_of = function (docpathfilname, cbf) {
-    //console.log("spec=", spec)
-    this.m_compound = this.decompose(docpathfilname)
-    var _This = this
-    this.getFary(this.m_rootDir, function (spath, sfile) {
-        var pathfile = path.join(spath, sfile);
-        var cmpd = _This.decompose(pathfile)
-        if (cmpd.base === _This.m_compound.base) {
-            _This.output.m_olis.push(pathfile);
-            console.log("fnd:", pathfile)
-            if (cbf) cbf(spath, sfile)
-        }
-
-    })
-    return this.output
-}
-
-
-
-
 
 
 
@@ -242,7 +170,6 @@ NCache.Init()
 var BibleObjGitusrMgr = function () {
 
     this.m_BaseGitUser = new BaseGitUser()
-    this.m_SvrUsrsBCV = new SvrUsrsBCV(this.m_BaseGitUser.pathrootdir)
 }
 
 

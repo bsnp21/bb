@@ -441,66 +441,6 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            console.log(inp.par.aux)
-            if (!inp.par.aux) {
-                console.log("no inp.par.aux.")
-            }
-            if (!inp.par.aux.Search_repodesc) {
-                console.log("no Search_repodesc.")
-            }
-            var shareID = inp.par.aux.Search_repodesc
-            var inpObj = inp.par.inpObj
-
-            var doc = inp.par.fnames[0]
-
-            var docpathfilname = gituserMgr.m_BaseGitUser.get_pfxname(doc)
-            var outfil = gituserMgr.m_SvrUsrsBCV.gen_crossnet_files_of(docpathfilname)
-
-
-            //////----
-            function __load_to_obj(outObj, jsfname, owner, shareID, inpObj,) {
-                //'../../../../bible_study_notes/usrs/bsnp21/pub_wd01/account/myoj/myNote_json.js': 735213,
-                var bio = BaseGUti.loadObj_by_fname(jsfname);
-                var karyObj = BaseGUti.inpObj_to_karyObj(inpObj)
-                if (karyObj.kary.length < 3) {
-                    console.log("error",)
-                }
-                if (bio.obj && karyObj.kary.length >= 3) {
-                    var tms = (new Date(bio.stat.mtime)).toISOString().substr(0, 10)
-                    var usr_repo = `${owner}#${shareID}@${tms}`
-                    outObj[usr_repo] = bio.obj[karyObj.bkc][karyObj.chp][karyObj.vrs]
-                } else {
-                }
-            }
-
-
-            /////--------------
-            var retObj = {}
-            var owner = gituserMgr.___session_get_github_owner(docpathfilname)
-            __load_to_obj(retObj, docpathfilname, owner, inp.usr.repodesc, inpObj)
-            //console.log("jspfn:", jsfname)
-            console.log("dcpfn:", docpathfilname)
-
-            for (var i = 0; i < outfil.m_olis.length; i++) {
-                var jspfn = outfil.m_olis[i]
-                if (docpathfilname === jspfn) continue;
-                console.log("*docfname=", jspfn)
-                var others = gituserMgr.___session_git_repodesc_load(jspfn)
-                if (!others) continue
-                if ("*" === shareID) {//no restriction
-                    var owner = gituserMgr.___session_get_github_owner(jspfn)
-                    __load_to_obj(retObj, jspfn, owner, others.repodesc, inpObj)
-                    continue
-                }
-                console.log("*repodesc=", others.repodesc, shareID)
-                if (others.repodesc === shareID) {
-                    var owner = gituserMgr.___session_get_github_owner(jspfn)
-                    __load_to_obj(retObj, jspfn, owner, others.repodesc, inpObj)
-                }
-            }
-
-            inp.out.repodesc = shareID
-            inp.out.data = retObj
         })
 
 
