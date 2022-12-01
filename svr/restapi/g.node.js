@@ -147,7 +147,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
     var envKey = `GH_TOKEN_${ownername}`
     var envs = process.env[envKey]
     console.log("process.env", process.env)
-    console.log("env", envs)
+    //console.log("env", envs)
     console.log("envKey", envKey)
 
 
