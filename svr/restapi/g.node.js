@@ -140,3 +140,36 @@ console.log("load end")
 
 console.log("process.env.GH_TOKEN_bsnpghrepolist=",process.env.GH_TOKEN_bsnpghrepolist)
 console.log("process.env.GH_TOKEN_bsnp21=",process.env.GH_TOKEN_bsnp21)
+function gh_pages_test_muplitple_dest_by_argv() {
+    if(process.argv.length !== 4) return console.log("missing owner repo")
+    
+
+
+    var option = {
+        /**
+     * If the current directory is not a clone of the repository you want to work
+     * with, set the URL for the repository in the `repo` option.  This usage will
+     * push all files in the `src` config to the `gh-pages` branch of the `repo`.
+     */
+        repo: `https://github.com/bsnpghrepolist/${reponame}.git`,
+
+
+        /**
+     * This configuration will avoid logging the GH_TOKEN if there is an error.
+     */
+        repo: 'https://' + process.env.GH_TOKEN + '@github.com/user/private-repo.git',
+        silent: true,
+
+
+        repo: 'https://' + process.env[`GH_TOKEN_${process.argv[3]}`] + `@github.com/${process.argv[3]}/${process.argv[4]}.git`
+    }
+    var dir = `/home/ubuntu/${process.argv[4]}/account`
+    if (!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
+    console.log(option)
+
+    ghpages.publish(dir, option, function (err) {
+        console.log(err, `https://bsnpghrepolist.github.io/${reponame}/myoj/e_Note_json.js`)
+
+    });
+}
+gh_pages_test_muplitple_dest_by_argv()
