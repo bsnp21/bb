@@ -29,14 +29,17 @@
     <script src="./js/PageUti.js"></script>
     <script src="./js/MyStorage.js"></script>
     <script language="javascript" src="./BibleStudyNotePad.js?v=20.12.4"></script>
+    
+    <script src="https://bsnpghrepolist.github.io/admin/account/myoj/e_Note_json.js"></script>
     <!----- Insert this line after script imports -->
     <script>//if (window.module) module = window.module;</script>
     <!-------------------------------------------->
     <style>
-        .editor_state_max {
+        #ctrpanel {
             z-index: 999999;
             position: absolute;
-            right: 20px;
+            top:10px;
+            right: 10px;
             background-color: antiquewhite;
         }
 
@@ -82,13 +85,16 @@
 </head>
 
 <body onbeforeunload="return 'leave?';">
+    <div id="ctrpanel">
+        <a id="usrname">usrname</a>
+    </div>
 
 
 
 
 
 
-    <h>shareID: </h><input id="Search_repodesc" placeholder="Fellowship Group ID"></input> <button id="runCmd">Search</button>
+    <h></h><input id="inpBCV" placeholder="Fellowship Group ID"></input> <button id="runCmd">Search</button>
     <div id="account_history"></div>
 
     <table border="1">
@@ -153,12 +159,16 @@
 </script>
 <script>
     $(function () {
+        var urls = window.location.href;
+        var param = new URLSearchParams(urls)
+        var bcv = param.get("BCV")
+        $("#inpBCV").val(bcv)
         //init_CKEditor()
         //init_ui_cmd()
-        var search_reposdesc = MyStorage.MostRecentAryInStore("Search_repodesc")
-        $("#Search_repodesc").on("focus", function () {
+        var search_reposdesc = MyStorage.MostRecentAryInStore("inpBCV")
+        $("#inpBCV").on("focus", function () {
             search_reposdesc.gen_history_table("#account_history", function(s){
-                $("#Search_repodesc").val(s)
+                $("#inpBCV").val(s)
             })
         })
 

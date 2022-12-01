@@ -311,7 +311,7 @@ PopupMenu_EdiTag.prototype.init = function () {
         if (_set_par_ediTxt()) {
             var api = new BsnpRestApi()
             var shref = $(this).attr("href")
-            window.open(`${shref}${api.urlRedirectParam()}&${_THIS.m_par.m_bcv}`, "_blank")
+            window.open(`${shref}${api.urlRedirectParam()}&BCV=${_THIS.m_par.m_bcv}`, "_blank")
             return false;// true enable href open.
         }
         return false;// diable href open
