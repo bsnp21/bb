@@ -70,7 +70,7 @@ function gh_pages_bsnpghrepolist_publish(dist, reponame) {
      * with, set the URL for the repository in the `repo` option.  This usage will
      * push all files in the `src` config to the `gh-pages` branch of the `repo`.
      */
-        repo: `https://github.com/bsnpghrepolist/${reponame}.git`
+        repo: `https://github.com/bsnp21/${reponame}.git`
 
     }
     //var dist = `${workdir}/${reponame}/account`
@@ -131,8 +131,12 @@ function get_txt_fr_net(urls, cbf) {
     });
     return body
 }
-urls = "https://bsnpghrepolist.github.io/wdingpub01/dat/MyBiblicalDiary_json.jss"
+urls = "https://bsnpghrepolist.github.io/wdingpub01/dat/MyBiblicalDiary_json.js"
 var txt = get_txt_fr_net(urls, (dat) => {
     console.log(dat)
 })
 console.log("load end")
+
+
+console.log("process.env.GH_TOKEN_bsnpghrepolist=",process.env.GH_TOKEN_bsnpghrepolist)
+console.log("process.env.GH_TOKEN_bsnp21=",process.env.GH_TOKEN_bsnp21)
