@@ -198,12 +198,12 @@ var BaseGUti = {
                     if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
                         _iterate(carObj[carProperty], srcObj[carProperty]);
                     } else {
-                        //carObj[carProperty] = srcObj[carProperty]
                         if (param.FetchNodeEnd) param.FetchNodeEnd(carProperty, carObj, srcObj)
+                        else carObj[carProperty] = srcObj[carProperty]
                     }
                 } else {
-                    //delete carObj[carProperty]
                     if (param.SrcNodeNotOwnProperty) param.SrcNodeNotOwnProperty(carProperty, carObj, srcObj)
+                    else delete carObj[carProperty]
                 }
             }
         }
@@ -219,7 +219,7 @@ var BaseGUti = {
         _iterate(retObj, SrcObj)
         return retObj
     },
-    FetchObjDat: function (datObj, SrcObj) {
+    FetchObjDat___: function (datObj, SrcObj) {
         function _iterate(carObj, srcObj) {
             if (!srcObj) return;
             for (var carProperty in carObj) {

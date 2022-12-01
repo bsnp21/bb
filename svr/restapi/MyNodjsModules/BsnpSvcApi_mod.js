@@ -527,7 +527,7 @@ var ApiJsonp_BibleObj = {
             if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
                 try {
                     retObj = JSON.parse(JSON.stringify(par.data));// 
-                    BaseGUti.FetchObjDat(retObj, ret.obj)
+                    BaseGUti.FetchObj_UntilEnd(retObj, ret.obj)
                     console.log("out.data", retObj)
                 } catch (err) {
                     console.log("err", err)
