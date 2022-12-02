@@ -374,12 +374,12 @@ var ApiJsonp_BibleObj = {
 
                 ret.usrObj = JSON.parse(JSON.stringify(bcvObj))
                 BaseGUti.WalkthruObj_BCV_txt(ret.usrObj,
-                    function (bkc, chp, vrs, endobj) {//at the end of object tree.
-                        if ("object" !== typeof (endobj[vrs])) {
-                            endobj[vrs] = {}
+                    function (bkc, chp, vrs, endnod) {//at the end of object tree.
+                        if ("object" !== typeof (endnod)) {
+                            endnod = {}
                         }
-                        endobj[vrs][username] = 1
-                        ret.usrObj_set = [bkc, chp, vrs, endobj]
+                        endnod[username] = 1
+                        ret.usrObj_set = [bkc, chp, vrs, endnod]
                     })
                 ret["usrObj_set_done"] = ret.usrObj
 
