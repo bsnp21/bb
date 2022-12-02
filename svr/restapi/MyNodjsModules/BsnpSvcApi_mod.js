@@ -363,11 +363,70 @@ var ApiJsonp_BibleObj = {
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
 
+          
+
+            /////////////////////////////
+            function Admin_Add_doc_BCV_user(doc, bcvObj, username) {
+                var bUpdatedUsersList = false
+
+                var ret = {bUpdatedUsersList:bUpdatedUsersList}
+
+
+                var usrObj = JSON.parse(JSON.stringify(bcvObj))
+                BaseGUti.WalkthruObj_BCV_txt(usrObj,
+                    function (bkc, chp, vrs, endobj) {//at the end of object tree.
+                        if ("object" !== typeof (endobj[vrs])) {
+                            endobj[vrs] = {}
+                        }
+                        endobj[vrs][username] = 1
+                    })
+                console.log("merged usrObj", usrObj)
+
+                ///
+                var adminMgr = new BibleObjGitusrMgr()
+                adminMgr.m_BaseGitUser.Set_gitusr("admin")
+                adminMgr.m_BaseGitUser.Deploy_proj()
+                var jsfname = adminMgr.m_BaseGitUser.get_pfxname(doc, {
+                    IfUsrNotExist: function (stdpfname, usrpfname) {
+                        ret.err_not_exist = adminMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                        return usrpfname;
+                    }
+                })
+                var admobj = BaseGUti.loadObj_by_fname(jsfname);
+                if (null === admobj.obj) {
+                     ret.err_load = `load(${doc},${jsfname})=null` 
+                     return ret;
+                }
+
+                BaseGUti.FlushObj_UntilEnd(usrObj, admobj.obj, {
+                    SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
+                        //already exist
+                    },
+                    TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
+                        targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+                        bUpdatedUsersList = true
+                    }
+                })
+
+
+                if (bUpdatedUsersList) {
+                    admobj.set_fname_header()
+                    admobj.writeback()
+                    ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+                }
+                return ret;
+            }
+
+            var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+            inp.out.olog.admin_add_usr = Admin_Add_doc_BCV_user(doc, inp.par.inpObj, username)
+            return
+
             /////////////////////////////
 
             const reponame_pub = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
             const reponame_prv = "~" + reponame_pub
             var bUpdatedUsersList = false
+
             var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
             var bVisibility = "private"
             if (!usrinfo.err) bVisibility = usrinfo.visibility
