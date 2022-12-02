@@ -376,9 +376,9 @@ var ApiJsonp_BibleObj = {
                 BaseGUti.WalkthruObj_BCV_txt(ret.usrObj,
                     function (bkc, chp, vrs, endnod) {//at the end of object tree.
                         if ("object" !== typeof (endnod)) {
-                            endnod = {}
+                            ret.usrObj[bkc][chp][vrs] = {}
                         }
-                        endnod[username] = 1
+                        ret.usrObj[bkc][chp][vrs][username] = 1
                         ret.usrObj_set = [bkc, chp, vrs, endnod]
                     })
                 ret["usrObj_set_done"] = ret.usrObj
