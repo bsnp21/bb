@@ -402,13 +402,16 @@ var ApiJsonp_BibleObj = {
                 BaseGUti.FlushObj_UntilEnd(ret.usrObj, ret.admobj.obj, {
                     SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
                         //already exist
+                        ret.SrcNodeEnd = [carProperty, carObj, targObj]
                     },
                     TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
                         targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                         bUpdatedUsersList = true
+                        ret.TargNodeNotOwnProperty = [carProperty, carObj, targObj]
                     }
                 })
 
+                ret.admobj_afterFlucsh = ret.admobj.obj
 
                 if (bUpdatedUsersList) {
                     ret.admobj.set_fname_header()
