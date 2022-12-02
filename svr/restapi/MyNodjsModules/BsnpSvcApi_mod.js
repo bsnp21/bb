@@ -191,7 +191,7 @@ var ApiJsonp_BibleObj = {
                     var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
                     console.log("jsfname:", jsfname)
                     var bib = BaseGUti.loadObj_by_fname(jsfname);
-                    if (null===bib.obj) continue
+                    if (null === bib.obj) continue
                     var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
                     TbcvObj[fnameID] = bcObj;
                     inp.out.desc += ":" + fnameID
@@ -280,7 +280,7 @@ var ApiJsonp_BibleObj = {
                         if (bib.obj) {
                             olog.push(jsfname + "::" + fnameID)
                             console.log("exist..............", jsfname)
-                            BaseGUti.Walk_of_entries(carryObj,
+                            BaseGUti.WalkthruObj_BCV_txt(carryObj,
                                 function (bkc, chp, vrs, emptyobj) {//at the end of object tree.
                                     if ("object" === typeof (emptyobj)) {
                                         if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs])) {
@@ -291,7 +291,7 @@ var ApiJsonp_BibleObj = {
                                         }
                                     } else {
                                         carryObj[bkc][chp][vrs][fnameID] = ""
-                                        console.log("============ Error, Walk_of_entries=", bkc, chp, vrs, emptyobj)
+                                        console.log("============ Error, WalkthruObj_BCV_txt=", bkc, chp, vrs, emptyobj)
                                         olog.push([jsfname, fnameID, bkc, chp, vrs])
                                     }
                                 })
@@ -397,28 +397,39 @@ var ApiJsonp_BibleObj = {
                 SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
                     if ("string" === typeof (carObj[carProperty])) {
                         var ary = targObj[carProperty].split(",")
-                        var idx = ary.indexOf(reponame)
-                        if (idx < 0) {
-                            if (bVisibility === "public") {
-                                ary.unshift(reponame)  // add new public usrname.
-                                targObj[carProperty] = ary.join(",")
-                                bUpdatedUsersList = true
-                            }
-                        } else {
-                            if (bVisibility === "private") {
-                                ary.splice(idx, 1) // remove the private user.
-                                targObj[carProperty] = ary.join(",")
-                                bUpdatedUsersList = true
-                            }
+                        var reponame_public = reponame, reponame_private = "~" + reponame
+                        if (bVisibility === "private") reponame = "~" + reponame
+                        var idx_public = ary.indexOf(reponame_public)
+                        var idx_private = ary.indexOf(reponame_private)
+                        if (idx_private < 0 && idx_public < 0) {
+                            ary.unshift(reponame)  // add new public usrname.
+                            targObj[carProperty] = ary.join(",")
+                            bUpdatedUsersList = true
                         }
                     } else {
                         console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
                     }
                 },
                 TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
-                    targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+                    targObj[carProperty] = reponame //at the end of object tree, make a copy or src.
+                    bUpdatedUsersList = true
                 }
             })
+            BaseGUti.WalkthruObj_BCV_txt(bio.obj,
+                function (bkc, chp, vrs, str) {//at the end of object tree.
+                    if ("string" === typeof (str)) {
+                        if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs])) {
+                            carryObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
+                        }
+                        else {
+                            carryObj[bkc][chp][vrs][fnameID] = ""
+                        }
+                    } else {
+                        console.log("============ Error, WalkthruObj_BCV_txt=", bkc, chp, vrs, str)
+                        olog.push([jsfname, fnameID, bkc, chp, vrs])
+                    }
+                })
+
             console.log("3 bio.obj", bio.obj, bVisibility)
             if (bUpdatedUsersList) {
                 bio.set_fname_header()
