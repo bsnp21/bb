@@ -364,6 +364,20 @@ var ApiJsonp_BibleObj = {
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
 
 
+            /////////////////////////////
+
+        
+            var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+
+            var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+            var bVisibility = "private"
+            if (!usrinfo.err) bVisibility = usrinfo.visibility
+
+
+
+            var admin = gituserMgr.CreateAdminMgr()
+            admin.Add_doc_BCV_user(doc, inp.par.inpObj, username, bVisibility)
+            return;
 
             /////////////////////////////
             function Admin_Add_doc_BCV_user(doc, bcvObj, username) {
@@ -425,77 +439,12 @@ var ApiJsonp_BibleObj = {
                 return ret;
             }
 
-            var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+            
             inp.out.olog.admin_add_usr = Admin_Add_doc_BCV_user(doc, inp.par.inpObj, username)
             return
 
-            /////////////////////////////
-
-            const reponame_pub = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-            const reponame_prv = "~" + reponame_pub
-            var bUpdatedUsersList = false
-
-            var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-            var bVisibility = "private"
-            if (!usrinfo.err) bVisibility = usrinfo.visibility
-
-
-
 
             //////////////////////////////
-
-            var adminMgr = new BibleObjGitusrMgr()
-            adminMgr.m_BaseGitUser.Set_gitusr("admin")
-            adminMgr.m_BaseGitUser.Deploy_proj()
-            var jsfname = adminMgr.m_BaseGitUser.get_pfxname(doc, {
-                IfUsrNotExist: function (stdpfname, usrpfname) {
-                    inp.out.olog["cpIfUsrNotExist2"] = adminMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
-                    return usrpfname;
-                }
-            })
-            var admobj = BaseGUti.loadObj_by_fname(jsfname);
-            if (null === admobj.obj) {
-                save_res.desc2 = `load(${doc},${jsfname})=null`
-                return;
-            }
-            ////// clearup antiname.
-            var currName = reponame_pub
-            var antiName = reponame_prv
-            if ("private" === bVisibility) {
-                currName = reponame_prv
-                antiName = reponame_pub
-            }
-            var replacedTot = BaseGUti.WalkthruObj_BCV_ReplaceUsername(admobj.obj, currName, antiName)
-            if (replacedTot > 0) bUpdatedUsersList = true
-
-            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, admobj.obj, {
-                SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
-                    if ("string" === typeof (carObj[carProperty])) {
-                        var usrtr = targObj[carProperty]
-                        var ar = usrtr.split(",")
-                        var uniqu = [...new Set(ar)] //make a unique arr
-                        var idx = uniqu.indexOf(antiName)
-                        if (idx < 0) {
-                            uniqu.unshift(currName)
-                            targObj[carProperty] = uniqu.join(",")
-                            bUpdatedUsersList = true
-                        }
-                    } else {
-                        console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
-                    }
-                },
-                TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
-                    targObj[carProperty] = currName //at the end of object tree, make a copy or src.
-                    bUpdatedUsersList = true
-                }
-            })
-
-            console.log("3 admobj.obj", admobj.obj, bVisibility)
-            if (bUpdatedUsersList) {
-                admobj.set_fname_header()
-                admobj.writeback()
-                inp.out.olog.git_res2 = adminMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc2);//after saved
-            }
             ///////////////////////////////////////////////////////////////////////////
         })
 

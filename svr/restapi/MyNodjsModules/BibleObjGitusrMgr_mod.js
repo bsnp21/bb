@@ -357,7 +357,71 @@ BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
 }
 
 
+BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
+    var adminMgr = new BibleObjGitusrMgr()
+    adminMgr.m_BaseGitUser.Set_gitusr("admin")
+    adminMgr.m_BaseGitUser.Deploy_proj()
+   
+    adminMgr.Add_doc_BCV_user = function (doc, bcvObj, username, visib){
+        var ret = { bUpdatedUsersList: bUpdatedUsersList, doc: doc, bcvObj: bcvObj, usrername: username }
 
+
+        ret.usrObj = JSON.parse(JSON.stringify(bcvObj))
+        BaseGUti.WalkthruObj_BCV_txt(ret.usrObj,
+            function (bkc, chp, vrs, endnod) {//at the end of object tree.
+                if ("object" !== typeof (endnod)) {
+                    ret.usrObj[bkc][chp][vrs] = {}
+                }
+                ret.usrObj[bkc][chp][vrs][username] = 1
+                ret.usrObj_set = [bkc, chp, vrs, endnod]
+            })
+        ret["usrObj_set_done"] = ret.usrObj
+
+        ////////////
+
+        var jsfname = adminMgr.m_BaseGitUser.get_pfxname(doc, {
+            IfUsrNotExist: function (stdpfname, usrpfname) {
+                ret.err_not_exist = adminMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+                return usrpfname;
+            }
+        })
+        ret.admobj = BaseGUti.loadObj_by_fname(jsfname);
+        if (null === ret.admobj.obj) {
+            ret.err_load = `load(${doc},${jsfname})=null`
+            return ret;
+        }
+
+        BaseGUti.FlushObj_UntilEnd(ret.usrObj, ret.admobj.obj, {
+            SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
+                //already exist
+                ret.SrcNodeEnd = [carProperty, carObj, targObj]
+            },
+            TargNodeNotOwnProperty: function (carProperty, carObj, targObj, tarParent, tarParentProperty) {//at the end of object tree.
+                //targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+                bUpdatedUsersList = true
+                if("object" !== typeof(targObj)){
+                    tarParent[tarParentProperty] = {}
+                }
+                tarParent[tarParentProperty][carProperty] = carObj[carProperty]
+                ret.TargNodeNotOwnProperty = [carProperty, carObj, targObj, tarParent, tarParentProperty, ret.admobj.obj]
+            }
+        })
+
+        ret.admobj_afterFlucsh = ret.admobj.obj
+
+        if (bUpdatedUsersList) {
+            ret.admobj.set_fname_header()
+            ret.admobj.writeback()
+
+            
+            ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+        }
+
+        var usrfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("pub_users_json.js")
+        return ret;
+    }
+   return adminMgr
+}
 
 
 
