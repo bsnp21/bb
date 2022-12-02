@@ -180,7 +180,26 @@ var BaseGUti = {
         _iterate(obj, structObj)
         return structObj
     },
-
+    WalkthruObj_BCV_ReplaceUsername: function (Obj, newStr, oldStr) {
+        var replaceTot = 0
+        BaseGUti.WalkthruObj_BCV_txt(Obj,
+            function (bkc, chp, vrs, leafObj) {//at the end of object tree.
+                if ("object" === typeof (leafObj)) {
+                    var ar = Obj[bkc][chp][vrs].split(",")
+                    var uniqu = [...new Set(ar)] //make a unique arr
+                    var idx = uniqu.indexOf(oldStr)
+                    if (idx >= 0) {
+                        uniqu[idx] = newStr
+                        Obj[bkc][chp][vrs] = uniqu.join(",")
+                        replaceTot++
+                    }
+                } else {
+                    console.log("============ Error, WalkthruObj_BCV_txt=", bkc, chp, vrs, leafObj)
+                    //olog.push([jsfname, fnameID, bkc, chp, vrs])
+                }
+            })
+        return replaceTot
+    },
     WalkthruObj_BCV_txt: function (bcvR, cbf) {
         for (const [bkc, chpObj] of Object.entries(bcvR)) {
             for (const [chp, vrsObj] of Object.entries(chpObj)) {
@@ -218,7 +237,7 @@ var BaseGUti = {
         _iterate(retObj, SrcObj)
         return retObj
     },
- 
+
     // FlushObjDat: function (datObj, targObj) {
     //     function _iterate(carObj, tarObj) {
     //         if (!tarObj) return;
@@ -1103,7 +1122,7 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
             break;
     }
 
-   
+
 
     return dest_pfname
 }
