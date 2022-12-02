@@ -361,8 +361,10 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     var adminMgr = new BibleObjGitusrMgr()
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
     adminMgr.m_BaseGitUser.Deploy_proj()
-   
+
+    
     adminMgr.Add_doc_BCV_user = function (doc, bcvObj, username, visib){
+        var bUpdatedUsersList = false
         var ret = { bUpdatedUsersList: bUpdatedUsersList, doc: doc, bcvObj: bcvObj, usrername: username }
 
 
@@ -413,7 +415,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
             ret.admobj.set_fname_header()
             ret.admobj.writeback()
 
-            
+
             ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
         }
 
