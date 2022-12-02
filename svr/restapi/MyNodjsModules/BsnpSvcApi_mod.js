@@ -415,20 +415,7 @@ var ApiJsonp_BibleObj = {
                     bUpdatedUsersList = true
                 }
             })
-            BaseGUti.WalkthruObj_BCV_txt(bio.obj,
-                function (bkc, chp, vrs, str) {//at the end of object tree.
-                    if ("string" === typeof (str)) {
-                        if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs])) {
-                            carryObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
-                        }
-                        else {
-                            carryObj[bkc][chp][vrs][fnameID] = ""
-                        }
-                    } else {
-                        console.log("============ Error, WalkthruObj_BCV_txt=", bkc, chp, vrs, str)
-                        olog.push([jsfname, fnameID, bkc, chp, vrs])
-                    }
-                })
+            
 
             console.log("3 bio.obj", bio.obj, bVisibility)
             if (bUpdatedUsersList) {
