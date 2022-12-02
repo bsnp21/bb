@@ -268,7 +268,7 @@ var BaseGUti = {
     //     return targObj
     // },
     FlushObj_UntilEnd: function (datObj, targObj, param) {
-        function _iterate(carObj, tarObj, tarParent) {
+        function _iterate(carObj, tarObj, tarParent, tarParentProperty) {
             if (!tarObj) return;
             for (var carProperty in carObj) {
                 //console.log("carProperty=", carProperty)
@@ -284,7 +284,7 @@ var BaseGUti = {
                         //  }
                     }
                 } else {//mismatch keys
-                    if (param.TargNodeNotOwnProperty) param.TargNodeNotOwnProperty(carProperty, carObj, tarObj, tarParent,tarParentProperty)
+                    if (param.TargNodeNotOwnProperty) param.TargNodeNotOwnProperty(carProperty, carObj, tarObj, tarParent, tarParentProperty)
                     //  if (null === carObj[carProperty]) {
                     //      //nothing to delete. 
                     //  } else {//add new key to targetObj.
@@ -293,7 +293,7 @@ var BaseGUti = {
                 }
             }
         }
-        _iterate(datObj, targObj, null)
+        _iterate(datObj, targObj, null, null)
         return targObj
     },
 
