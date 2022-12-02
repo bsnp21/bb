@@ -268,13 +268,13 @@ var BaseGUti = {
     //     return targObj
     // },
     FlushObj_UntilEnd: function (datObj, targObj, param) {
-        function _iterate(carObj, tarObj) {
+        function _iterate(carObj, tarObj, tarParent) {
             if (!tarObj) return;
             for (var carProperty in carObj) {
                 //console.log("carProperty=", carProperty)
                 if (tarObj.hasOwnProperty(carProperty)) {//match keys
                     if (carObj[carProperty] && "object" === typeof (carObj[carProperty]) && !Array.isArray(carObj[carProperty]) && Object.keys(carObj[carProperty]).length > 0) {
-                        _iterate(carObj[carProperty], tarObj[carProperty]); //non-arry obj. 
+                        _iterate(carObj[carProperty], tarObj[carProperty], tarObj, carProperty); //non-arry obj. 
                     } else {
                         if (param.SrcNodeEnd) param.SrcNodeEnd(carProperty, carObj, tarObj)
                         //  if (null === carObj[carProperty]) { //to delete key in targetObj.
@@ -284,7 +284,7 @@ var BaseGUti = {
                         //  }
                     }
                 } else {//mismatch keys
-                    if (param.TargNodeNotOwnProperty) param.TargNodeNotOwnProperty(carProperty, carObj, tarObj)
+                    if (param.TargNodeNotOwnProperty) param.TargNodeNotOwnProperty(carProperty, carObj, tarObj, tarParent,tarParentProperty)
                     //  if (null === carObj[carProperty]) {
                     //      //nothing to delete. 
                     //  } else {//add new key to targetObj.
@@ -293,7 +293,7 @@ var BaseGUti = {
                 }
             }
         }
-        _iterate(datObj, targObj)
+        _iterate(datObj, targObj, null)
         return targObj
     },
 
