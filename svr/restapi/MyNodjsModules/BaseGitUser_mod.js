@@ -488,6 +488,17 @@ var BaseGUti = {
 
     loadObj_by_fname: function (jsfnm) {
         var ret = { obj: null, fname: jsfnm, fsize: -1, header: "", err: "" };
+        ret.set_fname_header = function () {
+            var basename = path.basename(this.fname).replace(".js", "")
+            this.header = `var ${basename} = \n`
+            return
+        }
+        ret.writeback = function () {
+            var s2 = JSON.stringify(this.obj, null, 4);
+            BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S chmod 777 ${this.fname}`)
+            fs.writeFileSync(this.fname, this.header + s2);
+            ret.dlt_size = ret.header.length + s2.length - ret.fsize
+        }
 
         if (!fs.existsSync(jsfnm)) {
             console.log("loadObj_by_fname,f not exit:", jsfnm)
@@ -508,18 +519,6 @@ var BaseGUti = {
                 }
 
             }
-        }
-
-        ret.set_fname_header = function () {
-            var basename = path.basename(this.fname).replace(".js", "")
-            this.header = `var ${basename} = \n`
-            return
-        }
-        ret.writeback = function () {
-            var s2 = JSON.stringify(this.obj, null, 4);
-            BaseGUti.execSync_Cmd(`echo 'lll'| sudo -S chmod 777 ${this.fname}`)
-            fs.writeFileSync(this.fname, this.header + s2);
-            ret.dlt_size = ret.header.length + s2.length - ret.fsize
         }
         return ret;
     },
