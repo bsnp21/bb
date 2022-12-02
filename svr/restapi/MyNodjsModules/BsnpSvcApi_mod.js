@@ -379,8 +379,9 @@ var ApiJsonp_BibleObj = {
                             endobj[vrs] = {}
                         }
                         endobj[vrs][username] = 1
+                        ret.usrObj_set = [bkc, chp, vrs, endobj]
                     })
-                console.log("merged usrObj", ret.usrObj)
+                ret["usrObj_set_done"] = ret.usrObj
 
                 ///
                 var adminMgr = new BibleObjGitusrMgr()
