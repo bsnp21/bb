@@ -80,20 +80,22 @@
             float: right;
             white-space: nowrap;
         }
-        .usrbar{
+
+        .usrbar {
             background-color: rgb(94, 135, 172);
         }
 
 
-        .heart{
+        .heart {
             float: right;
             padding: 0 10px 0 10px;
         }
 
-        .heart_grey{
+        .heart_grey {
             color: gray;
         }
-        .heart_red{
+
+        .heart_red {
             color: red;
         }
     </style>
@@ -148,7 +150,7 @@
         $("head").append(scst)
         console.log(urls)
     }
-    function get_usr_urls(usrname){
+    function get_usr_urls(usrname) {
         var urls = `https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
         return urls;
     }
@@ -159,38 +161,59 @@
         var bcv = param.get("BCV")
         $("#inpBCV").val(bcv)
 
-    
-
-      
-
+        /////////
+        ajx_gen_table(bcv)
+    })
+    function ajx_gen_table(bcv) {
+        var trs = ""
+        var str = getvrs(bcv, e_Note_json)
+        str.split(",").forEach(function (usrnam) {
+            trs += `<tr><td><div class='usrbar'><a class='usrnamelabel'>${usrnam}</a><a class='heart'>&#9829;</a></div><div id='${usrnam}_note'></div> </td></tr>`
+        })
+        $("#allusrs").html(trs)
+        $(".usrnamelabel").on("click", function () {
+            var usrname = $(this).text()
+            var urls = get_usr_urls(usrname)
+            $.get(urls, function (dat, err) {
+                console.log(err)
+                if(err) return;
+                var obj = JSON.parse(dat.slice(dat.indexOf("{")))
+                var vrs = getvrs(bcv, obj)
+                $(`#${usrname}_note`).html(vrs)
+            })
+        })
+    }
+    function api_gen_table(bcv) {
         var api = new BsnpRestApi()
         var retOj = Uti.parse_bcv(bcv, "")
         var par = { fnames: ["e_Note"] }
         par.inpObj = retOj.bcvObj
         api.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(par, function (rob) {
             console.log(rob)
-
             gen_table(rob.out.data)
-
         })
-    })
-    function gen_table(obj) {
-        var slst = ""
-        Object.keys(obj).forEach(function (key, i) {
 
-            slst += `<tr><td>${i}</td><td><div class='usrbar'><a class='usrname'>${key}</a><a class='heart'>&#9829;</a></div>
+        ///
+        function gen_table(obj) {
+            var slst = ""
+            Object.keys(obj).forEach(function (key, i) {
+
+                slst += `<tr><td>${i}</td><td><div class='usrbar'><a class='usrname'>${key}</a><a class='heart'>&#9829;</a></div>
                 <div class='enote' urls='${key}'>${obj[key]}</div></td></tr>`
-        })
-        $("#allusrs").html(slst)
-        $(".heart").on("click",function(){
-            $(this).toggleClass("heart_red")
-        })
-        $(".enote").on("click",function(){
-            var url = get_usr_urls($(this).attr("urls"))
-            $.get(url,function(dat,stat){
-
             })
-        })
+            $("#allusrs").html(slst)
+            $(".heart").on("click", function () {
+                $(this).toggleClass("heart_red")
+            })
+            $(".enote").on("click", function () {
+                var url = get_usr_urls($(this).attr("urls"))
+                $.get(url, function (dat, stat) {
+                    console.log(dat, stat)
 
+                })
+            })
+
+        }
     }
+
 </script>
