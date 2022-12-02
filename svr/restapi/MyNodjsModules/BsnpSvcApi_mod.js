@@ -405,7 +405,7 @@ var ApiJsonp_BibleObj = {
                         ret.SrcNodeEnd = [carProperty, carObj, targObj]
                     },
                     TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
-                        targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+                        targObj= carObj //at the end of object tree, make a copy or src.
                         bUpdatedUsersList = true
                         ret.TargNodeNotOwnProperty = [carProperty, carObj, targObj]
                     }
