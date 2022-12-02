@@ -176,7 +176,6 @@
             var urls = get_usr_urls(usrname)
             $.get(urls, function (dat, err) {
                 console.log(err)
-                if(err) return;
                 var obj = JSON.parse(dat.slice(dat.indexOf("{")))
                 var vrs = getvrs(bcv, obj)
                 $(`#${usrname}_note`).html(vrs)
