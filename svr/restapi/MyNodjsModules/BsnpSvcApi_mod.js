@@ -407,7 +407,10 @@ var ApiJsonp_BibleObj = {
                     TargNodeNotOwnProperty: function (carProperty, carObj, targObj, tarParent, tarParentProperty) {//at the end of object tree.
                         //targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                         bUpdatedUsersList = true
-                        tarParent[tarParentProperty] = carObj
+                        if("object" !== typeof(targObj)){
+                            tarParent[tarParentProperty] = {}
+                        }
+                        tarParent[tarParentProperty][carProperty] = carObj[carProperty]
                         ret.TargNodeNotOwnProperty = [carProperty, carObj, targObj, tarParent, tarParentProperty, ret.admobj.obj]
                     }
                 })
