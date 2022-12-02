@@ -362,8 +362,8 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
     adminMgr.m_BaseGitUser.Deploy_proj()
 
-    
-    adminMgr.Add_doc_BCV_user = function (doc, bcvObj, username, visib){
+
+    adminMgr.Add_doc_BCV_user = function (doc, bcvObj, username, visib) {
         var bUpdatedUsersList = false
         var ret = { bUpdatedUsersList: bUpdatedUsersList, doc: doc, bcvObj: bcvObj, usrername: username }
 
@@ -381,16 +381,10 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
 
         ////////////
 
-        var jsfname = adminMgr.m_BaseGitUser.get_pfxname(doc, {
-            IfUsrNotExist: function (stdpfname, usrpfname) {
-                ret.err_not_exist = adminMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
-                return usrpfname;
-            }
-        })
+        var jsfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("u_e_Node_json.js")
         ret.admobj = BaseGUti.loadObj_by_fname(jsfname);
         if (null === ret.admobj.obj) {
-            ret.err_load = `load(${doc},${jsfname})=null`
-            return ret;
+            ret.admobj.obj = {}
         }
 
         BaseGUti.FlushObj_UntilEnd(ret.usrObj, ret.admobj.obj, {
@@ -401,28 +395,52 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
             TargNodeNotOwnProperty: function (carProperty, carObj, targObj, tarParent, tarParentProperty) {//at the end of object tree.
                 //targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
                 bUpdatedUsersList = true
-                if("object" !== typeof(targObj)){
+                if ("object" !== typeof (targObj)) {
                     tarParent[tarParentProperty] = {}
+                    tarParent[tarParentProperty][carProperty] = carObj[carProperty]
+                } else {
+                    targObj[carProperty] = carObj[carProperty]
                 }
-                tarParent[tarParentProperty][carProperty] = carObj[carProperty]
                 ret.TargNodeNotOwnProperty = [carProperty, carObj, targObj, tarParent, tarParentProperty, ret.admobj.obj]
             }
         })
 
         ret.admobj_afterFlucsh = ret.admobj.obj
 
+        ////////////////////////////////////
+        /// maintain/update public user list.
+        var usrfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("pub_users_json.js")
+        var retUsr = BaseGUti.loadObj_by_fname(usrfname);
+        if (null === retUsr.obj) {
+            retUsr.obj = {}
+        }
+        if (retUsr.obj.hasOwnProperty(username)) {
+            if ("private" === visib) {
+                delete retUsr.obj[username]
+                bUpdatedUsersList = true
+            }
+        } else {
+            if ("public" === visib) {
+                retUsr.obj[username] = 1
+                bUpdatedUsersList = true
+            }
+        }
+        ret.retUsr = retUsr
+        /////////////
+
         if (bUpdatedUsersList) {
             ret.admobj.set_fname_header()
             ret.admobj.writeback()
 
+            ret.retUsr.set_fname_header()
+            ret.retUsr.writeback()
 
             ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
         }
 
-        var usrfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("pub_users_json.js")
         return ret;
     }
-   return adminMgr
+    return adminMgr
 }
 
 
