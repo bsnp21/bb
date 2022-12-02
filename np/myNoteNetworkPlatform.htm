@@ -148,6 +148,10 @@
         $("head").append(scst)
         console.log(urls)
     }
+    function get_usr_urls(usrname){
+        var urls = `https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
+        return urls;
+    }
     $(function () {
         var urls = window.location.href;
         var param = new URLSearchParams(urls)
@@ -173,12 +177,19 @@
     function gen_table(obj) {
         var slst = ""
         Object.keys(obj).forEach(function (key, i) {
-            slst += `<tr><td>${i}</td><td><div class='usrbar'><a>${key}</a><a class='heart'>&#9829;</a></div>
-                <div>${obj[key]}</div></td></tr>`
+
+            slst += `<tr><td>${i}</td><td><div class='usrbar'><a class='usrname'>${key}</a><a class='heart'>&#9829;</a></div>
+                <div class='enote' urls='${key}'>${obj[key]}</div></td></tr>`
         })
         $("#allusrs").html(slst)
         $(".heart").on("click",function(){
             $(this).toggleClass("heart_red")
+        })
+        $(".enote").on("click",function(){
+            var url = get_usr_urls($(this).attr("urls"))
+            $.get(url,function(dat,stat){
+
+            })
         })
 
     }
