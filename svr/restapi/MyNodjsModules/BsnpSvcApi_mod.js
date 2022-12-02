@@ -363,24 +363,24 @@ var ApiJsonp_BibleObj = {
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
 
-          
+
 
             /////////////////////////////
             function Admin_Add_doc_BCV_user(doc, bcvObj, username) {
                 var bUpdatedUsersList = false
 
-                var ret = {bUpdatedUsersList:bUpdatedUsersList}
+                var ret = { bUpdatedUsersList: bUpdatedUsersList, doc: doc, bcvObj: bcvObj, usrername: username }
 
 
-                var usrObj = JSON.parse(JSON.stringify(bcvObj))
-                BaseGUti.WalkthruObj_BCV_txt(usrObj,
+                ret.usrObj = JSON.parse(JSON.stringify(bcvObj))
+                BaseGUti.WalkthruObj_BCV_txt(ret.usrObj,
                     function (bkc, chp, vrs, endobj) {//at the end of object tree.
                         if ("object" !== typeof (endobj[vrs])) {
                             endobj[vrs] = {}
                         }
                         endobj[vrs][username] = 1
                     })
-                console.log("merged usrObj", usrObj)
+                console.log("merged usrObj", ret.usrObj)
 
                 ///
                 var adminMgr = new BibleObjGitusrMgr()
@@ -392,13 +392,13 @@ var ApiJsonp_BibleObj = {
                         return usrpfname;
                     }
                 })
-                var admobj = BaseGUti.loadObj_by_fname(jsfname);
-                if (null === admobj.obj) {
-                     ret.err_load = `load(${doc},${jsfname})=null` 
-                     return ret;
+                ret.admobj = BaseGUti.loadObj_by_fname(jsfname);
+                if (null === ret.admobj.obj) {
+                    ret.err_load = `load(${doc},${jsfname})=null`
+                    return ret;
                 }
 
-                BaseGUti.FlushObj_UntilEnd(usrObj, admobj.obj, {
+                BaseGUti.FlushObj_UntilEnd(ret.usrObj, ret.admobj.obj, {
                     SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
                         //already exist
                     },
@@ -410,8 +410,8 @@ var ApiJsonp_BibleObj = {
 
 
                 if (bUpdatedUsersList) {
-                    admobj.set_fname_header()
-                    admobj.writeback()
+                    ret.admobj.set_fname_header()
+                    ret.admobj.writeback()
                     ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
                 }
                 return ret;
