@@ -17,7 +17,9 @@
     <script src="https://bsnp21.github.io/bb/np/js/BsnpRestApi.js"></script>
     <script src="https://bsnp21.github.io/bb/np/js/BsnpRestConst.js"></script>
     <!-------------------------------------------->
-    <script src="https://bsnpghrepolist.github.io/admin/account/myoj/e_Note_json.js"></script>
+    <script ___src="https://bsnpghrepolist.github.io/admin/account/myoj/e_Note_json.js"></script>
+    <script src="https://bsnpghrepolist.github.io/admin/account/u_e_Node_json.js"></script>
+    <script src="https://bsnpghrepolist.github.io/admin/account/pub_users_json.js"></script>
     <!-------------------------------------------->
     <style>
         #ctrpanel {
@@ -189,8 +191,8 @@
     /////////////////////////////
     function ajx_gen_table() {
         function get_usrname_list(bcv) {
-            var str = getvrs(bcv, e_Note_json)
-            var usrsnamelist = str.split(",")
+            var obj = getvrs(bcv, u_e_Node_json)
+            var usrsnamelist = Object.keys(obj)
             var me = $("#usrname").text()
             var meidx = usrsnamelist.indexOf(me)
             if (meidx > 0) usrsnamelist.splice(meidx, 1), usrsnamelist.unshift(me)
