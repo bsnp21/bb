@@ -26,18 +26,23 @@
 
 
     <style>
+        body{
+            padding-top: 100px;
+            padding-bottom: 100px;
+            background-color: aliceblue;
+        }
         table,
         textarea {
             width: 100%;
             height: 500px;
         }
 
-        button {
-            position: fixed;
-        }
-
+       
         div.topbar {
+            position: fixed;
+            top:1px;
             background-color: antiquewhite;
+            width: 100%;
         }
 
         .toggleColor {
@@ -76,7 +81,7 @@
         function auto_refresh() {
             setInterval(function () {
                 gen_tab()
-                $("button").toggleClass("toggleColor")
+                $("button.refresh").toggleClass("toggleColor")
             }, 5000)
         }
 
@@ -87,7 +92,9 @@
 
 <BODY>
     <div class="topbar" onclick="gen_tab()">
-        <button onclick="auto_refresh()">refresh</button><br><a href="./api_demo_local.htm">api_demo_local</a>
+        <button class="refresh" onclick="auto_refresh()">auto_refresh</button>
+        <a href="./api_demo_local.htm">api_demo_local</a>
+        <button onclick="localStorage.setItem('DbugarStore','');gen_tab()">clearStore</button>
     </div>
 
 

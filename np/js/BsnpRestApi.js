@@ -70,7 +70,7 @@ var BsnpRestUti = {
     },
     Dbugar_load: function () {
         var str = localStorage.getItem("DbugarStore")
-        if (!str) {
+        if ("null"===str || !str) {
             str = JSON.stringify([{}, {}, {}, {}])
         }
         var ar = JSON.parse(str)
