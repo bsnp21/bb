@@ -17,17 +17,25 @@
     <script src="https://bsnp21.github.io/bb/np/js/BsnpRestApi.js"></script>
     <script src="https://bsnp21.github.io/bb/np/js/BsnpRestConst.js"></script>
     <!-------------------------------------------->
-   
+
     <script src="https://bsnpghrepolist.github.io/admin/account/u_e_Note_json.js"></script>
     <script src="https://bsnpghrepolist.github.io/admin/account/pub_users_json.js"></script>
     <!-------------------------------------------->
     <style>
-        #ctrpanel {
-            z-index: 999999;
+        #usrname {
             position: absolute;
             top: 10px;
             right: 10px;
             background-color: antiquewhite;
+        }
+
+        .ctrpanel {
+            z-index: 1;
+            position: absolute;
+            top: 30px;
+            right: 10px;
+            background-color: gray;
+            display: none;
         }
 
         #input,
@@ -107,7 +115,8 @@
             xvisibility: hidden;
             display: none;
         }
-        #robout{
+
+        #robout {
             width: 100%;
             height: 300px;
         }
@@ -116,21 +125,36 @@
             border: 3px solid red;
 
         }
-        .private_usr{
+
+        .private_usr {
             border: 1px solid black;
-            color:darkgray;
+            color: darkgray;
         }
     </style>
 </head>
 
 <body onbeforeunload="return 'leave?';">
-    <div id="ctrpanel">
-        <a id="usrname">usrname</a>
+    <a id="usrname">usrname</a>
+    <div class="ctrpanel">
+        <table>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="showprivate" id="showprivate"></input></td>
+                    <td><label for="showprivate">show private</label></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="showfavoriteonly" id="showfavoriteonly"></input></td>
+                    <td><label for="showfavoriteonly">show favorite only</label></td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 
 
 
-    <h></h><input id="inpBCV" placeholder="Fellowship Group ID"></input> <button onclick="ajx_gen_table()">refresh</button><button id="toggleCollapse">toggleCollapse</button>
+    <h></h><input id="inpBCV" placeholder="Fellowship Group ID"></input> <button
+        onclick="ajx_gen_table()">refresh</button><button id="toggleCollapse">toggleCollapse</button>
 
     <div id="account_history"></div>
 
@@ -163,10 +187,13 @@
         var urls = window.location.href;
         var param = new URLSearchParams(urls)
         $("#usrname").text(param.get("SSID").slice(13))
+        $("#usrname").on("click", function () {
+            $(this).next().slideToggle()
+        })
         var bcv = param.get("BCV")
         $("#inpBCV").val(bcv)
 
-        $("#toggleCollapse").on("click",function(){
+        $("#toggleCollapse").on("click", function () {
             $(".usrNote").slideToggle()
         })
     }
@@ -206,19 +233,19 @@
         function get_trs(usrsnamelist) {
             var trs = ""
             usrsnamelist.forEach(function (usrnam, i) {
-                var editable = "", savbtn = "", plaintextarea = ""
+                var editable = "", savbtn = "", plaintextarea = "", tr_visi = ""
                 if (0 === i) {
                     editable = "contenteditable='true'"
                     savbtn = `<button id='saveNote' class='floatrightside'>save</button><a class='floatrightside wordtot'>..</a>`
                     plaintextarea = "<textarea class='plaintxt'></textarea>"
                 }
-                var prvt = (!pub_users_json[usrnam])? "private_usr" : ""
+                var prvt = (!pub_users_json[usrnam]) ? "private_usr" : ""
 
-                trs += `<tr><td><div class='usrbar'><a class='usrnamelabel ${prvt}'>${usrnam}</a><a class='notetoggle'> -</a><a class='heart floatrightside'>&#9829;</a>${savbtn}</div><div class='usrNote' id='${usrnam}_note' ${editable}></div>${plaintextarea}</td></tr>`
+                trs += `<tr class='usrtr ${prvt}'><td><div class='usrbar'><a class='usrnamelabel ${prvt}'>${usrnam}</a><a class='notetoggle'> -</a><a class='heart floatrightside' usrname='${usrnam}'>&#9829;</a>${savbtn}</div><div class='usrNote' id='${usrnam}_note' ${editable}></div>${plaintextarea}</td></tr>`
             })
             return trs
         }
-        function get_note(usrname) {
+        function ajx_get_note(usrname) {
             var bcv = $("#inpBCV").val()
             var urls = get_usr_urls(usrname)
             $.get(urls, function (dat, err) {
@@ -229,28 +256,103 @@
             })
         }
 
-        ////////////
 
         var bcv = $("#inpBCV").val()
         var usrsnamelist = get_usrname_list(bcv)
         $("#allusrs").html(get_trs(usrsnamelist))
 
+
+
+        //////////// init //////////
+        function init_display() {
+            $(".usrnamelabel").each(function () {
+                var usrname = $(this).text()
+                if (pub_users_json[usrname]) {
+                    ajx_get_note(usrname)
+                } else {
+                    $(this).next().text("private")
+                }
+            })
+        }
+        init_display()
+        /////////
+
+
+
+        function run_checkedbox(eid, checkedfun, uncheckedfun) {
+            var bshowprivate = localStorage.getItem(eid)
+            $(eid).attr("checked", !bshowprivate ? null : true)
+
+            $(eid).on("click", function () {
+                localStorage.setItem(eid, $(this).is(":checked") ? "true" : "")
+            })
+
+            if (!$(eid).is(":checked")) {
+                //$(".usrtr.private_usr").hide()
+                checkedfun()
+            } else {
+                //$(".usrtr.private_usr").show()
+                uncheckedfun()
+            }
+        }
+        run_checkedbox("#showprivate", () => {
+            $(".usrtr.private_usr").hide()
+        }, () => {
+            $(".usrtr.private_usr").show()
+        })
+
+        
+        /////////
+        ///////////////////////////
+        function heart_checked() {
+            $(".heart").on("click", function () {
+                $(this).toggleClass("heart_red")
+                var heartary = []
+                $(".heart_red").each(function () {
+                    heartary.push($(this).attr("usrname"))
+                })
+                localStorage.setItem("heart_redary", heartary.join(","))
+            })
+            var heartary = localStorage.getItem("heart_redary").split(",")
+            heartary.forEach(function (key) {
+                $(`a[usrname='${key}'`).addClass("heart_red")
+            })
+        }
+        heart_checked()
+
+        run_checkedbox("#showfavoriteonly", () => {
+            //$(".usrtr.private_usr").hide()
+        }, () => {
+            $("#allusrs tr").each(function () {
+                if ($(this).find("a.heart_red").length == 0) {
+                    $(this).hide()
+                }
+            })
+        })
+
+
+
+
+
+
+
+
+
+
+
+
         $(".usrnamelabel").on("click", function () {
             var usrname = $(this).text()
-            if(pub_users_json[usrname]){
-                get_note(usrname)
-            }else{
+            if (pub_users_json[usrname]) {
+                ajx_get_note(usrname)
+            } else {
                 $(this).next().text("private")
             }
         })
-        $(".usrnamelabel").each(function () {
-            var usrname = $(this).text()
-            if(pub_users_json[usrname]){
-                get_note(usrname)
-            }else{
-                $(this).next().text("private")
-            }
-        })
+
+
+
+
         $(".notetoggle").on("click", function () {
             var _THIS = this
             var usrname = $(this).parentsUntil("td").find(".usrnamelabel").text()
@@ -259,9 +361,7 @@
                 else $(_THIS).text(" +")
             })
         })
-        $(".heart").on("click", function () {
-            $(this).toggleClass("heart_red")
-        })
+
         $(".wordtot").on("click", function () {
             $(".plaintxt").slideToggle()
             var htm = $(".plaintxt").prev().html()
