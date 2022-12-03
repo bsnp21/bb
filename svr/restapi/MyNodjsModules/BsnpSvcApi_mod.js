@@ -366,14 +366,14 @@ var ApiJsonp_BibleObj = {
 
             /////////////////////////////
 
-        
+
             var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
             var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
             var bVisibility = "private"
             if (!usrinfo.err) bVisibility = usrinfo.visibility
 
             var admin = gituserMgr.CreateAdminMgr()
-            admin.Add_doc_BCV_user(doc, inp.par.inpObj, username, bVisibility)
+            admin.Add_doc_BCV_user(inp.par.inpObj, username, bVisibility)
             return;
             //////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
