@@ -1,6 +1,7 @@
 
 var BsnpRestUti = {
     ajax_post: function (urls, inp, cbf) {
+        BsnpRestUti.Dbugar_store(inp)
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -55,7 +56,22 @@ var BsnpRestUti = {
         }).fail(function (xhr, textStatus, errorThrown) {
             alert(xhr.responseText);
             alert(textStatus);
-        });;
+        });
+    },
+    Dbugar_store: function (obj) {
+        var ar = this.Dbugar_load()
+        ar.unshift(obj)
+        ar.pop()
+        var str = JSON.stringify(ar)
+        localStorage.setItem("DbugarStore", str)
+    },
+    Dbugar_load: function () {
+        var str = localStorage.getItem("DbugarStore")
+        if (!str) {
+            str = JSON.stringify([{}, {}, {}, {}])
+        }
+        var ar = JSON.parse(str)
+        return ar;
     },
     walk_obj: function (upar, obj) {
         function obj_iterate_walk(obj, par, cbf) {
@@ -105,7 +121,7 @@ var RestApi_uPar_Validate = {
         })
     },
     "ApiUsrRepos_toolkids": function () { },
-    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": function(){},
+    "ApiBibleObj_read_crossnetwork_BkcChpVrs_txt": function () { },
     "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
