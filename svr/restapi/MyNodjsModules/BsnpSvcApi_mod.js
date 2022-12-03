@@ -501,7 +501,7 @@ var ApiJsonp_BibleObj = {
             ApiUti.Output_append(inp.out, ret)
 
             var admin = gituserMgr.CreateAdminMgr()
-            admin.Add_doc_BCV_user(doc, inp.par.inpObj, username, bVisibility)
+            //admin.Add_doc_BCV_user(doc, inp.par.inpObj, username, bVisibility)
             return;
         })
     },

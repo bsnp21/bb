@@ -460,6 +460,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
         /////////////
         return retUsr
     }
+    return adminMgr;
 }
 
 
