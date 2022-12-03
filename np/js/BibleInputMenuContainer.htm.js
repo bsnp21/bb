@@ -318,10 +318,6 @@ var BibleInputMenuContainer = `
                 
                 <tr>
                     <td>
-                    <a id="account_history">Username:</a>
-                  
-                    <input id="repopath" value='' placeholder='username' readonly></input>
-
                     FontSize:
                             <button onclick="g_obt.incFontSize(-2);" title='font-size minus'>-</button>
                             <a id='fontsize'></a>
