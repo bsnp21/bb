@@ -362,11 +362,28 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
     adminMgr.m_BaseGitUser.Deploy_proj()
 
+    adminMgr.bUpdatedUsersList = false
 
-    adminMgr.Add_doc_BCV_user = function (doc, bcvObj, username, visib) {
+    adminMgr.release_user = function () {
+        if (this.bUpdatedUsersList) {
+            return adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+        }
+    }
+    adminMgr.Add_doc_BCV_user = function (bcvObj, username, visib) {
+
+        var ret = { bcvObj: bcvObj, usrername: username }
+
+        ret.up_doc_bcv_user = this.Update_doc_bcv_user(bcvObj, username)
+
+        ret.publish_usr = this.Publish_user(username, visib)
+
+        ret.release = this.release_user()
+
+        return ret;
+    }
+    adminMgr.Update_doc_bcv_user = function (bcvObj, username) {
         var bUpdatedUsersList = false
-        var ret = { bUpdatedUsersList: bUpdatedUsersList, doc: doc, bcvObj: bcvObj, usrername: username }
-
+        var ret = { bUpdatedUsersList: bUpdatedUsersList, bcvObj: bcvObj, usrername: username }
 
         ret.usrObj = JSON.parse(JSON.stringify(bcvObj))
         BaseGUti.WalkthruObj_BCV_txt(ret.usrObj,
@@ -407,9 +424,19 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
 
         ret.admobj_afterFlucsh = ret.admobj.obj
 
+        if (bUpdatedUsersList) {
+            ret.admobj.set_fname_header()
+            ret.admobj.writeback()
+        }
+        //ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+        this.bUpdatedUsersList = bUpdatedUsersList
+        return ret;
+    }
+    adminMgr.Publish_user = function (username, visib) {
         ////////////////////////////////////
         /// maintain/update public user list.
-        var usrfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("pub_users_json.js")
+        var bUpdatedUsersList = false
+        var usrfname = this.m_BaseGitUser.getFullPath_usr_acct("pub_users_json.js")
         var retUsr = BaseGUti.loadObj_by_fname(usrfname);
         if (null === retUsr.obj) {
             retUsr.obj = {}
@@ -425,22 +452,14 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
                 bUpdatedUsersList = true
             }
         }
-        ret.retUsr = retUsr
-        /////////////
-
         if (bUpdatedUsersList) {
-            ret.admobj.set_fname_header()
-            ret.admobj.writeback()
-
-            ret.retUsr.set_fname_header()
-            ret.retUsr.writeback()
-
-            ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+            retUsr.set_fname_header()
+            retUsr.writeback()
         }
-
-        return ret;
+        this.bUpdatedUsersList = bUpdatedUsersList
+        /////////////
+        return retUsr
     }
-    return adminMgr
 }
 
 
