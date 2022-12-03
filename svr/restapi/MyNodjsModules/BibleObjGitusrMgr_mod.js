@@ -381,7 +381,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
 
         ////////////
 
-        var jsfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("u_e_Node_json.js")
+        var jsfname = adminMgr.m_BaseGitUser.getFullPath_usr_acct("u_e_Note_json.js")
         ret.admobj = BaseGUti.loadObj_by_fname(jsfname);
         if (null === ret.admobj.obj) {
             ret.admobj.obj = {}
