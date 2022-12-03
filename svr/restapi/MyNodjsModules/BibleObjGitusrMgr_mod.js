@@ -185,9 +185,9 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     robj.state_orign = this.m_BaseGitUser.Check_proj_state()
     robj.sponsorDiskUsage = this.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
 
-    robj.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (!robj.ghinfo.err) {
-        console.log(robj.ghinfo);
+    robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    if (!robj.ghapinfo.err) {
+        console.log(robj.ghapinfo);
         robj.err = ["already exist.", repopath]
         return robj;
     }
@@ -235,8 +235,8 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     if (robj.err) return robj;
 
     console.log("========__Proj_parse_usr_login__")
-    robj.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (robj.ghinfo.err) {
+    robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    if (robj.ghapinfo.err) {
         robj.err = ["not exist: ", repopath]
         console.log(robj);
         return robj
@@ -278,8 +278,8 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 
 BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
     var rob = {}
-    rob.ghinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (rob.ghinfo.visibility !== "public") {
+    rob.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    if (rob.ghapinfo.visibility !== "public") {
         rob.err = "cannot publish private repo."
         return rob
     }

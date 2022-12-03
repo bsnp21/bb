@@ -314,7 +314,8 @@ a[sid] {
 
 #SignOut_repopathname {
 
-    
+    border: 1px solid gray;
+    background-color: gray;
   
     padding-left: 5px;
     padding-right: 5px;

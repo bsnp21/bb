@@ -1,4 +1,4 @@
-"ghinfo": {
+"ghapinfo": {
     "id": 572468007,
     "node_id": "R_kgDOIh8rJw",
     "name": "gc0001",
