@@ -491,7 +491,6 @@ var BaseGUti = {
         ret.set_fname_header = function () {
             var basename = path.basename(this.fname).replace(".js", "")
             this.header = `var ${basename} = \n`
-            return
         }
         ret.writeback = function () {
             var s2 = JSON.stringify(this.obj, null, 4);
@@ -501,7 +500,8 @@ var BaseGUti = {
         }
 
         if (!fs.existsSync(jsfnm)) {
-            console.log("loadObj_by_fname,f not exit:", jsfnm)
+            ret.err = "loadObj_by_fname,f not exit:"+jsfnm
+            console.log(ret.err)
             return ret;
         }
         ret.stat = BaseGUti.GetFileStat(jsfnm)
@@ -510,8 +510,8 @@ var BaseGUti = {
             var t = fs.readFileSync(jsfnm, "utf8");
             var i = t.indexOf("{");
             if (i > 0) {
-                ret.header = t.substr(0, i);
-                var s = t.substr(i);
+                ret.header = t.slice(0, i);
+                var s = t.slice(i);
                 try {
                     ret.obj = JSON.parse(s);
                 } catch (e) {
