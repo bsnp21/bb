@@ -322,7 +322,7 @@ a[sid] {
 }
 .user_vsibility_private{
     background-color: gray;
-    border-top: 2px solid rgb(37, 35, 35);
+    border-top: 2px solid yellow;
 }
 .user_vsibility_public, .user_vsibility_  {
     background-color: green;

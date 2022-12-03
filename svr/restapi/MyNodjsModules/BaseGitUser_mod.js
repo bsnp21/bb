@@ -871,17 +871,18 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 
 
 BaseGitUser.prototype.get_repo_salts = function (u) {
+    var ret = ["YQ==","a"]
     var fname = this.getFullPath_usr_git(".salts")
     if (!fs.existsSync(fname)) {
-        return ["a", "a"]
+        return ret
     }
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
-    if (!txt) return ["a", "a"]
+    if (!txt) return ret
     try {
         return JSON.parse(txt)
     } catch {
-        return ["a", "a"]
+        return ret
     }
 }
 

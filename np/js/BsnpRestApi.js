@@ -271,6 +271,7 @@ BsnpRestApi.prototype.ApiUsrAccount_logout = function (par, cbf) {
     return this.ajaxion("ApiUsrAccount_logout", par, cbf)
 }
 BsnpRestApi.prototype.ApiUsrAccount_update = function (par, cbf) {
+    par.passcodeNew = btoa(par.passcodeNew) 
     return this.ajaxion("ApiUsrAccount_update", par, cbf)
 }
 
