@@ -245,7 +245,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     robj.deploy = this.m_BaseGitUser.Deploy_proj()
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
-    if (robj.saltary.indexOf(passcode) < 0) {
+    if (robj.saltary[0] !== passcode) {
         robj.err = ["password error. Hint: ", robj.saltary[1]]
         return robj
     }

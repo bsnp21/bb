@@ -247,12 +247,14 @@ BsnpRestApi.prototype.ajaxion = function (sapi, par, cbf) {
 //////////////////////////////////////////////////////////////////////
 // for easier to use.
 BsnpRestApi.prototype.ApiUsrAccount_create = function (par, cbf) {
+    par.passcode = btoa(par.passcode)
     var _this = this
     _this.SSID = "-" //create/login do not need ssid. others need.
     return this.ajaxion("ApiUsrAccount_create", par, cbf)
 }
 
 BsnpRestApi.prototype.ApiUsrAccount_login = function (par, cbf) {
+    par.passcode = btoa(par.passcode) 
     var _this = this
     _this.SSID = "-" //create/login do not need ssid. others need.
     return this.ajaxion("ApiUsrAccount_login", par, function (ret) {

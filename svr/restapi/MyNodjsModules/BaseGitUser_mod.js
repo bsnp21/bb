@@ -877,7 +877,7 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     }
     var txt = fs.readFileSync(fname, "utf-8")
     console.log("salt", fname, txt)
-    if (!txt) return []
+    if (!txt) return ["a", "a"]
     try {
         return JSON.parse(txt)
     } catch {
