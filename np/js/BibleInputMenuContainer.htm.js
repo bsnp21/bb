@@ -315,10 +315,14 @@ var BibleInputMenuContainer = `
                 
                 <button class="StorageRepo_Signout">Sign Out</button>
                 </td></tr>
-                
                 <tr>
                     <td>
-                    visibility:<a id='visibilitydisplay' href='./mySignUpdate.htm'>affa</a>
+                    <span style="display:in-line block;">Change Current Visibility : <a id='visibilitydisplay' href='./mySignUpdate.htm'>affa</a><span><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
                     FontSize:
                             <button onclick="g_obt.incFontSize(-2);" title='font-size minus'>-</button>
                             <a id='fontsize'></a>
