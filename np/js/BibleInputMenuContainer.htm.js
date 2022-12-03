@@ -354,7 +354,7 @@ var BibleInputMenuContainer = `
                 <div id="DevTool" style='display:none;'>
                 <button onclick="$('#txtarea').val('');$('#operation_res').text('+')" title='clearout txt'>x</button>
                 <button id="Check_bcv">Check(bcv)</button>
-                <a target='_blank' href='../index.htm'>.</a>  
+                <a target='_blank' href='../restapi_tester/index.htm'>.</a>  
                 <textarea id="txtarea" style='width:100%;' rows='20'  value='search results...' title='log.'></textarea><br>
                 </div>
                 
