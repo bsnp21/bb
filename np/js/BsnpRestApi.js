@@ -21,6 +21,7 @@ var BsnpRestUti = {
             })
             .done(function (ret) {
                 var ret = JSON.parse(ret)
+                BsnpRestUti.Dbugar_store(ret)
                 cbf(ret)
             })
             .fail(function (xhr, textStatus, errorThrown) {
@@ -29,6 +30,7 @@ var BsnpRestUti = {
             });
     },
     ajax_get: function (urls, datum, cbf) {
+        BsnpRestUti.Dbugar_store({ datum: datum })
         $.ajax({
             type: "GET",
             url: urls,//
@@ -38,6 +40,7 @@ var BsnpRestUti = {
             success: function (dat, err) {
                 console.log(dat)
                 console.log(err)
+                BsnpRestUti.Dbugar_store({ dat: dat, err, err })
                 cbf(dat)
             },
             dataType: "json", //exe script.

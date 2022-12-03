@@ -182,7 +182,7 @@ var ApiJsonp_BibleObj = {
             var gituserMgr = new BibleObjGitusrMgr()
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+            if (!ApiUti.Output_append(inp.out, ret)) return console.log("ApiBibleObj_search_txt failed.")
 
             var TbcvObj = {};
             if ("object" === typeof inp.par.fnames) {//['NIV','ESV']

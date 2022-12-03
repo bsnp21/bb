@@ -1,0 +1,101 @@
+<HTML>
+
+<HEAD>
+    <TITLE>dbgar</TITLE>
+    <base target="_blank" />
+    <META http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <META name="viewport" content="width=device-witdh, initial-scale=1, maximum-scale=1, user-scale=0">
+
+
+
+    <!--------->
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <script language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+    <script language="javascript" src="../jq/jquery.js"></script>
+
+    <!----------------------------------------------------------------------------->
+    <!------ api ---->
+
+    <script src="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
+    <script src="https://bsnp21.github.io/home/js/test_bsnp_ip_availability.js"></script>
+    <script src="../np/js/BsnpRestApi.js"></script>
+    <script src="../np/js/BsnpRestConst.js"></script>
+    <!----------------------------------------------------------------------------->
+
+
+    <style>
+        table,
+        textarea {
+            width: 100%;
+            height: 500px;
+        }
+
+        button {
+            position: fixed;
+        }
+
+        div.topbar {
+            background-color: antiquewhite;
+        }
+
+        .toggleColor {
+            background-color: aqua;
+        }
+
+        .hili {
+            background-color: rgb(190, 160, 162);
+        }
+    </style>
+    <script>
+
+        $(function () {
+
+
+
+            gen_tab()
+
+        })
+        function gen_tab() {
+            var ar = BsnpRestUti.Dbugar_load()
+            var trs = ""
+            ar.forEach(function (obj) {
+                trs += `<tr><td><textarea>${JSON.stringify(obj, null, 4)}</textarea></td></tr>`
+            })
+            if (window.m_trs != trs) {
+                window.m_trs = trs
+                $("#tbd").html(trs)
+                $("textarea").on("click", function () {
+                    $(".hili").removeClass("hili")
+                    $(this).addClass("hili")
+                })
+            }
+        }
+
+        function auto_refresh() {
+            setInterval(function () {
+                gen_tab()
+                $("button").toggleClass("toggleColor")
+            }, 5000)
+        }
+
+
+    </script>
+
+</HEAD>
+
+<BODY>
+    <div class="topbar" onclick="gen_tab()">
+        <button onclick="auto_refresh()">refresh</button><br><a href="./api_demo_local.htm">api_demo_local</a>
+    </div>
+
+
+    <table border="1">
+        <tbody id="tbd">
+
+        </tbody>
+    </table>
+</BODY>
+
+</HTML>
