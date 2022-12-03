@@ -209,35 +209,6 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            function way1() {
-                var par = inp.par, olog = [];
-                console.log("-----:fnames", par.fnames, typeof par.fnames)
-                console.log("-----:binp.par.bibOj", par.bibOj)
-                var TbcObj = {};
-                if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
-                    console.log("par.fnames:", par.fnames)
-                    for (var i = 0; i < par.fnames.length; i++) {
-                        var fnameID = par.fnames[i];
-                        var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
-                        console.log("load:", jsfname)
-                        var bib = BaseGUti.loadObj_by_fname(jsfname);
-                        if (null === bib.obj) {
-                            olog.push(jsfname + ":noexist:" + fnameID)
-                            console.log("not exist..............", jsfname)
-                            continue
-                        }
-                        var bcObj = BaseGUti.copy_biobj(bib.obj, par.bibOj);
-                        TbcObj[fnameID] = bcObj;
-                        olog.push("loaded:" + fnameID)
-                    }
-                    olog.push(":success")
-                }
-                //console.log(TbcObj)
-                var bcvT = {}
-                BaseGUti.convert_Tbcv_2_bcvT(TbcObj, bcvT)
-                inp.out.data = bcvT
-                inp.out.olog = olog
-            }
             //////////////
             function way2() {
                 var par = inp.par, olog = [];
@@ -302,7 +273,6 @@ var ApiJsonp_BibleObj = {
                 inp.out.data = carryObj
                 inp.out.olog = olog
             }
-            //way1()
             way2()
             //console.log(bcvT)
         })
