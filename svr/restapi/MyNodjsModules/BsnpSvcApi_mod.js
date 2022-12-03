@@ -498,10 +498,11 @@ var ApiJsonp_BibleObj = {
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
-            ApiUti.Output_append(inp.out, ret)
+            if (!ApiUti.Output_append(inp.out, ret)) return console.log("ApiUsrAccount_create failed.")
 
             var admin = gituserMgr.CreateAdminMgr()
-            //admin.Add_doc_BCV_user(doc, inp.par.inpObj, username, bVisibility)
+            ret.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
+            ret.admrelease = admin.release_user()
             return;
         })
     },
@@ -578,6 +579,10 @@ var ApiJsonp_BibleObj = {
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
             inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
 
+            ///////////////
+            var admin = gituserMgr.CreateAdminMgr()
+            inp.out.olog.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
+            inp.out.olog.admrelease = admin.release_user()
 
         })
     },
