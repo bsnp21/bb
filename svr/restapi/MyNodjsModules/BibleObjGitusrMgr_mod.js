@@ -362,10 +362,10 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
     adminMgr.m_BaseGitUser.Deploy_proj()
 
-    adminMgr.bUpdatedUsersList = false
+    adminMgr.iUpdatedUsersList = 0
 
     adminMgr.release_user = function () {
-        if (this.bUpdatedUsersList) {
+        if (this.iUpdatedUsersList > 0) {
             return adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
         }
     }
@@ -429,7 +429,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
             ret.admobj.writeback()
         }
         //ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
-        this.bUpdatedUsersList = bUpdatedUsersList
+        this.iUpdatedUsersList += bUpdatedUsersList ? 1 : 0
         return ret;
     }
     adminMgr.Publish_user = function (username, visib) {
@@ -456,7 +456,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
             retUsr.set_fname_header()
             retUsr.writeback()
         }
-        this.bUpdatedUsersList = bUpdatedUsersList
+        this.iUpdatedUsersList += bUpdatedUsersList ? 1 : 0
         /////////////
         return retUsr
     }
