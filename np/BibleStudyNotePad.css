@@ -313,14 +313,20 @@ a[sid] {
 }
 
 #SignOut_repopathname {
+    border: 20x solid red;
 
-    border: 1px solid gray;
-    background-color: gray;
-  
     padding-left: 5px;
     padding-right: 5px;
     float: right;
     right:15px;
+}
+.user_vsibility_private{
+    background-color: gray;
+    border-top: 2px solid rgb(37, 35, 35);
+}
+.user_vsibility_public, .user_vsibility_  {
+    background-color: green;
+    border-top: 2px solid chartreuse;
 }
 
 .trRecentBCV {

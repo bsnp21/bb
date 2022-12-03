@@ -2128,7 +2128,7 @@ var AppInstancesManager = function () {
 AppInstancesManager.prototype.init = function (cbf) {
     var _This = this
 
-    $("#idatetiemstampe").text((new Date()).toString())
+    
 
 
     $("body").prepend(BibleInputMenuContainer);
@@ -2372,7 +2372,12 @@ AppInstancesManager.prototype.init_load_storage = function () {
         var api = new BsnpRestApi()
         var username = api.urlParams.get("SSID").slice(13)
         $("#SignOut_repopathname").text(username)
+        var vision = api.urlParams.get("vision")
+        $("#SignOut_repopathname").addClass(`user_vsibility_${vision}`)
         //$("#repopath").val(username)
+        $("#visibilitydisplay").text(vision) //(new Date()).toISOString()
+        $("#visibilitydisplay").attr("href",`./mySignUpdate.htm${window.location.search}`)
+    
       
 
         Uti.Msg("RestApi=", RestApi);

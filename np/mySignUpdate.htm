@@ -62,6 +62,9 @@
     $(function () {
 
         mySignin_init()
+        var param = new URLSearchParams(window.location.search)
+        var vision = param.get("vision")
+        if(vision=="private") $("#private").attr("checked", "true")
 
 
         $("#loginAsUser").attr("href", `./mySignIn.htm${window.location.search}`)

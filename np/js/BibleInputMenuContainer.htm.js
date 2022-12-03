@@ -318,11 +318,12 @@ var BibleInputMenuContainer = `
                 
                 <tr>
                     <td>
+                    visibility:<a id='visibilitydisplay' href='./mySignUpdate.htm'>affa</a>
                     FontSize:
                             <button onclick="g_obt.incFontSize(-2);" title='font-size minus'>-</button>
                             <a id='fontsize'></a>
                             <button onclick="g_obt.incFontSize(2);" title='font-size plus'>+</button>
-                      <a id='idatetiemstampe'></a>
+                      
                     <br>
                     <input type="radio" id="Storage_clear" title='clear up storage'>Clear localStorage</input>        
                     <a id="Storage_local_repos_exchange"></a>
@@ -335,7 +336,6 @@ var BibleInputMenuContainer = `
                 
                     <div id="account_set_info"></div>
                     </td>
-                    
                 </tr>
                 </tbody>
                 </table>

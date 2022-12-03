@@ -229,7 +229,7 @@ function login_acct(cbf) {
             $("#errmsg").html(rob.out.err).addClass("failed")
         }
         else {
-            var ur = `${api.urlRedirectParam()}`
+            var ur = `${api.urlRedirectParam()}&vision=${rob.out.ghapinfo.visibility}`
             rob.redirect_param = ur
             if (cbf && !cbf(rob)) {
                 return
