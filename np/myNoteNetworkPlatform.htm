@@ -116,6 +116,9 @@
             border: 3px solid red;
 
         }
+        .pvturs{
+            border: 1px solid black;
+        }
     </style>
 </head>
 
@@ -191,7 +194,7 @@
     /////////////////////////////
     function ajx_gen_table() {
         function get_usrname_list(bcv) {
-            var obj = getvrs(bcv, u_e_Node_json)
+            var obj = getvrs(bcv, u_e_Note_json)
             var usrsnamelist = Object.keys(obj)
             var me = $("#usrname").text()
             var meidx = usrsnamelist.indexOf(me)
@@ -208,8 +211,9 @@
                     savbtn = `<button id='saveNote' class='floatrightside'>save</button><a class='floatrightside wordtot'>..</a>`
                     plaintextarea = "<textarea class='plaintxt'></textarea>"
                 }
+                var prvt = (!pub_users_json[usrnam])? "pvturs" : ""
 
-                trs += `<tr><td><div class='usrbar'><a class='usrnamelabel'>${usrnam}</a><a class='notetoggle'> -</a><a class='heart floatrightside'>&#9829;</a>${savbtn}</div><div class='usrNote' id='${usrnam}_note' ${editable}></div>${plaintextarea}</td></tr>`
+                trs += `<tr><td><div class='usrbar'><a class='usrnamelabel ${prvt}'>${usrnam}</a><a class='notetoggle'> -</a><a class='heart floatrightside'>&#9829;</a>${savbtn}</div><div class='usrNote' id='${usrnam}_note' ${editable}></div>${plaintextarea}</td></tr>`
             })
             return trs
         }
