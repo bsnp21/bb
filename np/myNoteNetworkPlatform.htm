@@ -22,8 +22,12 @@
     <script src="https://bsnpghrepolist.github.io/admin/account/pub_users_json.js"></script>
     <!-------------------------------------------->
     <style>
+        body {
+            padding-top: 100px;
+        }
+
         #usrname {
-            position: absolute;
+            position: fixed;
             top: 10px;
             right: 10px;
             background-color: gray;
@@ -32,7 +36,7 @@
 
         .ctrpanel {
             z-index: 1;
-            position: absolute;
+            position: fixed;
             top: 34px;
             right: 10px;
             background-color: gray;
@@ -91,10 +95,6 @@
             padding: 0 10px 0 10px;
         }
 
-        .heart_grey {
-            color: gray;
-        }
-
         .heart_red {
             color: red;
         }
@@ -130,23 +130,25 @@
         .private_usr {
             border: 1px solid black;
             color: darkgray;
+            pointer-events: none;
         }
     </style>
 </head>
 
-<body onbeforeunload="return 'leave?';">
+<body __onbeforeunload="return 'leave?';">
     <a id="usrname">usrname</a>
     <div class="ctrpanel">
         <table>
             <tbody>
                 <tr>
+                    <td><input type="checkbox" name="showfavoriteonly" id="showfavoriteonly"></input></td>
+                    <td><label for="showfavoriteonly">favorite only</label></td>
+                </tr>
+                <tr>
                     <td><input type="checkbox" name="showprivate" id="showprivate"></input></td>
                     <td><label for="showprivate">show private</label></td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" name="showfavoriteonly" id="showfavoriteonly"></input></td>
-                    <td><label for="showfavoriteonly">show favorite only</label></td>
-                </tr>
+
             </tbody>
         </table>
 
@@ -156,6 +158,9 @@
 
     <h></h><input id="inpBCV" placeholder="Fellowship Group ID"></input> <button
         onclick="ajx_gen_table()">refresh</button><button id="toggleCollapse">toggleCollapse</button>
+    <input type="radio" name="showmode" id="defaultmode"><label for="defaultmode">default</label>
+    <input type="radio" name="showmode" id="showall"><label for="showall">show all</label>
+    <input type="radio" name="showmode" id="favoriteonly"><label for="favoriteonly">favorite only</label>
 
     <div id="account_history"></div>
 
@@ -265,7 +270,7 @@
 
 
         //////////// init //////////
-        function init_display() {
+        function init_load_note_all_pub() {
             $(".usrnamelabel").each(function () {
                 var usrname = $(this).text()
                 if (pub_users_json[usrname]) {
@@ -275,37 +280,11 @@
                 }
             })
         }
-        init_display()
+        init_load_note_all_pub()
         /////////
 
 
-
-        function run_checkedbox(eid, checkedfun, uncheckedfun) {
-            var bshowprivate = localStorage.getItem(eid)
-            $(eid).attr("checked", !bshowprivate ? null : true)
-
-            $(eid).on("click", function () {
-                localStorage.setItem(eid, $(this).is(":checked") ? "true" : "")
-            })
-
-            if (!$(eid).is(":checked")) {
-                //$(".usrtr.private_usr").hide()
-                checkedfun()
-            } else {
-                //$(".usrtr.private_usr").show()
-                uncheckedfun()
-            }
-        }
-        run_checkedbox("#showprivate", () => {
-            $(".usrtr.private_usr").hide()
-        }, () => {
-            $(".usrtr.private_usr").show()
-        })
-
-        
-        /////////
-        ///////////////////////////
-        function heart_checked() {
+        function enable_heart_checked_stored() {
             $(".heart").on("click", function () {
                 $(this).toggleClass("heart_red")
                 var heartary = []
@@ -314,30 +293,66 @@
                 })
                 localStorage.setItem("heart_redary", heartary.join(","))
             })
-            var heartary = localStorage.getItem("heart_redary").split(",")
-            heartary.forEach(function (key) {
-                $(`a[usrname='${key}'`).addClass("heart_red")
-            })
+            var hearts = localStorage.getItem("heart_redary")
+            if (hearts) {
+                hearts.split(",").forEach(function (key) {
+                    $(`a[usrname='${key}'`).addClass("heart_red")
+                })
+            }
         }
-        heart_checked()
+        enable_heart_checked_stored()
 
-        run_checkedbox("#showfavoriteonly", () => {
-            //$(".usrtr.private_usr").hide()
-        }, () => {
-            $("#allusrs tr").each(function () {
-                if ($(this).find("a.heart_red").length == 0) {
-                    $(this).hide()
-                }
+        ///radio setting
+        if (1) {
+            var eid = localStorage.getItem("#showmode")
+            if (null == eid) eid = "defaultmode"
+            $("#" + eid).attr("checked", true)
+            ///////////
+            $("input[name='showmode").on("click", function () {
+                var id = $(this).attr("id")
+                localStorage.setItem("#showmode", id)
+                show_radio_checked_mode(id)
             })
-        })
+            function show_radio_checked_mode(eid) {
+                function show_favorite_only() {
+                    $("#allusrs tr").each(function () {
+                        if ($(this).find("a.heart_red").length <= 0) {
+                            $(this).hide()
+                        } else {
+                            $(this).show()
+                        }
+                    })
+                }
+                function show_public_only() {
+                    $("#allusrs tr").each(function () {
+                        if ($(this).hasClass("private_usr")) {
+                            $(this).hide()
+                        } else {
+                            $(this).show()
+                        }
+                    })
+                }
+                function show_all() {
+                    $("#allusrs tr").show();
+                }
 
-
-
-
-
-
-
-
+                switch (eid) {
+                    case "defaultmode":
+                        show_public_only()
+                        break;
+                    case "showall":
+                        show_all()
+                        break;
+                    case "favoriteonly":
+                        show_favorite_only()
+                        break;
+                    default:
+                        alert(eid + ":err")
+                        break;
+                }
+            }
+            show_radio_checked_mode(eid)
+        }
 
 
 
@@ -350,9 +365,6 @@
                 $(this).next().text("private")
             }
         })
-
-
-
 
         $(".notetoggle").on("click", function () {
             var _THIS = this
