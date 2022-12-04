@@ -209,26 +209,22 @@
     })
 
 
-    function getvrs(bcv, objSrc) {
-        var retOj = Uti.parse_bcv(bcv, "")
-        Uti.FetchObj_UntilEnd(retOj.bcvObj, objSrc)
-        var str = retOj.get_vrs()
-        return str
-    }
-    function jster_obj(usrname) {
-        var urls = `https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
-        var scst = "<" + "script " + "src=\'" + urls + "\'/>"
-        $("head").append(scst)
-        console.log(urls)
-    }
+
+
     function get_usr_urls(usrname) {
         var urls = `https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
         return urls;
     }
     /////////////////////////////
     function ajx_gen_table() {
+        function get_vrs_fr_Obj(bcv, objSrc) {
+            var retOj = Uti.parse_bcv(bcv, "")
+            Uti.FetchObj_UntilEnd(retOj.bcvObj, objSrc)
+            var str = retOj.get_vrs()
+            return str
+        }
         function get_usrname_list(bcv) {
-            var obj = getvrs(bcv, u_e_Note_json)
+            var obj = get_vrs_fr_Obj(bcv, u_e_Note_json)
             var usrsnamelist = Object.keys(obj)
             var me = $("#usrname").text()
             var meidx = usrsnamelist.indexOf(me)
@@ -257,7 +253,7 @@
             $.get(urls, function (dat, err) {
                 console.log(err)
                 var obj = JSON.parse(dat.slice(dat.indexOf("{")))
-                var vrs = getvrs(bcv, obj)
+                var vrs = get_vrs_fr_Obj(bcv, obj)
                 $(`#${usrname}_note`).html(vrs)
             })
         }
