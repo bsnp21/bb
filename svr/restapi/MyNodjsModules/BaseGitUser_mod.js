@@ -1493,21 +1493,7 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     var ret = this.execSync_gitdir_cmd(cmd).toString()
     return ret
 }
-BaseGitUser.prototype.git_push = function (cbf) {
-    var gitdir = this.getFullPath_usr_git()
-    if (!fs.existsSync(gitdir)) {
-        return `push nonexistance:${gitdir}`
-    }
-    var cmd = `
-    cd ${gitdir}
-    pwd
-    sudo GIT_TERMINAL_PROMPT=0 git push
-    sudo chown ubuntu:ubuntu -R ${gitdir}
-    sudo chmod 777 -R ${gitdir}
-    `
-    var ret = this.execSync_gitdir_cmd(cmd).toString()
-    return ret
-}
+
 
 
 BaseGitUser.prototype.git_push_test = function () {
