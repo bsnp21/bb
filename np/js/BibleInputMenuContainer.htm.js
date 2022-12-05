@@ -79,7 +79,7 @@ var BibleInputMenuContainer = `
         </tr>
         <tr>
         <td>
-            <a id="RevTag_SocialNetworkPlatform" target="_blank" href="myNoteNetworkPlatform.htm">Cross-Network Platform</a>
+            <a id="RevTag_SocialNetworkPlatform" target="_blank" href="myNoteNetworkPlatform.htm">Group Shared Editor</a>
         </td>
     </tr>
         <tr>
