@@ -1443,6 +1443,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo 'lll'|  sudo -S git add *
     echo 'lll'|  sudo -S git add .salts
     echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     echo 'lll'|  sudo -S git remote set-url origin ${repo_url}
     # echo 'lll'|  sudo -S git branch -M main default   # error: refname refs/heads/main not found, fatal: Branch rename failed
     echo 'lll'|  sudo -S git branch -M master main
@@ -1480,7 +1481,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
 BaseGitUser.prototype.git_pull = function (cbf) {
     var gitdir = this.getFullPath_usr_git()
     if (!fs.existsSync(gitdir)) {
-        return `nonexistance:${gitdir}`
+        return `pull nonexistance:${gitdir}`
     }
     var cmd = `
     cd ${gitdir}
@@ -1492,7 +1493,21 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     var ret = this.execSync_gitdir_cmd(cmd).toString()
     return ret
 }
-
+BaseGitUser.prototype.git_push = function (cbf) {
+    var gitdir = this.getFullPath_usr_git()
+    if (!fs.existsSync(gitdir)) {
+        return `push nonexistance:${gitdir}`
+    }
+    var cmd = `
+    cd ${gitdir}
+    pwd
+    sudo GIT_TERMINAL_PROMPT=0 git push
+    sudo chown ubuntu:ubuntu -R ${gitdir}
+    sudo chmod 777 -R ${gitdir}
+    `
+    var ret = this.execSync_gitdir_cmd(cmd).toString()
+    return ret
+}
 
 
 BaseGitUser.prototype.git_push_test = function () {
