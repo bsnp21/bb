@@ -222,6 +222,7 @@
 
     function get_usr_urls(usrname) {
         var urls = `https://bsnpghrepolist.github.io/${usrname}/myoj/e_Note_json.js`
+        console.log(urls)
         return urls;
     }
     /////////////////////////////
@@ -259,6 +260,7 @@
         function ajx_get_note(usrname) {
             var bcv = $("#inpBCV").val()
             var urls = get_usr_urls(usrname)
+            $("#robout").val(urls)
             $.get(urls, function (dat, err) {
                 console.log(err)
                 var obj = JSON.parse(dat.slice(dat.indexOf("{")))

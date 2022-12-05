@@ -1486,6 +1486,8 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     var cmd = `
     cd ${gitdir}
     pwd
+    sudo chown ubuntu:ubuntu -R ${gitdir}
+    sudo chmod 777 -R ${gitdir}
     sudo GIT_TERMINAL_PROMPT=0 git pull
     sudo chown ubuntu:ubuntu -R ${gitdir}
     sudo chmod 777 -R ${gitdir}

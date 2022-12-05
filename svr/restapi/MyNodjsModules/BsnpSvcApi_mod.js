@@ -305,7 +305,7 @@ var ApiJsonp_BibleObj = {
                 return;
             }
 
-            console.log("inp.par.inpObj", inp.par.inpObj)
+            //console.log("inp.par.inpObj", inp.par.inpObj)
             //console.log("karyObj", karyObj)
             //console.log("bio.obj", bio.obj)
 
@@ -326,9 +326,9 @@ var ApiJsonp_BibleObj = {
             bio.writeback()
 
             //// optional
-            var idxfile = gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm")
+            //var idxfile = gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm")
             //fs.writeFileSync(idxfile, "a")
-            inp.out.olog.indexfile = idxfile
+            //inp.out.olog.indexfile = idxfile
 
             inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
@@ -339,11 +339,8 @@ var ApiJsonp_BibleObj = {
 
             var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
             var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-            var bVisibility = "private"
-            if (!usrinfo.err) bVisibility = usrinfo.visibility
-
             var admin = gituserMgr.CreateAdminMgr()
-            admin.Add_doc_BCV_user(inp.par.inpObj, username, bVisibility)
+            inp.out.olog["Add_doc_BCV_user"] = admin.Add_doc_BCV_user(inp.par.inpObj, username, usrinfo.visibility)
             return;
             //////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
