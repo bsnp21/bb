@@ -527,13 +527,7 @@ var ApiJsonp_BibleObj = {
             gituserMgr.m_BaseGitUser.git_dir_remove()
             gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
             gituserMgr.m_BaseGitUser.Deploy_proj() //on master. 
-            //inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
-            //var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_git()
-            //if (fs.existsSync(gitdir)) {
-                //inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync_default(true)
-            //}
-            //inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
-            //inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
+           
 
             if (!inp.par.passcodeNew) {
                 inp.out.err = ["missing new passcode."]
