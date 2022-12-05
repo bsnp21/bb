@@ -438,28 +438,28 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
         /// maintain/update public user list.
         var bUpdatedUsersList = false
         var usrfname = this.m_BaseGitUser.getFullPath_usr_acct("pub_users_json.js")
-        var retUsr = BaseGUti.loadObj_by_fname(usrfname);
-        if (null === retUsr.obj) {
-            retUsr.obj = {}
+        var pubUsrObj = BaseGUti.loadObj_by_fname(usrfname);
+        if (null === pubUsrObj.obj) {
+            pubUsrObj.obj = {}
         }
-        if (retUsr.obj.hasOwnProperty(username)) {
+        if (pubUsrObj.obj.hasOwnProperty(username)) {
             if ("private" === visib) {
-                delete retUsr.obj[username]
+                delete pubUsrObj.obj[username]
                 bUpdatedUsersList = true
             }
         } else {
             if ("public" === visib) {
-                retUsr.obj[username] = 1
+                pubUsrObj.obj[username] = 1
                 bUpdatedUsersList = true
             }
         }
         if (bUpdatedUsersList) {
-            retUsr.set_fname_header()
-            retUsr.writeback()
+            pubUsrObj.set_fname_header()
+            pubUsrObj.writeback()
         }
         this.iUpdatedUsersList += bUpdatedUsersList ? 1 : 0
         /////////////
-        return retUsr
+        return pubUsrObj
     }
     return adminMgr;
 }
