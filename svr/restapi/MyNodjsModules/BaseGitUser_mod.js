@@ -791,7 +791,7 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     if (ret.message && ret.message === "Not Found") {
         ret.err = "gh_api_repos_nameWithOwner failed"
     }
-    console.log("ret", ret)
+    //console.log("ret", ret)
     return ret
 }
 
