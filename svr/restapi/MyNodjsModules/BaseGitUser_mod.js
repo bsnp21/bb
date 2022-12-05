@@ -1388,10 +1388,10 @@ BaseGitUser.prototype.git_clone = function (branch) {
 
     var clone_https = this.m_sponser.git_repo_user_url_private(true)
     var bransh_option = `--branch ${branch}`
-    var git_root = this.getFullPath_usr_git()
-    if (!branch) {
+    var git_root = this.getFullPath_usr_acct()
+    if (!branch) { //on master by default.
         bransh_option = ""
-        git_root = this.getFullPath_usr_acct()
+        git_root = this.getFullPath_usr_git()
     }
 
     var git_clone_cmd = `
@@ -1401,7 +1401,7 @@ BaseGitUser.prototype.git_clone = function (branch) {
         echo 'lll' | sudo -S chmod  777 ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
     else 
-        echo "${git_root}/.git/config does not exist, so to clone"
+        echo "${git_root} does not exist, then git clone ${bransh_option}  ${clone_https}  ${git_root}"
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option}  ${clone_https}  ${git_root}
         sudo -S chmod 777 -R ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
