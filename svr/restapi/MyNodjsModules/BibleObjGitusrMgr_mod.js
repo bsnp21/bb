@@ -192,12 +192,12 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
         return robj;
     }
 
-    robj.gh_repo_create_remote = this.gh_repo_create_remote(accesstr)
-    robj.git_clone = this.git_clone()  //on master by default.
-    robj.main_dir_write_salts = this.main_dir_write_salts(passcode, hintword)
-    robj._git_add_commit_push_Sync = this.main_git_add_commit_push_Sync(true)
-    robj.state_just_created = this.Check_proj_state()
-    robj.main_dir_remove = this.main_dir_remove()
+    robj.gh_repo_create_remote = this.m_BaseGitUser.gh_repo_create_remote(accesstr)
+    robj.git_clone = this.m_BaseGitUser.git_clone()  //on master by default.
+    robj.main_dir_write_salts = this.m_BaseGitUser.main_dir_write_salts(passcode, hintword)
+    robj._git_add_commit_push_Sync = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
+    robj.state_just_created = this.m_BaseGitUser.Check_proj_state()
+    robj.main_dir_remove = this.m_BaseGitUser.main_dir_remove()
 
     return robj
 }
