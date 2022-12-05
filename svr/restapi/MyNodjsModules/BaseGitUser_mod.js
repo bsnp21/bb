@@ -1336,9 +1336,9 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     var rob = {}
     rob.gh_repo_create_remote = this.gh_repo_create_remote(accesstr)
-    rob.git_clone = this.git_clone()
+    rob.git_clone = this.git_clone()  //on master by default.
     rob.git_dir_write_salts = this.git_dir_write_salts(passcode, hintword)
-    rob.git_add_commit_push_Sync = this.git_add_commit_push_Sync(true)
+    rob._git_add_commit_push_Sync = this.git_add_commit_push_Sync_default(true)
     rob.state_just_created = this.Check_proj_state()
     rob.git_dir_remove = this.git_dir_remove()
     return rob
@@ -1359,14 +1359,32 @@ gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   ##
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
     return str
 }
+BaseGitUser.prototype.gh_repo_create_remote_master = function (accesstr) {
+
+    var usrdir = this.getFullPath_usr_host()
+    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
+
+    var username = this.m_sponser.m_reponame
+    var gh_repo_create = `
+# create my-project and clone 
+############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
+#######################################################################################################
+gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   --clone ## must remove sudo for third pary github account. 
+#######################################################################################################
+`
+    var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
+    return str
+}
 
 
-BaseGitUser.prototype.git_clone = function () {
+BaseGitUser.prototype.git_clone = function (branch) {
     //var password = "lll" //dev mac
     //var root_sys = this.getFullPath_root_sys()
     var git_root = this.getFullPath_usr_git()
     var git_cfg = this.getFullPath_usr_git("/.git/config")
     var clone_https = this.m_sponser.git_repo_user_url_private(true)
+    var bransh_option = `--branch ${branch}`
+    if(!branch) bransh_option = ""
 
     var git_clone_cmd = `
     #!/bin/sh     # git_clone()
@@ -1375,9 +1393,7 @@ BaseGitUser.prototype.git_clone = function () {
         echo 'lll' | sudo -S chmod  777 ${git_cfg}
     else 
         echo "${git_root}/.git/config does not exist, so to clone"
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone  ${clone_https}  ${git_root}
-        echo 'lll' | sudo -S chown ubuntu:ubuntu  -R ${git_root} 
-        echo 'lll' | sudo -S chmod  777 -R ${git_root} 
+        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option}  ${clone_https}  ${git_root}
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
@@ -1405,6 +1421,70 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     return ret
 }
 
+BaseGitUser.prototype.git_add_commit_push_Sync_default = function (bSync) {
+    var _THIS = this
+    var gitdir = this.getFullPath_usr_git()
+    if (!fs.existsSync(gitdir)) {
+        return console.log("gitdir not exists=" + gitdir);
+    }
+    //git remote set-url origin new.git.url/herefffff
+    var repo_url = this.m_sponser.git_repo_user_url_private(true)
+
+    //password = "lll" //dev mac
+    /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
+    var command = `
+    #!/bin/bash  ###git_add_commit_push_Sync
+    set -x #echo on
+    cd  ${gitdir}
+    pwd
+    echo 'lll'|  sudo -S git status
+    echo 'lll'|  sudo -S git branch -a 
+    echo 'lll'|  sudo -S git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.
+    echo 'lll'|  sudo -S git add *
+    echo 'lll'|  sudo -S git add .salts
+    echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
+    echo 'lll'|  sudo -S git git remote set-url origin ${repo_url} 
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
+    echo 'lll'|  sudo -S git status
+    echo 'lll'|  sudo -S git branch
+    echo 'lll'|  sudo -S git status -sb
+    `
+
+    /****
+     wdingpub01$ git pull --all
+Fetching origin
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+    ******/
+    if (bSync) {
+        return BaseGUti.execSync_Cmd(command).split(/[\r|\n]/)
+    }
+
+    try {
+        {
+            exec(command, (err, stdout, stderr) => {
+                console.log('\n-exec_Cmd errorr:')
+                console.log(err)
+                console.log('\n-exec_Cmd stderr:',)
+                console.log(stderr)
+                console.log('\n-exec_Cmd stdout:')
+                console.log(stdout)
+                console.log('\n-exec_Cmd end.')
+
+            })
+        };
+    } catch (err) {
+        console.log(err)
+    }
+}
 BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
     var gitdir = this.getFullPath_usr_git()
