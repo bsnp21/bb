@@ -1257,29 +1257,34 @@ fi
 
 
 
-BaseGitUser.prototype.Deploy_proj = function () {
+BaseGitUser.prototype.Deploy_proj = function (sBranch) {
     console.log("********************************************* Deploy_proj  1")
 
-    var cfgf = this.getFullPath_usr_git("/.git/config")
-    if (fs.existsSync(cfgf)) {
-        return this.git_pull()
+
+    var dir = this.getFullPath_usr_git()
+    if (sBranch && sBranch.length > 0) {
+        dir = this.getFullPath_usr_acct()
     }
 
-    var ret = this.git_clone() //always sucess even passwd is wrong.
-
-    var old_txt = fs.readFileSync(cfgf, "utf8")
-    console.log("old_cfg :", old_txt)
-    var old_file = cfgf + "_old"
-    if (!fs.existsSync(old_file)) {
-        //fs.writeFileSync(old_file, old_txt, "utf8", function(err){
-        //    console.log("failed to write old_file", old_file, err)
-        //})
+    if (fs.existsSync(dir)) {
+        return this.git_pull(sBranch)
     }
 
-    console.log("new cfg:", this.m_sponser.git_conf_txt(true))
-    fs.writeFileSync(cfgf, this.m_sponser.git_conf_txt(true), "utf8")
+    var ret = this.git_clone(sBranch) //always sucess even passwd is wrong.
 
-    this.git_push_test()
+    //var old_txt = fs.readFileSync(cfgf, "utf8")
+    //console.log("old_cfg :", old_txt)
+    //var old_file = cfgf + "_old"
+    //if (!fs.existsSync(old_file)) {
+    //fs.writeFileSync(old_file, old_txt, "utf8", function(err){
+    //    console.log("failed to write old_file", old_file, err)
+    //})
+    //}
+
+    //console.log("new cfg:", this.m_sponser.git_conf_txt(true))
+    //fs.writeFileSync(cfgf, this.m_sponser.git_conf_txt(true), "utf8")
+
+    //this.git_push_test()
 
     return ret
 }
@@ -1380,17 +1385,21 @@ gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   --
 BaseGitUser.prototype.git_clone = function (branch) {
     //var password = "lll" //dev mac
     //var root_sys = this.getFullPath_root_sys()
-    var git_root = this.getFullPath_usr_git()
-    var git_cfg = this.getFullPath_usr_git("/.git/config")
+
     var clone_https = this.m_sponser.git_repo_user_url_private(true)
     var bransh_option = `--branch ${branch}`
-    if(!branch) bransh_option = ""
+    var git_root = this.getFullPath_usr_git()
+    if (!branch) {
+        bransh_option = ""
+        git_root = this.getFullPath_usr_acct()
+    }
 
     var git_clone_cmd = `
     #!/bin/sh     # git_clone()
-    if [ -f "${git_cfg}" ]; then
-        echo "${git_cfg} exists."
-        echo 'lll' | sudo -S chmod  777 ${git_cfg}
+    if [ -f "${git_root}" ]; then
+        echo "${git_root} aleady exists."
+        echo 'lll' | sudo -S chmod  777 ${git_root}
+        sudo chown ubuntu:ubuntu -R ${git_root}
     else 
         echo "${git_root}/.git/config does not exist, so to clone"
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option}  ${clone_https}  ${git_root}
@@ -1403,8 +1412,11 @@ BaseGitUser.prototype.git_clone = function (branch) {
     return ret
 }
 
-BaseGitUser.prototype.git_pull = function (cbf) {
+BaseGitUser.prototype.git_pull = function (branch) {
     var gitdir = this.getFullPath_usr_git()
+    if (branch && branch.length > 0) {
+        gitdir = this.getFullPath_usr_acct()
+    }
     if (!fs.existsSync(gitdir)) {
         return `pull nonexistance:${gitdir}`
     }
@@ -1413,8 +1425,8 @@ BaseGitUser.prototype.git_pull = function (cbf) {
     pwd
     sudo chown ubuntu:ubuntu -R ${gitdir}
     sudo chmod 777 -R ${gitdir}
-    sudo GIT_TERMINAL_PROMPT=0 git pull origin main
-    sudo git checkout main
+    sudo GIT_TERMINAL_PROMPT=0 git pull     #origin main
+    #sudo git checkout main
     sudo chown ubuntu:ubuntu -R ${gitdir}
     sudo chmod 777 -R ${gitdir}
     git branch -a
@@ -1487,7 +1499,7 @@ If you wish to set tracking information for this branch you can do so with:
         console.log(err)
     }
 }
-BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
+BaseGitUser.prototype.git_add_commit_push_Sync_ = function (bSync) {
     var _THIS = this
     var gitdir = this.getFullPath_usr_git()
     if (!fs.existsSync(gitdir)) {
@@ -1507,10 +1519,9 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     echo 'lll'|  sudo -S git branch
     echo 'lll'|  sudo -S git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.
     echo 'lll'|  sudo -S git add *
-    echo 'lll'|  sudo -S git add .salts
     echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
-    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     echo 'lll'|  sudo -S git remote set-url origin ${repo_url}
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
     # echo 'lll'|  sudo -S git branch -M main default   # error: refname refs/heads/main not found, fatal: Branch rename failed
     echo 'lll'|  sudo -S git branch -M master main
     echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
@@ -1558,6 +1569,75 @@ If you wish to set tracking information for this branch you can do so with:
     }
 }
 
+BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
+    var _THIS = this
+    var gitdir = this.getFullPath_usr_git()
+    if (!fs.existsSync(gitdir)) {
+        return console.log("gitdir not exists=" + gitdir);
+    }
+    //git remote set-url origin new.git.url/herefffff
+    var repo_url = this.m_sponser.git_repo_user_url_private(true)
+
+    //password = "lll" //dev mac
+    /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
+    var command = `
+    #!/bin/bash  ###git_add_commit_push_Sync
+    set -x #echo on
+    cd  ${gitdir}
+    pwd
+    echo 'lll'|  sudo -S git status
+    echo 'lll'|  sudo -S git branch
+    echo 'lll'|  sudo -S git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.
+    echo 'lll'|  sudo -S git add *
+    echo 'lll'|  sudo -S git commit -m 'do git_add_commit_push_Sync(${bSync}).'
+    echo 'lll'|  sudo -S git remote set-url origin ${repo_url}
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push
+    # echo 'lll'|  sudo -S git branch -M main default   # error: refname refs/heads/main not found, fatal: Branch rename failed
+    echo 'lll'|  sudo -S git branch -M master main
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push origin HEAD:main
+    echo 'lll'|  sudo -S GIT_TERMINAL_PROMPT=0 git push --set-upstream origin main
+    echo 'lll'|  sudo -S git status
+    echo 'lll'|  sudo -S git branch
+    echo 'lll'|  sudo -S git status -sb
+    `
+
+    /****
+     wdingpub01$ git pull --all
+Fetching origin
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+    ******/
+    if (bSync) {
+        return BaseGUti.execSync_Cmd(command).split(/[\r|\n]/)
+    }
+
+    try {
+        {
+            exec(command, (err, stdout, stderr) => {
+                console.log('\n-exec_Cmd errorr:')
+                console.log(err)
+                console.log('\n-exec_Cmd stderr:',)
+                console.log(stderr)
+                console.log('\n-exec_Cmd stdout:')
+                console.log(stdout)
+                console.log('\n-exec_Cmd end.')
+
+            })
+        };
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 
 

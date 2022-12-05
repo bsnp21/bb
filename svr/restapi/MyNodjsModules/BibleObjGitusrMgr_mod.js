@@ -242,7 +242,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
         return robj
     }
 
-    robj.deploy = this.m_BaseGitUser.Deploy_proj()
+    robj.deploy = this.m_BaseGitUser.Deploy_proj() //on default master branch.
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
     if (robj.saltary[0] !== passcode) {
@@ -270,7 +270,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     var robj = this.m_BaseGitUser.Set_gitusr(usr.repopath)
     if (robj.err) return robj;
 
-    robj.deploy_proj = this.m_BaseGitUser.Deploy_proj()
+    robj.deploy_proj = this.m_BaseGitUser.Deploy_proj("gh-pages")
 
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
@@ -282,7 +282,8 @@ BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
     rob.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (rob.ghapinfo.visibility !== "public") {
         rob.err = "cannot publish private repo."
-        return rob
+        //need to change it to public. the change back to private.
+        //return rob
     }
     rob.reponame = this.m_BaseGitUser.m_sponser.m_reponame;
     rob.dir = this.m_BaseGitUser.getFullPath_usr_acct() //getFullPath_usr_git();//getFullPath_usr_acct
@@ -361,7 +362,7 @@ BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
 BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     var adminMgr = new BibleObjGitusrMgr()
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
-    adminMgr.m_BaseGitUser.Deploy_proj()
+    adminMgr.m_BaseGitUser.Deploy_proj()//on  master by default
 
     adminMgr.iUpdatedUsersList = 0
 
