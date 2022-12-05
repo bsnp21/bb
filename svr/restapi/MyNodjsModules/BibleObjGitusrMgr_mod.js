@@ -76,7 +76,7 @@ NCache.Init = function () {
                 console.log("on del:git dir exist. push before to delete it")
                 
             }
-            userProject.m_BaseGitUser.git_dir_remove()
+            userProject.m_BaseGitUser.main_dir_remove()
         }
         console.log("on del:* End of del proj_destroy ssid=", key, gitdir)
     }
@@ -188,21 +188,17 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (!robj.ghapinfo.err) {
         console.log(robj.ghapinfo);
-        robj.err = ["already exist.", repopath]
+        robj.err = ["already exist: ", repopath]
         return robj;
     }
 
-    robj.gh_repo_create = this.m_BaseGitUser.gh_repo_create(passcode, hintword, accesstr)
-    if (!robj.gh_repo_create) {
-        robj.err = ["failed to create.", repopath]
-        return robj
-    }
-    if (robj.gh_repo_create.err) return robj;
+    robj.gh_repo_create_remote = this.gh_repo_create_remote(accesstr)
+    robj.git_clone = this.git_clone()  //on master by default.
+    robj.main_dir_write_salts = this.main_dir_write_salts(passcode, hintword)
+    robj._git_add_commit_push_Sync = this.main_git_add_commit_push_Sync(true)
+    robj.state_just_created = this.Check_proj_state()
+    robj.main_dir_remove = this.main_dir_remove()
 
-    robj.state_after_created = this.m_BaseGitUser.Check_proj_state()
-    robj.git_add_commit_push_Sync_ = this.m_BaseGitUser.git_add_commit_push_master_Sync(true)
-    robj.proj_detele = this.m_BaseGitUser.git_dir_remove()
-    robj.state_after_deleted = this.m_BaseGitUser.Check_proj_state()
     return robj
 }
 
@@ -242,6 +238,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
         return robj
     }
 
+    robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
     robj.deploy = this.m_BaseGitUser.Deploy_proj() //on default master branch.
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
@@ -256,7 +253,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     robj.state = this.m_BaseGitUser.Check_proj_state()
 
-    robj.delete_master_dir = this.m_BaseGitUser.git_dir_remove()
+    robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
 
     return robj //must be SSID capitalized ret.
 }
@@ -370,7 +367,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
 
     adminMgr.release_user = function () {
         if (this.iUpdatedUsersList > 0) {
-            return adminMgr.m_BaseGitUser.git_add_commit_push_master_Sync("admin add usr");//after saved
+            return adminMgr.m_BaseGitUser.main_git_add_commit_push_Sync("admin add usr");//after saved
         }
     }
     adminMgr.Add_doc_BCV_user = function (bcvObj, username, visib) {

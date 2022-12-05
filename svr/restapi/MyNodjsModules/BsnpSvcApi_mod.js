@@ -523,7 +523,7 @@ var ApiJsonp_BibleObj = {
             var usrname = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
 
             inp.out.olog = {}
-            gituserMgr.m_BaseGitUser.git_dir_remove()
+            gituserMgr.m_BaseGitUser.main_dir_remove()
             gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
             gituserMgr.m_BaseGitUser.Deploy_proj() //on master. 
            
@@ -536,16 +536,14 @@ var ApiJsonp_BibleObj = {
                 inp.out.err = ["missing accesstr."]
                 return
             }
-            //return
 
-            gituserMgr.m_BaseGitUser.git_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
-            inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.git_add_commit_push_master_Sync("ApiUsrAccount_update");//after saved
+            gituserMgr.m_BaseGitUser.main_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
+            inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
 
-            //return
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
             inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
 
-            gituserMgr.m_BaseGitUser.git_dir_remove()
+            gituserMgr.m_BaseGitUser.main_dir_remove()
 
             ///////////////
             var admin = gituserMgr.CreateAdminMgr()

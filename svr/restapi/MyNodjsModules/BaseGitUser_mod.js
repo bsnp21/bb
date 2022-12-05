@@ -1197,7 +1197,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 }
 
 
-BaseGitUser.prototype.git_dir_write_salts = function (passcode, hintword) {
+BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword])
     var fname = this.getFullPath_usr_main(".salts")
     var ret = fs.writeFileSync(fname, salts)
@@ -1276,7 +1276,7 @@ BaseGitUser.prototype.Deploy_proj = function (sBranch) {
 }
 
 
-BaseGitUser.prototype.git_dir_remove = function () {
+BaseGitUser.prototype.main_dir_remove = function () {
 
     var gitdir = this.getFullPath_usr_main()
     //var password = "lll" //dev mac
@@ -1324,16 +1324,7 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 /////
 
 
-BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
-    var rob = {}
-    rob.gh_repo_create_remote = this.gh_repo_create_remote(accesstr)
-    rob.git_clone = this.git_clone()  //on master by default.
-    rob.git_dir_write_salts = this.git_dir_write_salts(passcode, hintword)
-    rob._git_add_commit_push_Sync = this.git_add_commit_push_master_Sync(true)
-    rob.state_just_created = this.Check_proj_state()
-    rob.git_dir_remove = this.git_dir_remove()
-    return rob
-}
+
 BaseGitUser.prototype.gh_repo_create_remote = function (accesstr) {
 
     var usrdir = this.getFullPath_usr_host()
@@ -1421,7 +1412,7 @@ BaseGitUser.prototype.git_pull = function (branch) {
     return ret
 }
 
-BaseGitUser.prototype.git_add_commit_push_master_Sync = function (bSync) {
+BaseGitUser.prototype.main_git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
     var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
