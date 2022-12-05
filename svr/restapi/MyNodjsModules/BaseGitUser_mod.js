@@ -872,7 +872,7 @@ BaseGitUser.prototype.absRootWorkingDir = function () {
 
 BaseGitUser.prototype.get_repo_salts = function (u) {
     var ret = ["YQ==", "a"]
-    var fname = this.getFullPath_usr_git(".salts")
+    var fname = this.getFullPath_usr_main(".salts")
     if (!fs.existsSync(fname)) {
         return ret
     }
@@ -971,7 +971,7 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
 BaseGitUser.prototype.getFullPath_usr_host = function (subpath) {
     return (!subpath) ? this.m_projDirs.user_dir : `${this.m_projDirs.user_dir}/${subpath.replace(/^[\/]/, "")}`
 }
-BaseGitUser.prototype.getFullPath_usr_git = function (subpath) {
+BaseGitUser.prototype.getFullPath_usr_main = function (subpath) {
     return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
 }
 
@@ -1133,7 +1133,7 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
     var stat = { bRepostoryDirExist: false }; //this.m_inp.out.state
-    if (!fs.existsSync(this.getFullPath_usr_git())) {
+    if (!fs.existsSync(this.getFullPath_usr_main())) {
         return stat;
     }
     var _THIS = this
@@ -1144,11 +1144,11 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
     var dir = this.getFullPath_usr_dat()
 
 
-    var dir = this.getFullPath_usr_git("/.git/config")
+    var dir = this.getFullPath_usr_main("/.git/config")
     stat.bRepostoryDirExist = fs.existsSync(dir)
 
 
-    var accdir = this.getFullPath_usr_git()
+    var accdir = this.getFullPath_usr_main()
     var fstat = {}
     var totalsize = 0
     var iAlertLevel = 0
@@ -1199,7 +1199,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 
 BaseGitUser.prototype.git_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword])
-    var fname = this.getFullPath_usr_git(".salts")
+    var fname = this.getFullPath_usr_main(".salts")
     var ret = fs.writeFileSync(fname, salts)
     return salts
 }
@@ -1209,7 +1209,7 @@ BaseGitUser.prototype.gh_repo_create__and_more____ = function (passcode, hintwor
     var dir = this.getFullPath_usr_host()
     if (!hintword) hintword = ""
     var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
-    var commit_msg = this.getFullPath_usr_git(".salts")
+    var commit_msg = this.getFullPath_usr_main(".salts")
     if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
 
     var username = this.m_sponser.m_reponame
@@ -1243,8 +1243,8 @@ else
 fi
     `
     //console.log(gh_repo_create)
-    if (this.getFullPath_usr_git() !== this.getFullPath_usr_host(username)) {
-        console.log(this.getFullPath_usr_git() + " is not the same with: " + this.getFullPath_usr_host(username))
+    if (this.getFullPath_usr_main() !== this.getFullPath_usr_host(username)) {
+        console.log(this.getFullPath_usr_main() + " is not the same with: " + this.getFullPath_usr_host(username))
     }
 
     console.log("git_gh_repo_createne_cmd...")
@@ -1261,7 +1261,7 @@ BaseGitUser.prototype.Deploy_proj = function (sBranch) {
     console.log("********************************************* Deploy_proj  1")
 
 
-    var dir = this.getFullPath_usr_git()
+    var dir = this.getFullPath_usr_main()
     if (sBranch && sBranch.length > 0) {
         dir = this.getFullPath_usr_acct()
     }
@@ -1272,27 +1272,13 @@ BaseGitUser.prototype.Deploy_proj = function (sBranch) {
 
     var ret = this.git_clone(sBranch) //always sucess even passwd is wrong.
 
-    //var old_txt = fs.readFileSync(cfgf, "utf8")
-    //console.log("old_cfg :", old_txt)
-    //var old_file = cfgf + "_old"
-    //if (!fs.existsSync(old_file)) {
-    //fs.writeFileSync(old_file, old_txt, "utf8", function(err){
-    //    console.log("failed to write old_file", old_file, err)
-    //})
-    //}
-
-    //console.log("new cfg:", this.m_sponser.git_conf_txt(true))
-    //fs.writeFileSync(cfgf, this.m_sponser.git_conf_txt(true), "utf8")
-
-    //this.git_push_test()
-
     return ret
 }
 
 
 BaseGitUser.prototype.git_dir_remove = function () {
 
-    var gitdir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_main()
     //var password = "lll" //dev mac
     var proj_destroy = `
       sudo -S rm -rf ${gitdir}
@@ -1323,11 +1309,11 @@ BaseGitUser.prototype.git_status = async function (_sb) {
     if (!inp.out.state) return console.log("*** Fatal Error: inp.out.state = null")
 
     if (undefined === _sb) _sb = ""
-    var gitdir = this.getFullPath_usr_git("/.git/config")
+    var gitdir = this.getFullPath_usr_main("/.git/config")
     if (fs.existsSync(gitdir)) {
         /////// git status
         var git_status_cmd = `
-        cd ${this.getFullPath_usr_git()}
+        cd ${this.getFullPath_usr_main()}
         git status ${_sb}
         #git diff --ignore-space-at-eol -b -w --ignore-blank-lines --color-words=.`
 
@@ -1343,7 +1329,7 @@ BaseGitUser.prototype.gh_repo_create = function (passcode, hintword, accesstr) {
     rob.gh_repo_create_remote = this.gh_repo_create_remote(accesstr)
     rob.git_clone = this.git_clone()  //on master by default.
     rob.git_dir_write_salts = this.git_dir_write_salts(passcode, hintword)
-    rob._git_add_commit_push_Sync = this.git_add_commit_push_Sync_default(true)
+    rob._git_add_commit_push_Sync = this.git_add_commit_push_master_Sync(true)
     rob.state_just_created = this.Check_proj_state()
     rob.git_dir_remove = this.git_dir_remove()
     return rob
@@ -1391,7 +1377,7 @@ BaseGitUser.prototype.git_clone = function (branch) {
     var git_root = this.getFullPath_usr_acct()
     if (!branch) { //on master by default.
         bransh_option = ""
-        git_root = this.getFullPath_usr_git()
+        git_root = this.getFullPath_usr_main()
     }
 
     var git_clone_cmd = `
@@ -1413,7 +1399,7 @@ BaseGitUser.prototype.git_clone = function (branch) {
 }
 
 BaseGitUser.prototype.git_pull = function (branch) {
-    var gitdir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_main()
     if (branch && branch.length > 0) {
         gitdir = this.getFullPath_usr_acct()
     }
@@ -1435,9 +1421,9 @@ BaseGitUser.prototype.git_pull = function (branch) {
     return ret
 }
 
-BaseGitUser.prototype.git_add_commit_push_Sync_default = function (bSync) {
+BaseGitUser.prototype.git_add_commit_push_master_Sync = function (bSync) {
     var _THIS = this
-    var gitdir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists=" + gitdir);
     }
@@ -1501,7 +1487,7 @@ If you wish to set tracking information for this branch you can do so with:
 }
 BaseGitUser.prototype.git_add_commit_push_Sync_ = function (bSync) {
     var _THIS = this
-    var gitdir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists=" + gitdir);
     }
@@ -1571,7 +1557,7 @@ If you wish to set tracking information for this branch you can do so with:
 
 BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
-    var gitdir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
         return console.log("gitdir not exists=" + gitdir);
     }
@@ -1679,7 +1665,7 @@ BaseGitUser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
-    var gitdir = this.getFullPath_usr_git()
+    var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
         return `nonexistance:${gitdir}`
     }
@@ -1699,7 +1685,7 @@ BaseGitUser.prototype.git_push_test = function () {
         console.log("\n*** test git push:", gitdir, ret)
         if (ret.match(/failed/i)) {
             if (!fs.existsSync(gitdir)) {
-                console.log("*********** getFullPath_usr_git not exist.", gitdir)
+                console.log("*********** getFullPath_usr_main not exist.", gitdir)
                 return null
             }
             ret = null
@@ -1711,15 +1697,15 @@ BaseGitUser.prototype.git_push_test = function () {
 BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     var _THIS = this
 
-    if (!fs.existsSync(this.getFullPath_usr_git())) {
-        return "NotExistGitDir=" + this.getFullPath_usr_git()
+    if (!fs.existsSync(this.getFullPath_usr_main())) {
+        return "NotExistGitDir=" + this.getFullPath_usr_main()
     }
 
     //console.log("proj", proj)
     //var password = "lll" //dev mac
     var scmd = `
     #!/bin/sh
-    cd ${this.getFullPath_usr_git()}
+    cd ${this.getFullPath_usr_main()}
     ${gitcmd}
     `
     console.log("\n----git_cmd start:>", scmd)

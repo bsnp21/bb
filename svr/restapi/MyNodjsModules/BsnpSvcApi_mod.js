@@ -330,7 +330,7 @@ var ApiJsonp_BibleObj = {
             //fs.writeFileSync(idxfile, "a")
             //inp.out.olog.indexfile = idxfile
 
-            ///inp.out.olog.git_res = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(save_res.desc);//after saved
+            //
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
 
 
@@ -413,7 +413,7 @@ var ApiJsonp_BibleObj = {
             inp.out.state.save = save_res
 
             //
-            //inp.out["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync("ApiUsrDat_save");//after saved
+            //
             inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
         })
     },
@@ -497,10 +497,9 @@ var ApiJsonp_BibleObj = {
 
             inp.out.olog = {}
             inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
-            var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_git()
+            var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_main()
             if (fs.existsSync(gitdir)) {
-                //inp.out.olog["git_push"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(true)
-                //inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync(true)
+                
             }
             inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
@@ -540,7 +539,7 @@ var ApiJsonp_BibleObj = {
             //return
 
             gituserMgr.m_BaseGitUser.git_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
-            inp.out.olog["git_add_commit_push_Sync"] = gituserMgr.m_BaseGitUser.git_add_commit_push_Sync_default("ApiUsrAccount_update");//after saved
+            inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.git_add_commit_push_master_Sync("ApiUsrAccount_update");//after saved
 
             //return
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`

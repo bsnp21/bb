@@ -72,9 +72,9 @@ NCache.Init = function () {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
             console.log(inp.out.state)
-            if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_git())) {
+            if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_main())) {
                 console.log("on del:git dir exist. push before to delete it")
-                userProject.m_BaseGitUser.git_add_commit_push_Sync(true)
+                
             }
             userProject.m_BaseGitUser.git_dir_remove()
         }
@@ -200,7 +200,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     if (robj.gh_repo_create.err) return robj;
 
     robj.state_after_created = this.m_BaseGitUser.Check_proj_state()
-    robj.git_add_commit_push_Sync = this.m_BaseGitUser.git_add_commit_push_Sync(true)
+    robj.git_add_commit_push_Sync_ = this.m_BaseGitUser.git_add_commit_push_master_Sync(true)
     robj.proj_detele = this.m_BaseGitUser.git_dir_remove()
     robj.state_after_deleted = this.m_BaseGitUser.Check_proj_state()
     return robj
@@ -288,7 +288,7 @@ BibleObjGitusrMgr.prototype.gh_pages_publish = function () {
         //return rob
     }
     rob.reponame = this.m_BaseGitUser.m_sponser.m_reponame;
-    rob.dir = this.m_BaseGitUser.getFullPath_usr_acct() //getFullPath_usr_git();//getFullPath_usr_acct
+    rob.dir = this.m_BaseGitUser.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
     rob.repourl = this.m_BaseGitUser.m_sponser.git_repo_user_url_private(true)
     rob.published_url_sample = this.m_BaseGitUser.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
     rob.published_ret = ghpages.publish(rob.dir, {
@@ -370,7 +370,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
 
     adminMgr.release_user = function () {
         if (this.iUpdatedUsersList > 0) {
-            return adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+            return adminMgr.m_BaseGitUser.git_add_commit_push_master_Sync("admin add usr");//after saved
         }
     }
     adminMgr.Add_doc_BCV_user = function (bcvObj, username, visib) {
@@ -432,7 +432,7 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
             ret.admobj.set_fname_header()
             ret.admobj.writeback()
         }
-        //ret.add_commit = adminMgr.m_BaseGitUser.git_add_commit_push_Sync("admin add usr");//after saved
+
         this.iUpdatedUsersList += bUpdatedUsersList ? 1 : 0
         return ret;
     }
