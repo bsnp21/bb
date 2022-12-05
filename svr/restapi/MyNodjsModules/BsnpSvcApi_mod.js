@@ -521,7 +521,12 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
+            var usrname = this.m_BaseGitUser.m_sponser.m_reponame
+
             inp.out.olog = {}
+            gituserMgr.m_BaseGitUser.git_dir_remove()
+            gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
+            gituserMgr.m_BaseGitUser.Deploy_proj() //on master. 
             //inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
             //var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_git()
             //if (fs.existsSync(gitdir)) {
@@ -547,6 +552,8 @@ var ApiJsonp_BibleObj = {
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
             inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
 
+            gituserMgr.m_BaseGitUser.git_dir_remove()
+            
             ///////////////
             var admin = gituserMgr.CreateAdminMgr()
             inp.out.olog.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
