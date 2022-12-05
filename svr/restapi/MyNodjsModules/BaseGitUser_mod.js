@@ -1394,6 +1394,8 @@ BaseGitUser.prototype.git_clone = function (branch) {
     else 
         echo "${git_root}/.git/config does not exist, so to clone"
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option}  ${clone_https}  ${git_root}
+        sudo -S chmod 777 -R ${git_root}
+        sudo chown ubuntu:ubuntu -R ${git_root}
     fi
     `
     var ret = BaseGUti.execSync_Cmd(git_clone_cmd).toString()
