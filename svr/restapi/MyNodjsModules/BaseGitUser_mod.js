@@ -1431,7 +1431,7 @@ BaseGitUser.prototype.git_pull = function (branch) {
     sudo chmod 777 -R ${gitdir}
     git branch -a
     `
-    var ret = this.execSync_gitdir_cmd(cmd).toString()
+    var ret = this.execSync_Cmd(cmd).toString()
     return ret
 }
 
@@ -1722,9 +1722,9 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
     cd ${this.getFullPath_usr_main()}
     ${gitcmd}
     `
-    console.log("\n----git_cmd start:>", scmd)
+    //console.log("\n----git_cmd start:>", scmd)
     var res = BaseGUti.execSync_Cmd(scmd)
-    console.log("\n----git_cmd end.")
+    //console.log("\n----git_cmd end.")
 
     return res
 }
