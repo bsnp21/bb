@@ -92,23 +92,29 @@ var MASTER_SVR = {
             "ps aux | grep .node.",
             "node a.node.js",
             "node a.node.js &",
-            
+
             "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
 
-            `cd ~/install/cmd  enter;
-            ./setup_proj_main.sh  enter;`,
+            `cd ~/install/cmd  #;
+            ./setup_proj_main.sh  #;`,
 
-            `cd ~ enter;
-            ls -al enter;`,
+            `cd ~ #;
+            ls -al #;`,
 
-            `cd ~/install enter;
-            ls -al enter;
+            `cd ~/install #;
+            ls -al #;
+            sudo git pull`,
+
+            `cd  #;
             sudo git pull`,
 
             "ls -al",
             "ls -al ../",
             "ls -al ../../",
             "ls -al ../../",
+
+
+
             "dig +short myip.opendns.com @resolver1.opendns.com",
         ]
         var str = `Usage:<br>exec: async cmd. <br>sync: for execSync.<br> e.g.:<br><table border='1'><tr><th>Async</th><th>Sync</th></tr>`
@@ -138,7 +144,7 @@ var MASTER_SVR = {
         var cmd = `echo 'lll'| sudo -S ls -al`
         var ret = ""
         if ("exec" in req.query) {
-            cmd = req.query["exec"]
+            cmd = req.query["exec"].replace(/\#\;/g, "\n")
             ret = MASTER_SVR.exec_Cmd(cmd).then(
                 function (re) {
                     var killers = MASTER_SVR.ps_aux_grep_node(cmd, re.stdout)
@@ -151,7 +157,7 @@ var MASTER_SVR = {
                 })
         }
         else if ("sync" in req.query) {
-            cmd = req.query["sync"].replace(/enter\;/g, "\n")
+            cmd = req.query["sync"].replace(/\#\;/g, "\n")
             ret1 = MASTER_SVR.execSync_Cmd(cmd)
             ret2 = MASTER_SVR.ps_aux_grep_node(cmd, ret)
             console.log("cmd=",cmd)
