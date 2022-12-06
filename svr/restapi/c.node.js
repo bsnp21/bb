@@ -98,6 +98,12 @@ var MASTER_SVR = {
             `cd ~/install/cmd  #;
             ./setup_proj_main.sh  #;`,
 
+            `sudo systemctl restart bsnpc`,
+
+            `sudo git pull #;
+            sudo systemctl restart bsnpa
+            `,
+
             `cd ~ #;
             ls -al #;`,
 
