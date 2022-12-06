@@ -94,8 +94,8 @@ var MASTER_SVR = {
             "node a.node.js &",
             "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
 
-            `cd ~/install/cmd
-            ./setup_proj_main.sh`,
+            `cd ~/install/cmd  enter;
+            ./setup_proj_main.sh  enter;`,
 
             `cd ~ enter;
             ls -al enter;`,
