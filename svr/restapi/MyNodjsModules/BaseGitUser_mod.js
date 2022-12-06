@@ -641,8 +641,10 @@ GitSponsor.prototype.set_reponame = function (reponame) {
 GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
     var istart = this.m_acct.ownername.length + 1
-    var str = BaseGUti.execSync_Cmd(`gh repo list --limit ${MAX_SIZE}`).toString()// --json nameWithOwner|url
-    console.log("gh repo list:", str)
+
+    var cmd = `gh repo list --limit ${MAX_SIZE}`
+    console.log("gh repo list:", cmd)
+    var str = BaseGUti.execSync_Cmd(cmd).toString()// --json nameWithOwner|url
     if (str.indexOf("Command failed") >= 0) {
         console.log("=============gh is not installed or not work:", str)
         return { err: [str], obj: {} };
@@ -777,8 +779,8 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
 }
 GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
+    console.log("gh_api_repos_nameWithOwner:", ghcmd)
     var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
-    //console.log("gh_api_repos_nameWithOwner:", str)
     var ret = {
         "message": "Not Found",
         "documentation_url": "https://docs.github.com/rest/reference/repos#get-a-repository"
