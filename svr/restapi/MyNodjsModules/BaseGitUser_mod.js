@@ -15,6 +15,8 @@ const crypto = require('crypto')
 
 const NodeCache = require("node-cache");
 
+//https://www.npmjs.com/package/gh-pages
+var ghpages = require('gh-pages');
 
 
 

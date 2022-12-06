@@ -15,8 +15,7 @@ const crypto = require('crypto')
 
 const NodeCache = require("node-cache");
 
-//https://www.npmjs.com/package/gh-pages
-var ghpages = require('gh-pages');
+
 
 
 
@@ -276,29 +275,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 }
 
 
-BibleObjGitusrMgr.prototype.gh_pages_publish_______________________ = function () {
-    var rob = {}
-    rob.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-    if (rob.ghapinfo.visibility !== "public") {
-        rob.err = "cannot publish private repo."
-        //need to change it to public. the change back to private.
-        //return rob
-    }
-    rob.reponame = this.m_BaseGitUser.m_sponser.m_reponame;
-    rob.dir = this.m_BaseGitUser.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
-    rob.repourl = this.m_BaseGitUser.m_sponser.git_repo_user_url_private(true)
-    rob.published_url_sample = this.m_BaseGitUser.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
-    rob.published_ret = ghpages.publish(rob.dir, {
-        repo: rob.repourl,
-        silent: true,
-        //branch: 'main',  //default value=gh-pages. //main
-    },
-        function (err) {
-            rob.gh_pages_publish_err = err
-            console.log("gh_pages_publish err=", err)
-        });
-    return rob
-}
+
 
 
 BibleObjGitusrMgr.prototype.___session_get_github_owner = function (docfile) {
