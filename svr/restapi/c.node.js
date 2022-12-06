@@ -97,9 +97,9 @@ var MASTER_SVR = {
             `cd ~/install/cmd
             ./setup_proj_main.sh`,
 
-            `cd ~ \n
-            ls -al \n
-            sudo git pull \n`,
+            `cd ~ <br>
+            ls -al <br>
+            sudo git pull <br>`,
 
             "ls -al",
             "ls -al ../",
