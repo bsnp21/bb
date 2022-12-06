@@ -100,6 +100,10 @@ var MASTER_SVR = {
             `cd ~ enter;
             ls -al enter;`,
 
+            `cd ~/install enter;
+            ls -al enter;
+            sudo git pull`,
+
             "ls -al",
             "ls -al ../",
             "ls -al ../../",
