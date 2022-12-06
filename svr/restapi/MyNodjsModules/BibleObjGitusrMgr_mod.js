@@ -234,7 +234,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (robj.ghapinfo.err) {
         robj.err = ["not exist: ", repopath]
-        console.log(robj);
+        console.log(robj.err);
         return robj
     }
 
