@@ -117,7 +117,7 @@ var Uti = {
         $("#menuContainer, #passcode, #repopath").removeClass("menuContainer_red").removeClass("menuContainer_yellow").removeClass("menuContainer_green")
         if (ret.out.state) {
 
-            if (ret.out.state.bRepostoryDirExist <= 0) {
+            if (Object.keys(ret.out.state.fstat).length===0) {
                 $("#menuContainer, #passcode").addClass("menuContainer_yellow")
             } else {
                 $("#menuContainer").addClass("menuContainer_green")
@@ -127,25 +127,7 @@ var Uti = {
             $("#menuContainer, #repopath").addClass("menuContainer_red")
         }
     },
-    show_save_results: function (ret, eid) {
-        Uti.Msg("ret.out.save_res:", ret.out.save_res);//,null, 4))
-        var msg = "failed to save.", clr = "red"
-        if (ret.out.save_res && ret.out.save_res.desc) {
-            clr = "lightgreen", msg = `wrote:${ret.out.save_res.desc}(B)`
-        }
-        var sta = ret.out.state
-        if (sta) {
-            var colr1 = (sta && 1 === sta.bRepostoryDirExist) ? "lightgreen" : "yellow"
-            var msg1 = `bRepostoryDirExist:${sta.bRepostoryDirExist}`
-            var colr2 = (sta && 1 === sta.bRepostoryDirExist) ? "lightgreen" : "yellow"
-            var msg2 = `bRepostoryDirExist:${sta.bRepostoryDirExist}`
-            var desc = ret.out.save_res.desc
-
-            $(eid).html(`<font color='${colr1}'>${msg1}</font>, <font color='${colr2}'>${msg2}</font>, <br><a>${desc}</a>`)
-        } else {
-            $(eid).html(`<font color='red'>Failed: Invalid Repository</font>`)
-        }
-    },
+  
 
 
     validate_repository_url: function (repoath) {

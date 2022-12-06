@@ -463,23 +463,6 @@ PopupMenu.prototype.init = function (cbf) {
         $("#Mr_Input_Datalist").val("MemoryRequired")
         $("#MemoryVerse_Btn").trigger("click")
 
-        //        obj = tab_MostRecent_BCV.m_tbodies.MemoryRequired.m_MrObjInStore.get_obj()
-        //        var inpObj = {}
-        //
-        //
-        //        MyStorage.Repo_save_data_MostRecentVerses(
-        //            {
-        //                "MemoryRequired": obj
-        //            },
-        //            function (ret) {
-        //                Uti.show_save_results(ret, "#StorageRepo_save_res")
-        //                Uti.Msg("MyStorage.Repo_save_data_MostRecentVerses:", ret)
-        //                //$("#StorageRepo_save").prop("checked", false)
-        //
-        //                $(`.bcvTag[title='${bcv}']`).addClass("divPopupMenu_CaptionBCV_MemoVerse")
-        //            })
-        //
-        //        _THIS.hide()
     })
 
     this.popupMenu_BcvTag = new PopupMenu_BcvTag()

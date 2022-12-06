@@ -19,15 +19,15 @@ var PageUti = {
                 trs += `<tr class='${clsn}'><td>${nam}</td><td>${str}</td></tr>`
             })
         }
-        var accesstr = (ret.out.ghapinfo)?(ret.out.ghapinfo.visibility):("");
-        var alertclrary =  ["lightblue", "yellow", "red"]
-        var accesclrary =  {"public":"lightgreen", "private": "lightgray"}
-        
+        var accesstr = (ret.out.ghapinfo) ? (ret.out.ghapinfo.visibility) : ("");
+        var alertclrary = ["lightblue", "yellow", "red"]
+        var accesclrary = { "public": "lightgreen", "private": "lightgray" }
+
         var caps = ""
-        if (undefined !== ret.out.state.bRepostoryDirExist) {
-            var idx =  ret.out.state.repo_alertLevel
-            caps = `<a style='background-color:${accesclrary[accesstr]};color:black;'>${accesstr}</a><br><a style='background-color:${alertclrary[idx]};color:black;'>${ret.out.state.repo_usage}</a><br> `
-        }
+
+        var idx = ret.out.state.repo_alertLevel
+        caps = `<a style='background-color:${accesclrary[accesstr]};color:black;'>${accesstr}</a><br><a style='background-color:${alertclrary[idx]};color:black;'>${ret.out.state.repo_usage}</a><br> `
+
 
         var tbs = `<table border='1'><caption>${caps}</caption><thead><tr><th>NoteFile</th><th>MemUsage</th></tr></thead>${trs}</table>`
         return tbs
@@ -126,44 +126,18 @@ var PageUti = {
             Uti.Msg("ret.out.state", ret.out.state)
 
             $(showid).html("<font color='green'>ok.</font>")
-            //PageUti.repos_status_display(ret, showid)
             var stb = PageUti.Repo_fstat_table(ret)
             $(showid).html(stb)
         })
 
         return
     },
-    repos_status_display: function (ret, eid) {
-        var sta = ret.out.state
-        var msg = "<font color='red'>Invalid Repository</font>"
-        if (sta) {
-            if (sta.fstat) {
-                var filename
-                Object.keys(sta.fstat).forEach(function (fname) {
-                    var size = sta.fstat[fname]
-                })
-            }
 
-            var colr = (sta && 1 === sta.bEditable) ? "lightgreen" : "red"
-            var msg = `<font color='${colr}'>bEditable=${sta.bEditable}</font>`
-
-            var colr = (sta && 1 === sta.bRepostoryDirExist) ? "lightgreen" : "yellow"
-            msg += `,<font color='${colr}'>bRepostoryDirExist=${sta.bRepostoryDirExist}</font>`
-            if (1 === sta.bEditable && 1 === sta.bRepostoryDirExist) {
-                msg = "<font color='lightgreen'> Repository works normally</font>"
-            }
-            if (sta.bEditable < 1 && sta.bRepostoryDirExist < 1) {
-                msg = "<font color='red'>Session timeout. Sign-in again.</font>"
-            }
-        }
-
-        $(eid).html(msg).show()
-    },
     repo_pushback: function (bForce) {
-       
+
     },
     repo_pulldown: function (bForce) {
-    
+
     },
     gen_cmdline_table: function (eid, ar) {
         var cmdary =
@@ -202,7 +176,7 @@ var PageUti = {
                 {
                     cmdline: cmd
                 },
-                function(ret){
+                function (ret) {
                     Uti.Msg(ret)
                     var res = ret.out.cmd_exec_res.success
                     var str2 = ""
