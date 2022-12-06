@@ -47,10 +47,10 @@ var MASTER_SVR = {
             console.log(ret)
         } catch (error) {
             ret += JSON.stringify(error, null, 4)
-            console.log("error:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
-            console.log("error:", error.message); // Holds the message you typically want.
-            console.log("error:", error.stderr);  // Holds the stderr output. Use `.toString()`.
-            console.log("error:", error.stdout);  // Holds the stdout output. Use `.toString()`.
+            console.log("error status :", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
+            console.log("error message:", error.message); // Holds the message you typically want.
+            console.log("error stderr :", error.stderr.toString());  // Holds the stderr output. Use `.toString()`.
+            console.log("error stdout :", error.stdout).toString();  // Holds the stdout output. Use `.toString()`.
             //return error.message
         }
         return ret;
@@ -62,8 +62,8 @@ var MASTER_SVR = {
                 //console.log('exec_Cmd:', command)
                 exec(command, (err, stdout, stderr) => {
                     console.log('-exec_Cmd errorr:', err)
-                    console.log('-exec_Cmd stderr:', stderr)
-                    console.log('-exec_Cmd stdout:', stdout)
+                    console.log('-exec_Cmd stderr:', stderr.toString())
+                    console.log('-exec_Cmd stdout:', stdout.toString())
 
                     // the *entire* stdout and stderr (buffered)
                     //resolve(stdout);
@@ -148,9 +148,9 @@ var MASTER_SVR = {
         }
         else if ("sync" in req.query) {
             cmd = req.query["sync"]
-            ret = MASTER_SVR.execSync_Cmd(cmd)
-            ret += MASTER_SVR.ps_aux_grep_node(cmd, ret)
-            var str = `<textarea style='width:100%;height:100%;'>${dt}\n${reqs}\n${cmd}\n${ret}</textarea>`
+            ret1 = MASTER_SVR.execSync_Cmd(cmd)
+            ret2 = MASTER_SVR.ps_aux_grep_node(cmd, ret)
+            var str = `<a>${dt}</a><br><pre>${reqs}</pre><textarea style='width:100%;height:100%;'>\n${cmd}\n${ret1}</textarea><pre>${ret2}</pre>`
             res.send(str);
         }
         else {
