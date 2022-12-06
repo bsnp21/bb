@@ -778,7 +778,7 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
 GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
     var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
-    console.log("gh_api_repos_nameWithOwner:", str)
+    //console.log("gh_api_repos_nameWithOwner:", str)
     var ret = {
         "message": "Not Found",
         "documentation_url": "https://docs.github.com/rest/reference/repos#get-a-repository"
