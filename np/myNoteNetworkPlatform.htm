@@ -121,6 +121,7 @@
         #robout {
             width: 100%;
             height: 300px;
+            color:white
         }
 
         .RunningState {
@@ -141,6 +142,11 @@
         .notetoggle{
             cursor:ns-resize;
         }
+        .wordtot{
+            padding-left: 10px;
+            padding-right: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -149,15 +155,7 @@
     <div class="ctrpanel">
         <table>
             <tbody>
-                <tr>
-                    <td><input type="checkbox" name="showfavoriteonly" id="showfavoriteonly"></input></td>
-                    <td><label for="showfavoriteonly">favorite only</label></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" name="showprivate" id="showprivate"></input></td>
-                    <td><label for="showprivate">show private</label></td>
-                </tr>
-
+           
             </tbody>
         </table>
 
@@ -184,10 +182,10 @@
 
 
 
-    <textarea id="robout">
+    <a id="robout">
 
 
-    </textarea>
+    </a>
 </body>
 
 </html>
@@ -248,7 +246,7 @@
                 var editable = "", savbtn = "", plaintextarea = "", tr_visi = ""
                 if (0 === i) {
                     editable = "contenteditable='true'"
-                    savbtn = `<button id='saveNote' class='floatrightside'>save</button><a class='floatrightside wordtot'>..</a>`
+                    savbtn = `<button id='saveNote' class='floatrightside'>save</button><a class='floatrightside wordtot'>[.]</a>`
                     plaintextarea = "<textarea class='plaintxt'></textarea>"
                 }
                 var prvt = (!pub_users_json[usrnam]) ? "private_usr" : ""
@@ -260,7 +258,7 @@
         function ajx_get_note(usrname) {
             var bcv = $("#inpBCV").val()
             var urls = get_usr_urls(usrname)
-            $("#robout").val(urls)
+            $("#robout").attr("href", urls).text(urls)
             $.get(urls, function (dat, err) {
                 console.log(err)
                 var obj = JSON.parse(dat.slice(dat.indexOf("{")))
@@ -407,7 +405,7 @@
                 function (rob) {
                     $(".RunningState").removeClass("RunningState")
                     $(_THIS).attr("disabled", null)
-                    $("#robout").val(JSON.stringify(rob, null, 4))
+                    $("#robout").html(JSON.stringify(rob, null, 4))
 
                 })
 
