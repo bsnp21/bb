@@ -150,6 +150,7 @@ var MASTER_SVR = {
             cmd = req.query["sync"]
             ret1 = MASTER_SVR.execSync_Cmd(cmd)
             ret2 = MASTER_SVR.ps_aux_grep_node(cmd, ret)
+            console.log("cmd=",cmd)
             var str = `<a>${dt}</a><br><pre>${reqs}</pre><textarea style='width:100%;height:50%;'>\n${cmd}\n${ret1}</textarea><pre>${ret2}</pre>`
             res.send(str);
         }
