@@ -1257,8 +1257,8 @@ fi
 
 
 
-BaseGitUser.prototype.Deploy_proj = function (sBranch) {
-    console.log("********************************************* Deploy_proj  1")
+BaseGitUser.prototype.Setup_git_dist = function (sBranch) {
+    console.log("********************************************* Setup_git_dist  1")
 
 
     var dir = this.getFullPath_usr_main()
@@ -1322,7 +1322,29 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 }
 
 /////
-
+BaseGitUser.prototype.gh_pages_publish = function () {
+    var rob = {}
+    rob.ghapinfo = this.m_sponser.gh_api_repos_nameWithOwner()
+    if (rob.ghapinfo.visibility !== "public") {
+        rob.err = "cannot publish private repo."
+        //need to change it to public. the change back to private.
+        //return rob
+    }
+    rob.reponame = this.m_sponser.m_reponame;
+    rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
+    rob.repourl = this.m_sponser.git_repo_user_url_private(true)
+    rob.published_url_sample = this.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
+    rob.published_ret = ghpages.publish(rob.dir, {
+        repo: rob.repourl,
+        silent: true,
+        //branch: 'main',  //default value=gh-pages. //main
+    },
+        function (err) {
+            rob.gh_pages_publish_err = err
+            console.log("gh_pages_publish err=", err)
+        });
+    return rob
+}
 
 
 BaseGitUser.prototype.gh_repo_create_remote = function (accesstr) {

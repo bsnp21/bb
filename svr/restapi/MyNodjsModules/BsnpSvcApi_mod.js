@@ -325,13 +325,8 @@ var ApiJsonp_BibleObj = {
 
             bio.writeback()
 
-            //// optional
-            //var idxfile = gituserMgr.m_BaseGitUser.getFullPath_usr_acct("/index.htm")
-            //fs.writeFileSync(idxfile, "a")
-            //inp.out.olog.indexfile = idxfile
-
             //
-            inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
+            inp.out.olog.gh_pages_publish = gituserMgr.m_BaseGitUser.gh_pages_publish()
 
 
             /////////////////////////////
@@ -403,18 +398,14 @@ var ApiJsonp_BibleObj = {
                         }
                     }
                 })
-                console.log("ret", ret)
                 ret.writeback()
             } else {
                 save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
-                //inp.out.state.err = "FATAL: loadObj_by_fname failed:=", jsfname
-                //console.log(inp.out.state.err)
             }
             inp.out.state.save = save_res
 
             //
-            //
-            inp.out.olog.gh_pages_publish = gituserMgr.gh_pages_publish()
+            inp.out.olog.gh_pages_publish = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },
     ApiUsrDat_load: async function (req, res) {
@@ -499,7 +490,7 @@ var ApiJsonp_BibleObj = {
             inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
             var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_main()
             if (fs.existsSync(gitdir)) {
-                
+
             }
             inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
@@ -525,8 +516,7 @@ var ApiJsonp_BibleObj = {
             inp.out.olog = {}
             gituserMgr.m_BaseGitUser.main_dir_remove()
             gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
-            gituserMgr.m_BaseGitUser.Deploy_proj() //on master. 
-           
+            gituserMgr.m_BaseGitUser.Setup_git_dist() //on master. 
 
             if (!inp.par.passcodeNew) {
                 inp.out.err = ["missing new passcode."]
@@ -686,7 +676,7 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            
+
             //await gituserMgr.git_add_commit_push("push hard.", "");//real push hard.
 
             var res2 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd("git add *")
@@ -712,7 +702,7 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            
+
             gituserMgr.m_BaseGitUser.git_pull();
             gituserMgr.m_BaseGitUser.Check_proj_state()
 
@@ -777,7 +767,7 @@ var ApiJsonp_BibleObj = {
         var gituserMgr = new BibleObjGitusrMgr()
         var ret = gituserMgr.Proj_parse_usr_signin(inp)
         if (ret) {
-       
+
 
 
         }
