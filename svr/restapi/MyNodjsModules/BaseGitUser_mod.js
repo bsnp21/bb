@@ -643,7 +643,6 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     var istart = this.m_acct.ownername.length + 1
 
     var cmd = `gh repo list --limit ${MAX_SIZE}`
-    console.log("gh repo list:", cmd)
     var str = BaseGUti.execSync_Cmd(cmd).toString()// --json nameWithOwner|url
     if (str.indexOf("Command failed") >= 0) {
         console.log("=============gh is not installed or not work:", str)
@@ -669,7 +668,6 @@ GitSponsor.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner)
     var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
     if (!github_accountowner) github_accountowner = this.m_acct.ownername
     var cmd = `gh repo list --source ${github_accountowner} --json diskUsage --limit ${MAX_SIZE}`
-    console.log("gh repo list:", cmd)
     var str = BaseGUti.execSync_Cmd(cmd).toString()// --json nameWithOwner|url
     if (str.indexOf("Command failed") >= 0) {
         console.log("============= gh is not installed or not work:", str)
