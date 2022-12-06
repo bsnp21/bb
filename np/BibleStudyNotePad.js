@@ -2618,6 +2618,8 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
         Uti.Msg(txt);
         $("#divPopupMenu").hide()
         $("#Tab_OutputVolumnNamesList").hide()
+
+        tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(bcv)
     });
 
     $(tbid).find("td").bind("click", function () {
