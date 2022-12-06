@@ -93,8 +93,10 @@ var MASTER_SVR = {
             "node a.node.js",
             "node a.node.js &",
             "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
-            "~/install/cmd/setup_proj_main.sh",
             
+            `cd ~/install/cmd
+            ./setup_proj_main.sh`,
+
             `cd ~
             ls -al
             sudo git pull`,
