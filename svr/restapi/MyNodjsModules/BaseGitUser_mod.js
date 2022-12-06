@@ -1431,7 +1431,7 @@ BaseGitUser.prototype.git_pull = function (branch) {
     sudo chmod 777 -R ${gitdir}
     git branch -a
     `
-    var ret = this.execSync_Cmd(cmd).toString()
+    var ret = BaseGUti.execSync_Cmd(cmd).toString()
     return ret
 }
 
