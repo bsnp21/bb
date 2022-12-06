@@ -98,8 +98,7 @@ var MASTER_SVR = {
             ./setup_proj_main.sh`,
 
             `cd ~ enter;
-            ls -al enter;
-            sudo git pull enter;`,
+            ls -al enter;`,
 
             "ls -al",
             "ls -al ../",
