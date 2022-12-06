@@ -147,7 +147,7 @@ var MASTER_SVR = {
                 })
         }
         else if ("sync" in req.query) {
-            cmd = req.query["sync"].replace(/enter\;/g, "\r\n")
+            cmd = req.query["sync"].replace(/enter\;/g, "\n")
             ret1 = MASTER_SVR.execSync_Cmd(cmd)
             ret2 = MASTER_SVR.ps_aux_grep_node(cmd, ret)
             console.log("cmd=",cmd)
