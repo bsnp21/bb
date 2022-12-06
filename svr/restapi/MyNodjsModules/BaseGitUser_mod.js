@@ -145,10 +145,10 @@ var BaseGUti = {
             var ret = execSync(command).toString();
             //console.log(ret)
         } catch (error) {
-            console.log("error:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
-            console.log("error:", error.message); // Holds the message you typically want.
-            console.log("error:", error.stderr);  // Holds the stderr output. Use `.toString()`.
-            console.log("error:", error.stdout);  // Holds the stdout output. Use `.toString()`.
+            console.log("error status:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
+            console.log("error message:", error.message); // Holds the message you typically want.
+            console.log("error stderr:", error.stderr);  // Holds the stderr output. Use `.toString()`.
+            console.log("error stdout:", error.stdout);  // Holds the stdout output. Use `.toString()`.
             return error.message
         }
         return ret;
