@@ -150,7 +150,7 @@ var MASTER_SVR = {
             cmd = req.query["sync"]
             ret = MASTER_SVR.execSync_Cmd(cmd)
             ret += MASTER_SVR.ps_aux_grep_node(cmd, ret)
-            var str = `<textarea>${dt}\n${reqs}\n${cmd}\n${ret}</textarea>`
+            var str = `<textarea style='width:100%;height:100%;'>${dt}\n${reqs}\n${cmd}\n${ret}</textarea>`
             res.send(str);
         }
         else {
