@@ -187,8 +187,8 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
     robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
     if (!robj.ghapinfo.err) {
-        console.log(robj.ghapinfo);
         robj.err = ["already exist: ", repopath]
+        console.log("already exist: ", repopath);
         return robj;
     }
 
