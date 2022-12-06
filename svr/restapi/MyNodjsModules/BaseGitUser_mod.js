@@ -605,7 +605,7 @@ var BaseGUti = {
     default_inp_out_obj: function () {
         return {
             SSID: "", data: null, desc: "", err: null,
-            state: { bEditable: -1, bRepostoryDirExist: -1 }
+            state: {}
         }
     },
 
@@ -1135,21 +1135,11 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
-    var stat = { bRepostoryDirExist: false }; //this.m_inp.out.state
+    var stat = { }; //this.m_inp.out.state
     if (!fs.existsSync(this.getFullPath_usr_main())) {
         return stat;
     }
     var _THIS = this
-
-    var dir = this.getFullPath_usr_myoj()
-
-
-    var dir = this.getFullPath_usr_dat()
-
-
-    var dir = this.getFullPath_usr_main("/.git/config")
-    stat.bRepostoryDirExist = fs.existsSync(dir)
-
 
     var accdir = this.getFullPath_usr_main()
     var fstat = {}
