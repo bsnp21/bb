@@ -92,6 +92,7 @@ var MASTER_SVR = {
             "ps aux | grep .node.",
             "node a.node.js",
             "node a.node.js &",
+            
             "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
 
             `cd ~/install/cmd  enter;
