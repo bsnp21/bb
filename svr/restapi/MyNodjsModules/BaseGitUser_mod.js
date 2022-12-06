@@ -143,7 +143,7 @@ var BaseGUti = {
             //command = "ls"
             console.log('execSync Cmd:', command)
             var ret = execSync(command).toString();
-            console.log(ret)
+            //console.log(ret)
         } catch (error) {
             console.log("error:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
             console.log("error:", error.message); // Holds the message you typically want.
