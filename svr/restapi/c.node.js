@@ -93,7 +93,7 @@ var MASTER_SVR = {
             "node a.node.js",
             "node a.node.js &",
             "/usr/bin/node /var/www/html/wdaws/bb/svr/restapi/a.node.js",
-            
+
             `cd ~/install/cmd
             ./setup_proj_main.sh`,
 
@@ -150,7 +150,7 @@ var MASTER_SVR = {
             cmd = req.query["sync"]
             ret = MASTER_SVR.execSync_Cmd(cmd)
             ret += MASTER_SVR.ps_aux_grep_node(cmd, ret)
-            var str = `<pre>${dt}<br>${reqs}<br>${cmd}<br>${ret}</pre>`
+            var str = `<textarea>${dt}\n${reqs}\n${cmd}\n${ret}</textarea>`
             res.send(str);
         }
         else {
