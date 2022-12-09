@@ -1464,9 +1464,9 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
         var obj = shob.get_obj()
         $("#Tab_regex_history_search tbody").find("tr.hili_SeaStrRaw").each(function () {
-                var key = $(this).attr("objkey")
-                delete obj[key]
-                $(this).empty()
+            var key = $(this).attr("objkey")
+            delete obj[key]
+            $(this).empty()
         })
         shob.set_obj(obj)
         //MyStorage.MostRecentSearchStrn.set_ary(ar)
@@ -1489,7 +1489,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         if (s.length === 0) return alert("empty")
         MyStorage.MostRecentSearchStrn.addonTop(s)
         var ar = s.split(" ")
-        if(ar.length<=1) return
+        if (ar.length <= 1) return
         var sss = ""
         ar.forEach(function (str) {
             if (str.length > 0) {
@@ -1987,7 +1987,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     /////
 
-    $("#Check_bcv").click(function () {
+    $("#Check_bcv").on("click", function () {
         var str = $("#txtarea").val()
 
         var bcvAry = CNST.StdBcvAry_FromAnyStr(str)
@@ -2014,62 +2014,86 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         str = Uti.convert_std_bcv_in_text_To_linked(str)
         Uti.Msg(str)
     });
-
-
-   
-
-
-
-    $("#Storage_local_repos_exchange").on("click", function () {
-        Uti.open_child_window("./myStorageRepos.htm", function (data) {
-            Uti.Msg("fr child win:", data)
-        })
-    })
-
-
-    $("#share_private").on("click", function () {
-      
-    })
-    $("#account_reSignIn").on("click", function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        var ip = urlParams.get('sip')
-        window.open(`./mySignIn.htm?sip=${ip}`, "_target")
-    })
-
-    $("#myExt_Diary").on("click", function () {
-        var repo = $("#repopath").val()
-        $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}`)
-    })
-   
-    
-                
-
-
-  
-
-
-   
-
-    $("#Storage_clear").on("change", function () {
-        MyStorage.clear();
-        var _THIS = this
-        setTimeout(function () {
-            $(_THIS).prop('checked', false);
-        }, 3000)
-    })
-
-
-    $(".StorageRepo_Signout").on("click", function () {
-        if (!confirm("Are you sure to sign out?")) return;
+    $("#saveUsrDat").on("click", function () {
+        $(this).addClass("hili")
+        var par = {
+            "fnames": [
+                "./dat/MyPrivateDat"
+            ],
+            "data": {
+                "whjd": $("#txtarea").val()
+            }
+        }
 
         var api = new BsnpRestApi()
-        var url = `./mySignIn.htm${window.location.search}`
-        api.ajaxion(RestApi.ApiUsrAccount_logout, {
-        }, function (ret) {
-            $("body").attr("onbeforeunload", null)
-            window.open(url, "_self")
-        })
+        var _this = this
+
+        api.ajaxion(
+            RestApi.ApiUsrDat_save,
+            par,
+            function (ret) {
+                $(_this).removeClass("hili")
+                console.log("ret", ret)
+                alert("ok")
+            })
     })
+});
+
+
+
+
+
+
+$("#Storage_local_repos_exchange").on("click", function () {
+    Uti.open_child_window("./myStorageRepos.htm", function (data) {
+        Uti.Msg("fr child win:", data)
+    })
+})
+
+
+$("#share_private").on("click", function () {
+
+})
+$("#account_reSignIn").on("click", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    var ip = urlParams.get('sip')
+    window.open(`./mySignIn.htm?sip=${ip}`, "_target")
+})
+
+$("#myExt_Diary").on("click", function () {
+    var repo = $("#repopath").val()
+    $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}`)
+})
+
+
+
+
+
+
+
+
+
+
+$("#Storage_clear").on("change", function () {
+    MyStorage.clear();
+    var _THIS = this
+    setTimeout(function () {
+        $(_THIS).prop('checked', false);
+    }, 3000)
+})
+
+
+$(".StorageRepo_Signout").on("click", function () {
+    if (!confirm("Are you sure to sign out?")) return;
+
+    var api = new BsnpRestApi()
+    var url = `./mySignIn.htm${window.location.search}`
+    api.ajaxion(RestApi.ApiUsrAccount_logout, {
+    }, function (ret) {
+        $("body").attr("onbeforeunload", null)
+        window.open(url, "_self")
+    })
+})
 }
 GroupsMenuMgr.prototype.sel_default = function (sid) {
     if (!sid) sid = "Keyboard"
@@ -2111,7 +2135,7 @@ var AppInstancesManager = function () {
 AppInstancesManager.prototype.init = function (cbf) {
     var _This = this
 
-    
+
 
 
     $("body").prepend(BibleInputMenuContainer);
@@ -2359,9 +2383,9 @@ AppInstancesManager.prototype.init_load_storage = function () {
         $("#SignOut_repopathname").addClass(`user_vsibility_${vision}`)
         //$("#repopath").val(username)
         $("#visibilitydisplay").text(vision) //(new Date()).toISOString()
-        $("#visibilitydisplay").attr("href",`./mySignUpdate.htm${window.location.search}`)
-    
-      
+        $("#visibilitydisplay").attr("href", `./mySignUpdate.htm${window.location.search}`)
+
+
 
         Uti.Msg("RestApi=", RestApi);
 
