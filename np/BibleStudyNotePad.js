@@ -2018,7 +2018,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         $(this).addClass("hili")
         var par = {
             "fnames": [
-                "./dat/MyPrivateDat"
+                "./dat/PrivateObj"
             ],
             "data": {
                 "whjd": $("#txtarea").val()

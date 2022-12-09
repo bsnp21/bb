@@ -400,7 +400,7 @@ var ApiJsonp_BibleObj = {
                 })
                 ret.writeback()
             } else {
-                ret.obj = { dat: inp.par.data }
+                ret.obj = inp.par.data 
                 ret.writeback()
                 save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
             }
