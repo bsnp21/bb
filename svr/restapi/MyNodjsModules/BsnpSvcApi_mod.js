@@ -400,9 +400,11 @@ var ApiJsonp_BibleObj = {
                 })
                 ret.writeback()
             } else {
-                save_res.desc = "FATAL: loadObj_by_fname failed:=" + jsfname
+                ret.obj = { dat: inp.par.data }
+                ret.writeback()
+                save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
             }
-            inp.out.state.save = save_res
+            inp.out.olog.saved = save_res
 
             //
             inp.out.olog.gh_pages_publish = gituserMgr.m_BaseGitUser.gh_pages_publish()
