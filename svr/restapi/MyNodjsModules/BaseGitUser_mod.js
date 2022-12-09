@@ -145,7 +145,7 @@ var BaseGUti = {
             //command = "ls"
             console.log('execSync Cmd:', command)
             var ret = execSync(command).toString();
-            console.log("execSync ==>",ret.slice(0,120), "...")
+            console.log("execSync ==>", ret.slice(0, 120), "...")
         } catch (error) {
             console.log("error status:", error.status);  // 0 : successful exit, but here in exception it has to be greater than 0
             console.log("error message:", error.message); // Holds the message you typically want.
@@ -1024,13 +1024,13 @@ BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
 BaseGitUser.prototype.getFullPath_usr_acct_file_StdChoice_IfNotExist = function (subpath, cbf) {
     var usrpfname = this.getFullPath_usr_acct(subpath)
     var stdpfname = this.getFullPath_sys_stdlib_template(subpath)
-    if (!fs.existsSync(stdpfname)) {
-        return console.log("************ FATAL error: std file not exist.", stdpfname)
-    }
     if (!fs.existsSync(usrpfname)) {
         if (cbf) {
             return cbf(stdpfname, usrpfname) //usr make decision between the two. 
         } else {
+            if (!fs.existsSync(stdpfname)) {
+                console.log("*** std file not exist.", stdpfname)
+            }
             return stdpfname;
         }
     }
@@ -1135,7 +1135,7 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
-    var stat = { }; //this.m_inp.out.state
+    var stat = {}; //this.m_inp.out.state
     if (!fs.existsSync(this.getFullPath_usr_main())) {
         return stat;
     }
