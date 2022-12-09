@@ -1067,7 +1067,7 @@ BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
     return `${DocCode}_json.js`
 }
 BaseGitUser.prototype.get_pfxname = function (DocCode, par) {
-    var cbf = par ? (par.IfUsrNotExist ? par.IfUsrNotExist : null) : null
+    var cbf = par ? (par.IfUsrFileNotExist ? par.IfUsrFileNotExist : null) : null
     //full path rw executable
     //var DocCode = inp.par.fnames[0]
     if (!DocCode) return ""

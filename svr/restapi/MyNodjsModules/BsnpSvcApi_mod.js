@@ -242,7 +242,7 @@ var ApiJsonp_BibleObj = {
                     for (var i = 0; i < par.fnames.length; i++) {
                         var fnameID = par.fnames[i];
                         var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID, {
-                            IfUsrNotExist: function (stdpfname, usrpfname) {
+                            IfUsrFileNotExist: function (stdpfname, usrpfname) {
                                 return stdpfname;
                             }
                         })
@@ -294,7 +294,7 @@ var ApiJsonp_BibleObj = {
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
             var doc = inp.par.fnames[0]
             var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
-                IfUsrNotExist: function (stdpfname, usrpfname) {
+                IfUsrFileNotExist: function (stdpfname, usrpfname) {
                     inp.out.olog["cpIfUsrNotExist"] = gituserMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
                     return usrpfname;
                 }
@@ -370,13 +370,13 @@ var ApiJsonp_BibleObj = {
             var save_res = { desc: "ok" }
             var doc = par.fnames[0]
             var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
-                IfUsrNotExist: function (stdfile, usrfile) {
+                IfUsrFileNotExist: function (stdfile, usrfile) {
                     var base = path.parse(usrfile)
                     BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`)
                     BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`)
                     BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`)
                     BaseGUti.execSync_Cmd(`sudo cp ${stdfile} ${usrfile}`)
-
+                    console.log("IfUsrFileNotExist, base=", base)
                     return usrfile
                 }
             })
