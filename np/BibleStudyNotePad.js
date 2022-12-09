@@ -2036,64 +2036,64 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
                 console.log("ret", ret)
                 alert("ok")
             })
+
+    });
+
+
+
+
+
+
+    $("#Storage_local_repos_exchange").on("click", function () {
+        Uti.open_child_window("./myStorageRepos.htm", function (data) {
+            Uti.Msg("fr child win:", data)
+        })
     })
-});
 
 
+    $("#share_private").on("click", function () {
 
-
-
-
-$("#Storage_local_repos_exchange").on("click", function () {
-    Uti.open_child_window("./myStorageRepos.htm", function (data) {
-        Uti.Msg("fr child win:", data)
     })
-})
-
-
-$("#share_private").on("click", function () {
-
-})
-$("#account_reSignIn").on("click", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    var ip = urlParams.get('sip')
-    window.open(`./mySignIn.htm?sip=${ip}`, "_target")
-})
-
-$("#myExt_Diary").on("click", function () {
-    var repo = $("#repopath").val()
-    $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}`)
-})
-
-
-
-
-
-
-
-
-
-
-$("#Storage_clear").on("change", function () {
-    MyStorage.clear();
-    var _THIS = this
-    setTimeout(function () {
-        $(_THIS).prop('checked', false);
-    }, 3000)
-})
-
-
-$(".StorageRepo_Signout").on("click", function () {
-    if (!confirm("Are you sure to sign out?")) return;
-
-    var api = new BsnpRestApi()
-    var url = `./mySignIn.htm${window.location.search}`
-    api.ajaxion(RestApi.ApiUsrAccount_logout, {
-    }, function (ret) {
-        $("body").attr("onbeforeunload", null)
-        window.open(url, "_self")
+    $("#account_reSignIn").on("click", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        var ip = urlParams.get('sip')
+        window.open(`./mySignIn.htm?sip=${ip}`, "_target")
     })
-})
+
+    $("#myExt_Diary").on("click", function () {
+        var repo = $("#repopath").val()
+        $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}`)
+    })
+
+
+
+
+
+
+
+
+
+
+    $("#Storage_clear").on("change", function () {
+        MyStorage.clear();
+        var _THIS = this
+        setTimeout(function () {
+            $(_THIS).prop('checked', false);
+        }, 3000)
+    })
+
+
+    $(".StorageRepo_Signout").on("click", function () {
+        if (!confirm("Are you sure to sign out?")) return;
+
+        var api = new BsnpRestApi()
+        var url = `./mySignIn.htm${window.location.search}`
+        api.ajaxion(RestApi.ApiUsrAccount_logout, {
+        }, function (ret) {
+            $("body").attr("onbeforeunload", null)
+            window.open(url, "_self")
+        })
+    })
 }
 GroupsMenuMgr.prototype.sel_default = function (sid) {
     if (!sid) sid = "Keyboard"
