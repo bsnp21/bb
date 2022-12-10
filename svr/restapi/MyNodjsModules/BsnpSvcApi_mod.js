@@ -421,7 +421,7 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.olog.save_dat = ProjSignedin_Save_dat(par.fnames[0], par.data)
+            inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(par.fnames[0], par.data)
 
             inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
