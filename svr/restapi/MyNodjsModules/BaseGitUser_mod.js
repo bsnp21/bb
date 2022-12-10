@@ -1733,15 +1733,16 @@ BaseGitUser.prototype.main_execSync_cmd = function (gitcmd) {
 BaseGitUser.prototype.main_execSync_cmdar = function (subdir, cmdar) {
     var _THIS = this
 
-    if (!fs.existsSync(this.getFullPath_usr_main(subdir))) {
-        return "NotExistGitDir=" + this.getFullPath_usr_main(subdir)
+    var sdir = this.getFullPath_usr_main(subdir)
+    if (!fs.existsSync(sdir)) {
+        return "NotExistGitDir=" + sdir
     }
 
     var ret = []
     cmdar.forEach(function (scmd, i) {
         var cmd = `
         #!/bin/sh
-        cd ${_THIS.getFullPath_usr_main()}
+        cd ${sdir}
         ${scmd}
         `
         ret.push(BaseGUti.execSync_Cmd(cmd))
