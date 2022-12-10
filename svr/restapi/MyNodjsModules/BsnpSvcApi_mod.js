@@ -378,12 +378,12 @@ var ApiJsonp_BibleObj = {
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
-            var save_res = { desc: "to save" }
+
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.olog = gituserMgr.ProjSignedin_Save_bibObj(inp.par.fnames[0], inp.par.inpObj)
+            inp.out.olog = gituserMgr.ProjSignedin_Save_myoj(inp.par.fnames[0], inp.par.inpObj)
 
             /////////////////////////////
             // for sharing staff.
@@ -409,8 +409,6 @@ var ApiJsonp_BibleObj = {
 
 
 
-
-
     ///////////////////////////////////
     ApiUsrDat_save: async function (req, res) {
         if (!req || !res) {
@@ -423,50 +421,8 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            var par = inp.par
-            var save_res = { desc: "ok" }
-            var doc = par.fnames[0]
-            var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
-                IfUsrFileNotExist: function (stdfile, usrfile) {
-                    var base = path.parse(usrfile)
-                    BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`)
-                    BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`)
-                    BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`)
-                    BaseGUti.execSync_Cmd(`sudo cp ${stdfile} ${usrfile}`)
-                    console.log("IfUsrFileNotExist, base=", base)
-                    return usrfile
-                }
-            })
-            console.log("jsfname=", jsfname)
-            var ret = BaseGUti.loadObj_by_fname(jsfname)
-            if (null === ret.obj) {
-                ret.obj = {}
-            }
-            if (ret.obj) {
-                BaseGUti.FlushObj_UntilEnd(par.data, ret.obj, {
-                    SrcNodeEnd: function (carProperty, carObj, tarObj) {
-                        if (null === carObj[carProperty]) { //to delete key in targetObj.
-                            delete tarObj[carProperty]
-                        } else {  //flush update target obj.
-                            tarObj[carProperty] = carObj[carProperty]
-                        }
-                    }, TargNodeNotOwnProperty: function (carProperty, carObj, tarObj) {
-                        if (null === carObj[carProperty]) {
-                            //nothing to delete. 
-                        } else {//add new key to targetObj.
-                            tarObj[carProperty] = carObj[carProperty]
-                        }
-                    }
-                })
-            //    ret.writeback()
-            //} else {
-                
-                ret.set_fname_header()
-                ret.writeback()
-                save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
-            }
-            inp.out.olog.saved = save_res
-            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync(true)
+            inp.out.olog.save_dat = ProjSignedin_Save_dat(par.fnames[0], par.data)
+
             inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },

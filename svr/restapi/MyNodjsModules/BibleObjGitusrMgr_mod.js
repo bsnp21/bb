@@ -285,7 +285,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
 }
-BibleObjGitusrMgr.prototype.ProjSignedin_Save_bibObj = function (doc, bibObj) {
+BibleObjGitusrMgr.prototype.ProjSignedin_Save_myoj = function (doc, bibObj) {
     var _this = this
     var olog = {}
     var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
@@ -318,6 +318,48 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_bibObj = function (doc, bibObj) {
     olog.gh_pages_publish_ = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
 
     return olog;
+}
+BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function(doc, inpObj){
+    var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
+        IfUsrFileNotExist: function (stdfile, usrfile) {
+            var base = path.parse(usrfile)
+            BaseGUti.execSync_Cmd(`sudo mkdir -p ${base.dir}`)
+            BaseGUti.execSync_Cmd(`sudo chown ubuntu:ubuntu -R ${base.dir}`)
+            BaseGUti.execSync_Cmd(`sudo chmod 777 -R ${base.dir}`)
+            BaseGUti.execSync_Cmd(`sudo cp ${stdfile} ${usrfile}`)
+            console.log("IfUsrFileNotExist, base=", base)
+            return usrfile
+        }
+    })
+
+    var ret = BaseGUti.loadObj_by_fname(jsfname)
+    if (null === ret.obj) {
+        ret.obj = {}
+        ret["file without template:"] = [jsfname, inpObj]
+    }
+    if (ret.obj) {
+        BaseGUti.FlushObj_UntilEnd(inpObj, ret.obj, {
+            SrcNodeEnd: function (carProperty, carObj, tarObj) {
+                if (null === carObj[carProperty]) { //to delete key in targetObj.
+                    delete tarObj[carProperty]
+                } else {  //flush update target obj.
+                    tarObj[carProperty] = carObj[carProperty]
+                }
+            }, TargNodeNotOwnProperty: function (carProperty, carObj, tarObj) {
+                if (null === carObj[carProperty]) {
+                    //nothing to delete. 
+                } else {//add new key to targetObj.
+                    tarObj[carProperty] = carObj[carProperty]
+                }
+            }
+        })
+        
+        ret.set_fname_header()
+        ret.writeback()
+        ret["force to save usr data:"] = [jsfname, inpObj]
+    }
+    ret.gh_pages_publish_ = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
+    return ret;
 }
 
 
