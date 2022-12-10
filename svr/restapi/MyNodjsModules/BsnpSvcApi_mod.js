@@ -264,6 +264,7 @@ var ApiJsonp_BibleObj = {
             }
 
             gituserMgr.m_BaseGitUser.main_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
+            gituserMgr.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
             inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
 
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
