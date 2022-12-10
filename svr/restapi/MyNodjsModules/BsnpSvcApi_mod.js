@@ -285,7 +285,7 @@ var ApiJsonp_BibleObj = {
 
 
 
-    
+
     ApiBibleObj_search_txt: function (req, res) {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
@@ -518,6 +518,7 @@ var ApiJsonp_BibleObj = {
                 save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
             }
             inp.out.olog.saved = save_res
+            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync(true)
             inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },
