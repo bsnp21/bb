@@ -1259,15 +1259,15 @@ BaseGitUser.prototype.Deploy_git_dist = function (sBranch) {
     var dir = this.getFullPath_usr_main()
     if (sBranch && sBranch.length > 0) {
         dir = this.getFullPath_usr_acct()
-    }  
-    
+    }
+
     var ret = this.git_clone(sBranch) //always sucess even passwd is wrong.
 
     if (fs.existsSync(dir)) {
         return this.git_pull(sBranch)
     }
 
-  
+
     return ret
 }
 
@@ -1344,11 +1344,12 @@ BaseGitUser.prototype.gh_pages_publish = function () {
     var opt = {
         repo: rob.repourl,
         silent: true,
+        dest: "account",
         //branch: 'main',  //default value=gh-pages. //main
     }
     rob.gh_pages_publish_opt = opt
     console.log("gh_pages_publish_ opt=", opt, rob.dir)
-    
+
     rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
         rob.gh_pages_publish_err = err
         console.log("gh_pages_publish_ err=", err)
