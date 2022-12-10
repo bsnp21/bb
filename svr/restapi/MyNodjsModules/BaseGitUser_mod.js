@@ -1327,10 +1327,16 @@ BaseGitUser.prototype.gh_pages_publish = function () {
     rob.reponame = this.m_sponser.m_reponame;
 
     rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
-    if (fs.existsSync(rob.dir)) {
+    if (!fs.existsSync(rob.dir)) {
         rob.dir_not_exist = "****fatal error: unable to ghpages publish."
-        return rob
+        var cmd=`
+        sudo mkdir -p ${rob.dir}
+        sudo -S chmod 777 -R ${rob.dir}
+        sudo -S chown ubuntu:ubuntu -R ${rob.dir}
+        `
+        rob.cmd_mkdir_acct = BaseGUti.execSync_Cmd(cmd)
     }
+
     rob.repourl = this.m_sponser.git_repo_user_url_private(true)
     var opt = {
         repo: rob.repourl,
