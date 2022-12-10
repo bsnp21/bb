@@ -1327,6 +1327,10 @@ BaseGitUser.prototype.gh_pages_publish = function () {
     rob.reponame = this.m_sponser.m_reponame;
 
     rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
+    if (fs.existsSync(rob.dir)) {
+        rob.dir_not_exist = "****fatal error: unable to ghpages publish."
+        return rob
+    }
     rob.repourl = this.m_sponser.git_repo_user_url_private(true)
     var opt = {
         repo: rob.repourl,
@@ -1348,27 +1352,12 @@ BaseGitUser.prototype.gh_pages_publish = function () {
     git commit -m 'gh publish'
     git push
     `
-    rob.cmd_ret_git = BaseGUti.execSync_Cmd(cmd)
+    //rob.cmd_ret_git = BaseGUti.execSync_Cmd(cmd)
     return rob
 }
 
 
-BaseGitUser.prototype.gh_repo_create_remote = function (accesstr) {
 
-    var usrdir = this.getFullPath_usr_host()
-    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
-
-    var username = this.m_sponser.m_reponame
-    var gh_repo_create = `
-# create my-project and clone 
-############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
-#######################################################################################################
-gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}  --clone  ## must remove sudo for third pary github account. 
-#######################################################################################################
-`
-    var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
-    return str
-}
 BaseGitUser.prototype.gh_repo_create_remote_master = function (accesstr) {
 
     var usrdir = this.getFullPath_usr_host()

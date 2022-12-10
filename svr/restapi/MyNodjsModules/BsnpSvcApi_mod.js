@@ -465,6 +465,8 @@ var ApiJsonp_BibleObj = {
             var admin = gituserMgr.CreateAdminMgr()
             ret.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
             ret.admrelease = admin.release_user()
+
+            
             return;
         })
     },
