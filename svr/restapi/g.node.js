@@ -158,7 +158,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
      * This configuration will avoid logging the GH_TOKEN if there is an error.
      */
         repo: 'https://' + process.env.GH_TOKEN + 'github.com/user/private-repo.git',
-        silent: false,
+        //silent: false,
         //dest:"account",
         repo: `https://${envs}github.com/${ownername}/${reponame}.git`
     }
