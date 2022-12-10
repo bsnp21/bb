@@ -2017,12 +2017,17 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     $("#saveUsrDat").on("click", function () {
         $(this).addClass("hili")
         var fname = $("#saveUsrDatFilename").val()
+        if (fname.length === 0) return alert("no fname.")
+        var txt = $("#txtarea").val()
+        try {
+            var ar = JSON.parse(txt.slice(txt.indexOf("[")))
+        } catch (err) { return alert(err) }
         var par = {
             "fnames": [
                 `./dat/${fname}`
             ],
             "data": {
-                "whjdat": $("#txtarea").val()
+                "whjdat": ar
             }
         }
         var _this = this

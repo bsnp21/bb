@@ -382,6 +382,9 @@ var ApiJsonp_BibleObj = {
             })
             console.log("jsfname=", jsfname)
             var ret = BaseGUti.loadObj_by_fname(jsfname)
+            if (null === ret.obj) {
+                ret.obj = {}
+            }
             if (ret.obj) {
                 BaseGUti.FlushObj_UntilEnd(par.data, ret.obj, {
                     SrcNodeEnd: function (carProperty, carObj, tarObj) {
@@ -398,9 +401,9 @@ var ApiJsonp_BibleObj = {
                         }
                     }
                 })
-                ret.writeback()
-            } else {
-                ret.obj = inp.par.data 
+            //    ret.writeback()
+            //} else {
+                
                 ret.set_fname_header()
                 ret.writeback()
                 save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
