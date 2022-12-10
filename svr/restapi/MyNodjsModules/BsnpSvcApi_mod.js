@@ -326,7 +326,7 @@ var ApiJsonp_BibleObj = {
             bio.writeback()
 
             //
-            inp.out.olog.gh_pages_publish = gituserMgr.m_BaseGitUser.gh_pages_publish()
+            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
 
 
             /////////////////////////////
@@ -409,7 +409,7 @@ var ApiJsonp_BibleObj = {
                 save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
             }
             inp.out.olog.saved = save_res
-            inp.out.olog.gh_pages_publish = gituserMgr.m_BaseGitUser.gh_pages_publish()
+            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },
     ApiUsrDat_load: async function (req, res) {
@@ -466,7 +466,7 @@ var ApiJsonp_BibleObj = {
             ret.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
             ret.admrelease = admin.release_user()
 
-            
+
             return;
         })
     },

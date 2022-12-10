@@ -1338,10 +1338,10 @@ BaseGitUser.prototype.gh_pages_publish = function () {
         //branch: 'main',  //default value=gh-pages. //main
     }
     rob.gh_pages_publish_opt = opt
-    console.log("gh_pages_publish opt=", opt)
+    console.log("gh_pages_publish_ opt=", opt)
     rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
         rob.gh_pages_publish_err = err
-        console.log("gh_pages_publish err=", err)
+        console.log("gh_pages_publish_ err=", err)
     });
 
     var cmd = `

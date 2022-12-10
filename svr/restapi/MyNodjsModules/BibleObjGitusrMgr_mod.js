@@ -197,13 +197,11 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     robj.main_git_add_salts = BaseGUti.execSync_Cmd("sudo git add .salts")
     robj._git_add_commit_push_Sync = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
     robj.state_just_created = this.m_BaseGitUser.Check_proj_state()
-
-    //////
-    //gh_pahges
-    this.m_BaseGitUser.gh_pages_publish()
-
-    
     robj.main_dir_remove = this.m_BaseGitUser.main_dir_remove()
+
+     //////
+    //gh_pahges
+    //this.m_BaseGitUser.gh_pages_publish()
 
     
 
