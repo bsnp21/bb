@@ -163,6 +163,7 @@ function gh_pages_test_muplitple_dest_by_argv2() {
         repo: `https://${envs}@github.com/${ownername}/${reponame}.git`
     }
     var dir = `/home/ubuntu/dist`
+    dir = process.argv[4]
 
     if (!fs.existsSync(dir)) return console.log(`${dir} does not exist.`)
     console.log(option)
