@@ -401,7 +401,7 @@ var ApiJsonp_BibleObj = {
                 ret.writeback()
             } else {
                 ret.obj = inp.par.data 
-                bio.set_fname_header()
+                ret.set_fname_header()
                 ret.writeback()
                 save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
             }
