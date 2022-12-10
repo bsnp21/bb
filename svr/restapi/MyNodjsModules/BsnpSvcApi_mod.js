@@ -307,71 +307,8 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             //////////////
-            function way2(fnames, bibOj) {
-                var olog = [];
-                console.log("-----:fnames", fnames, typeof fnames)
-                console.log("-----:binp.par.bibOj", bibOj)
-
-                var carryObj = JSON.parse(JSON.stringify(bibOj))
-                var sMaxStructFile = gituserMgr.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
-                var bibMaxStruct = BaseGUti.loadObj_by_fname(sMaxStructFile);
-                BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
-                    {
-                        FetchNodeEnd: function (carProperty, carObj, srcObj) {
-                            carObj[carProperty] = srcObj[carProperty] //at the end of object tree, make a copy fr src.
-                        }, SrcNodeNotOwnProperty: function (carProperty, carObj, srcObj) { //missing src of object. 
-                            //noop
-                        }
-                    })
-                BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
-                    {
-                        FetchNodeEnd: function (carProperty, carObj, srcObj) {//at the end of object tree.
-                            if ("string" === typeof (carObj[carProperty])) {
-                                carObj[carProperty] = {} //at the end of object tree, change string to arr to prepare to load different version of txt.
-                            } else {
-                                console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
-                            }
-                        }
-                    })
-
-                if ("object" === typeof fnames && bibOj) {//['NIV','ESV']
-                    console.log("par.fnames:", fnames)
-                    for (var i = 0; i < fnames.length; i++) {
-                        var fnameID = fnames[i];
-                        var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID, {
-                            IfUsrFileNotExist: function (stdpfname, usrpfname) {
-                                return stdpfname;
-                            }
-                        })
-                        console.log("load:", jsfname)
-                        var bib = BaseGUti.loadObj_by_fname(jsfname);
-                        if (bib.obj) {
-                            olog.push(jsfname + "::" + fnameID)
-                            console.log("exist..............", jsfname)
-                            BaseGUti.WalkthruObj_BCV_txt(carryObj,
-                                function (bkc, chp, vrs, emptyobj) {//at the end of object tree.
-                                    if ("object" === typeof (emptyobj)) {
-                                        if (bib.obj[bkc] && bib.obj[bkc][chp] && "string" === typeof (bib.obj[bkc][chp][vrs])) {
-                                            carryObj[bkc][chp][vrs][fnameID] = bib.obj[bkc][chp][vrs] //at the end of object tree, change string to arr to prepare to load different version of txt.
-                                        }
-                                        else {
-                                            carryObj[bkc][chp][vrs][fnameID] = ""
-                                        }
-                                    } else {
-                                        carryObj[bkc][chp][vrs][fnameID] = ""
-                                        console.log("============ Error, WalkthruObj_BCV_txt=", bkc, chp, vrs, emptyobj)
-                                        olog.push([jsfname, fnameID, bkc, chp, vrs])
-                                    }
-                                })
-                        }
-                    }
-                    olog.push(":success")
-                }
-                //inp.out.data = carryObj
-                //inp.out.olog = olog
-                return { data: carryObj, olog: olog }
-            }
-            var ret = way2(inp.par.fnames, inp.par.bibOj)
+            
+            var ret = gituserMgr.ProjSignedin_load_bibObj(inp.par.fnames, inp.par.bibOj)
             inp.out.data = ret.data
             inp.out.olog = ret.olog
             //console.log(bcvT)
