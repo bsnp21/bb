@@ -202,10 +202,6 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiUsrAccount_login: function (req, res) {
-        console.log("ApiUsrAccount_login")
-        if (!req || !res) {
-            return inp_struct_account_setup
-        }
         ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var gituserMgr = new BibleObjGitusrMgr()
@@ -216,7 +212,6 @@ var ApiJsonp_BibleObj = {
         })
     },
     ApiUsrAccount_logout: async function (req, res) {
-
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -231,14 +226,6 @@ var ApiJsonp_BibleObj = {
             inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
             inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
         })
-
-        // var sret = JSON.stringify(inp, null, 4)
-        // var sid = ""
-        // 
-        // console.log("oup is ", inp.out)
-        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        // res.end();
     },
     ApiUsrAccount_update: function (req, res) {
         console.log("ApiUsrAccount_create")
@@ -389,16 +376,12 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
-        if (!req || !res) {
-            return inp_struct_base
-        }
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
             var save_res = { desc: "to save" }
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
 
             inp.out.olog = {}
             //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
@@ -434,6 +417,7 @@ var ApiJsonp_BibleObj = {
             console.log("2 bio.obj", bio.obj)
 
             bio.writeback()
+            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync(true)
 
             //
             inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
