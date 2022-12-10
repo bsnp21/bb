@@ -2018,7 +2018,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         $(this).addClass("hili")
         var fname = $("#saveUsrDatFilename").val()
         if (fname.length === 0) return alert("no fname.")
-        var txt = $("#txtarea").val()
+        var txt = $("#txtarea").val().replace(/\\n/g, "\n").replace(/\\/g, "")
         try {
             var ar = JSON.parse(txt.slice(txt.indexOf("[")))
         } catch (err) { return alert(err) }
