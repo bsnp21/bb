@@ -245,7 +245,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
         return robj
     }
 
-    robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
+    //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
     robj.deploy = this.m_BaseGitUser.Deploy_git_dist() //on default master branch.
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
@@ -260,10 +260,10 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
 
     robj.state_main = this.m_BaseGitUser.Check_proj_state()
 
-    robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
-
+    //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
+    //this.m_BaseGitUser.gh_pages_publish()
     /////////
-    robj.deploy = this.m_BaseGitUser.Deploy_git_dist("gh-pages") // branch.
+    //robj.deploy = this.m_BaseGitUser.Deploy_git_dist("gh-pages") // branch.
     robj.state = this.m_BaseGitUser.Check_proj_state()
 
     return robj //must be SSID capitalized ret.
