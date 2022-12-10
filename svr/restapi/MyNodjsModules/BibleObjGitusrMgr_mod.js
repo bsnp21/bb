@@ -286,11 +286,11 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     return robj
 }
 BibleObjGitusrMgr.prototype.Proj_prepare_after_signed_Save_bibObj = function (doc, bibObj) {
-
+    var _this = this
     var olog = {}
     var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
         IfUsrFileNotExist: function (stdpfname, usrpfname) {
-            olog["cpIfUsrNotExist"] = this.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+            olog["cpIfUsrNotExist"] = _this.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
             return usrpfname;
         }
     })
