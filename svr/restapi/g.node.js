@@ -131,7 +131,7 @@ function get_txt_fr_net(urls, cbf) {
     });
     return body
 }
-urls = "https://bsnpghrepolist.github.io/wdingpub01/dat/MyBiblicalDiary_json.js"
+urls = "https://bsnpghrepolist.github.io/wdingpba/dat/MyBiblicalDiary_json.js"
 var txt = get_txt_fr_net(urls, (dat) => {
     //console.log(dat)
 })
