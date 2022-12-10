@@ -354,11 +354,11 @@ var BibleInputMenuContainer = `
                 <div id="DevTool" style='display:none;'>
                 <button onclick="$('#txtarea').val('');$('#operation_res').text('+')" title='clearout txt'>x</button>
                 <button id="Check_bcv">Check(bcv)</button>
-                <a target='_blank' href='../restapi_tester/index.htm'>.</a><br>
-                <button id='saveUsrDat'>S</button>
-                    <input list="browsers">
+                <a target='_blank' href='../restapi_tester/index.htm'>.</a> <a onclick='$("#txtarea").toggleClass("widerTexta")'>[w]</a> <br>
+                <button id='saveUsrDat'>Save</button>
+                    <input list='browsers' id='saveUsrDatFilename'>
                     <datalist id="browsers">
-                    <option value="UsrDat">
+                    <option value='private_whjdat'>
                     <option value="Firefox">
                     <option value="Chrome">
                     <option value="Opera">

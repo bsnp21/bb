@@ -405,8 +405,6 @@ var ApiJsonp_BibleObj = {
                 save_res.desc = ["force to save usr data:=" + jsfname, inp.par.data]
             }
             inp.out.olog.saved = save_res
-
-            //
             inp.out.olog.gh_pages_publish = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },

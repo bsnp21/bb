@@ -1323,19 +1323,22 @@ BaseGitUser.prototype.gh_pages_publish = function () {
         //need to change it to public. the change back to private.
         //return rob
     }
+    rob.published_url_sample = this.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
     rob.reponame = this.m_sponser.m_reponame;
+
     rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
     rob.repourl = this.m_sponser.git_repo_user_url_private(true)
-    rob.published_url_sample = this.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
-    rob.published_ret = ghpages.publish(rob.dir, {
+    var opt = {
         repo: rob.repourl,
         silent: true,
         //branch: 'main',  //default value=gh-pages. //main
-    },
-        function (err) {
-            rob.gh_pages_publish_err = err
-            console.log("gh_pages_publish err=", err)
-        });
+    }
+    rob.gh_pages_publish_opt = opt
+    console.log("gh_pages_publish opt=", opt)
+    rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
+        rob.gh_pages_publish_err = err
+        console.log("gh_pages_publish err=", err)
+    });
     return rob
 }
 

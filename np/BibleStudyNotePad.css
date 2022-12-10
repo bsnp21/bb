@@ -835,3 +835,11 @@ input[readonly],
 textarea[readonly] {
     background-color: lightgray;
 }
+
+
+.widerTexta{
+    position: fixed;
+    left:1px;
+    width: 100%;;
+    height: 700px;
+}

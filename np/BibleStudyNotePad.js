@@ -2016,18 +2016,18 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     });
     $("#saveUsrDat").on("click", function () {
         $(this).addClass("hili")
+        var fname = $("#saveUsrDatFilename").val()
         var par = {
             "fnames": [
-                "./dat/PrivateObj"
+                `./dat/${fname}`
             ],
             "data": {
-                "whjd": $("#txtarea").val()
+                "whjdat": $("#txtarea").val()
             }
         }
-
-        var api = new BsnpRestApi()
         var _this = this
 
+        var api = new BsnpRestApi()
         api.ajaxion(
             RestApi.ApiUsrDat_save,
             par,
