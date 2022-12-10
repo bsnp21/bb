@@ -1342,6 +1342,8 @@ BaseGitUser.prototype.gh_pages_publish = function () {
 
     var cmd = `
     cd ${rob.dir}
+    git diff --color-words=.
+    git status
     git add *
     git commit -m 'gh publish'
     git push
