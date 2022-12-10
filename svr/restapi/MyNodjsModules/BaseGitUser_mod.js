@@ -1194,6 +1194,7 @@ BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword])
     var fname = this.getFullPath_usr_main(".salts")
     var ret = fs.writeFileSync(fname, salts)
+    console.log("write salts: ", fname, salts)
     return salts
 }
 
