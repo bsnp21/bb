@@ -288,9 +288,9 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 BibleObjGitusrMgr.prototype.Proj_prepare_after_signed_Save_bibObj = function (doc, bibObj) {
 
     var olog = {}
-    var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
+    var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
         IfUsrFileNotExist: function (stdpfname, usrpfname) {
-            olog["cpIfUsrNotExist"] = gituserMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+            olog["cpIfUsrNotExist"] = this.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
             return usrpfname;
         }
     })
@@ -315,7 +315,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed_Save_bibObj = function (do
     console.log("2 bio.obj", bio.obj)
 
     bio.writeback()
-    olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync(true)
+    olog.gh_pages_publish_ = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
 
     return olog;
 }
