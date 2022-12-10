@@ -1339,6 +1339,14 @@ BaseGitUser.prototype.gh_pages_publish = function () {
         rob.gh_pages_publish_err = err
         console.log("gh_pages_publish err=", err)
     });
+
+    var cmd = `
+    cd ${rob.dir}
+    git add *
+    git commit -m 'gh publish'
+    git push
+    `
+    rob.cmd_ret_git = BaseGUti.execSync_Cmd(cmd)
     return rob
 }
 
