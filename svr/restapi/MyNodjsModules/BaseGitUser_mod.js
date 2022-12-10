@@ -1739,12 +1739,12 @@ BaseGitUser.prototype.main_execSync_cmdar = function (subdir, cmdar) {
 
     var ret = []
     cmdar.forEach(function (scmd, i) {
-        var scmd = `
+        var cmd = `
         #!/bin/sh
         cd ${_THIS.getFullPath_usr_main()}
-        ${gitcmd}
+        ${scmd}
         `
-        ret.push(BaseGUti.execSync_Cmd(scmd))
+        ret.push(BaseGUti.execSync_Cmd(cmd))
     })
     return ret;
 }
