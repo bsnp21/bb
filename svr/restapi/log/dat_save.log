@@ -1,4 +1,5 @@
 
+
 ----Parse_POST_req_to_inp
 req.method= OPTIONS
 req.url= /
@@ -13,7 +14,7 @@ req.url= /
 on post data.
 on post eend.
 POST after decoding, inp= {
-    "SSID": "1670656580273e09l",
+    "SSID": "1670657616151e09l",
     "api": "ApiUsrDat_save",
     "par": {
         "fnames": [
@@ -43,17 +44,17 @@ POST after decoding, inp= {
     }
 }
 cbf start ------------------------------
-NCache.Set|key,val,ttl | 1670656580273e09l { repopath: 'e09l',
+NCache.Set|key,val,ttl | 1670657616151e09l { repopath: 'e09l',
   passcode: 'YQ==',
-  tms: 1670656734610,
+  tms: 1670657631478,
   ttl: 15552000 } 15552000
-NCache.Get|key,val,ttl | 1670656580273e09l { repopath: 'e09l',
+NCache.Get|key,val,ttl | 1670657616151e09l { repopath: 'e09l',
   passcode: 'YQ==',
-  tms: 1670656734610,
+  tms: 1670657631478,
   ttl: 15552000 } 15552000
-NCache.Set|key,val,ttl | 1670656580273e09l { repopath: 'e09l',
+NCache.Set|key,val,ttl | 1670657616151e09l { repopath: 'e09l',
   passcode: 'YQ==',
-  tms: 1670656734611,
+  tms: 1670657631478,
   ttl: 15552000 } 15552000
 loadObj_by_fname { obj:
    { ownername: 'YnNucGdocmVwb2xpc3Q=',
@@ -183,9 +184,11 @@ execSync Cmd: gh api repos/bsnpghrepolist/e09l
 execSync ==> {"id":576539808,"node_id":"R_kgDOIl1MoA","name":"e09l","full_name":"bsnpghrepolist/e09l","private":false,"owner":{"login ...
 gh_pages_publish_ opt= { repo:
    'https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git',
-  silent: true }
+  silent: true } /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
 cbf ended ------------------------------
-______________________________finished post req 2022-12-10T07:18:55.185Z
+______________________________finished post req 2022-12-10T07:33:52.017Z
 gh_pages_publish_ err= Error: Unspecified error (run without silent option for detail)
     at getRepo.then.then.then.then.then.then.then.then.then.then.then.then.then.then.then (/var/www/html/wdaws/bb/svr/restapi/node_modules/gh-pages/lib/index.js:241:21)
-
+^C
+ubuntu@ip-172-31-87-112:/var/www/html/wdaws/bb/svr/restapi$ ^C
+ubuntu@ip-172-31-87-112:/var/www/html/wdaws/bb/svr/restapi$ 
