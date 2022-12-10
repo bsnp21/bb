@@ -1252,8 +1252,8 @@ fi
 
 
 
-BaseGitUser.prototype.Deploy_git_dist = function (sBranch) {
-    console.log("********************************************* Deploy_git_dist  1")
+BaseGitUser.prototype.Deploy_git_repo = function (sBranch) {
+    console.log("********************************************* Deploy_git_repo  1")
 
 
     var dir = this.getFullPath_usr_main()

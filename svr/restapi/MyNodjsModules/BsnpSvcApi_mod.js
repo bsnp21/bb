@@ -239,7 +239,7 @@ var ApiJsonp_BibleObj = {
             inp.out.olog = {}
             gituserMgr.m_BaseGitUser.main_dir_remove()
             gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
-            gituserMgr.m_BaseGitUser.Deploy_git_dist() //on master. 
+            gituserMgr.m_BaseGitUser.Deploy_git_repo() //on master. 
 
             if (!inp.par.passcodeNew) {
                 inp.out.err = ["missing new passcode."]
@@ -383,48 +383,11 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.olog = {}
-            //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
-            var doc = inp.par.fnames[0]
-            var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
-                IfUsrFileNotExist: function (stdpfname, usrpfname) {
-                    inp.out.olog["cpIfUsrNotExist"] = gituserMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
-                    return usrpfname;
-                }
-            })
-            var bio = BaseGUti.loadObj_by_fname(jsfname);
-            if (null === bio.obj) {
-                save_res.desc = `load(${doc},${jsfname})=null`
-                return;
-            }
-
-            //console.log("inp.par.inpObj", inp.par.inpObj)
-            //console.log("karyObj", karyObj)
-            //console.log("bio.obj", bio.obj)
-
-            BaseGUti.FlushObj_UntilEnd(inp.par.inpObj, bio.obj, {
-                SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
-                    if ("string" === typeof (carObj[carProperty])) {
-                        targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
-                    } else {
-                        console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
-                    }
-                },
-                TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
-                    targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
-                }
-            })
-            console.log("2 bio.obj", bio.obj)
-
-            bio.writeback()
-            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync(true)
-
-            //
-            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
-
+            inp.out.olog = gituserMgr.Proj_prepare_after_signed_Save_bibObj(inp.par.fnames[0], inp.par.inpObj)
 
             /////////////////////////////
-
+            // for sharing staff.
+            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
 
             var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
             var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()

@@ -109,7 +109,7 @@ execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has
 gh_api_repos_nameWithOwner: gh api repos/bsnpghrepolist/e09l
 execSync Cmd: gh api repos/bsnpghrepolist/e09l
 execSync ==> {"id":576539808,"node_id":"R_kgDOIl1MoA","name":"e09l","full_name":"bsnpghrepolist/e09l","private":false,"owner":{"login ...
-********************************************* Deploy_git_dist  1
+********************************************* Deploy_git_repo  1
 execSync Cmd: 
     #!/bin/sh     # git_clone()
     if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/.git" ]; then
@@ -415,7 +415,7 @@ execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has
  ...
 -fs.existsSync(ghroot): true /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has been created.
 
-********************************************* Deploy_git_dist  1
+********************************************* Deploy_git_repo  1
 execSync Cmd: 
     #!/bin/sh     # git_clone()
     if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/.git" ]; then

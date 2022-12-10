@@ -246,7 +246,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     }
 
     //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
-    robj.deploy = this.m_BaseGitUser.Deploy_git_dist() //on default master branch.
+    robj.deploy = this.m_BaseGitUser.Deploy_git_repo() //on default master branch.
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
     if (robj.saltary[0] !== passcode) {
@@ -263,7 +263,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
     //this.m_BaseGitUser.gh_pages_publish()
     /////////
-    //robj.deploy = this.m_BaseGitUser.Deploy_git_dist("gh-pages") // branch.
+    //robj.deploy = this.m_BaseGitUser.Deploy_git_repo("gh-pages") // branch.
     //robj.state = this.m_BaseGitUser.Check_proj_state()
 
     return robj //must be SSID capitalized ret.
@@ -280,12 +280,45 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     var robj = this.m_BaseGitUser.Set_gitusr(usr.repopath)
     if (robj.err) return robj;
 
-    robj.deploy_proj = this.m_BaseGitUser.Deploy_git_dist()
+    robj.deploy_proj = this.m_BaseGitUser.Deploy_git_repo()
 
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
 }
+BibleObjGitusrMgr.prototype.Proj_prepare_after_signed_Save_bibObj = function (doc, bibObj) {
 
+    var olog = {}
+    var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc, {
+        IfUsrFileNotExist: function (stdpfname, usrpfname) {
+            olog["cpIfUsrNotExist"] = gituserMgr.m_BaseGitUser.getFullPath_usr__cp_std(stdpfname, usrpfname).split(/\r|\n/) // must manually do it with sudo for gh auth
+            return usrpfname;
+        }
+    })
+    var bio = BaseGUti.loadObj_by_fname(jsfname);
+    if (null === bio.obj) {
+        olog.desc_err = `load(${doc},${jsfname})=null`
+        return;
+    }
+
+    BaseGUti.FlushObj_UntilEnd(bibObj, bio.obj, {
+        SrcNodeEnd: function (carProperty, carObj, targObj) {//at the end of object tree.
+            if ("string" === typeof (carObj[carProperty])) {
+                targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+            } else {
+                console.log("************ Impossible Fatal Error, carProperty=", carProperty, carObj[carProperty])
+            }
+        },
+        TargNodeNotOwnProperty: function (carProperty, carObj, targObj) {//at the end of object tree.
+            targObj[carProperty] = carObj[carProperty] //at the end of object tree, make a copy or src.
+        }
+    })
+    console.log("2 bio.obj", bio.obj)
+
+    bio.writeback()
+    olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync(true)
+
+    return olog;
+}
 
 
 
@@ -350,7 +383,7 @@ BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
 BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     var adminMgr = new BibleObjGitusrMgr()
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
-    adminMgr.m_BaseGitUser.Deploy_git_dist()//on  master by default
+    adminMgr.m_BaseGitUser.Deploy_git_repo()//on  master by default
 
     adminMgr.iUpdatedUsersList = 0
 

@@ -127,7 +127,7 @@ execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has
  ...
 -fs.existsSync(ghroot): true /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has been created.
 
-********************************************* Deploy_git_dist  1
+********************************************* Deploy_git_repo  1
 execSync Cmd: 
     #!/bin/sh     # git_clone()
     if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/.git" ]; then
