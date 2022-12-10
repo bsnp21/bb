@@ -1340,15 +1340,15 @@ BaseGitUser.prototype.gh_pages_publish = function () {
         rob.cmd_mkdir_acct = BaseGUti.execSync_Cmd(cmd)
     }
 
-    rob.repourl = this.m_sponser.git_repo_user_url_private(true)
     var opt = {
-        repo: rob.repourl,
+        repo: "",
         silent: true,
         dest: "account",
         //branch: 'main',  //default value=gh-pages. //main
     }
+    opt.repo = this.m_sponser.git_repo_user_url_private(true)
     rob.gh_pages_publish_opt = opt
-    console.log("gh_pages_publish_ opt=", opt, rob.dir)
+    console.log("gh_pages_publish_ dir,opt=", rob.dir, opt)
 
     rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
         rob.gh_pages_publish_err = err
