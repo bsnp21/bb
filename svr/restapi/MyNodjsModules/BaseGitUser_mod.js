@@ -1471,7 +1471,7 @@ BaseGitUser.prototype.main_git_add_commit_push_Sync = function (bSync) {
     `
 
     /****
-     wdingpub01$ git pull --all
+     wdingpba$ git pull --all
 Fetching origin
 There is no tracking information for the current branch.
 Please specify which branch you want to merge with.
@@ -1540,7 +1540,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync_ = function (bSync) {
     `
 
     /****
-     wdingpub01$ git pull --all
+     wdingpba$ git pull --all
 Fetching origin
 There is no tracking information for the current branch.
 Please specify which branch you want to merge with.
@@ -1610,7 +1610,7 @@ BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
     `
 
     /****
-     wdingpub01$ git pull --all
+     wdingpba$ git pull --all
 Fetching origin
 There is no tracking information for the current branch.
 Please specify which branch you want to merge with.
