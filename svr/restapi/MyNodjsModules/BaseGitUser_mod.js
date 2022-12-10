@@ -1374,7 +1374,7 @@ BaseGitUser.prototype.gh_repo_create_remote_master = function (accesstr) {
 # create my-project and clone 
 ############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
 #######################################################################################################
-gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   --clone ## must remove sudo for third pary github account. 
+gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   ## must remove sudo for third pary github account. 
 #######################################################################################################
 `
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
