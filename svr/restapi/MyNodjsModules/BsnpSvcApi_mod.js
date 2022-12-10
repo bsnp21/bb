@@ -307,12 +307,12 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             //////////////
-            function way2() {
-                var par = inp.par, olog = [];
-                console.log("-----:fnames", par.fnames, typeof par.fnames)
-                console.log("-----:binp.par.bibOj", par.bibOj)
+            function way2(fnames, bibOj) {
+                var olog = [];
+                console.log("-----:fnames", fnames, typeof fnames)
+                console.log("-----:binp.par.bibOj", bibOj)
 
-                var carryObj = JSON.parse(JSON.stringify(par.bibOj))
+                var carryObj = JSON.parse(JSON.stringify(bibOj))
                 var sMaxStructFile = gituserMgr.m_BaseGitUser.getFullPath_sys_stdlib_BibleStruct("All_Max_struct_json.js")
                 var bibMaxStruct = BaseGUti.loadObj_by_fname(sMaxStructFile);
                 BaseGUti.FetchObj_UntilEnd(carryObj, bibMaxStruct.obj,
@@ -334,10 +334,10 @@ var ApiJsonp_BibleObj = {
                         }
                     })
 
-                if ("object" === typeof par.fnames && par.bibOj) {//['NIV','ESV']
-                    console.log("par.fnames:", par.fnames)
-                    for (var i = 0; i < par.fnames.length; i++) {
-                        var fnameID = par.fnames[i];
+                if ("object" === typeof fnames && bibOj) {//['NIV','ESV']
+                    console.log("par.fnames:", fnames)
+                    for (var i = 0; i < fnames.length; i++) {
+                        var fnameID = fnames[i];
                         var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID, {
                             IfUsrFileNotExist: function (stdpfname, usrpfname) {
                                 return stdpfname;
@@ -367,10 +367,13 @@ var ApiJsonp_BibleObj = {
                     }
                     olog.push(":success")
                 }
-                inp.out.data = carryObj
-                inp.out.olog = olog
+                //inp.out.data = carryObj
+                //inp.out.olog = olog
+                return { data: carryObj, olog: olog }
             }
-            way2()
+            var ret = way2(inp.par.fnames, inp.par.bibOj)
+            inp.out.data = ret.carryObj
+            inp.out.olog = ret.olog
             //console.log(bcvT)
         })
     },
