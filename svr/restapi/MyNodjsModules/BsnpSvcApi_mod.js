@@ -372,7 +372,7 @@ var ApiJsonp_BibleObj = {
                 return { data: carryObj, olog: olog }
             }
             var ret = way2(inp.par.fnames, inp.par.bibOj)
-            inp.out.data = ret.carryObj
+            inp.out.data = ret.data
             inp.out.olog = ret.olog
             //console.log(bcvT)
         })
