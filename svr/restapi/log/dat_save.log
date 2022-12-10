@@ -13,15 +13,24 @@ req.url= /
 on post data.
 on post eend.
 POST after decoding, inp= {
-    "SSID": "1670654705059e09l",
-    "api": "ApiUsrDat_load",
+    "SSID": "1670656580273e09l",
+    "api": "ApiUsrDat_save",
     "par": {
         "fnames": [
             "./dat/MostRecentVerses"
         ],
         "data": {
             "MostRecent_Verses": {
-                "RecentAccessed": {}
+                "RecentAccessed": [
+                    {
+                        "Gen1:1": "221210 024610",
+                        "Oba1:1": "221107 233928",
+                        "Gen1:2": "221106 192246",
+                        "Gen1:9": "221106 192232",
+                        "Amo1:6": "221106 032928",
+                        "Amo1:2": "221106 032920"
+                    }
+                ]
             }
         }
     },
@@ -34,17 +43,17 @@ POST after decoding, inp= {
     }
 }
 cbf start ------------------------------
-NCache.Set|key,val,ttl | 1670654705059e09l { repopath: 'e09l',
+NCache.Set|key,val,ttl | 1670656580273e09l { repopath: 'e09l',
   passcode: 'YQ==',
-  tms: 1670654858496,
+  tms: 1670656734610,
   ttl: 15552000 } 15552000
-NCache.Get|key,val,ttl | 1670654705059e09l { repopath: 'e09l',
+NCache.Get|key,val,ttl | 1670656580273e09l { repopath: 'e09l',
   passcode: 'YQ==',
-  tms: 1670654858496,
+  tms: 1670656734610,
   ttl: 15552000 } 15552000
-NCache.Set|key,val,ttl | 1670654705059e09l { repopath: 'e09l',
+NCache.Set|key,val,ttl | 1670656580273e09l { repopath: 'e09l',
   passcode: 'YQ==',
-  tms: 1670654858497,
+  tms: 1670656734611,
   ttl: 15552000 } 15552000
 loadObj_by_fname { obj:
    { ownername: 'YnNucGdocmVwb2xpc3Q=',
@@ -120,65 +129,63 @@ execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has
 ********************************************* Deploy_git_dist  1
 execSync Cmd: 
     #!/bin/sh     # git_clone()
-    if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account" ]; then
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account aleady exists."
-        echo 'lll' | sudo -S chmod  777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
+    if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/.git" ]; then
+        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l aleady exists."
+        echo 'lll' | sudo -S chmod  777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
     else 
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account does not exist, then git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account"
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo -S chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
+        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l"
+        sudo rm -rf /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+        sudo -S chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
     fi
     
-Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account'...
-fatal: Remote branch gh-pages not found in upstream origin
-chmod: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-chown: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-error status: 1
-error message: Command failed: 
-    #!/bin/sh     # git_clone()
-    if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account" ]; then
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account aleady exists."
-        echo 'lll' | sudo -S chmod  777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-    else 
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account does not exist, then git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account"
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo -S chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-    fi
+Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l'...
+execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:ghp ...
+git_clone_cmd: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+
+execSync Cmd: 
+    sudo mkdir -p /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    cd /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    pwd
+    sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    sudo chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    sudo GIT_TERMINAL_PROMPT=0 git pull     #origin main
+    #sudo git checkout main
+    sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    sudo chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    git branch -a
     
-Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account'...
-fatal: Remote branch gh-pages not found in upstream origin
-chmod: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-chown: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-
-error stderr: Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account'...
-fatal: Remote branch gh-pages not found in upstream origin
-chmod: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-chown: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-
-error stdout: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account does not exist, then git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-
-git_clone_cmd: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account Command failed: 
-    #!/bin/sh     # git_clone()
-    if [ -f "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account" ]; then
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account aleady exists."
-        echo 'lll' | sudo -S chmod  777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-    else 
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account does not exist, then git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account"
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone --branch gh-pages  https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo -S chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-        sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account
-    fi
-    
-Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account'...
-fatal: Remote branch gh-pages not found in upstream origin
-chmod: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-chown: cannot access '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account': No such file or directory
-
-out.data {}
+execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+Already up to date.
+* master
+  remotes/origin/HEAD -> origi ...
+execSync Cmd: sudo mkdir -p /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat
+execSync ==>  ...
+execSync Cmd: sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat
+execSync ==>  ...
+execSync Cmd: sudo chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat
+execSync ==>  ...
+execSync Cmd: sudo cp /var/www/html/wdaws/bible_obj_lib/jsdb/UsrDataTemplate/dat/MostRecentVerses_json.js /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat/MostRecentVerses_json.js
+execSync ==>  ...
+IfUsrFileNotExist, base= { root: '/',
+  dir:
+   '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat',
+  base: 'MostRecentVerses_json.js',
+  ext: '.js',
+  name: 'MostRecentVerses_json' }
+jsfname= /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat/MostRecentVerses_json.js
+execSync Cmd: echo 'lll'| sudo -S chmod 777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat/MostRecentVerses_json.js
+execSync ==>  ...
+gh_api_repos_nameWithOwner: gh api repos/bsnpghrepolist/e09l
+execSync Cmd: gh api repos/bsnpghrepolist/e09l
+execSync ==> {"id":576539808,"node_id":"R_kgDOIl1MoA","name":"e09l","full_name":"bsnpghrepolist/e09l","private":false,"owner":{"login ...
+gh_pages_publish_ opt= { repo:
+   'https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git',
+  silent: true }
 cbf ended ------------------------------
-______________________________finished post req 2022-12-10T06:47:38.607Z
+______________________________finished post req 2022-12-10T07:18:55.185Z
+gh_pages_publish_ err= Error: Unspecified error (run without silent option for detail)
+    at getRepo.then.then.then.then.then.then.then.then.then.then.then.then.then.then.then (/var/www/html/wdaws/bb/svr/restapi/node_modules/gh-pages/lib/index.js:241:21)
+
