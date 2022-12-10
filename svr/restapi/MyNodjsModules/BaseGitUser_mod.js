@@ -1348,8 +1348,8 @@ BaseGitUser.prototype.gh_pages_publish = function () {
     }
     rob.gh_pages_publish_opt = opt
     console.log("gh_pages_publish_ opt=", opt, rob.dir)
-
-    rob.published_ret = ghpages.publish("account", opt, function (err) {
+    
+    rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
         rob.gh_pages_publish_err = err
         console.log("gh_pages_publish_ err=", err)
     });
