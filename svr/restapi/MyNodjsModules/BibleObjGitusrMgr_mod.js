@@ -285,7 +285,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
 }
-BibleObjGitusrMgr.prototype.Proj_prepare_after_signed_Save_bibObj = function (doc, bibObj) {
+BibleObjGitusrMgr.prototype.ProjSignedin_Save_bibObj = function (doc, bibObj) {
     var _this = this
     var olog = {}
     var jsfname = this.m_BaseGitUser.get_pfxname(doc, {

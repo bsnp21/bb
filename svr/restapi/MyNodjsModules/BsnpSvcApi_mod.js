@@ -383,7 +383,7 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.olog = gituserMgr.Proj_prepare_after_signed_Save_bibObj(inp.par.fnames[0], inp.par.inpObj)
+            inp.out.olog = gituserMgr.ProjSignedin_Save_bibObj(inp.par.fnames[0], inp.par.inpObj)
 
             /////////////////////////////
             // for sharing staff.
