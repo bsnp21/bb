@@ -264,7 +264,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     //this.m_BaseGitUser.gh_pages_publish()
     /////////
     //robj.deploy = this.m_BaseGitUser.Deploy_git_dist("gh-pages") // branch.
-    robj.state = this.m_BaseGitUser.Check_proj_state()
+    //robj.state = this.m_BaseGitUser.Check_proj_state()
 
     return robj //must be SSID capitalized ret.
 }
@@ -280,7 +280,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     var robj = this.m_BaseGitUser.Set_gitusr(usr.repopath)
     if (robj.err) return robj;
 
-    robj.deploy_proj = this.m_BaseGitUser.Deploy_git_dist("gh-pages")
+    robj.deploy_proj = this.m_BaseGitUser.Deploy_git_dist()
 
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
