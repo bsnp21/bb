@@ -76,7 +76,7 @@ loadObj_by_fname { obj:
      ctime: 2022-11-26T01:31:59.800Z,
      birthtime: 2022-11-26T01:31:59.800Z } }
 sponsor { ownername: 'bsnpghrepolist',
-  ownerpat: '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',
+  ownerpat: '-',
   ownerpa2: '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' }
 __dirname= /var/www/html/wdaws/bb/svr/restapi/MyNodjsModules rootdir= /var/www/html/wdaws/
 _prepare_proj_data_dirs---- projDirs = { root_sys: '/var/www/html/wdaws/',
@@ -117,16 +117,16 @@ execSync Cmd:
         echo 'lll' | sudo -S chmod  777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
         sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
     else 
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l"
+        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:-@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l"
         sudo rm -rf /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone   https://bsnpghrepolist:-@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
         sudo -S chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
         sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
     fi
     
 Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l'...
 execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:ghp ...
-git_clone_cmd: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+git_clone_cmd: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:-@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
 
 execSync Cmd: 
     sudo mkdir -p /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
@@ -386,7 +386,7 @@ loadObj_by_fname { obj:
      ctime: 2022-11-26T01:31:59.800Z,
      birthtime: 2022-11-26T01:31:59.800Z } }
 sponsor { ownername: 'bsnpghrepolist',
-  ownerpat: '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',
+  ownerpat: '-',
   ownerpa2: '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' }
 __dirname= /var/www/html/wdaws/bb/svr/restapi/MyNodjsModules rootdir= /var/www/html/wdaws/
 _prepare_proj_data_dirs---- projDirs = { root_sys: '/var/www/html/wdaws/',
@@ -423,16 +423,16 @@ execSync Cmd:
         echo 'lll' | sudo -S chmod  777 /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
         sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
     else 
-        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l"
+        echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:-@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l"
         sudo rm -rf /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone   https://bsnpghrepolist:-@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
         sudo -S chmod 777 -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
         sudo chown ubuntu:ubuntu -R /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
     fi
     
 Cloning into '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l'...
 execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:ghp ...
-git_clone_cmd: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist: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@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+git_clone_cmd: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l does not exist, then git clone   https://bsnpghrepolist:-@github.com/bsnpghrepolist/e09l.git  /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
 
 execSync Cmd: 
     sudo mkdir -p /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
