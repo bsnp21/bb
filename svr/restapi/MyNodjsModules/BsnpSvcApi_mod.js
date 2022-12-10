@@ -537,7 +537,7 @@ var ApiJsonp_BibleObj = {
             inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
 
             var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
-            inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
+            inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
 
             gituserMgr.m_BaseGitUser.main_dir_remove()
 
@@ -581,7 +581,7 @@ var ApiJsonp_BibleObj = {
                 console.log("to delete:" + reponame)
                 inp.out.destroy_res = {}
                 var cmd = `sudo gh repo delete ${reponame} --confirm`
-                inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
+                inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
                 inp.out.reposlist = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
                 //gituserMgr.Session_delete(inp.SSID)
                 inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
@@ -597,7 +597,7 @@ var ApiJsonp_BibleObj = {
                 inp.out.olog = []
                 for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
                     var cmd = inp.par.git_cmd_ary[i]
-                    var arr = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
+                    var arr = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
                     var obj = {}
                     obj[cmd] = arr
                     inp.out.olog.push(obj)
@@ -654,7 +654,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
-            var res2 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd("git status -sb")
+            var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git status -sb")
             if (res2 && res2.stdout) {
                 inp.out.state.git_status_sb = res2.stdout
                 inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
@@ -685,8 +685,8 @@ var ApiJsonp_BibleObj = {
 
             //await gituserMgr.git_add_commit_push("push hard.", "");//real push hard.
 
-            var res2 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd("git add *")
-            var res3 = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
+            var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git add *")
+            var res3 = gituserMgr.m_BaseGitUser.main_execSync_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
             //var res4 = gituserMgr.m_BaseGitUser.git_push()
 
             gituserMgr.m_BaseGitUser.Check_proj_state()
@@ -730,7 +730,7 @@ var ApiJsonp_BibleObj = {
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
-            var rso = gituserMgr.m_BaseGitUser.execSync_gitdir_cmd()
+            var rso = gituserMgr.m_BaseGitUser.main_execSync_cmd()
             console.log("\n\n*cmd-res", rso)
             gituserMgr.m_BaseGitUser.Check_proj_state()
         })

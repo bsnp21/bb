@@ -1193,7 +1193,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword])
     var fname = this.getFullPath_usr_main(".salts")
-    var ret = fs.writeFileSync(fname, salts, function(er){
+    var ret = fs.writeFileSync(fname, salts, function (er) {
         console.log("write ret", er)
     })
     console.log("write salts: ", fname, salts)
@@ -1332,7 +1332,7 @@ BaseGitUser.prototype.gh_pages_publish = function () {
     rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
     if (!fs.existsSync(rob.dir)) {
         rob.dir_not_exist = "****fatal error: unable to ghpages publish."
-        var cmd=`
+        var cmd = `
         sudo mkdir -p ${rob.dir}
         sudo -S chmod 777 -R ${rob.dir}
         sudo -S chown ubuntu:ubuntu -R ${rob.dir}
@@ -1696,7 +1696,7 @@ BaseGitUser.prototype.git_push_test = function () {
     echo lll | sudo -S  git commit -m '${logname}'
     echo lll | sudo -S  git push
     `
-    var ret = this.execSync_gitdir_cmd(cmd).toString()
+    var ret = this.main_execSync_cmd(cmd).toString()
     if (null !== ret) {
         console.log("\n*** test git push:", gitdir, ret)
         if (ret.match(/failed/i)) {
@@ -1710,7 +1710,7 @@ BaseGitUser.prototype.git_push_test = function () {
 
     return ret
 }
-BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
+BaseGitUser.prototype.main_execSync_cmd = function (gitcmd) {
     var _THIS = this
 
     if (!fs.existsSync(this.getFullPath_usr_main())) {
@@ -1730,7 +1730,24 @@ BaseGitUser.prototype.execSync_gitdir_cmd = function (gitcmd) {
 
     return res
 }
+BaseGitUser.prototype.main_execSync_cmdar = function (subdir, cmdar) {
+    var _THIS = this
 
+    if (!fs.existsSync(this.getFullPath_usr_main(subdir))) {
+        return "NotExistGitDir=" + this.getFullPath_usr_main(subdir)
+    }
+
+    var ret = []
+    cmdar.forEach(function (scmd, i) {
+        var scmd = `
+        #!/bin/sh
+        cd ${this.getFullPath_usr_main()}
+        ${gitcmd}
+        `
+        ret.push(BaseGUti.execSync_Cmd(scmd))
+    })
+    return ret;
+}
 
 
 
