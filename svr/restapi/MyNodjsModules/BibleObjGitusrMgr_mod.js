@@ -246,7 +246,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     }
 
     robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
-    robj.deploy = this.m_BaseGitUser.Setup_git_dist() //on default master branch.
+    robj.deploy = this.m_BaseGitUser.Deploy_git_dist() //on default master branch.
 
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
     if (robj.saltary[0] !== passcode) {
@@ -263,7 +263,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
 
     /////////
-    robj.deploy = this.m_BaseGitUser.Setup_git_dist("gh-pages") // branch.
+    robj.deploy = this.m_BaseGitUser.Deploy_git_dist("gh-pages") // branch.
     robj.state = this.m_BaseGitUser.Check_proj_state()
 
     return robj //must be SSID capitalized ret.
@@ -280,7 +280,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     var robj = this.m_BaseGitUser.Set_gitusr(usr.repopath)
     if (robj.err) return robj;
 
-    robj.deploy_proj = this.m_BaseGitUser.Setup_git_dist("gh-pages")
+    robj.deploy_proj = this.m_BaseGitUser.Deploy_git_dist("gh-pages")
 
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
@@ -350,7 +350,7 @@ BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
 BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
     var adminMgr = new BibleObjGitusrMgr()
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
-    adminMgr.m_BaseGitUser.Setup_git_dist()//on  master by default
+    adminMgr.m_BaseGitUser.Deploy_git_dist()//on  master by default
 
     adminMgr.iUpdatedUsersList = 0
 

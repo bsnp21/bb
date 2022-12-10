@@ -522,7 +522,7 @@ var ApiJsonp_BibleObj = {
             inp.out.olog = {}
             gituserMgr.m_BaseGitUser.main_dir_remove()
             gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
-            gituserMgr.m_BaseGitUser.Setup_git_dist() //on master. 
+            gituserMgr.m_BaseGitUser.Deploy_git_dist() //on master. 
 
             if (!inp.par.passcodeNew) {
                 inp.out.err = ["missing new passcode."]

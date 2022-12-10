@@ -1252,21 +1252,22 @@ fi
 
 
 
-BaseGitUser.prototype.Setup_git_dist = function (sBranch) {
-    console.log("********************************************* Setup_git_dist  1")
+BaseGitUser.prototype.Deploy_git_dist = function (sBranch) {
+    console.log("********************************************* Deploy_git_dist  1")
 
 
     var dir = this.getFullPath_usr_main()
     if (sBranch && sBranch.length > 0) {
         dir = this.getFullPath_usr_acct()
-    }
+    }  
+    
+    var ret = this.git_clone(sBranch) //always sucess even passwd is wrong.
 
     if (fs.existsSync(dir)) {
         return this.git_pull(sBranch)
     }
 
-    var ret = this.git_clone(sBranch) //always sucess even passwd is wrong.
-
+  
     return ret
 }
 
@@ -1398,12 +1399,13 @@ BaseGitUser.prototype.git_clone = function (branch) {
 
     var git_clone_cmd = `
     #!/bin/sh     # git_clone()
-    if [ -f "${git_root}" ]; then
+    if [ -f "${git_root}/.git" ]; then
         echo "${git_root} aleady exists."
         echo 'lll' | sudo -S chmod  777 ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
     else 
         echo "${git_root} does not exist, then git clone ${bransh_option}  ${clone_https}  ${git_root}"
+        sudo rm -rf ${git_root}
         echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option}  ${clone_https}  ${git_root}
         sudo -S chmod 777 -R ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
