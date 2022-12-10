@@ -1,0 +1,97 @@
+
+
+
+
+on del, NCache.m_checkperiod=600,m_TTL=360000
+on del:key=1670655490674e09l, 
+-val={"repopath":"e09l","passcode":"YQ==","tms":1670655538202,"ttl":15552000} 
+on del:* start to del proj_destroy ssid= 1670655490674e09l
+on del:* start to del proj_destroy val= { repopath: 'e09l',
+  passcode: 'YQ==',
+  tms: 1670655538202,
+  ttl: 15552000 }
+on del:* start to del proj_destroy ownr= ׮��x�N���=
+loadObj_by_fname { obj:
+   { ownername: 'YnNucGdocmVwb2xpc3Q=',
+     ownerpets:
+      [ 'Z2hwXz',
+        'k2Z',
+        'HZZO',
+        'ENKUn',
+        'lCR',
+        'VhLOX',
+        'NJZmZJ',
+        'S1htSD',
+        'Vue',
+        'WREZT',
+        'FENnI0TA',
+        '==' ] },
+  fname: '/home/ubuntu/install/gh/sponsorCfg.json.js',
+  fsize: 183,
+  header: 'var sponsorCfg = ',
+  err: '',
+  set_fname_header: [Function],
+  writeback: [Function],
+  stat:
+   Stats {
+     dev: 51713,
+     mode: 33261,
+     nlink: 1,
+     uid: 0,
+     gid: 0,
+     rdev: 0,
+     blksize: 4096,
+     ino: 279202,
+     size: 183,
+     blocks: 8,
+     atimeMs: 1670623502105.5723,
+     mtimeMs: 1669426319800.0479,
+     ctimeMs: 1669426319800.0479,
+     birthtimeMs: 1669426319800.0479,
+     atime: 2022-12-09T22:05:02.106Z,
+     mtime: 2022-11-26T01:31:59.800Z,
+     ctime: 2022-11-26T01:31:59.800Z,
+     birthtime: 2022-11-26T01:31:59.800Z } }
+sponsor { ownername: 'bsnpghrepolist',
+  ownerpat: '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',
+  ownerpa2: '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' }
+__dirname= /var/www/html/wdaws/bb/svr/restapi/MyNodjsModules rootdir= /var/www/html/wdaws/
+_prepare_proj_data_dirs---- projDirs = { root_sys: '/var/www/html/wdaws/',
+  base_Dir: '/var/www/html/wdaws/ddir',
+  user_dir: '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist',
+  git_root:
+   '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l',
+  acct_dir:
+   '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account',
+  dest_myo:
+   '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/myoj',
+  dest_dat:
+   '/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l/account/dat' }
+execSync Cmd: 
+        #!/bin/sh 
+        if [ -d "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist" ]; then
+            echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has been created."
+        else 
+            echo "/var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist does not exist, create it one-time-for-all: /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist"
+            echo 'lll' | sudo -S mkdir -p /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist
+            echo 'lll' | sudo -S chown -R ubuntu:ubuntu /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist
+            echo 'lll' | sudo -S chmod -R 777 /var/www/html/wdaws/ddir
+        fi
+        
+execSync ==> /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has been created.
+ ...
+-fs.existsSync(ghroot): true /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist already has been created.
+
+{}
+on del:git dir exist. push before to delete it
+execSync Cmd: 
+      sudo -S rm -rf /var/www/html/wdaws/ddir/usrs/github.com/bsnpghrepolist/e09l
+    
+execSync ==>  ...
+on del:* End of del proj_destroy ssid= 1670655490674e09l ׮��x�N���=
+Session_delete: 1670655490674e09l { repopath: 'e09l',
+  passcode: 'YQ==',
+  tms: 1670655538202,
+  ttl: 15552000 }
+cbf ended ------------------------------
+______________________________finished post req 2022-12-10T06:58:58.342Z
