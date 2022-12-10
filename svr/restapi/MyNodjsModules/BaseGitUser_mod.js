@@ -939,17 +939,16 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
 
     function make_path_777(startPath, endpath) {
         var cmd_ghroot = `
-    #!/bin/sh 
-    if [ -d "${endpath}" ]; then
-        echo "${endpath} already has been created."
-    else 
-        echo "${endpath} does not exist, create it one-time-for-all: ${endpath}"
-        echo 'lll' | sudo -S mkdir -p ${endpath}
-        echo 'lll' | sudo -S chown -R ubuntu:ubuntu ${endpath}
-        echo 'lll' | sudo -S chmod -R 777 ${startPath}
-        ls -al ${endpath}
-    fi
-    `
+        #!/bin/sh 
+        if [ -d "${endpath}" ]; then
+            echo "${endpath} already has been created."
+        else 
+            echo "${endpath} does not exist, create it one-time-for-all: ${endpath}"
+            echo 'lll' | sudo -S mkdir -p ${endpath}
+            echo 'lll' | sudo -S chown -R ubuntu:ubuntu ${endpath}
+            echo 'lll' | sudo -S chmod -R 777 ${startPath}
+        fi
+        `
         var ret = BaseGUti.execSync_Cmd(cmd_ghroot).toString()
         console.log("-fs.existsSync(ghroot):", fs.existsSync(ghroot), ret)
     }
@@ -1424,6 +1423,7 @@ BaseGitUser.prototype.git_pull = function (branch) {
         return `pull nonexistance:${gitdir}`
     }
     var cmd = `
+    sudo mkdir -p ${gitdir}
     cd ${gitdir}
     pwd
     sudo chown ubuntu:ubuntu -R ${gitdir}
