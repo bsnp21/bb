@@ -351,9 +351,6 @@ var ApiJsonp_BibleObj = {
 
     ///////////////////////////////////
     ApiUsrDat_save: async function (req, res) {
-        if (!req || !res) {
-            return inp_struct_base
-        }
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             inp.out.olog = {}
             //: unlimited write size. 
@@ -361,13 +358,12 @@ var ApiJsonp_BibleObj = {
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-            inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(inp.par.fnames[0], inp.par.data)
+            inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(inp.par.fnames[0], inp.par.data, inp.par.datype)
 
             inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },
     ApiUsrDat_load: async function (req, res) {
-
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)

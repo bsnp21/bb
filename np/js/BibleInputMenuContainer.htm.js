@@ -359,6 +359,7 @@ var BibleInputMenuContainer = `
                     <input list='browsers' id='saveUsrDatFilename'>
                     <datalist id="browsers">
                     <option value='private_whjdat'>
+                    <option value='private_whjd_encoj'>
                     <option value="Firefox">
                     <option value="Chrome">
                     <option value="Opera">

@@ -73,7 +73,7 @@ NCache.Init = function () {
             console.log(inp.out.state)
             if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_main())) {
                 console.log("on del:git dir exist. push before to delete it")
-                
+
             }
             userProject.m_BaseGitUser.main_dir_remove()
         }
@@ -197,14 +197,14 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     robj.main_git_add_salts = this.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
     robj._git_add_commit_push_Sync = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
     robj.state_just_created = this.m_BaseGitUser.Check_proj_state()
-    
+
     robj.main_dir_remove = this.m_BaseGitUser.main_dir_remove()
 
-     //////
+    //////
     //gh_pahges
     //this.m_BaseGitUser.gh_pages_publish()
 
-    
+
 
     return robj
 }
@@ -251,7 +251,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     robj.saltary = this.m_BaseGitUser.get_repo_salts()
     if (robj.saltary[0] !== passcode) {
         robj.err = ["password error. Hint: ", robj.saltary[1]]
-        console.log("robj=",robj)
+        console.log("robj=", robj)
         return robj
     }
 
@@ -319,7 +319,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_myoj = function (doc, bibObj) {
 
     return olog;
 }
-BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function(doc, inpObj){
+BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function (doc, inpObj, datype) {
     var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
         IfUsrFileNotExist: function (stdfile, usrfile) {
             var base = path.parse(usrfile)
@@ -331,6 +331,10 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function(doc, inpObj){
             return usrfile
         }
     })
+    if ("plain_text_content" === datype) {
+        fs.writeFileSync(jsfname, inpObj, "utf8")
+        return { plain_text_content_writeFileSync: jsfname }
+    }
 
     var ret = BaseGUti.loadObj_by_fname(jsfname)
     if (null === ret.obj) {
@@ -353,7 +357,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function(doc, inpObj){
                 }
             }
         })
-        
+
         ret.set_fname_header()
         ret.writeback()
         ret["force to save usr data:"] = [jsfname, inpObj]
@@ -361,7 +365,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function(doc, inpObj){
     ret.gh_pages_publish_ = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
     return ret;
 }
-BibleObjGitusrMgr.prototype.ProjSignedin_load_bibObj =function (fnames, bibOj) {
+BibleObjGitusrMgr.prototype.ProjSignedin_load_bibObj = function (fnames, bibOj) {
     var olog = [];
     console.log("-----:fnames", fnames, typeof fnames)
     console.log("-----:binp.par.bibOj", bibOj)
