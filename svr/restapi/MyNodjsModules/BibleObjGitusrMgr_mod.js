@@ -333,7 +333,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function (doc, inpObj, datyp
     })
     if ("plain_text_content" === datype) {
         fs.writeFileSync(jsfname, inpObj, "utf8")
-        return { plain_text_content_writeFileSync: jsfname }
+        return { plain_text_content_writeFileSync: jsfname, gh_pages_publish_ : this.m_BaseGitUser.main_git_add_commit_push_Sync(true) }
     }
 
     var ret = BaseGUti.loadObj_by_fname(jsfname)
