@@ -1135,12 +1135,12 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 BaseGitUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
     var stat = {}; //this.m_inp.out.state
-    if (!fs.existsSync(this.getFullPath_usr_main())) {
-        return stat;
+    var accdir = this.getFullPath_usr_main()
+    if (!fs.existsSync(accdir)) {
+        return { main_dir_not_exist: accdir };
     }
     var _THIS = this
 
-    var accdir = this.getFullPath_usr_main()
     var fstat = {}
     var totalsize = 0
     var iAlertLevel = 0
