@@ -1347,7 +1347,7 @@ BaseGitUser.prototype.gh_pages_publish = function () {
         //branch: 'main',  //default value=gh-pages. //main
     }
     opt.repo = this.m_sponser.git_repo_user_url_private(true)
-    rob.gh_pages_publish_opt = opt
+    //rob.gh_pages_publish_opt = opt
     console.log("gh_pages_publish_ dir,opt=", rob.dir, opt)
 
     rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
