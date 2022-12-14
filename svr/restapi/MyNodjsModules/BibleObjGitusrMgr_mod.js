@@ -258,7 +258,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     var usrObj = { repopath: repopath, passcode: passcode }
     robj.SSID = this.Session_create(usrObj)
 
-    robj.state_main = this.m_BaseGitUser.Check_proj_state()
+    robj.state = this.m_BaseGitUser.Check_proj_state()
 
     //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
     //this.m_BaseGitUser.gh_pages_publish()
