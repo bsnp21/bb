@@ -2019,13 +2019,13 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         var fname = $("#saveUsrDatFilename").val()
         if (fname.length === 0) return alert("no fname.")
         var txt = $("#txtarea").val();//.replace(/\\n/g, "\n").replace(/\\/g, "")
-        
+
         var par = {
             "fnames": [
                 `./dat/${fname}`
             ],
             "data": txt,
-            "datype":"plain_text_content"
+            "datype": "plain_text_content"
         }
         var _this = this
 
@@ -2065,6 +2065,14 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     $("#myExt_Diary").on("click", function () {
         var repo = $("#repopath").val()
         $(this).attr("href", `./calendars/calendar3yr.htm${window.location.search}`)
+    })
+
+    $("#CloneNewPage").on("click", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        var bcv = $("title").text()
+        urlParams.set('bcv', bcv)
+        var url = '' + window.location.pathname + "?" + urlParams.toString();
+        window.open(url, "_target")
     })
 
 
@@ -2348,6 +2356,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         popupMenu.popup(par)
         tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(par.m_bcv)
         $("title").text(par.m_bcv)
+
 
         showup.update_showup(par.m_bcv)
         digi.init_Chp_digiKeys_by_vol()
