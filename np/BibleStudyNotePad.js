@@ -2069,10 +2069,10 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     $("#CloneNewPage").on("click", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        var bcv = $("title").text()
-        urlParams.set('bcv', bcv)
+        var bcv = $("title").text();
+        if (bcv !== "bsnp") urlParams.set('bcv', bcv)
         var url = '' + window.location.pathname + "?" + urlParams.toString();
-        window.open(url, "_target")
+        window.open(url, "_blank")
     })
 
 
@@ -2373,11 +2373,13 @@ AppInstancesManager.prototype.init_load_storage = function () {
 
     var _This = this
     function _load_bcv_from_url_param() {
-        if (window.m_bcv) {//frm url. 
-            var ret = Uti.parse_bcv(window.m_bcv)
+        const urlParams = new URLSearchParams(window.location.search);
+        const bcv = urlParams.get('bcv');
+        if (bcv) {//frm url. 
+            var ret = Uti.parse_bcv(bcv)
             if (ret) {
                 showup.setAsChildren()
-                showup.update_showup(window.m_bcv)
+                showup.update_showup(bcv)
                 setTimeout(function () {
                     _This.loadBible_chapter_by_bibOj()
                 }, 1000)
