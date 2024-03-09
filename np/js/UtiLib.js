@@ -117,7 +117,7 @@ var Uti = {
         $("#menuContainer, #passcode, #repopath").removeClass("menuContainer_red").removeClass("menuContainer_yellow").removeClass("menuContainer_green")
         if (ret.out.state) {
 
-            if (Object.keys(ret.out.state.fstat)) {
+            if (ret.out.state && ret.out.state.fstat && Object.keys(ret.out.state.fstat).length===0) {
                 $("#menuContainer, #passcode").addClass("menuContainer_yellow")
             } else {
                 $("#menuContainer").addClass("menuContainer_green")
