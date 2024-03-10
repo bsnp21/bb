@@ -327,12 +327,12 @@ var ApiJsonp_BibleObj = {
 
             /////////////////////////////
             // for sharing staff.
-            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
-
-            var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-            var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-            var admin = gituserMgr.CreateAdminMgr()
-            inp.out.olog["Add_doc_BCV_user"] = admin.Add_doc_BCV_user(inp.par.inpObj, username, usrinfo.visibility)
+            // inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
+// 
+            // var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+            // var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+            // var admin = gituserMgr.CreateAdminMgr()
+            // inp.out.olog["Add_doc_BCV_user"] = admin.Add_doc_BCV_user(inp.par.inpObj, username, usrinfo.visibility)
             return;
             //////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
