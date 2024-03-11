@@ -2079,7 +2079,8 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     $("#All_e_Notes").on("click", function () {
         var repopathname = $("#SignOut_repopathname").text();
-        var url = `https://bsnpghrepolist.github.io/admin/?repopathname=${repopathname}`
+        const encodedUrl = encodeURIComponent(window.location.href);
+        var url = `https://bsnpghrepolist.github.io/admin/?repopathname=${repopathname}&encodedUrl=${encodedUrl}`
         window.open(url, "_blank")
     })
 
