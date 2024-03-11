@@ -220,7 +220,7 @@ PopupMenu_EdiTag.prototype.init = function () {
                 if ("e_Subtitle" === this.m_rev) {
                     showTxt = "<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>"
                 } else {
-                    showTxt = "<ol><li></li></ol>"
+                    showTxt = Uti.Get_e_Note_Date("ed.") + "<ol><li></li></ol>"
                 }
             }
             showTxt = Uti.convert_std_bcv_in_text_To_unlinked(showTxt)
@@ -318,6 +318,8 @@ PopupMenu_EdiTag.prototype.init = function () {
     })
     function _get_par_ediTxt_par() {
         var htmEdit = _THIS.m_ediDiv.getEditHtm()
+        htmEdit = Uti.Update_e_Note_Date(htmEdit)
+
         if (htmEdit.length >= 2000000) alert(`lengh=${htmEdit.length} > max 2MB.`)
         var ret = Uti.parse_bcv(_THIS.m_par.m_bcv, htmEdit)
         var par = { fnames: [_THIS.m_par.m_rev], inpObj: ret.bcvObj }
@@ -2074,7 +2076,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         var url = '' + window.location.pathname + "?" + urlParams.toString();
         window.open(url, "_blank")
     })
-    
+
     $("#All_e_Notes").on("click", function () {
         var repopathname = $("#SignOut_repopathname").text();
         var url = `https://bsnpghrepolist.github.io/admin/?repopathname=${repopathname}`

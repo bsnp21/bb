@@ -84,7 +84,7 @@ var BibleInputMenuContainer = `
     </tr>
         <tr>
             <td>
-                <a id="RevTag_Save">Save (to svr)</a>
+                <a id="RevTag_Save">Save to svr (ed | mm).</a>
             </td>
         </tr>
         <tr>

@@ -117,7 +117,7 @@ var Uti = {
         $("#menuContainer, #passcode, #repopath").removeClass("menuContainer_red").removeClass("menuContainer_yellow").removeClass("menuContainer_green")
         if (ret.out.state) {
 
-            if (ret.out.state && ret.out.state.fstat && Object.keys(ret.out.state.fstat).length===0) {
+            if (ret.out.state && ret.out.state.fstat && Object.keys(ret.out.state.fstat).length === 0) {
                 $("#menuContainer, #passcode").addClass("menuContainer_yellow")
             } else {
                 $("#menuContainer").addClass("menuContainer_green")
@@ -127,7 +127,7 @@ var Uti = {
             $("#menuContainer, #repopath").addClass("menuContainer_red")
         }
     },
-  
+
 
 
     validate_repository_url: function (repoath) {
@@ -256,7 +256,7 @@ var Uti = {
             }
         }
 
-        ret.get_vrs=function(){
+        ret.get_vrs = function () {
             return this.bcvObj[ret.vol][ret.chp][ret.vrs]
         }
 
@@ -470,7 +470,9 @@ var Uti = {
     },
 
 
-  
+
+
+
 
 
 
@@ -491,11 +493,46 @@ var Uti = {
         return
     },
     jq_post: function () {
-   
+
     }
 
 
 };////  Uti
+Uti.Get_e_Note_Date = function (ssuffix) {
+    // Create a new Date object
+    var today = new Date();
+
+    // Get the current year
+    var year = "" + today.getFullYear();
+    year = year.substring(2)
+
+    // Get the current month (returns a number between 0 and 11)
+    var month = today.getMonth() + 1; // Adding 1 because January is 0
+    var monthFormatted = String(month).padStart(2, '0');
+
+    // Get the current day of the month
+    var day = today.getDate().toFixed();
+
+    var dayFormatted = String(day).padStart(2, '0');
+
+    // Get the current hour, minute, and second
+    let currentHour = String(today.getHours()).padStart(2, '0');
+    let currentMinute = String(today.getMinutes()).padStart(2, '0');
+    let currentSecond = String(today.getSeconds()).padStart(2, '0');
+
+    var sday = `${year}${monthFormatted}${dayFormatted}_${currentHour}${currentMinute}${currentSecond}_`
+    if (ssuffix) sday += ssuffix
+    return sday
+}
+Uti.Update_e_Note_Date = function (seNote) {
+    if (seNote.match(/^\d{6}_\d{6}_/)) {
+        seNote = seNote.replace(/^\d{6}_\d{6}_/, Uti.Get_e_Note_Date())
+    } else {
+        seNote = Uti.Get_e_Note_Date("ed.") + seNote
+    }
+    return seNote
+}
+
 ////////////////////////////////////
 var Ext_Link_Menu = {
     HiliEx: function (_this) {
