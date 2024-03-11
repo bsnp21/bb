@@ -10,6 +10,10 @@ sudo systemctl enable bsnpa
 sudo systemctl start bsnpa
 sudo systemctl daemon-reload
 
-journalctl -u bsnpa
 
-ps aux|grep a.node
+ps aux|grep a.node.js
+
+# -f: tail end for debug.
+journalctl -u bsnpa -f 
+
+
