@@ -1406,9 +1406,10 @@ BaseGitUser.prototype.git_clone = function (branch) {
         echo 'lll' | sudo -S chmod  777 ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
     else 
-        echo "${git_root} does not exist, then git clone ${bransh_option}  ${clone_https}  ${git_root}"
+        echo "${git_root} does not exist, then git clone ${bransh_option} ${clone_https}  ${git_root}"
         sudo rm -rf ${git_root}
-        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option}  ${clone_https}  ${git_root}
+        echo "start-git-clone..."
+        echo 'lll' | sudo -S GIT_TERMINAL_PROMPT=0 git clone ${bransh_option} ${clone_https}  ${git_root}
         sudo -S chmod 777 -R ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
     fi
