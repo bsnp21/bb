@@ -2364,7 +2364,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         par.m_groupsMenuMgr = groupsMenuMgr
         popupMenu.popup(par)
         tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(par.m_bcv)
-        $("title").text(par.m_bcv)
+
 
 
         showup.update_showup(par.m_bcv)
@@ -2503,6 +2503,7 @@ AppInstancesManager.prototype.loadBible_verse_by_bibOj = function (par) {
             _THIS.loadBible_verse_by_bibOj_output(ret, par)
             setTimeout(function () {
                 _THIS.scrollToView_Vrs()
+
             }, 2100)
         })
 
@@ -2515,8 +2516,8 @@ AppInstancesManager.prototype.apiCallback_Gen_output_table = function (ret, cbf)
 }
 AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
     var _THIS = this
+    var res = showup.get_selected_bcv_parm();
     if (!oj) {
-        var res = showup.get_selected_bcv_parm();
         console.log("res=", res);
         if (!res || !res.oj_bc) return null
         oj = res.oj_bc
@@ -2533,6 +2534,10 @@ AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
         _THIS.apiCallback_Gen_output_table(ret)
         setTimeout(function () {
             _THIS.scrollToView_Vrs()
+            
+            //set page-title
+            if (!res.m_bcv) return
+            $("title").text(res.m_bcv)
         }, 2100)
     })
 
@@ -2638,6 +2643,8 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
         bcr.m_ouTxtStr = ret.getxt4outOj(_THIS.m_data.out.data, bcr.m_rev)
         bcr.m_outxtObj = ret.getxt4outOj(_THIS.m_data.out.data)
         bcr.m_clickedLabel = this
+
+        //$("title").text(bcr.m_bcv)
 
         _THIS.m_onclick_popupLabel(bcr)
 
