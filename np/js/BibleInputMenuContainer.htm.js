@@ -311,6 +311,7 @@ var BibleInputMenuContainer = `
                 <a id="account_reSignIn" title='more user sign in without destroying current repositoary'>SignIn</a> |
                 <a id='CloneNewPage' target='_blank' xhref="${window.location.href}" title='clone browser'>Clone</a> | 
                 <a id='myExt_Diary' target='_blank' xxhref="./myExt_Diary.htm${window.location.search}" title='Diary'>Calendar</a> | 
+                <a id='All_e_Notes' target='_blank'  title='All e_Note'>eNotes</a> | 
 
                 
                 <button class="StorageRepo_Signout">Sign Out</button>
