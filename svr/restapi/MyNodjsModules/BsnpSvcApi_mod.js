@@ -360,7 +360,7 @@ var ApiJsonp_BibleObj = {
 
             inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(inp.par.fnames[0], inp.par.data, inp.par.datype)
 
-            inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
+            //inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
         })
     },
     ApiUsrDat_load: async function (req, res) {
