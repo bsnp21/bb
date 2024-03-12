@@ -680,6 +680,8 @@ ShowupBCV.prototype.get_selected_bcv_parm = function () {
 
     if (vrs > 0) {
         ret.m_bcv = vol + chp + ":" + vrs
+    }else{
+        ret.m_bcv = vol + chp + ":" + 1
     }
     return ret;
 };
