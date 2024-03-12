@@ -680,7 +680,7 @@ ShowupBCV.prototype.get_selected_bcv_parm = function () {
 
     if (vrs > 0) {
         ret.m_bcv = vol + chp + ":" + vrs
-    }else{
+    } else {
         ret.m_bcv = vol + chp + ":" + 1
     }
     return ret;
@@ -2384,9 +2384,25 @@ AppInstancesManager.prototype.init_load_storage = function () {
 
     var _This = this
     function _load_bcv_from_url_param() {
+        var bcv = ""
+        var punIdx = window.location.href.indexOf("#")
+        if (punIdx > 0) {
+            bcv = window.location.href.substring(punIdx + 1)
+            var ret = Uti.parse_bcv(bcv)
+            if (ret) {
+                //showup.setAsChildren()
+                showup.update_showup(bcv)
+                setTimeout(function () {
+                    _This.loadBible_chapter_by_bibOj()
+                }, 1000)
+            }
+            return;
+        }
+
+
         const urlParams = new URLSearchParams(window.location.search);
-        const bcv = urlParams.get('bcv');
-        if (bcv) {//frm url. 
+        var bcv = urlParams.get('bcv');
+        if (bcv) {//frm url for clone. 
             var ret = Uti.parse_bcv(bcv)
             if (ret) {
                 showup.setAsChildren()
@@ -2536,7 +2552,7 @@ AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
         _THIS.apiCallback_Gen_output_table(ret)
         setTimeout(function () {
             _THIS.scrollToView_Vrs()
-            
+
             //set page-title
             if (!res.m_bcv) return
             $("title").text(res.m_bcv)
