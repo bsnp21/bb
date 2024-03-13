@@ -181,16 +181,6 @@ BsnpRestApi.prototype.init_param_fr_url = function (usr, cbf) {
     this.svrurl = test_ip(ip)
     this.SSID = this.urlParams.get('SSID');
 
-
-    //other param form url param ?sip=0.0.0.0:778&#Gen2:7
-    // var idx = window.location.href.indexOf("#") //case: ?sip=1.1.1.1#Gen1:1
-    // var bcv = this.urlParams.get("bcv")
-    // if (idx >= 0) {
-    //     //ip = window.location.href.substr(0, idx)
-    //     bcv = window.location.href.substr(1 + idx)
-    //     //window.m_bcv = bcv
-    //     console.log("ip,pcv:", ip, bcv)
-    // }
 }
 BsnpRestApi.prototype.urlRedirectParam = function () {
     var spar = `?sip=${this.svrurl}`

@@ -111,18 +111,25 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     })
 
     $("#CloneNewPage").on("click", function () {
-        const urlParams = new URLSearchParams(window.location.search);
+        // use #bcv. 
+        var surl = '' + window.location.href   ////url-ankor #bcv. #Gen1:1
+        var punIndx = surl.indexOf("#")
+        if (punIndx > 0) {
+            surl = surl.substring(0, punIndx - 1)
+        }
         var bcv = $("title").text();
-        if (bcv !== "bsnp") urlParams.set('bcv', bcv)
-        var url = '' + window.location.pathname + "?" + urlParams.toString();
-        window.open(url, "_blank")
+        var ret = Uti.parse_bcv(bcv)
+        if (ret) {
+            surl = surl + "#" + bcv
+        }
+        window.open(surl, "_blank")
     })
 
     $("#All_e_Notes").on("click", function () {
         var repopathname = $("#SignOut_repopathname").text();
         const encodedUrl = encodeURIComponent(window.location.href);
-        var url = `https://bsnpghrepolist.github.io/admin/?repopathname=${repopathname}&encodedUrl=${encodedUrl}`
-        window.open(url, "_blank")
+        var surl = `https://bsnpghrepolist.github.io/admin/?repopathname=${repopathname}&encodedUrl=${encodedUrl}`
+        window.open(surl, "_blank")
     })
 
 

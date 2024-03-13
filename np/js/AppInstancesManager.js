@@ -238,9 +238,10 @@ AppInstancesManager.prototype.init = function (cbf) {
 AppInstancesManager.prototype.init_load_storage = function () {
 
     var _This = this
+
     function _load_bcv_from_url_param() {
         var bcv = ""
-        var punIdx = window.location.href.indexOf("#")
+        var punIdx = window.location.href.indexOf("#") //url-ankor #bcv. #Gen1:1
         if (punIdx > 0) {
             bcv = window.location.href.substring(punIdx + 1)
             var ret = Uti.parse_bcv(bcv)
@@ -255,6 +256,7 @@ AppInstancesManager.prototype.init_load_storage = function () {
         }
 
 
+        //this is not good, pls use #bcv.
         const urlParams = new URLSearchParams(window.location.search);
         var bcv = urlParams.get('bcv');
         if (bcv) {//frm url for clone. 
