@@ -115,7 +115,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         var surl = '' + window.location.href   ////url-ankor #bcv. #Gen1:1
         var punIndx = surl.indexOf("#")
         if (punIndx > 0) {
-            surl = surl.substring(0, punIndx - 1)
+            surl = surl.substring(0, punIndx)
         }
         var bcv = $("title").text();
         var ret = Uti.parse_bcv(bcv)
