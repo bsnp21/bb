@@ -12,8 +12,8 @@ sudo systemctl disable bsnpa
 sudo systemctl daemon-reload
 
 
-journalctl -u bsnpa -f
+# journalctl -u bsnpa 
 
-
+echo
 echo "stop a.node.js systemd service"
 ps aux|grep a.node
