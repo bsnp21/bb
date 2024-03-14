@@ -92,7 +92,7 @@ PopupMenu_EdiTag.prototype.init = function () {
                 if ("e_Subtitle" === this.m_rev) {
                     showTxt = "<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>"
                 } else {
-                    showTxt = Uti.Get_e_Note_Date("ed.") + "<ol><li></li></ol>"
+                    showTxt = Uti.Get_e_Note_Date("(ed).") + "<ol><li></li></ol>"   //remark:e_note: yymmdd_hhmmss(ed).
                 }
             }
             showTxt = Uti.convert_std_bcv_in_text_To_unlinked(showTxt)
