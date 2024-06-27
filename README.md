@@ -1,5 +1,4 @@
-#
-williamwding 
--yahoo-----
--3edc-fdsa--
+#bsnp.github @ TwentyOne_21
+williamwding -yahoo-----
 -----------
+usrdat=bsnpghrepolist 
