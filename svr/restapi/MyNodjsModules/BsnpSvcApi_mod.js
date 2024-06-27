@@ -302,16 +302,22 @@ var ApiJsonp_BibleObj = {
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
         ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+            console.log("\n*** (1) API:ApiBibleObj_load_by_bibOj:gituserMgr ***\n")
             var gituserMgr = new BibleObjGitusrMgr()
+
+            console.log("\n*** (2) API:ApiBibleObj_load_by_bibOj:Proj_prepare_after_signed ***\n")
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+
+            console.log("\n*** (3) API:ApiBibleObj_load_by_bibOj:Proj_prepare_after_signed ***\n")
             if (!ApiUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
             //////////////
+            console.log("\n*** (4) API:ApiBibleObj_load_by_bibOj:ProjSignedin_load_bibObj ***\n")
             
             var ret = gituserMgr.ProjSignedin_load_bibObj(inp.par.fnames, inp.par.bibOj)
             inp.out.data = ret.data
             inp.out.olog = ret.olog
-            //console.log(bcvT)
+            console.log("\n*** (5) API:ApiBibleObj_load_by_bibOj:end ***\n")
         })
     },
 
