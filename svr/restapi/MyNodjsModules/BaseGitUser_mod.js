@@ -780,27 +780,16 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
 }
 GitSponsor.prototype.gh_aut_login = function () {
     var ghcmd = "gh"
-    ghcmd += `auth login`
-    ghaulog=`--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
-    console.log("gh_aut_login:", ghcmd)
-    var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
-    var ret = {
-        "message": "Not Found",
-        "documentation_url": "https://docs.github.com/rest/reference/repos#get-a-repository"
-    }
-    try {
-        ret = JSON.parse(str)
-    } catch {
-        ret.catcherr = "err json str."
-    }
-    if (ret.message && ret.message === "Not Found") {
-        ret.err = "gh_api_repos_nameWithOwner failed"
-    }
-    //console.log("ret", ret)
+    ghcmd += `\auth login `
+    ghauthlogin=`--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
+    console.log("gh_aut_login:", ghcmd+ghauthlogin)
+    var ret = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
+    console.log("ret", ret)
     return ret
 }
 GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     this.gh_aut_login()
+
     var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
     console.log("gh_api_repos_nameWithOwner:", ghcmd)
     var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
