@@ -784,7 +784,7 @@ GitSponsor.prototype.gh_aut_login = function () {
     var ghcmd = `## 
     sudo -S echo ${this.m_acct.ownerpat} > ${tmpfile}
     gh auth login ${ghauthlogin}
-    #sudo -S rm ${tmpfile}
+    sudo -S rm -f ${tmpfile}
     `
     console.log("gh_aut_login:", ghcmd+ghauthlogin)
     var ret = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
