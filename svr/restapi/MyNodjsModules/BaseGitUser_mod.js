@@ -1400,8 +1400,9 @@ BaseGitUser.prototype.git_clone = function (branch) {
     }
 
     var git_clone_cmd = `
-    #!/bin/sh     # git_clone()
-    if [ -f "${git_root}/.git" ]; then
+    #!/bin/sh     
+    # BaseGitUser.git_clone()
+    if [ -d "${git_root}/.git" ]; then
         echo "${git_root} aleady exists."
         echo 'lll' | sudo -S chmod  777 ${git_root}
         sudo chown ubuntu:ubuntu -R ${git_root}
