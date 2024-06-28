@@ -779,9 +779,13 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
     return { obj: usrsInfo }
 }
 GitSponsor.prototype.gh_aut_login = function () {
-    var ghcmd = "gh"
-    ghcmd += `\auth login `
+    var tmpfile="gh_tok.tmp"
+    var ghcmd = "#"
     ghauthlogin=`--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
+    ghcmd += `
+    echo ${this.m_acct.ownerpat} > ${tmpfile}
+    gh auth login ${ghauthlogin}
+    `
     console.log("gh_aut_login:", ghcmd+ghauthlogin)
     var ret = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
     console.log("ret", ret)
