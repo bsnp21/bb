@@ -781,7 +781,8 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
 GitSponsor.prototype.gh_aut_login = function () {
     var ghcmd = "gh"
     ghcmd += `auth login`
-    console.log("gh_api_repos_nameWithOwner:", ghcmd)
+    ghaulog=`--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
+    console.log("gh_aut_login:", ghcmd)
     var str = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
     var ret = {
         "message": "Not Found",
