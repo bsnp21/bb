@@ -610,6 +610,16 @@ var BaseGUti = {
     },
 
 
+    ////////////
+    Output_append: function (pout, ret) {
+        Object.keys(ret).forEach(function (key) {
+            pout[key] = ret[key]
+        })
+        if (ret.err) {
+            return false;
+        }
+        return true;
+    }
     //// BaseGUti /////
 }
 
