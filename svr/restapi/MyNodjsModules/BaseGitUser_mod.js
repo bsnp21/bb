@@ -1245,7 +1245,7 @@ BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
 
     var fname = this.getFullPath_usr_main("index.htm")
     //var ret = fs.writeFileSync(fname, "making salts", function (er) {
-        console.log("write ret", er)
+        //console.log("write ret", er)
     //})
 
     console.log("write salts: ", fname, salts)
