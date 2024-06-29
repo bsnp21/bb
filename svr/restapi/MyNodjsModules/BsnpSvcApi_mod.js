@@ -11,7 +11,7 @@ const crypto = require('crypto')
 //var SvcUti = require("./SvcUti.module").SvcUti;
 //const exec = require('child_process').exec;
 
-const { BibleObjGitusrMgr, BsnpSvcUti, BsnpSvcToolkits, NCache } = require("./BibleObjGitusrMgr_mod")
+const { BsnpSvcUti, BsnpSvcToolkits, NCache } = require("./BibleObjGitusrMgr_mod")
 const { BaseGUti } = require("./BaseGitUser_mod")
 
 var ApiWrap = {
