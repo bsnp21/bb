@@ -763,7 +763,7 @@ BsnpSvcUti.ApiUsrAccount_update = function (inp, res) {
 
 
 
-
+///////////////
 
 BsnpSvcUti.ApiUsrReposData_status = function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
@@ -780,22 +780,67 @@ BsnpSvcUti.ApiUsrReposData_status = function (inp, res) {
     }
     gituserMgr.m_BaseGitUser.Check_proj_state()
     //})
-},
+}
 
 
 
+///////////////////////////////////
+// Usr Data: Save/Load
+BsnpSvcUti.ApiUsrDat_save = async function (inp, res) {
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+    inp.out.olog = {}
+    //: unlimited write size. 
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
+    inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(inp.par.fnames[0], inp.par.data, inp.par.datype)
 
+    //inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
+    //})
+}
+BsnpSvcUti.ApiUsrDat_load = async function (inp, res) {
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-
-
-
-
-
-
-
-    module.exports = {
-        NCache: NCache,
-        BibleObjGitusrMgr: BibleObjGitusrMgr,
-        BsnpSvcUti: BsnpSvcUti
+    var par = inp.par;
+    var doc = par.fnames[0]
+    var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(doc)
+    var ret = BaseGUti.loadObj_by_fname(jsfname)
+    var retObj = ret.obj  //get obj structure w/ keys.
+    if ("object" === typeof (par.data) && Object.keys(par.data).length > 0) {  // ===undefined, null, or ''. 
+        try {
+            retObj = JSON.parse(JSON.stringify(par.data));// 
+            BaseGUti.FetchObj_UntilEnd(retObj, ret.obj)
+            console.log("out.data", retObj)
+        } catch (err) {
+            console.log("err", err)
+            //inp.out.state.err = err
+        }
     }
+    inp.out.data = retObj;
+    //})
+
+    //var sret = JSON.stringify(inp)
+    //var sid = ""
+    //res.writeHead(200, { 'Content-Type': 'text/javascript' });
+
+    //res.end();
+}
+
+
+
+
+
+
+
+
+
+
+module.exports = {
+    NCache: NCache,
+    BibleObjGitusrMgr: BibleObjGitusrMgr,
+    BsnpSvcUti: BsnpSvcUti
+}
