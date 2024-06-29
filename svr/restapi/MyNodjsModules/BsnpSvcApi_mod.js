@@ -14,7 +14,7 @@ const crypto = require('crypto')
 const { BibleObjGitusrMgr, BsnpSvcUti, NCache } = require("./BibleObjGitusrMgr_mod")
 const { BaseGUti } = require("./BaseGitUser_mod")
 
-var ApiUti = {
+var ApiWrap = {
     Parse_GET_req_to_inp: function (req, cbf) {
         console.log("\n\n\n\n\n\n\n\n-----req.method (GET?)", req.method)
         console.log("-GET: req.url=", req.url);
@@ -164,7 +164,7 @@ inp_struct_all.par.Search = inp_struct_search.par.Search
 
 var ApiJsonp_BibleObj = {
     Get_OTK: function (req, res) {
-        var otk = ApiUti.GetOTK()
+        var otk = ApiWrap.GetOTK()
         console.log(otk);
         res.send(otk);
         res.end();
@@ -179,7 +179,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
-        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
             if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiUsrAccount_create failed.")
@@ -194,7 +194,7 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiUsrAccount_login: function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
             //: unlimited write size. 
             var gituserMgr = new BibleObjGitusrMgr()
             //console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
@@ -204,7 +204,7 @@ var ApiJsonp_BibleObj = {
         })
     },
     ApiUsrAccount_logout: async function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
@@ -221,7 +221,7 @@ var ApiJsonp_BibleObj = {
     },
     ApiUsrAccount_update: function (req, res) {
         console.log("ApiUsrAccount_create")
-        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
@@ -267,7 +267,7 @@ var ApiJsonp_BibleObj = {
 
 
     ApiBibleObj_search_txt: function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             //if (!inp.usr.f_path) inp.usr.f_path = ""
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -293,7 +293,7 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiBibleObj_load_by_bibOj(inp);
 
             //console.log("\n*** (1) API:ApiBibleObj_load_by_bibOj:gituserMgr ***\n")
@@ -316,7 +316,7 @@ var ApiJsonp_BibleObj = {
     },
 
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             //: unlimited write size. 
 
             var gituserMgr = new BibleObjGitusrMgr()
@@ -351,7 +351,7 @@ var ApiJsonp_BibleObj = {
 
     ///////////////////////////////////
     ApiUsrDat_save: async function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             inp.out.olog = {}
             //: unlimited write size. 
             var gituserMgr = new BibleObjGitusrMgr()
@@ -364,7 +364,7 @@ var ApiJsonp_BibleObj = {
         })
     },
     ApiUsrDat_load: async function (req, res) {
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
@@ -446,7 +446,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsrRepos_toolkids: async function (req, res) {
 
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             if (inp.par && inp.par.trepass_cmd_ary && inp.par.trepass_cmd_ary.length > 0) {
                 console.log("enter => inp.par.trepass_cmd_ary:")
                 inp.out.olog = []
@@ -521,7 +521,7 @@ var ApiJsonp_BibleObj = {
     /////
     ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
 
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -542,7 +542,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsrReposData_status: function (req, res) {
 
-        ApiUti.Parse_POST_req_to_inp(req, res, function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
 
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -571,7 +571,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsrReposData_git_push: async function (req, res) {
 
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -597,7 +597,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsrReposData_git_pull: async function (req, res) {
 
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
 
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -619,7 +619,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsr_Cmdline_Exec: async function (req, res) {
 
-        ApiUti.Parse_POST_req_to_inp(req, res, async function (inp) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             var gituserMgr = new BibleObjGitusrMgr()
             var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
             if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
@@ -664,7 +664,7 @@ var ApiJsonp_BibleObj = {
         if (!req || !res) {
             return inp_struct_account_setup
         }
-        var inp = ApiUti.Parse_GET_req_to_inp(req)
+        var inp = ApiWrap.Parse_GET_req_to_inp(req)
         var gituserMgr = new BibleObjGitusrMgr()
         var ret = gituserMgr.Proj_parse_usr_signin(inp)
         if (ret) {
