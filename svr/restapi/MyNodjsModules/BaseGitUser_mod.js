@@ -789,14 +789,14 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
     return { obj: usrsInfo }
 }
 GitSponsor.prototype.gh_aut_login = function () {
-    var tmpfile="gh_tok.tmp"
-    var ghauthlogin=`--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
+    var tmpfile = "gh_tok.tmp"
+    var ghauthlogin = `--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
     var ghcmd = `## 
     sudo -S echo ${this.m_acct.ownerpat} > ${tmpfile}
     gh auth login ${ghauthlogin}
     sudo -S rm -f ${tmpfile}
     `
-    console.log("gh_aut_login:", ghcmd+ghauthlogin)
+    console.log("gh_aut_login:", ghcmd + ghauthlogin)
     var ret = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
     console.log("ret", ret)
     return ret
@@ -876,6 +876,28 @@ GitSponsor.prototype.git_conf_txt = function (bSecure) {
         `
     return cfg
 }
+GitSponsor.prototype.curl_publish_source_for_website_of_git_reponame = function () {
+
+    const GITHUB_USER = this.m_acct.ownername //  ### "your-github-username"
+    const REPO_NAME = this.m_reponame         //  ### "your-repo-name"
+    const ACCESS_TOKEN = this.ownerpat        //  ### "your-github-access-token"
+    var gh_repo_create = `
+
+# Replace the following variables with your own values
+# https://github.com/bsnpghrepolist/wdingpbax/settings/pages
+
+# For user/organization sites (using 'main' or 'master' branch)
+curl -H "Authorization: token ${ACCESS_TOKEN}" \
+     -X POST \
+     -d '{"source":{"branch":"master"}}' \
+     https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/pages
+
+########                                                                
+`
+    var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
+    return str
+}
+
 
 
 
@@ -1220,6 +1242,12 @@ BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
     var ret = fs.writeFileSync(fname, salts, function (er) {
         console.log("write ret", er)
     })
+
+    var fname = this.getFullPath_usr_main("index.htm")
+    var ret = fs.writeFileSync(fname, "making salts", function (er) {
+        console.log("write ret", er)
+    })
+
     console.log("write salts: ", fname, salts)
     return salts
 }
@@ -1410,6 +1438,7 @@ gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr}   ##
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
     return str
 }
+
 
 
 BaseGitUser.prototype.git_clone = function (branch) {
