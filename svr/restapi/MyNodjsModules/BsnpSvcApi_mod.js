@@ -173,91 +173,96 @@ var ApiJsonp_BibleObj = {
 
 
     ///////////////////////////////////
-
-
-
+    //
+    // User Account Mgment: Create/Update, Login/Logout
+    //
 
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiUsrAccount_create failed.")
-
-            var admin = gituserMgr.CreateAdminMgr()
-            ret.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
-            ret.admrelease = admin.release_user()
-
-
-            return;
+            BsnpSvcUti.ApiUsrAccount_create(inp)
+            //var gituserMgr = new BibleObjGitusrMgr()
+            //var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
+            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiUsrAccount_create failed.")
+            //
+            //var admin = gituserMgr.CreateAdminMgr()
+            //ret.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
+            //ret.admrelease = admin.release_user()
+            //
+            //
+            //return;
         })
     },
 
     ApiUsrAccount_login: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            //: unlimited write size. 
-            var gituserMgr = new BibleObjGitusrMgr()
-            //console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
-            var ret = gituserMgr.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
-            BaseGUti.Output_append(inp.out, ret)
-            console.log(inp)
+            BsnpSvcUti.ApiUsrAccount_login(inp)
+            ////: unlimited write size. 
+            //var gituserMgr = new BibleObjGitusrMgr()
+            ////console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
+            //var ret = gituserMgr.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
+            //BaseGUti.Output_append(inp.out, ret)
+            //console.log(inp)
         })
     },
     ApiUsrAccount_logout: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-            inp.out.olog = {}
-            inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
-            var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_main()
-            if (fs.existsSync(gitdir)) {
-
-            }
-            inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
-            inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
+            BsnpSvcUti.ApiUsrAccount_logout(inp)
+            //var gituserMgr = new BibleObjGitusrMgr()
+            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+            //
+            //inp.out.olog = {}
+            //inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
+            //var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_main()
+            //if (fs.existsSync(gitdir)) {
+            //
+            //}
+            //inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
+            //inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
         })
     },
     ApiUsrAccount_update: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-            var usrname = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-
-            inp.out.olog = {}
-            gituserMgr.m_BaseGitUser.main_dir_remove()
-            gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
-            gituserMgr.m_BaseGitUser.Deploy_git_repo() //on master. 
-
-            if (!inp.par.passcodeNew) {
-                inp.out.err = ["missing new passcode."]
-                return
-            }
-            if (!inp.par.accesstr) {
-                inp.out.err = ["missing accesstr."]
-                return
-            }
-
-            gituserMgr.m_BaseGitUser.main_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
-            gituserMgr.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
-            inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
-
-            var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
-            inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
-
-            gituserMgr.m_BaseGitUser.main_dir_remove()
-
-            ///////////////
-            var admin = gituserMgr.CreateAdminMgr()
-            inp.out.olog.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
-            inp.out.olog.admrelease = admin.release_user()
+            BsnpSvcUti.ApiUsrAccount_update(inp)
+            //var gituserMgr = new BibleObjGitusrMgr()
+            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+            //
+            //var usrname = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+            //
+            //inp.out.olog = {}
+            //gituserMgr.m_BaseGitUser.main_dir_remove()
+            //gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
+            //gituserMgr.m_BaseGitUser.Deploy_git_repo() //on master. 
+            //
+            //if (!inp.par.passcodeNew) {
+            //    inp.out.err = ["missing new passcode."]
+            //    return
+            //}
+            //if (!inp.par.accesstr) {
+            //    inp.out.err = ["missing accesstr."]
+            //    return
+            //}
+            //
+            //gituserMgr.m_BaseGitUser.main_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
+            //gituserMgr.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
+            //inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
+            //
+            //var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
+            //inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
+            //
+            //gituserMgr.m_BaseGitUser.main_dir_remove()
+            //
+            /////////////////
+            //var admin = gituserMgr.CreateAdminMgr()
+            //inp.out.olog.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
+            //inp.out.olog.admrelease = admin.release_user()
 
         })
     },
+    ///////////////////////////////////////////////
 
 
 
@@ -266,6 +271,10 @@ var ApiJsonp_BibleObj = {
 
 
 
+    ////////////////////////////////////
+    //
+    // basic bible Read/Write/Search API.
+    // 
     ApiBibleObj_search_txt: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiBibleObj_search_txt(inp)
@@ -277,12 +286,13 @@ var ApiJsonp_BibleObj = {
             BsnpSvcUti.ApiBibleObj_load_by_bibOj(inp);
         })
     },
-    
+
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt(inp);
         })
     },
+    ///////////////////////////////////////
 
 
 
