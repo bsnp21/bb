@@ -181,45 +181,19 @@ var ApiJsonp_BibleObj = {
         console.log("ApiUsrAccount_create")
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
             BsnpSvcUti.ApiUsrAccount_create(inp)
-            //var gituserMgr = new BibleObjGitusrMgr()
-            //var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
-            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiUsrAccount_create failed.")
-            //
-            //var admin = gituserMgr.CreateAdminMgr()
-            //ret.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
-            //ret.admrelease = admin.release_user()
-            //
-            //
-            //return;
         })
     },
 
     ApiUsrAccount_login: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
             BsnpSvcUti.ApiUsrAccount_login(inp)
-            ////: unlimited write size. 
-            //var gituserMgr = new BibleObjGitusrMgr()
-            ////console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
-            //var ret = gituserMgr.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
-            //BaseGUti.Output_append(inp.out, ret)
-            //console.log(inp)
+
         })
     },
     ApiUsrAccount_logout: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiUsrAccount_logout(inp)
-            //var gituserMgr = new BibleObjGitusrMgr()
-            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-            //
-            //inp.out.olog = {}
-            //inp.out.olog["state_beforeDel"] = gituserMgr.m_BaseGitUser.Check_proj_state()
-            //var gitdir = gituserMgr.m_BaseGitUser.getFullPath_usr_main()
-            //if (fs.existsSync(gitdir)) {
-            //
-            //}
-            //inp.out.olog["destroySSID"] = gituserMgr.Session_delete(inp.SSID) //trig to delete usr dir. 
-            //inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
+
         })
     },
     ApiUsrAccount_update: function (req, res) {
@@ -296,7 +270,23 @@ var ApiJsonp_BibleObj = {
 
 
 
+    ApiUsrReposData_status: function (req, res) {
+        ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
+            BsnpSvcUti.ApiUsrReposData_status(inp)
 
+            //var gituserMgr = new BibleObjGitusrMgr()
+            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+            //
+            //var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
+            //var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git status -sb")
+            //if (res2 && res2.stdout) {
+            //    inp.out.state.git_status_sb = res2.stdout
+            //    inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
+            //}
+            //gituserMgr.m_BaseGitUser.Check_proj_state()
+        })
+    },
 
 
 
@@ -491,33 +481,7 @@ var ApiJsonp_BibleObj = {
 
 
 
-    ApiUsrReposData_status: function (req, res) {
 
-        ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-            var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
-            var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git status -sb")
-            if (res2 && res2.stdout) {
-                inp.out.state.git_status_sb = res2.stdout
-                inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
-            }
-            gituserMgr.m_BaseGitUser.Check_proj_state()
-        })
-
-
-
-        // var sret = JSON.stringify(inp, null, 4)
-        // var sid = ""
-        // 
-        // console.log("oup is ", inp.out)
-        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        // res.end();
-    },
 
 
     ApiUsrReposData_git_push: async function (req, res) {

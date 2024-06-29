@@ -765,6 +765,22 @@ BsnpSvcUti.ApiUsrAccount_update = function (inp, res) {
 
 
 
+BsnpSvcUti.ApiUsrReposData_status = function (inp, res) {
+    //ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
+
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
+    var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
+    var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git status -sb")
+    if (res2 && res2.stdout) {
+        inp.out.state.git_status_sb = res2.stdout
+        inp.out.state.is_git_behind = res2.stdout.indexOf("behind")
+    }
+    gituserMgr.m_BaseGitUser.Check_proj_state()
+    //})
+},
 
 
 
@@ -778,9 +794,8 @@ BsnpSvcUti.ApiUsrAccount_update = function (inp, res) {
 
 
 
-
-module.exports = {
-    NCache: NCache,
-    BibleObjGitusrMgr: BibleObjGitusrMgr,
-    BsnpSvcUti: BsnpSvcUti
-}
+    module.exports = {
+        NCache: NCache,
+        BibleObjGitusrMgr: BibleObjGitusrMgr,
+        BsnpSvcUti: BsnpSvcUti
+    }
