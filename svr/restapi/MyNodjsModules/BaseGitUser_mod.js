@@ -880,7 +880,7 @@ GitSponsor.prototype.curl_publish_source_for_website_of_git_reponame = function 
 
     const GITHUB_USER = this.m_acct.ownername //  ### "your-github-username"
     const REPO_NAME = this.m_reponame         //  ### "your-repo-name"
-    const ACCESS_TOKEN = this.ownerpat        //  ### "your-github-access-token"
+    const ACCESS_TOKEN = this.m_acct.ownerpat        //  ### "your-github-access-token"
     var gh_repo_create = `
 
 # Replace the following variables with your own values
