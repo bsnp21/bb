@@ -784,6 +784,7 @@ BsnpSvcUti.ApiUsrReposData_status = function (inp, res) {
 
 
 
+
 ///////////////////////////////////
 // Usr Data: Save/Load
 BsnpSvcUti.ApiUsrDat_save = async function (inp, res) {
@@ -839,8 +840,246 @@ BsnpSvcUti.ApiUsrDat_load = async function (inp, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////
+//
+// Tool Test
+//
+var BsnpSvcToolkits ={}
+BsnpSvcToolkits.ApiUsrRepos_toolkids = async function (inp, req, res) {
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+    if (inp.par && inp.par.trepass_cmd_ary && inp.par.trepass_cmd_ary.length > 0) {
+        console.log("enter => inp.par.trepass_cmd_ary:")
+        inp.out.olog = []
+        for (var i = 0; i < inp.par.trepass_cmd_ary.length; i++) {
+            var cmd = inp.par.trepass_cmd_ary[i]
+            var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
+            var obj = {}
+            obj[cmd] = arr
+            inp.out.olog.push(obj)
+        }
+        return
+    }
+
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) {
+        return console.log("Proj_prepare_after_signed failed.")
+    }
+
+    console.log("ApiUsrRepos_toolkids==>par:", inp.par)
+    inp.out.state_before_cmd = gituserMgr.m_BaseGitUser.Check_proj_state()
+
+    if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
+        console.log("enter destroy ===>par:")
+        var reponame = inp.par.gh_repo_delete_name
+        if (reponame === "self") reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame;
+        console.log("to delete:" + reponame)
+        inp.out.destroy_res = {}
+        var cmd = `sudo gh repo delete ${reponame} --confirm`
+        inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
+        inp.out.reposlist = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
+        //gituserMgr.Session_delete(inp.SSID)
+        inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
+        return
+    }
+    if (inp.par.gh_repo_list_tot_diskUsage) {
+        inp.out.gh_repo_list_tot_diskUsage = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
+        return
+    }
+
+    if (inp.par.git_cmd_ary && inp.par.git_cmd_ary.length > 0) {
+        console.log("enter => inp.par.git_cmd_ary:")
+        inp.out.olog = []
+        for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
+            var cmd = inp.par.git_cmd_ary[i]
+            var arr = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
+            var obj = {}
+            obj[cmd] = arr
+            inp.out.olog.push(obj)
+        }
+        inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
+        return
+    }
+
+
+
+    //})
+
+    // var sret = JSON.stringify(inp, null, 4)
+    // var sid = ""
+    // 
+    // console.log("oup is ", inp.out)
+    // res.writeHead(200, { 'Content-Type': 'text/javascript' });
+
+    // res.end();
+}
+
+
+
+
+
+/////
+BsnpSvcToolkits.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt = function (inp, req, res) {
+
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+    //})
+}
+
+
+
+
+
+
+
+BsnpSvcToolkits.ApiUsrReposData_git_push = async function (inp, req, res) {
+
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
+
+    //await gituserMgr.git_add_commit_push("push hard.", "");//real push hard.
+
+    var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git add *")
+    var res3 = gituserMgr.m_BaseGitUser.main_execSync_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
+    //var res4 = gituserMgr.m_BaseGitUser.git_push()
+
+    gituserMgr.m_BaseGitUser.Check_proj_state()
+    //})
+    //var sret = JSON.stringify(inp, null, 4)
+    //var sid = ""
+
+    //console.log("oup is ", inp.out)
+    //res.writeHead(200, { 'Content-Type': 'text/javascript' });
+
+    //res.end();
+}
+
+BsnpSvcToolkits.ApiUsrReposData_git_pull = async function (inp, req, res) {
+
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
+
+    gituserMgr.m_BaseGitUser.git_pull();
+    gituserMgr.m_BaseGitUser.Check_proj_state()
+
+    //})
+    //var sret = JSON.stringify(inp, null, 4)
+    //var sid = ""
+    //
+    //console.log("oup is ", inp.out)
+    //res.writeHead(200, { 'Content-Type': 'text/javascript' });
+
+    //res.end();
+}
+
+BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
+
+    //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+    if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+
+    var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
+    var rso = gituserMgr.m_BaseGitUser.main_execSync_cmd()
+    console.log("\n\n*cmd-res", rso)
+    gituserMgr.m_BaseGitUser.Check_proj_state()
+    //})
+
+    // var sret = JSON.stringify(inp, null, 4)
+    // var sid = ""
+    // console.log("oup is ", inp.out)
+    // res.writeHead(200, { 'Content-Type': 'text/javascript' });
+
+    // res.end();
+}
+
+BsnpSvcToolkits.test_https_work = async function (inp, req, res) {
+    console.log("test_https_work...")
+
+    /////// show cache.keys
+    console.log("NCache.myCache.keys():")
+    var ar = NCache.myCache.keys()
+    console.log(ar)
+    Object.keys(NCache.myCache.keys()).forEach(function (i) {
+        var sky = ar[i]
+        console.log("skey:", sky)
+        var obj = NCache.Get(sky)
+        console.log(obj)
+    })
+
+
+
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    res.write(`api: test_https_work, it works ok.`);
+    res.end();
+}
+
+BsnpSvcToolkits.________ApiUsrReposData_create___test_only = async function (inp, req, res) {
+    console.log("ApiUsrReposData_create")
+    if (!req || !res) {
+        return inp_struct_account_setup
+    }
+    var inp = ApiWrap.Parse_GET_req_to_inp(req)
+    var gituserMgr = new BibleObjGitusrMgr()
+    var ret = gituserMgr.Proj_parse_usr_signin(inp)
+    if (ret) {
+
+
+
+    }
+
+    var sret = JSON.stringify(inp, null, 4)
+    var sid = ""
+
+    console.log("oup is ", inp.out)
+
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    res.write(`.Response(${sret},${sid});`);
+    res.end();
+}
+
+
 module.exports = {
     NCache: NCache,
     BibleObjGitusrMgr: BibleObjGitusrMgr,
-    BsnpSvcUti: BsnpSvcUti
+    BsnpSvcUti: BsnpSvcUti,
+    BsnpSvcToolkits : BsnpSvcToolkits
 }

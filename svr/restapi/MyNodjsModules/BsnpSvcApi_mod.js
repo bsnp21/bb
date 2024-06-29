@@ -11,7 +11,7 @@ const crypto = require('crypto')
 //var SvcUti = require("./SvcUti.module").SvcUti;
 //const exec = require('child_process').exec;
 
-const { BibleObjGitusrMgr, BsnpSvcUti, NCache } = require("./BibleObjGitusrMgr_mod")
+const { BibleObjGitusrMgr, BsnpSvcUti, BsnpSvcToolkits, NCache } = require("./BibleObjGitusrMgr_mod")
 const { BaseGUti } = require("./BaseGitUser_mod")
 
 var ApiWrap = {
@@ -200,40 +200,6 @@ var ApiJsonp_BibleObj = {
         console.log("ApiUsrAccount_create")
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
             BsnpSvcUti.ApiUsrAccount_update(inp)
-            //var gituserMgr = new BibleObjGitusrMgr()
-            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-            //
-            //var usrname = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-            //
-            //inp.out.olog = {}
-            //gituserMgr.m_BaseGitUser.main_dir_remove()
-            //gituserMgr.m_BaseGitUser.Set_gitusr(usrname)
-            //gituserMgr.m_BaseGitUser.Deploy_git_repo() //on master. 
-            //
-            //if (!inp.par.passcodeNew) {
-            //    inp.out.err = ["missing new passcode."]
-            //    return
-            //}
-            //if (!inp.par.accesstr) {
-            //    inp.out.err = ["missing accesstr."]
-            //    return
-            //}
-            //
-            //gituserMgr.m_BaseGitUser.main_dir_write_salts(inp.par.passcodeNew, inp.par.hintword)
-            //gituserMgr.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
-            //inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
-            //
-            //var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
-            //inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
-            //
-            //gituserMgr.m_BaseGitUser.main_dir_remove()
-            //
-            /////////////////
-            //var admin = gituserMgr.CreateAdminMgr()
-            //inp.out.olog.admnpublish_usr = admin.Publish_user(inp.par.repopath, inp.par.accesstr)
-            //inp.out.olog.admrelease = admin.release_user()
-
         })
     },
     ///////////////////////////////////////////////
@@ -290,6 +256,7 @@ var ApiJsonp_BibleObj = {
             BsnpSvcUti.ApiUsrDat_load(inp)
         })
     },
+    /////////////////////////////////////
 
 
 
@@ -340,75 +307,15 @@ var ApiJsonp_BibleObj = {
 
 
 
+    //////////////////////////
+    //
+    // Tool Test
+    //
 
     ApiUsrRepos_toolkids: async function (req, res) {
-
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            if (inp.par && inp.par.trepass_cmd_ary && inp.par.trepass_cmd_ary.length > 0) {
-                console.log("enter => inp.par.trepass_cmd_ary:")
-                inp.out.olog = []
-                for (var i = 0; i < inp.par.trepass_cmd_ary.length; i++) {
-                    var cmd = inp.par.trepass_cmd_ary[i]
-                    var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
-                    var obj = {}
-                    obj[cmd] = arr
-                    inp.out.olog.push(obj)
-                }
-                return
-            }
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) {
-                return console.log("Proj_prepare_after_signed failed.")
-            }
-
-            console.log("ApiUsrRepos_toolkids==>par:", inp.par)
-            inp.out.state_before_cmd = gituserMgr.m_BaseGitUser.Check_proj_state()
-
-            if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
-                console.log("enter destroy ===>par:")
-                var reponame = inp.par.gh_repo_delete_name
-                if (reponame === "self") reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame;
-                console.log("to delete:" + reponame)
-                inp.out.destroy_res = {}
-                var cmd = `sudo gh repo delete ${reponame} --confirm`
-                inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
-                inp.out.reposlist = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
-                //gituserMgr.Session_delete(inp.SSID)
-                inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
-                return
-            }
-            if (inp.par.gh_repo_list_tot_diskUsage) {
-                inp.out.gh_repo_list_tot_diskUsage = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
-                return
-            }
-
-            if (inp.par.git_cmd_ary && inp.par.git_cmd_ary.length > 0) {
-                console.log("enter => inp.par.git_cmd_ary:")
-                inp.out.olog = []
-                for (var i = 0; i < inp.par.git_cmd_ary.length; i++) {
-                    var cmd = inp.par.git_cmd_ary[i]
-                    var arr = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
-                    var obj = {}
-                    obj[cmd] = arr
-                    inp.out.olog.push(obj)
-                }
-                inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
-                return
-            }
-
-
-
+            BsnpSvcToolkits.ApiUsrRepos_toolkids(inp, req, res)
         })
-
-        // var sret = JSON.stringify(inp, null, 4)
-        // var sid = ""
-        // 
-        // console.log("oup is ", inp.out)
-        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        // res.end();
     },
 
 
@@ -417,21 +324,9 @@ var ApiJsonp_BibleObj = {
 
     /////
     ApiBibleObj_read_crossnetwork_BkcChpVrs_txt: function (req, res) {
-
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
+            BsnpSvcToolkits.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt(inp, req, res)
         })
-
-
-
-        // var sret = JSON.stringify(inp)
-        // var sid = ""
-        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        // res.end();
     },
 
 
@@ -441,72 +336,23 @@ var ApiJsonp_BibleObj = {
 
 
     ApiUsrReposData_git_push: async function (req, res) {
-
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-
-            //await gituserMgr.git_add_commit_push("push hard.", "");//real push hard.
-
-            var res2 = gituserMgr.m_BaseGitUser.main_execSync_cmd("git add *")
-            var res3 = gituserMgr.m_BaseGitUser.main_execSync_cmd(`git commit -m "svr-push. repodesc:${inp.usr.repodesc}"`)
-            //var res4 = gituserMgr.m_BaseGitUser.git_push()
-
-            gituserMgr.m_BaseGitUser.Check_proj_state()
+            BsnpSvcToolkits.ApiUsrReposData_git_push(inp, req, res)
         })
-        //var sret = JSON.stringify(inp, null, 4)
-        //var sid = ""
-
-        //console.log("oup is ", inp.out)
-        //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        //res.end();
     },
 
     ApiUsrReposData_git_pull: async function (req, res) {
-
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-
-            gituserMgr.m_BaseGitUser.git_pull();
-            gituserMgr.m_BaseGitUser.Check_proj_state()
+            BsnpSvcToolkits.ApiUsrReposData_git_pull(inp, req, res)
 
         })
-        //var sret = JSON.stringify(inp, null, 4)
-        //var sid = ""
-        //
-        //console.log("oup is ", inp.out)
-        //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        //res.end();
     },
 
     ApiUsr_Cmdline_Exec: async function (req, res) {
 
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-            var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
-            var rso = gituserMgr.m_BaseGitUser.main_execSync_cmd()
-            console.log("\n\n*cmd-res", rso)
-            gituserMgr.m_BaseGitUser.Check_proj_state()
+            BsnpSvcToolkits.ApiUsr_Cmdline_Exec(inp, req, res)
         })
-
-        // var sret = JSON.stringify(inp, null, 4)
-        // var sid = ""
-        // console.log("oup is ", inp.out)
-        // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        // res.end();
     },
 
     test_https_work: async function (req, res) {
@@ -531,27 +377,7 @@ var ApiJsonp_BibleObj = {
     },
 
     ________ApiUsrReposData_create___test_only: async function (req, res) {
-        console.log("ApiUsrReposData_create")
-        if (!req || !res) {
-            return inp_struct_account_setup
-        }
-        var inp = ApiWrap.Parse_GET_req_to_inp(req)
-        var gituserMgr = new BibleObjGitusrMgr()
-        var ret = gituserMgr.Proj_parse_usr_signin(inp)
-        if (ret) {
 
-
-
-        }
-
-        var sret = JSON.stringify(inp, null, 4)
-        var sid = ""
-
-        console.log("oup is ", inp.out)
-
-        res.writeHead(200, { 'Content-Type': 'text/javascript' });
-        res.write(`.Response(${sret},${sid});`);
-        res.end();
     },
 }//// BibleRestApi ////
 
