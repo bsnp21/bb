@@ -136,7 +136,7 @@ var ApiWrap = {
         NCache.Set(cuid, val, 6000) //set 100min for sign-in page..
         return { CUID: cuid, pkb64: pkb64 }
     },
-    
+
 
 }
 
@@ -269,27 +269,6 @@ var ApiJsonp_BibleObj = {
     ApiBibleObj_search_txt: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiBibleObj_search_txt(inp)
-            //var gituserMgr = new BibleObjGitusrMgr()
-            ////if (!inp.usr.f_path) inp.usr.f_path = ""
-            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiBibleObj_search_txt failed.")
-//
-            //var TbcvObj = {};
-            //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
-            //    for (var i = 0; i < inp.par.fnames.length; i++) {
-            //        var fnameID = inp.par.fnames[i];
-            //        var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
-            //        console.log("jsfname:", jsfname)
-            //        var bib = BaseGUti.loadObj_by_fname(jsfname);
-            //        if (null === bib.obj) continue
-            //        var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
-            //        TbcvObj[fnameID] = bcObj;
-            //        inp.out.desc += ":" + fnameID
-            //    }
-            //}
-            //var bcvT = {}
-            //BaseGUti.convert_Tbcv_2_bcvT(TbcvObj, bcvT)
-            //inp.out.data = BaseGUti.search_str_in_bcvT(bcvT, inp.par.Search.File, inp.par.Search.Strn);
         })
     },
 
@@ -298,34 +277,11 @@ var ApiJsonp_BibleObj = {
             BsnpSvcUti.ApiBibleObj_load_by_bibOj(inp);
         })
     },
-
+    
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt(inp);
-            //: unlimited write size. 
-
-            var gituserMgr = new BibleObjGitusrMgr()
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-
-            inp.out.olog = gituserMgr.ProjSignedin_Save_myoj(inp.par.fnames[0], inp.par.inpObj)
-
-            /////////////////////////////
-            // for sharing staff.
-            // inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
-// 
-            // var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-            // var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
-            // var admin = gituserMgr.CreateAdminMgr()
-            // inp.out.olog["Add_doc_BCV_user"] = admin.Add_doc_BCV_user(inp.par.inpObj, username, usrinfo.visibility)
-            return;
-            //////////////////////////////
-            ///////////////////////////////////////////////////////////////////////////
         })
-
-        //res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-        //res.end();
     },
 
 
