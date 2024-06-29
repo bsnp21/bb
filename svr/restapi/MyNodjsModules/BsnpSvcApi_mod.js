@@ -268,55 +268,40 @@ var ApiJsonp_BibleObj = {
 
     ApiBibleObj_search_txt: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            var gituserMgr = new BibleObjGitusrMgr()
-            //if (!inp.usr.f_path) inp.usr.f_path = ""
-            var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-            if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiBibleObj_search_txt failed.")
-
-            var TbcvObj = {};
-            if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
-                for (var i = 0; i < inp.par.fnames.length; i++) {
-                    var fnameID = inp.par.fnames[i];
-                    var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
-                    console.log("jsfname:", jsfname)
-                    var bib = BaseGUti.loadObj_by_fname(jsfname);
-                    if (null === bib.obj) continue
-                    var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
-                    TbcvObj[fnameID] = bcObj;
-                    inp.out.desc += ":" + fnameID
-                }
-            }
-            var bcvT = {}
-            BaseGUti.convert_Tbcv_2_bcvT(TbcvObj, bcvT)
-            inp.out.data = BaseGUti.search_str_in_bcvT(bcvT, inp.par.Search.File, inp.par.Search.Strn);
+            BsnpSvcUti.ApiBibleObj_search_txt(inp)
+            //var gituserMgr = new BibleObjGitusrMgr()
+            ////if (!inp.usr.f_path) inp.usr.f_path = ""
+            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
+            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiBibleObj_search_txt failed.")
+//
+            //var TbcvObj = {};
+            //if ("object" === typeof inp.par.fnames) {//['NIV','ESV']
+            //    for (var i = 0; i < inp.par.fnames.length; i++) {
+            //        var fnameID = inp.par.fnames[i];
+            //        var jsfname = gituserMgr.m_BaseGitUser.get_pfxname(fnameID)
+            //        console.log("jsfname:", jsfname)
+            //        var bib = BaseGUti.loadObj_by_fname(jsfname);
+            //        if (null === bib.obj) continue
+            //        var bcObj = BaseGUti.copy_biobj(bib.obj, inp.par.bibOj);
+            //        TbcvObj[fnameID] = bcObj;
+            //        inp.out.desc += ":" + fnameID
+            //    }
+            //}
+            //var bcvT = {}
+            //BaseGUti.convert_Tbcv_2_bcvT(TbcvObj, bcvT)
+            //inp.out.data = BaseGUti.search_str_in_bcvT(bcvT, inp.par.Search.File, inp.par.Search.Strn);
         })
     },
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
             BsnpSvcUti.ApiBibleObj_load_by_bibOj(inp);
-
-            //console.log("\n*** (1) API:ApiBibleObj_load_by_bibOj:gituserMgr ***\n")
-            //var gituserMgr = new BibleObjGitusrMgr()
-//
-            //console.log("\n*** (2) API:ApiBibleObj_load_by_bibOj:Proj_prepare_after_signed ***\n")
-            //var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
-//
-            //console.log("\n*** (3) API:ApiBibleObj_load_by_bibOj:Proj_prepare_after_signed ***\n")
-            //if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
-//
-            ////////////////
-            //console.log("\n*** (4) API:ApiBibleObj_load_by_bibOj:ProjSignedin_load_bibObj ***\n")
-            //
-            //var ret = gituserMgr.ProjSignedin_load_bibObj(inp.par.fnames, inp.par.bibOj)
-            //inp.out.data = ret.data
-            //inp.out.olog = ret.olog
-            //console.log("\n*** (5) API:ApiBibleObj_load_by_bibOj:end ***\n")
         })
     },
 
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
+            BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt(inp);
             //: unlimited write size. 
 
             var gituserMgr = new BibleObjGitusrMgr()
