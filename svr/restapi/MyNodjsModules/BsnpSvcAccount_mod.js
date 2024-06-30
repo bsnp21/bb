@@ -66,7 +66,7 @@ NCache.Init = function () {
         inp.usr = val
         inp.out = BaseGUti.default_inp_out_obj()
         inp.SSID = key
-        var userProject = new BibleObjGitusrMgr()
+        var userProject = new BsnpAccountMgr()
         if (inp.gitusr = userProject.m_BaseGitUser.Set_gitusr(val.repopath)) {
             //userProject.m_inp = inp
             userProject.m_BaseGitUser.Check_proj_state()
@@ -167,7 +167,7 @@ NCache.Init()
 
 //../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/dat
 //../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/myoj
-var BibleObjGitusrMgr = function () {
+var BsnpAccountMgr = function () {
 
     this.m_BaseGitUser = new BaseGitUser()
 }
@@ -175,7 +175,7 @@ var BibleObjGitusrMgr = function () {
 
 
 
-BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
+BsnpAccountMgr.prototype.Proj_usr_account_create = function (repopath, passcode, hintword, accesstr) {
     console.log("========Proj_usr_account_create", repopath, passcode, hintword)
 
 
@@ -215,7 +215,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
 
 
 
-BibleObjGitusrMgr.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
+BsnpAccountMgr.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid, cipherusrs) {
     console.log("------- _decipher_usr_by_key_stored_in_cuid=", cuid)
 
     if (!cuid || cuid.length === 0 || cipherusrs.length === 0) return null
@@ -233,7 +233,7 @@ BibleObjGitusrMgr.prototype._decipher_usr_by_key_stored_in_cuid = function (cuid
     console.log(usrObj)
     return usrObj
 }
-BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
+BsnpAccountMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     if (!repopath) return { err: "null repopath" }
     repopath = repopath.toLowerCase()
 
@@ -272,7 +272,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     return robj //must be SSID capitalized ret.
 }
 
-BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
+BsnpAccountMgr.prototype.Proj_prepare_after_signed = function (ssid) {
 
     var usr = this.Session_get_usr(ssid)
     if (!usr) {
@@ -288,7 +288,7 @@ BibleObjGitusrMgr.prototype.Proj_prepare_after_signed = function (ssid) {
     robj.state = this.m_BaseGitUser.Check_proj_state()
     return robj
 }
-BibleObjGitusrMgr.prototype.ProjSignedin_Save_myoj = function (doc, bibObj) {
+BsnpAccountMgr.prototype.ProjSignedin_Save_myoj = function (doc, bibObj) {
     var _this = this
     var olog = {}
     var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
@@ -322,7 +322,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_myoj = function (doc, bibObj) {
 
     return olog;
 }
-BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function (doc, inpObj, datype) {
+BsnpAccountMgr.prototype.ProjSignedin_Save_dat = function (doc, inpObj, datype) {
     var jsfname = this.m_BaseGitUser.get_pfxname(doc, {
         IfUsrFileNotExist: function (stdfile, usrfile) {
             var base = path.parse(usrfile)
@@ -368,7 +368,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_Save_dat = function (doc, inpObj, datyp
     ret.gh_pages_publish_ = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
     return ret;
 }
-BibleObjGitusrMgr.prototype.ProjSignedin_load_bibObj = function (fnames, bibOj) {
+BsnpAccountMgr.prototype.ProjSignedin_load_bibObj = function (fnames, bibOj) {
     var olog = [];
     console.log("-----:fnames", fnames, typeof fnames)
     console.log("-----:binp.par.bibOj", bibOj)
@@ -435,7 +435,7 @@ BibleObjGitusrMgr.prototype.ProjSignedin_load_bibObj = function (fnames, bibOj) 
 
 
 
-BibleObjGitusrMgr.prototype.___session_get_github_owner = function (docfile) {
+BsnpAccountMgr.prototype.___session_get_github_owner = function (docfile) {
     //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var ary = docfile.split("/")
     var idx = ary.indexOf("usrs")
@@ -445,7 +445,7 @@ BibleObjGitusrMgr.prototype.___session_get_github_owner = function (docfile) {
     var owner = username + "/" + reponame
     return owner
 }
-BibleObjGitusrMgr.prototype.___session_git_repodesc_load = function (docfile) {
+BsnpAccountMgr.prototype.___session_git_repodesc_load = function (docfile) {
     //jspfn: ../../../../bugit/usrs/github.com/bsnp21/pub_test01/account/myoj/myNote_json.js
     var pos = docfile.indexOf("/account/")
     var gitpath = docfile.substr(0, pos)
@@ -456,7 +456,7 @@ BibleObjGitusrMgr.prototype.___session_git_repodesc_load = function (docfile) {
     return { repodesc: usrObj.repodesc, pathfile: gitpath }
 }
 
-BibleObjGitusrMgr.prototype.Session_get_usr = function (ssid) {
+BsnpAccountMgr.prototype.Session_get_usr = function (ssid) {
     //inp.out.state.ssid_cur = ssid
     if (!ssid || ssid.length === 0) {
         return null
@@ -471,7 +471,7 @@ BibleObjGitusrMgr.prototype.Session_get_usr = function (ssid) {
     NCache.Set(ssid, usr, 3600 * 24 * 180) //180days
     return usr;
 }
-BibleObjGitusrMgr.prototype.Session_create = function (usr) {
+BsnpAccountMgr.prototype.Session_create = function (usr) {
 
     var ssid = (new Date()).getTime() + this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
     var ssid_b64 = ssid;//Buffer.from(ssid).toString("base64") //=btoa()
@@ -482,7 +482,7 @@ BibleObjGitusrMgr.prototype.Session_create = function (usr) {
 
     return ssid_b64
 }
-BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
+BsnpAccountMgr.prototype.Session_delete = function (ssid) {
 
     var ret = NCache.myCache.take(ssid)
 
@@ -492,8 +492,8 @@ BibleObjGitusrMgr.prototype.Session_delete = function (ssid) {
 }
 
 
-BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
-    var adminMgr = new BibleObjGitusrMgr()
+BsnpAccountMgr.prototype.CreateAdminMgr = function () {
+    var adminMgr = new BsnpAccountMgr()
     adminMgr.m_BaseGitUser.Set_gitusr("admin")
     adminMgr.m_BaseGitUser.Deploy_git_repo()//on  master by default
 
@@ -606,7 +606,7 @@ var BsnpSvcAccount = {}
 // BibleObj Read/Write/Search
 BsnpSvcAccount.ApiBibleObj_search_txt = function (inp) {
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     //if (!inp.usr.f_path) inp.usr.f_path = ""
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiBibleObj_search_txt failed.")
@@ -633,7 +633,7 @@ BsnpSvcAccount.ApiBibleObj_search_txt = function (inp) {
 BsnpSvcAccount.ApiBibleObj_load_by_bibOj = function (inp) {
 
     console.log("\n*** (1) API:ApiBibleObj_load_by_bibOj:gituserMgr ***\n")
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
 
     console.log("\n*** (2) API:ApiBibleObj_load_by_bibOj:Proj_prepare_after_signed ***\n")
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -655,7 +655,7 @@ BsnpSvcAccount.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
 
     //: unlimited write size. 
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -687,7 +687,7 @@ BsnpSvcAccount.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
 BsnpSvcAccount.ApiUsrAccount_create = function (inp, res) {
     console.log("ApiUsrAccount_create")
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_usr_account_create(inp.par.repopath, inp.par.passcode, inp.par.hintword, inp.par.accesstr)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("ApiUsrAccount_create failed.")
 
@@ -699,7 +699,7 @@ BsnpSvcAccount.ApiUsrAccount_create = function (inp, res) {
 BsnpSvcAccount.ApiUsrAccount_login = function (inp, res) {
 
     //: unlimited write size. 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     //console.log(inp, "\n\n---Proj_parse_usr_login.start*************")
     var ret = gituserMgr.Proj_parse_usr_login(inp.par.repopath, inp.par.passcode)
     BaseGUti.Output_append(inp.out, ret)
@@ -708,7 +708,7 @@ BsnpSvcAccount.ApiUsrAccount_login = function (inp, res) {
 }
 BsnpSvcAccount.ApiUsrAccount_logout = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -725,7 +725,7 @@ BsnpSvcAccount.ApiUsrAccount_logout = async function (inp, res) {
 BsnpSvcAccount.ApiUsrAccount_update = function (inp, res) {
     console.log("ApiUsrAccount_create")
     //ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -769,7 +769,7 @@ BsnpSvcAccount.ApiUsrAccount_update = function (inp, res) {
 BsnpSvcAccount.ApiUsrReposData_status = function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -792,7 +792,7 @@ BsnpSvcAccount.ApiUsrDat_save = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     inp.out.olog = {}
     //: unlimited write size. 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -801,7 +801,7 @@ BsnpSvcAccount.ApiUsrDat_save = async function (inp, res) {
 }
 BsnpSvcAccount.ApiUsrDat_load = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -886,7 +886,7 @@ BsnpSvcToolkits.ApiUsrRepos_toolkids = async function (inp, req, res) {
         return
     }
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) {
         return console.log("Proj_prepare_after_signed failed.")
@@ -949,7 +949,7 @@ BsnpSvcToolkits.ApiBibleObj_read_crossnetwork_BkcChpVrs_txt = function (inp, req
 
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
     //})
@@ -965,7 +965,7 @@ BsnpSvcToolkits.ApiUsrReposData_git_push = async function (inp, req, res) {
 
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -991,7 +991,7 @@ BsnpSvcToolkits.ApiUsrReposData_git_pull = async function (inp, req, res) {
 
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
 
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -1012,7 +1012,7 @@ BsnpSvcToolkits.ApiUsrReposData_git_pull = async function (inp, req, res) {
 BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
 
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
@@ -1057,7 +1057,7 @@ BsnpSvcToolkits.________ApiUsrReposData_create___test_only = async function (inp
         return inp_struct_account_setup
     }
     var inp = ApiWrap.Parse_GET_req_to_inp(req)
-    var gituserMgr = new BibleObjGitusrMgr()
+    var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_parse_usr_signin(inp)
     if (ret) {
 
@@ -1078,7 +1078,7 @@ BsnpSvcToolkits.________ApiUsrReposData_create___test_only = async function (inp
 
 module.exports = {
     NCache: NCache,
-    BibleObjGitusrMgr: BibleObjGitusrMgr,
+    //BsnpAccountMgr: BsnpAccountMgr,
     BsnpSvcAccount: BsnpSvcAccount,
     BsnpSvcToolkits : BsnpSvcToolkits
 }
