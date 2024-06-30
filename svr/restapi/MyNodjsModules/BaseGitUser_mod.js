@@ -831,7 +831,7 @@ GitSponsor.prototype.git_published_usr_account_myoj_url = function (subpathname)
         subpathname = subpathname.replace(/^\/{0,2}/, "")
     }
     else subpathname = ""
-    var published = `https://bsnpghrepolist.github.io/${this.m_reponame}${subpathname}`
+    var published = `https://bsnpghrepolist.github.io/${this.m_reponame}/${subpathname}`
     return published;//.replace("/account/", "/")
 }
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
