@@ -192,7 +192,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
         return robj;
     }
 
-    robj.gh_repo_create_remote = this.m_BaseGitUser.gh_repo_create_remote_master(accesstr)
+    robj.gh_repo_create_remote = this.m_BaseGitUser.m_sponser.gh_repo_create_remote_master(accesstr)
     robj.git_clone = this.m_BaseGitUser.git_clone()  //on master by default.
     robj.main_dir_write_salts = this.m_BaseGitUser.main_dir_write_salts(passcode, hintword)
     robj.main_git_add_salts = this.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
