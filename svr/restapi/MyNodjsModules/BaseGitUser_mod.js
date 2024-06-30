@@ -1272,56 +1272,6 @@ BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
     return salts
 }
 
-BaseGitUser.prototype.gh_repo_create__and_more____ = function (passcode, hintword, accesstr) {
-
-    var dir = this.getFullPath_usr_host()
-    if (!hintword) hintword = ""
-    var salts = JSON.stringify([passcode, hintword]) //need to be encrypted.--> get_repo_salts
-    var commit_msg = this.getFullPath_usr_main(".salts")
-    if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
-
-    var username = this.m_sponser.m_reponame
-    var gh_repo_create = `
-# create my-project and clone 
-echo ${dir}
-cd ${dir}
-############   sudo -S gh repo create ${username} --private --clone   ## sudo cause gh to create repo on previos git account. 
-#######################################################################################################
-gh repo create ${this.m_sponser.m_acct.ownername}/${username} --${accesstr} --clone    ## must remove sudo for third pary github account. 
-#######################################################################################################
-if [ -d "${dir}/${username}" ]; then
-    sudo -S chmod 777 -R ${username}
-    sudo -S chmod 777 ${username}/.git/config
-    sudo -S cp ${username}/.git/config ${username}/.git/config_bak
-    sudo -S cat  ${username}/.git/config
-    ls -al
-    #####################################
-    cd ${dir}/${username}
-    sudo -S echo '${salts}' > .salts
-    sudo -S git add .salts
-    sudo -S git add *
-    sudo -S git commit -m "test:${commit_msg}"
-    sudo -S git branch -M main
-    ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
-    sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
-    git push -u origin main   ##error for sudo
-    sudo -S cat  ./.git/config
-else 
-    echo ${dir}/${username} nonexisistance
-fi
-    `
-    //console.log(gh_repo_create)
-    if (this.getFullPath_usr_main() !== this.getFullPath_usr_host(username)) {
-        console.log(this.getFullPath_usr_main() + " is not the same with: " + this.getFullPath_usr_host(username))
-    }
-
-    console.log("git_gh_repo_createne_cmd...")
-    var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
-    //console.log("ret", ret)
-
-    return str
-}
-
 
 
 
