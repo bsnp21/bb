@@ -823,13 +823,16 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     return ret
 }
 
-GitSponsor.prototype.git_gh_pages_published_url = function (subpathname) {
+GitSponsor.prototype.git_published_usr_account_myoj_url = function (subpathname) {
+    //https://bsnpghrepolist.github.io/wdingpbaz6/myoj/e_Note_json.js
+    //https://bsnpghrepolist.github.io/wdingpbaz6/account/myoj/e_Note_json.js
+    // Eg: subpathname= /e_Note_json.js
     if (subpathname) {
         subpathname = subpathname.replace(/^\/{0,2}/, "")
     }
     else subpathname = ""
-    var published = `https://bsnpghrepolist.github.io/${this.m_reponame}/${subpathname}`
-    return published.replace("/account/", "/")
+    var published = `https://bsnpghrepolist.github.io/${this.m_reponame}${subpathname}`
+    return published;//.replace("/account/", "/")
 }
 GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
@@ -1236,7 +1239,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
         var datname = fname.replace(accdir, "").slice(1)
         var str2 = datname
         if (datname.match(/_json.js/)) {
-            var url = _THIS.m_sponser.git_gh_pages_published_url(datname)
+            var url = _THIS.m_sponser.git_published_usr_account_myoj_url(datname)
             datname = datname.replace("_json.js", "").replace("account/", "")
             str2 = `<a href='${url}'>${datname}</a>`
         }
@@ -1396,7 +1399,7 @@ BaseGitUser.prototype.gh_pages_publish = function () {
         //need to change it to public. the change back to private.
         //return rob
     }
-    rob.published_url_sample = this.m_sponser.git_gh_pages_published_url(`/myoj/e_Note_json.js`)
+    rob.published_url_sample = this.m_sponser.git_published_usr_account_myoj_url(`/myoj/e_Note_json.js`)
     rob.reponame = this.m_sponser.m_reponame;
 
     rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
