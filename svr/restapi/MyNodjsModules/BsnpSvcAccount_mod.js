@@ -19,7 +19,7 @@ const NodeCache = require("node-cache");
 
 
 
-var { BsnpRepositoryUser, BaseGUti } = require("./BaseGitUser_mod");
+var { BsnpRepositoryUser, BaseGUti } = require("./BsnpRepositoryUser_mod");
 
 
 

@@ -12,7 +12,7 @@ const crypto = require('crypto')
 //const exec = require('child_process').exec;
 
 const { BsnpSvcAccount, BsnpSvcToolkits, NCache } = require("./BsnpSvcAccount_mod")
-const { BaseGUti } = require("./BaseGitUser_mod")
+const { BaseGUti } = require("./BsnpRepositoryUser_mod")
 
 var ApiWrap = {
     Parse_GET_req_to_inp: function (req, cbf) {
