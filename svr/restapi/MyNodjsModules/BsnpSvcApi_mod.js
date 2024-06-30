@@ -11,7 +11,7 @@ const crypto = require('crypto')
 //var SvcUti = require("./SvcUti.module").SvcUti;
 //const exec = require('child_process').exec;
 
-const { BsnpSvcUti, BsnpSvcToolkits, NCache } = require("./BibleObjGitusrMgr_mod")
+const { BsnpSvcAccount, BsnpSvcToolkits, NCache } = require("./BibleObjGitusrMgr_mod")
 const { BaseGUti } = require("./BaseGitUser_mod")
 
 var ApiWrap = {
@@ -180,26 +180,26 @@ var ApiJsonp_BibleObj = {
     ApiUsrAccount_create: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            BsnpSvcUti.ApiUsrAccount_create(inp)
+            BsnpSvcAccount.ApiUsrAccount_create(inp)
         })
     },
 
     ApiUsrAccount_login: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            BsnpSvcUti.ApiUsrAccount_login(inp)
+            BsnpSvcAccount.ApiUsrAccount_login(inp)
 
         })
     },
     ApiUsrAccount_logout: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            BsnpSvcUti.ApiUsrAccount_logout(inp)
+            BsnpSvcAccount.ApiUsrAccount_logout(inp)
 
         })
     },
     ApiUsrAccount_update: function (req, res) {
         console.log("ApiUsrAccount_create")
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            BsnpSvcUti.ApiUsrAccount_update(inp)
+            BsnpSvcAccount.ApiUsrAccount_update(inp)
         })
     },
     ///////////////////////////////////////////////
@@ -217,19 +217,19 @@ var ApiJsonp_BibleObj = {
     // 
     ApiBibleObj_search_txt: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            BsnpSvcUti.ApiBibleObj_search_txt(inp)
+            BsnpSvcAccount.ApiBibleObj_search_txt(inp)
         })
     },
 
     ApiBibleObj_load_by_bibOj: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            BsnpSvcUti.ApiBibleObj_load_by_bibOj(inp);
+            BsnpSvcAccount.ApiBibleObj_load_by_bibOj(inp);
         })
     },
 
     ApiBibleObj_write_Usr_BkcChpVrs_txt: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt(inp);
+            BsnpSvcAccount.ApiBibleObj_write_Usr_BkcChpVrs_txt(inp);
         })
     },
     ///////////////////////////////////////
@@ -238,7 +238,7 @@ var ApiJsonp_BibleObj = {
 
     ApiUsrReposData_status: function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
-            BsnpSvcUti.ApiUsrReposData_status(inp)
+            BsnpSvcAccount.ApiUsrReposData_status(inp)
         })
     },
 
@@ -248,12 +248,12 @@ var ApiJsonp_BibleObj = {
     // Usr Data: Save/Load
     ApiUsrDat_save: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            BsnpSvcUti.ApiUsrDat_save(inp)
+            BsnpSvcAccount.ApiUsrDat_save(inp)
         })
     },
     ApiUsrDat_load: async function (req, res) {
         ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
-            BsnpSvcUti.ApiUsrDat_load(inp)
+            BsnpSvcAccount.ApiUsrDat_load(inp)
         })
     },
     /////////////////////////////////////

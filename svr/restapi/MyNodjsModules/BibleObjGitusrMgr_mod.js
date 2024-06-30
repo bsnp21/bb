@@ -601,10 +601,10 @@ BibleObjGitusrMgr.prototype.CreateAdminMgr = function () {
 
 //////////////////////////////////////
 ////
-var BsnpSvcUti = {}
+var BsnpSvcAccount = {}
 
 // BibleObj Read/Write/Search
-BsnpSvcUti.ApiBibleObj_search_txt = function (inp) {
+BsnpSvcAccount.ApiBibleObj_search_txt = function (inp) {
 
     var gituserMgr = new BibleObjGitusrMgr()
     //if (!inp.usr.f_path) inp.usr.f_path = ""
@@ -630,7 +630,7 @@ BsnpSvcUti.ApiBibleObj_search_txt = function (inp) {
 
 }
 
-BsnpSvcUti.ApiBibleObj_load_by_bibOj = function (inp) {
+BsnpSvcAccount.ApiBibleObj_load_by_bibOj = function (inp) {
 
     console.log("\n*** (1) API:ApiBibleObj_load_by_bibOj:gituserMgr ***\n")
     var gituserMgr = new BibleObjGitusrMgr()
@@ -651,7 +651,7 @@ BsnpSvcUti.ApiBibleObj_load_by_bibOj = function (inp) {
 
 }
 
-BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
+BsnpSvcAccount.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
 
     //: unlimited write size. 
 
@@ -684,7 +684,7 @@ BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
 ///////////////////////////
 // User Account Mgment:
 
-BsnpSvcUti.ApiUsrAccount_create = function (inp, res) {
+BsnpSvcAccount.ApiUsrAccount_create = function (inp, res) {
     console.log("ApiUsrAccount_create")
 
     var gituserMgr = new BibleObjGitusrMgr()
@@ -696,7 +696,7 @@ BsnpSvcUti.ApiUsrAccount_create = function (inp, res) {
     ret.admrelease = admin.release_user()
 }
 
-BsnpSvcUti.ApiUsrAccount_login = function (inp, res) {
+BsnpSvcAccount.ApiUsrAccount_login = function (inp, res) {
 
     //: unlimited write size. 
     var gituserMgr = new BibleObjGitusrMgr()
@@ -706,7 +706,7 @@ BsnpSvcUti.ApiUsrAccount_login = function (inp, res) {
     console.log(inp)
 
 }
-BsnpSvcUti.ApiUsrAccount_logout = async function (inp, res) {
+BsnpSvcAccount.ApiUsrAccount_logout = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     var gituserMgr = new BibleObjGitusrMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -722,7 +722,7 @@ BsnpSvcUti.ApiUsrAccount_logout = async function (inp, res) {
     inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
     //})
 }
-BsnpSvcUti.ApiUsrAccount_update = function (inp, res) {
+BsnpSvcAccount.ApiUsrAccount_update = function (inp, res) {
     console.log("ApiUsrAccount_create")
     //ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
     var gituserMgr = new BibleObjGitusrMgr()
@@ -766,7 +766,7 @@ BsnpSvcUti.ApiUsrAccount_update = function (inp, res) {
 
 ///////////////
 
-BsnpSvcUti.ApiUsrReposData_status = function (inp, res) {
+BsnpSvcAccount.ApiUsrReposData_status = function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, function (inp) {
 
     var gituserMgr = new BibleObjGitusrMgr()
@@ -788,7 +788,7 @@ BsnpSvcUti.ApiUsrReposData_status = function (inp, res) {
 
 ///////////////////////////////////
 // Usr Data: Save/Load
-BsnpSvcUti.ApiUsrDat_save = async function (inp, res) {
+BsnpSvcAccount.ApiUsrDat_save = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     inp.out.olog = {}
     //: unlimited write size. 
@@ -799,7 +799,7 @@ BsnpSvcUti.ApiUsrDat_save = async function (inp, res) {
     inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(inp.par.fnames[0], inp.par.data, inp.par.datype)
 
 }
-BsnpSvcUti.ApiUsrDat_load = async function (inp, res) {
+BsnpSvcAccount.ApiUsrDat_load = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     var gituserMgr = new BibleObjGitusrMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -1079,6 +1079,6 @@ BsnpSvcToolkits.________ApiUsrReposData_create___test_only = async function (inp
 module.exports = {
     NCache: NCache,
     BibleObjGitusrMgr: BibleObjGitusrMgr,
-    BsnpSvcUti: BsnpSvcUti,
+    BsnpSvcAccount: BsnpSvcAccount,
     BsnpSvcToolkits : BsnpSvcToolkits
 }
