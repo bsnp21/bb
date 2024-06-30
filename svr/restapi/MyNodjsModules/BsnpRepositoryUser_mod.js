@@ -627,7 +627,7 @@ var BaseGUti = {
 
 
 
-function GitSponsor(reponame) {
+function GitRepository(reponame) {
     this.m_hostname = "github.com"
     if (reponame) this.m_reponame = reponame
 
@@ -647,10 +647,10 @@ function GitSponsor(reponame) {
     console.log("sponsor", this.m_acct)
     //const buffer = Buffer.from(toDecrypt, 'base64')
 }
-GitSponsor.prototype.set_reponame = function (reponame) {
+GitRepository.prototype.set_reponame = function (reponame) {
     this.m_reponame = reponame
 }
-GitSponsor.prototype.gh_repo_list_all_obj = function () {
+GitRepository.prototype.gh_repo_list_all_obj = function () {
     var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
     var istart = this.m_acct.ownername.length + 1
 
@@ -676,7 +676,7 @@ GitSponsor.prototype.gh_repo_list_all_obj = function () {
     return { obj: usrsInfo }
 }//gh repo list --json diskUsage --limit 10
 
-GitSponsor.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner) {
+GitRepository.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner) {
     var MAX_SIZE = 1000000 * 1000000000000;// millim Tillion10^12
     if (!github_accountowner) github_accountowner = this.m_acct.ownername
     var cmd = `gh repo list --source ${github_accountowner} --json diskUsage --limit ${MAX_SIZE}`
@@ -700,7 +700,7 @@ GitSponsor.prototype.gh_repo_list_tot_diskUsage = function (github_accountowner)
     }
     return robj
 }
-GitSponsor.prototype.gh_repo_view_json__________ = function () {
+GitRepository.prototype.gh_repo_view_json__________ = function () {
     var viewItems = ["assignableUsers",
         "codeOfConduct",
         "contactLinks",
@@ -788,7 +788,7 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
     console.log("usrsInfo", usrsInfo)
     return { obj: usrsInfo }
 }
-GitSponsor.prototype.gh_auth_login = function () {
+GitRepository.prototype.gh_auth_login = function () {
     var tmpfile = "gh_tok.tmp"
     var ghauthlogin = `--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
     var ghcmd = `## 
@@ -801,7 +801,7 @@ GitSponsor.prototype.gh_auth_login = function () {
     console.log("ret", ret)
     return ret
 }
-GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
+GitRepository.prototype.gh_api_repos_nameWithOwner = function () {
     this.gh_auth_login()
 
     var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
@@ -823,7 +823,7 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
     return ret
 }
 
-GitSponsor.prototype.git_published_usr_account_myoj_url = function (subpathname) {
+GitRepository.prototype.git_published_usr_account_myoj_url = function (subpathname) {
     //sample: 
     //https://bsnpghrepolist.github.io/wdingpbaz6/account/myoj/e_Note_json.js
     // Eg: subpathname= /e_Note_json.js
@@ -834,7 +834,7 @@ GitSponsor.prototype.git_published_usr_account_myoj_url = function (subpathname)
     var published = `https://bsnpghrepolist.github.io/${this.m_reponame}/${subpathname}`
     return published;//.replace("/account/", "/")
 }
-GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
+GitRepository.prototype.git_repo_user_url_private = function (bSecure) {
     //https://${userproj.username}:${passcode}@${userproj.hostname}/${userproj.username}/${userproj.projname}.git`
     //this.m_giturl = `https://${m_acct.ownername}:${m_acct.ownerpat}@github.com/${m_acct.ownername}/${this.m_repos}.git`
 
@@ -863,7 +863,7 @@ GitSponsor.prototype.git_repo_user_url_private = function (bSecure) {
     return secu_repopath
 }
 
-GitSponsor.prototype.git_conf_txt = function (bSecure) {
+GitRepository.prototype.git_conf_txt = function (bSecure) {
     var sec_url = this.git_repo_user_url_private(bSecure)
     var cfg = `
     [core]
@@ -881,7 +881,7 @@ GitSponsor.prototype.git_conf_txt = function (bSecure) {
     return cfg
 }
 
-GitSponsor.prototype.gh_repo_create_remote_master = function (accesstr) {
+GitRepository.prototype.gh_repo_create_remote_master = function (accesstr) {
 
     if (["public", "private"].indexOf(accesstr) < 0) return { err: ["accesstr must be public|private.", accesstr] }
 
@@ -896,7 +896,7 @@ gh repo create ${this.m_acct.ownername}/${username} --${accesstr}   ## must remo
     var str = BaseGUti.execSync_Cmd(gh_repo_create).split(/\r|\n/)
     return str
 }
-GitSponsor.prototype.curl_publish_source_for_website_of_git_reponame = function () {
+GitRepository.prototype.curl_publish_source_for_website_of_git_reponame = function () {
 
     const GITHUB_USER = this.m_acct.ownername //  ### "your-github-username"
     const REPO_NAME = this.m_reponame         //  ### "your-repo-name"
@@ -979,7 +979,7 @@ BsnpRepositoryUser.prototype.Set_gitusr = function (reponame) {
     var vld = this.validate_reponame(reponame)
     if (vld.err) return vld;
 
-    this.m_sponser = new GitSponsor(reponame)
+    this.m_sponser = new GitRepository(reponame)
 
     this.m_projDirs = this._prepare_proj_data_dirs()
 
