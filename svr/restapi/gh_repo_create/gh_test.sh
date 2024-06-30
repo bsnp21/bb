@@ -17,7 +17,7 @@ if [ -d "$1" ]; then
     sudo -S git commit -m "test:$1"
     sudo -S git branch -M main
     ################### sudo -S git remote add origin https://github.com/bsnp21/${username}.git
-    sudo -S git remote add origin ${this.m_sponser.git_repo_user_url_private(false)}
+    sudo -S git remote add origin ${this.m_RepoUsr.git_repo_user_url_private(false)}
     git push -u origin main   ##error for sudo
     sudo -S cat  ./.git/config
 else 
