@@ -19,7 +19,7 @@ const NodeCache = require("node-cache");
 
 
 
-var { BaseGitUser, BaseGUti } = require("./BaseGitUser_mod");
+var { BsnpRepositoryUser, BaseGUti } = require("./BaseGitUser_mod");
 
 
 
@@ -169,7 +169,7 @@ NCache.Init()
 //../../../../bugit/usrs/{hostname}/{Usrname}/{projname}/account/myoj
 var BsnpAccountMgr = function () {
 
-    this.m_BaseGitUser = new BaseGitUser()
+    this.m_BaseGitUser = new BsnpRepositoryUser()
 }
 
 

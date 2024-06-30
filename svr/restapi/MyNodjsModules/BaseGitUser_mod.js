@@ -930,17 +930,17 @@ curl -H "Authorization: token ${ACCESS_TOKEN}" \
 
 
 
-var BaseGitUser = function () {
+var BsnpRepositoryUser = function () {
     this.m_dlog = []
 }
-BaseGitUser.prototype.absRootWorkingDir = function () {
+BsnpRepositoryUser.prototype.absRootWorkingDir = function () {
     var rootdir = __dirname.slice(0, __dirname.indexOf("/bb/") + 1)
     console.log("__dirname=", __dirname, "rootdir=", rootdir)
     return rootdir
 }
 
 
-BaseGitUser.prototype.get_repo_salts = function (u) {
+BsnpRepositoryUser.prototype.get_repo_salts = function (u) {
     var ret = ["YQ==", "a"]
     var fname = this.getFullPath_usr_main(".salts")
     if (!fs.existsSync(fname)) {
@@ -956,7 +956,7 @@ BaseGitUser.prototype.get_repo_salts = function (u) {
     }
 }
 
-BaseGitUser.prototype.validate_reponame = function (reponame) {
+BsnpRepositoryUser.prototype.validate_reponame = function (reponame) {
     //The repository name must start with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes.
     if (reponame.length >= 120) {
         return { err: ["invalide name length.", reponame] }
@@ -970,7 +970,7 @@ BaseGitUser.prototype.validate_reponame = function (reponame) {
 
     return { ok: ["legal name.", reponame] }
 }
-BaseGitUser.prototype.Set_gitusr = function (reponame) {
+BsnpRepositoryUser.prototype.Set_gitusr = function (reponame) {
     if (!reponame) return { err: "reponame is null." }
     reponame = reponame.toLowerCase()
 
@@ -985,7 +985,7 @@ BaseGitUser.prototype.Set_gitusr = function (reponame) {
 
     return { vld: vld };
 }
-BaseGitUser.prototype._prepare_proj_data_dirs = function () {
+BsnpRepositoryUser.prototype._prepare_proj_data_dirs = function () {
     //const WorkingRootNodeName = "ddir"
     const NodeUsrs = "usrs" //keep same as old. 
     var absSvcRoot = this.absRootWorkingDir()
@@ -1037,18 +1037,18 @@ BaseGitUser.prototype._prepare_proj_data_dirs = function () {
 
     return projDirs
 }
-BaseGitUser.prototype.getFullPath_usr_host = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_usr_host = function (subpath) {
     return (!subpath) ? this.m_projDirs.user_dir : `${this.m_projDirs.user_dir}/${subpath.replace(/^[\/]/, "")}`
 }
-BaseGitUser.prototype.getFullPath_usr_main = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_usr_main = function (subpath) {
     return (!subpath) ? this.m_projDirs.git_root : `${this.m_projDirs.git_root}/${subpath.replace(/^[\/]/, "")}`
 }
 
-BaseGitUser.prototype.getFullPath_usr_acct = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_usr_acct = function (subpath) {
     var fullpathname = (!subpath) ? this.m_projDirs.acct_dir : `${this.m_projDirs.acct_dir}/${subpath.replace(/^[\/]/, "")}`
     return fullpathname;
 }
-BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath, bCopyIfNonexistance) {
+BsnpRepositoryUser.prototype.getFullPath_usr_myoj = function (subpath, bCopyIfNonexistance) {
     var fullpathname = (!subpath) ? this.m_projDirs.dest_myo : `${this.m_projDirs.dest_myo}/${subpath.replace(/^[\/]/, "")}`
     if (subpath && bCopyIfNonexistance) {
         var std = this.getFullPath_sys_stdlib_template(`/myoj/${subpath}`)
@@ -1057,7 +1057,7 @@ BaseGitUser.prototype.getFullPath_usr_myoj = function (subpath, bCopyIfNonexista
     }
     return fullpathname;
 }
-BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistance) {
+BsnpRepositoryUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistance) {
     var fullpathname = (!subpath) ? this.m_projDirs.dest_dat : `${this.m_projDirs.dest_dat}/${subpath.replace(/^[\/]/, "")}`
     if (subpath && bCopyIfNonexistance) {
         var std = this.getFullPath_sys_stdlib_template(`/dat/${subpath}`)
@@ -1066,7 +1066,7 @@ BaseGitUser.prototype.getFullPath_usr_dat = function (subpath, bCopyIfNonexistan
     }
     return fullpathname;
 }
-BaseGitUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
+BsnpRepositoryUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
     console.log("getFullPath_usr__cp_std:", std, fullpathname)
     if (!fs.existsSync(fullpathname) && fs.existsSync(std)) { //dynamic copy one. 
         var acctDir = this.m_projDirs.acct_dir;//this.getFullPath_usr_acct()
@@ -1084,10 +1084,10 @@ BaseGitUser.prototype.getFullPath_usr__cp_std = function (std, fullpathname) {
     }
     return ""
 }
-BaseGitUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_sys_stdlib_template = function (subpath) {
     return (!subpath) ? this.m_std_bible_obj_lib_template : `${this.m_std_bible_obj_lib_template}/${subpath.replace(/^[\/]/, "")}`
 }
-BaseGitUser.prototype.getFullPath_usr_acct_file_StdChoice_IfNotExist = function (subpath, cbf) {
+BsnpRepositoryUser.prototype.getFullPath_usr_acct_file_StdChoice_IfNotExist = function (subpath, cbf) {
     var usrpfname = this.getFullPath_usr_acct(subpath)
     var stdpfname = this.getFullPath_sys_stdlib_template(subpath)
     if (!fs.existsSync(usrpfname)) {
@@ -1103,15 +1103,15 @@ BaseGitUser.prototype.getFullPath_usr_acct_file_StdChoice_IfNotExist = function 
     return usrpfname;
 }
 
-BaseGitUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_sys_stdlib_BibleObj = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleObj`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
 }
-BaseGitUser.prototype.getFullPath_sys_stdlib_BibleStruct = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_sys_stdlib_BibleStruct = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}bible_obj_lib/jsdb/jsBibleStruct`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}/${subpath.replace(/^[\/]/, "")}`
 }
-BaseGitUser.prototype.getFullPath_root_sys = function (subpath) {
+BsnpRepositoryUser.prototype.getFullPath_root_sys = function (subpath) {
     var sysBibleObjPath = `${this.m_projDirs.root_sys}`
     return (!subpath) ? sysBibleObjPath : `${sysBibleObjPath}${subpath.replace(/^[\/]/, "")}`
 }
@@ -1127,12 +1127,12 @@ BaseGitUser.prototype.getFullPath_root_sys = function (subpath) {
 
 ///bible doc applied. 
 
-BaseGitUser.prototype.get_DocCode_Fname = function (DocCode) {
+BsnpRepositoryUser.prototype.get_DocCode_Fname = function (DocCode) {
     if (!DocCode.match(/^e_/)) return "" //:like, e_Note
     //var fnam = DocCode.replace(/^e_/, "my")  //:myNode_json.js
     return `${DocCode}_json.js`
 }
-BaseGitUser.prototype.get_pfxname = function (DocCode, par) {
+BsnpRepositoryUser.prototype.get_pfxname = function (DocCode, par) {
     var cbf = par ? (par.IfUsrFileNotExist ? par.IfUsrFileNotExist : null) : null
     //full path rw executable
     //var DocCode = inp.par.fnames[0]
@@ -1166,7 +1166,7 @@ BaseGitUser.prototype.get_pfxname = function (DocCode, par) {
 
     return dest_pfname
 }
-BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsistance) {
+BsnpRepositoryUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsistance) {
     //full path rw executable
     //var DocCode = inp.par.fnames[0]
     if (!DocCode) return ""
@@ -1199,7 +1199,7 @@ BaseGitUser.prototype.get_pfxname____________ = function (DocCode, cpyIfNonsista
 //////////////////////////////////////////
 
 
-BaseGitUser.prototype.Check_proj_state = function (cbf) {
+BsnpRepositoryUser.prototype.Check_proj_state = function (cbf) {
     //if (!this.m_inp.out || !this.m_inp.out.state) return console.log("******Fatal Error.")
     var stat = {}; //this.m_inp.out.state
     var accdir = this.getFullPath_usr_main()
@@ -1256,7 +1256,7 @@ BaseGitUser.prototype.Check_proj_state = function (cbf) {
 }
 
 
-BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
+BsnpRepositoryUser.prototype.main_dir_write_salts = function (passcode, hintword) {
     var salts = JSON.stringify([passcode, hintword])
     var fname = this.getFullPath_usr_main(".salts")
     var ret = fs.writeFileSync(fname, salts, function (er) {
@@ -1275,7 +1275,7 @@ BaseGitUser.prototype.main_dir_write_salts = function (passcode, hintword) {
 
 
 
-BaseGitUser.prototype.Deploy_git_repo = function (sBranch) {
+BsnpRepositoryUser.prototype.Deploy_git_repo = function (sBranch) {
     console.log("********************************************* Deploy_git_repo  1")
 
 
@@ -1295,7 +1295,7 @@ BaseGitUser.prototype.Deploy_git_repo = function (sBranch) {
 }
 
 
-BaseGitUser.prototype.main_dir_remove = function () {
+BsnpRepositoryUser.prototype.main_dir_remove = function () {
 
     var gitdir = this.getFullPath_usr_main()
     //var password = "lll" //dev mac
@@ -1323,7 +1323,7 @@ BaseGitUser.prototype.main_dir_remove = function () {
 
 
 
-BaseGitUser.prototype.git_status = async function (_sb) {
+BsnpRepositoryUser.prototype.git_status = async function (_sb) {
     var inp = { out: {} }
     if (!inp.out.state) return console.log("*** Fatal Error: inp.out.state = null")
 
@@ -1348,7 +1348,7 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 
 
 
-BaseGitUser.prototype.git_clone = function (branch) {
+BsnpRepositoryUser.prototype.git_clone = function (branch) {
     //var password = "lll" //dev mac
     //var root_sys = this.getFullPath_root_sys()
 
@@ -1362,7 +1362,7 @@ BaseGitUser.prototype.git_clone = function (branch) {
 
     var git_clone_cmd = `
     #!/bin/sh     
-    # BaseGitUser.git_clone()
+    # BsnpRepositoryUser.git_clone()
     if [ -d "${git_root}/.git" ]; then
         echo "${git_root} aleady exists."
         echo 'lll' | sudo -S chmod  777 ${git_root}
@@ -1381,7 +1381,7 @@ BaseGitUser.prototype.git_clone = function (branch) {
     return ret
 }
 
-BaseGitUser.prototype.git_pull = function (branch) {
+BsnpRepositoryUser.prototype.git_pull = function (branch) {
     var gitdir = this.getFullPath_usr_main()
     if (branch && branch.length > 0) {
         gitdir = this.getFullPath_usr_acct()
@@ -1405,7 +1405,7 @@ BaseGitUser.prototype.git_pull = function (branch) {
     return ret
 }
 
-BaseGitUser.prototype.main_git_add_commit_push_Sync = function (bSync) {
+BsnpRepositoryUser.prototype.main_git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
     var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
@@ -1468,7 +1468,7 @@ If you wish to set tracking information for this branch you can do so with:
         console.log(err)
     }
 }
-BaseGitUser.prototype.git_add_commit_push_Sync_ = function (bSync) {
+BsnpRepositoryUser.prototype.git_add_commit_push_Sync_ = function (bSync) {
     var _THIS = this
     var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
@@ -1538,7 +1538,7 @@ If you wish to set tracking information for this branch you can do so with:
     }
 }
 
-BaseGitUser.prototype.git_add_commit_push_Sync = function (bSync) {
+BsnpRepositoryUser.prototype.git_add_commit_push_Sync = function (bSync) {
     var _THIS = this
     var gitdir = this.getFullPath_usr_main()
     if (!fs.existsSync(gitdir)) {
@@ -1610,7 +1610,7 @@ If you wish to set tracking information for this branch you can do so with:
 
 
 
-BaseGitUser.prototype.chmod_R_777_acct = function (spath) {
+BsnpRepositoryUser.prototype.chmod_R_777_acct = function (spath) {
     // mode : "777" 
     var inp = { out: {} };//this.m_inp
 
@@ -1626,7 +1626,7 @@ BaseGitUser.prototype.chmod_R_777_acct = function (spath) {
 
     return inp.out.change_perm
 }
-BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
+BsnpRepositoryUser.prototype.chmod_R_ = function (mode, dir) {
     // mode : "777" 
     var inp = { out: {} }//this.m_inp
 
@@ -1644,7 +1644,7 @@ BaseGitUser.prototype.chmod_R_ = function (mode, dir) {
 }
 
 
-BaseGitUser.prototype.git_push_test = function () {
+BsnpRepositoryUser.prototype.git_push_test = function () {
     var tm = (new Date()).toString()
     console.log("tm=", tm)
 
@@ -1677,7 +1677,7 @@ BaseGitUser.prototype.git_push_test = function () {
 
     return ret
 }
-BaseGitUser.prototype.main_execSync_cmd = function (gitcmd) {
+BsnpRepositoryUser.prototype.main_execSync_cmd = function (gitcmd) {
     var _THIS = this
 
     if (!fs.existsSync(this.getFullPath_usr_main())) {
@@ -1697,7 +1697,7 @@ BaseGitUser.prototype.main_execSync_cmd = function (gitcmd) {
 
     return res
 }
-BaseGitUser.prototype.main_execSync_cmdar = function (subdir, cmdar) {
+BsnpRepositoryUser.prototype.main_execSync_cmdar = function (subdir, cmdar) {
     var _THIS = this
 
     var sdir = this.getFullPath_usr_main(subdir)
@@ -1724,5 +1724,5 @@ BaseGitUser.prototype.main_execSync_cmdar = function (subdir, cmdar) {
 
 module.exports = {
     BaseGUti: BaseGUti,
-    BaseGitUser: BaseGitUser
+    BsnpRepositoryUser: BsnpRepositoryUser
 }
