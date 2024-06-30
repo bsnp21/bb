@@ -205,7 +205,7 @@ BibleObjGitusrMgr.prototype.Proj_usr_account_create = function (repopath, passco
     this.m_BaseGitUser.m_sponser.curl_publish_source_for_website_of_git_reponame()
     //////
     //gh_pahges
-    //this.m_BaseGitUser.gh_pages_publish()
+   
 
 
 
@@ -264,7 +264,7 @@ BibleObjGitusrMgr.prototype.Proj_parse_usr_login = function (repopath, passcode)
     robj.state = this.m_BaseGitUser.Check_proj_state()
 
     //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
-    //this.m_BaseGitUser.gh_pages_publish()
+   
     /////////
     //robj.deploy = this.m_BaseGitUser.Deploy_git_repo("gh-pages") // branch.
     //robj.state = this.m_BaseGitUser.Check_proj_state()
@@ -663,7 +663,6 @@ BsnpSvcUti.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
 
     /////////////////////////////
     // for sharing staff.
-    // inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
     // 
     // var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
     // var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
@@ -799,8 +798,6 @@ BsnpSvcUti.ApiUsrDat_save = async function (inp, res) {
 
     inp.out.olog.save_dat = gituserMgr.ProjSignedin_Save_dat(inp.par.fnames[0], inp.par.data, inp.par.datype)
 
-    //inp.out.olog.gh_pages_publish_ = gituserMgr.m_BaseGitUser.gh_pages_publish()
-    //})
 }
 BsnpSvcUti.ApiUsrDat_load = async function (inp, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {

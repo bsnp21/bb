@@ -824,7 +824,7 @@ GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
 }
 
 GitSponsor.prototype.git_published_usr_account_myoj_url = function (subpathname) {
-    //https://bsnpghrepolist.github.io/wdingpbaz6/myoj/e_Note_json.js
+    //sample: 
     //https://bsnpghrepolist.github.io/wdingpbaz6/account/myoj/e_Note_json.js
     // Eg: subpathname= /e_Note_json.js
     if (subpathname) {
@@ -1391,54 +1391,7 @@ BaseGitUser.prototype.git_status = async function (_sb) {
 }
 
 /////
-BaseGitUser.prototype.gh_pages_publish = function () {
-    var rob = {}
-    rob.ghapinfo = this.m_sponser.gh_api_repos_nameWithOwner()
-    if (rob.ghapinfo.visibility !== "public") {
-        rob.err = "cannot publish private repo."
-        //need to change it to public. the change back to private.
-        //return rob
-    }
-    rob.published_url_sample = this.m_sponser.git_published_usr_account_myoj_url(`/myoj/e_Note_json.js`)
-    rob.reponame = this.m_sponser.m_reponame;
 
-    rob.dir = this.getFullPath_usr_acct() //getFullPath_usr_main();//getFullPath_usr_acct
-    if (!fs.existsSync(rob.dir)) {
-        rob.dir_not_exist = "****fatal error: unable to ghpages publish."
-        var cmd = `
-        sudo mkdir -p ${rob.dir}
-        sudo -S chmod 777 -R ${rob.dir}
-        sudo -S chown ubuntu:ubuntu -R ${rob.dir}
-        `
-        rob.cmd_mkdir_acct = BaseGUti.execSync_Cmd(cmd)
-    }
-
-    var opt = {
-        repo: "",
-        silent: true,
-        dest: "account",
-        //branch: 'main',  //default value=gh-pages. //main
-    }
-    opt.repo = this.m_sponser.git_repo_user_url_private(true)
-    //rob.gh_pages_publish_opt = opt
-    console.log("gh_pages_publish_ dir,opt=", rob.dir, opt)
-
-    rob.published_ret = ghpages.publish(rob.dir, opt, function (err) {
-        rob.gh_pages_publish_err = err
-        console.log("gh_pages_publish_ err=", err)
-    });
-
-    var cmd = `
-    cd ${rob.dir}
-    git diff --color-words=.
-    git status
-    git add *
-    git commit -m 'gh publish'
-    git push
-    `
-    //rob.cmd_ret_git = BaseGUti.execSync_Cmd(cmd)
-    return rob
-}
 
 
 
