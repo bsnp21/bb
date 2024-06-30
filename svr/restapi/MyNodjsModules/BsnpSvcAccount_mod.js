@@ -74,7 +74,7 @@ NCache.Init = function () {
             if (fs.existsSync(userProject.m_BaseGitUser.getFullPath_usr_main())) {
                 console.log("on del:git dir exist. push before to delete it")
                 userProject.m_BaseGitUser.git_add_commit_push_Sync(false)
-                userProject.m_BaseGitUser.m_sponser.git_published_usr_account_myoj_url()
+                userProject.m_BaseGitUser.m_RepoUsr.git_published_usr_account_myoj_url()
             }
             userProject.m_BaseGitUser.main_dir_remove()
         }
@@ -183,16 +183,16 @@ BsnpAccountMgr.prototype.Proj_usr_account_create = function (repopath, passcode,
     if (robj.err) return robj
 
     robj.state_orign = this.m_BaseGitUser.Check_proj_state()
-    robj.sponsorDiskUsage = this.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
+    robj.sponsorDiskUsage = this.m_BaseGitUser.m_RepoUsr.gh_repo_list_tot_diskUsage()
 
-    robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    robj.ghapinfo = this.m_BaseGitUser.m_RepoUsr.gh_api_repos_nameWithOwner()
     if (!robj.ghapinfo.err) {
         robj.err = ["already exist: ", repopath]
         console.log("already exist: ", repopath);
         return robj;
     }
 
-    robj.gh_repo_create_remote = this.m_BaseGitUser.m_sponser.gh_repo_create_remote_master(accesstr)
+    robj.gh_repo_create_remote = this.m_BaseGitUser.m_RepoUsr.gh_repo_create_remote_master(accesstr)
     robj.git_clone = this.m_BaseGitUser.git_clone()  //on master by default.
     robj.main_dir_write_salts = this.m_BaseGitUser.main_dir_write_salts(passcode, hintword)
     robj.main_git_add_salts = this.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
@@ -202,7 +202,7 @@ BsnpAccountMgr.prototype.Proj_usr_account_create = function (repopath, passcode,
     robj.main_dir_remove = this.m_BaseGitUser.main_dir_remove()
     
     // publish the created repo for website.
-    this.m_BaseGitUser.m_sponser.curl_publish_source_for_website_of_git_reponame()
+    this.m_BaseGitUser.m_RepoUsr.curl_publish_source_for_website_of_git_reponame()
     //////
     //gh_pahges
    
@@ -241,7 +241,7 @@ BsnpAccountMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     if (robj.err) return robj;
 
     console.log("========__Proj_parse_usr_login__")
-    robj.ghapinfo = this.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    robj.ghapinfo = this.m_BaseGitUser.m_RepoUsr.gh_api_repos_nameWithOwner()
     if (robj.ghapinfo.err) {
         robj.err = ["not exist: ", repopath]
         console.log(robj.err);
@@ -473,7 +473,7 @@ BsnpAccountMgr.prototype.Session_get_usr = function (ssid) {
 }
 BsnpAccountMgr.prototype.Session_create = function (usr) {
 
-    var ssid = (new Date()).getTime() + this.m_BaseGitUser.m_sponser.m_reponame //usr_proj
+    var ssid = (new Date()).getTime() + this.m_BaseGitUser.m_RepoUsr.m_reponame //usr_proj
     var ssid_b64 = ssid;//Buffer.from(ssid).toString("base64") //=btoa()
     var ttl = NCache.m_TTL //default.
 
@@ -664,8 +664,8 @@ BsnpSvcAccount.ApiBibleObj_write_Usr_BkcChpVrs_txt = async function (inp, res) {
     /////////////////////////////
     // for sharing staff.
     // 
-    // var username = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
-    // var usrinfo = gituserMgr.m_BaseGitUser.m_sponser.gh_api_repos_nameWithOwner()
+    // var username = gituserMgr.m_BaseGitUser.m_RepoUsr.m_reponame
+    // var usrinfo = gituserMgr.m_BaseGitUser.m_RepoUsr.gh_api_repos_nameWithOwner()
     // var admin = gituserMgr.CreateAdminMgr()
     // inp.out.olog["Add_doc_BCV_user"] = admin.Add_doc_BCV_user(inp.par.inpObj, username, usrinfo.visibility)
     return;
@@ -729,7 +729,7 @@ BsnpSvcAccount.ApiUsrAccount_update = function (inp, res) {
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
-    var usrname = gituserMgr.m_BaseGitUser.m_sponser.m_reponame
+    var usrname = gituserMgr.m_BaseGitUser.m_RepoUsr.m_reponame
 
     inp.out.olog = {}
     gituserMgr.m_BaseGitUser.main_dir_remove()
@@ -749,7 +749,7 @@ BsnpSvcAccount.ApiUsrAccount_update = function (inp, res) {
     gituserMgr.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
     inp.out.olog["git_add_commit_push_Sync_def"] = gituserMgr.m_BaseGitUser.main_git_add_commit_push_Sync("ApiUsrAccount_update");//after saved
 
-    var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_sponser.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
+    var cmd = `gh repo edit ${gituserMgr.m_BaseGitUser.m_RepoUsr.m_acct.ownername}/${inp.par.repopath} --visibility ${inp.par.accesstr} --homepage 'https://github.com'`
     inp.out.olog[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
 
     gituserMgr.m_BaseGitUser.main_dir_remove()
@@ -898,18 +898,18 @@ BsnpSvcToolkits.ApiUsrRepos_toolkids = async function (inp, req, res) {
     if (inp.par.gh_repo_delete_name && inp.par.gh_repo_delete_name.length > 0) {
         console.log("enter destroy ===>par:")
         var reponame = inp.par.gh_repo_delete_name
-        if (reponame === "self") reponame = gituserMgr.m_BaseGitUser.m_sponser.m_reponame;
+        if (reponame === "self") reponame = gituserMgr.m_BaseGitUser.m_RepoUsr.m_reponame;
         console.log("to delete:" + reponame)
         inp.out.destroy_res = {}
         var cmd = `sudo gh repo delete ${reponame} --confirm`
         inp.out.destroy_res[cmd] = gituserMgr.m_BaseGitUser.main_execSync_cmd(cmd).split(/\r|\n/) // must manually do it with sudo for gh auth
-        inp.out.reposlist = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_all_obj()
+        inp.out.reposlist = gituserMgr.m_BaseGitUser.m_RepoUsr.gh_repo_list_all_obj()
         //gituserMgr.Session_delete(inp.SSID)
         inp.out.state = gituserMgr.m_BaseGitUser.Check_proj_state()
         return
     }
     if (inp.par.gh_repo_list_tot_diskUsage) {
-        inp.out.gh_repo_list_tot_diskUsage = gituserMgr.m_BaseGitUser.m_sponser.gh_repo_list_tot_diskUsage()
+        inp.out.gh_repo_list_tot_diskUsage = gituserMgr.m_BaseGitUser.m_RepoUsr.gh_repo_list_tot_diskUsage()
         return
     }
 

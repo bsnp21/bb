@@ -979,7 +979,7 @@ BsnpRepositoryUser.prototype.Set_gitusr = function (reponame) {
     var vld = this.validate_reponame(reponame)
     if (vld.err) return vld;
 
-    this.m_sponser = new GitRepository(reponame)
+    this.m_RepoUsr = new GitRepository(reponame)
 
     this.m_projDirs = this._prepare_proj_data_dirs()
 
@@ -989,9 +989,9 @@ BsnpRepositoryUser.prototype._prepare_proj_data_dirs = function () {
     //const WorkingRootNodeName = "ddir"
     const NodeUsrs = "usrs" //keep same as old. 
     var absSvcRoot = this.absRootWorkingDir()
-    var hostname = this.m_sponser.m_hostname;//"github.com"
-    var username = this.m_sponser.m_acct.ownername;
-    var projname = this.m_sponser.m_reponame
+    var hostname = this.m_RepoUsr.m_hostname;//"github.com"
+    var username = this.m_RepoUsr.m_acct.ownername;
+    var projname = this.m_RepoUsr.m_reponame
 
     var projDirs = {}
     projDirs.root_sys = `${absSvcRoot}`
@@ -1239,7 +1239,7 @@ BsnpRepositoryUser.prototype.Check_proj_state = function (cbf) {
         var datname = fname.replace(accdir, "").slice(1)
         var str2 = datname
         if (datname.match(/_json.js/)) {
-            var url = _THIS.m_sponser.git_published_usr_account_myoj_url(datname)
+            var url = _THIS.m_RepoUsr.git_published_usr_account_myoj_url(datname)
             datname = datname.replace("_json.js", "").replace("account/", "")
             str2 = `<a href='${url}'>${datname}</a>`
         }
@@ -1352,7 +1352,7 @@ BsnpRepositoryUser.prototype.git_clone = function (branch) {
     //var password = "lll" //dev mac
     //var root_sys = this.getFullPath_root_sys()
 
-    var clone_https = this.m_sponser.git_repo_user_url_private(true)
+    var clone_https = this.m_RepoUsr.git_repo_user_url_private(true)
     var bransh_option = `--branch ${branch}`
     var git_root = this.getFullPath_usr_acct()
     if (!branch) { //on master by default.
@@ -1412,7 +1412,7 @@ BsnpRepositoryUser.prototype.main_git_add_commit_push_Sync = function (bSync) {
         return console.log("gitdir not exists=" + gitdir);
     }
     //git remote set-url origin new.git.url/herefffff
-    var repo_url = this.m_sponser.git_repo_user_url_private(true)
+    var repo_url = this.m_RepoUsr.git_repo_user_url_private(true)
 
     //password = "lll" //dev mac
     /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
@@ -1475,7 +1475,7 @@ BsnpRepositoryUser.prototype.git_add_commit_push_Sync_ = function (bSync) {
         return console.log("gitdir not exists=" + gitdir);
     }
     //git remote set-url origin new.git.url/herefffff
-    var repo_url = this.m_sponser.git_repo_user_url_private(true)
+    var repo_url = this.m_RepoUsr.git_repo_user_url_private(true)
 
     //password = "lll" //dev mac
     /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
@@ -1545,7 +1545,7 @@ BsnpRepositoryUser.prototype.git_add_commit_push_Sync = function (bSync) {
         return console.log("gitdir not exists=" + gitdir);
     }
     //git remote set-url origin new.git.url/herefffff
-    var repo_url = this.m_sponser.git_repo_user_url_private(true)
+    var repo_url = this.m_RepoUsr.git_repo_user_url_private(true)
 
     //password = "lll" //dev mac
     /* https://www.r-bloggers.com/2020/07/5-steps-to-change-github-default-branch-from-master-to-main/ */
