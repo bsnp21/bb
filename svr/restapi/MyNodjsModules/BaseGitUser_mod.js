@@ -788,7 +788,7 @@ GitSponsor.prototype.gh_repo_view_json__________ = function () {
     console.log("usrsInfo", usrsInfo)
     return { obj: usrsInfo }
 }
-GitSponsor.prototype.gh_aut_login = function () {
+GitSponsor.prototype.gh_auth_login = function () {
     var tmpfile = "gh_tok.tmp"
     var ghauthlogin = `--git-protocol ssh --hostname github.com --with-token < ${tmpfile} `
     var ghcmd = `## 
@@ -796,13 +796,13 @@ GitSponsor.prototype.gh_aut_login = function () {
     gh auth login ${ghauthlogin}
     sudo -S rm -f ${tmpfile}
     `
-    console.log("gh_aut_login:", ghcmd + ghauthlogin)
+    console.log("gh_auth_login:", ghcmd + ghauthlogin)
     var ret = BaseGUti.execSync_Cmd(ghcmd).toString()// --json nameWithOwner|url
     console.log("ret", ret)
     return ret
 }
 GitSponsor.prototype.gh_api_repos_nameWithOwner = function () {
-    this.gh_aut_login()
+    this.gh_auth_login()
 
     var ghcmd = `gh api repos/${this.m_acct.ownername}/${this.m_reponame}`
     console.log("gh_api_repos_nameWithOwner:", ghcmd)
