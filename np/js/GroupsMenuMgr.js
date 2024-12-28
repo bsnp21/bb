@@ -127,6 +127,18 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
     $("#All_e_Notes").on("click", function () {
         var surl = '' + window.location.href   ////removal url-ankor #bcv. #Gen1:1
+        var punIndx = surl.indexOf("wdaws")
+        if (punIndx > 0) {
+            surl = surl.substring(0, punIndx)
+        }else return alert("no wdaws in url");
+        var repopathname = $("#SignOut_repopathname").text();
+        //http://34.227.20.213/wdaws/ddir/usrs/github.com/bsnpghrepolist/wdingpba/
+        surl += `wdaws/ddir/usrs/github.com/bsnpghrepolist/${repopathname}/index.htm`
+        window.open(surl, "_blank")
+
+
+
+        /*
         var punIndx = surl.indexOf("#")
         if (punIndx > 0) {
             surl = surl.substring(0, punIndx)
@@ -136,6 +148,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
         //const encodedUrl = decodeURIComponent(window.location.href);
         var surl = `https://bsnpghrepolist.github.io/admin/?_hosthref=${surl}`
         window.open(surl, "_blank")
+        ****/
     })
 
 
