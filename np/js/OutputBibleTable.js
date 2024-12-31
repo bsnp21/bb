@@ -145,6 +145,9 @@ OutputBibleTable.prototype.Gen_output_table_for_e_Note_Viewer = function (cbf) {
     this.Set_Event_output_table(this.m_tbid)
 
     this.incFontSize(0)
+
+    var sortab = new Rapid_Sort_Table("#"+tb.ID)
+    sortab.sort_col({ colIdx: 2, asend: 1 })
 }
 OutputBibleTable.prototype.update_table_tr = function (ret, par) {
     var ret = this.create_trs(ret.out.data)
@@ -218,12 +221,13 @@ OutputBibleTable.prototype.create_htm_table_str_for_e_Note_Viewer = function () 
 
     var s = "<table id='BibOut' border='1'>";
     s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
-    s += "<thead><th>#</th></thead>";
+    s += "<thead><th>#</th><th>BVC</th><th>Date</th><th>Verse</th></thead>";
     s += "<tbody>";
     s += ret.trs;
 
     s += "</tbody></table>";
     ret.htm = s
+    ret.ID = "BibOut"
     return ret
 }
 OutputBibleTable.prototype.create_trs = function (odat) {
@@ -322,11 +326,11 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
                 //console.log("typeof val=", typeof val);
                 idx++;
                 var sbcv = `${vol}${chp}:${vrs}`;
-      
+
                 var txt = val["e_Note"].trim()
                 var dat = htmlToText(txt).substring(0, 13)
                 trs += `<tr><td>${idx}</td><td class='e_Note_Bcv'>${sbcv}</td><td class='e_Note_datime'>${dat}</td><td>${txt}</td></tr>`;
-                
+
             });
         });
     });
