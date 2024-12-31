@@ -388,6 +388,7 @@ AppInstancesManager.prototype.apiCallback_Gen_output_table = function (ret, cbf)
     popupMenu.hide()
     g_obt.set_data(ret)
     if (ret.Gen_Output_Table_Form === "e_Note_Viewer") {
+        ret.Gen_Output_Table_Form === null
         g_obt.Gen_output_table_for_e_Note_Viewer(cbf)
     }else{
         g_obt.Gen_output_table(cbf)
