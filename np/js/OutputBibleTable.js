@@ -221,7 +221,7 @@ OutputBibleTable.prototype.create_htm_table_str_for_e_Note_Viewer = function () 
 
     var s = "<table id='BibOut' border='1'>";
     s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
-    s += "<thead><th>#</th><th>BVC</th><th>Date</th><th>Verse</th></thead>";
+    s += "<thead><th>#</th><th>BVC</th><th>Verse</th></thead>";
     s += "<tbody>";
     s += ret.trs;
 
@@ -329,7 +329,7 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
 
                 var txt = val["e_Note"].trim()
                 var dat = htmlToText(txt).substring(0, 13)
-                trs += `<tr><td>${idx}</td><td class='e_Note_Bcv'>${sbcv}</td><td class='e_Note_datime'>${dat}</td><td>${txt}</td></tr>`;
+                trs += `<tr><td>${idx}</td><td class='e_Note_Bcv'>${sbcv}</td><td>${txt}</td></tr>`;
 
             });
         });
