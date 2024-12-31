@@ -237,18 +237,6 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     var _This = this;
 
-    //var searchStrn = $("#sinput").val().trim();
-
-
-    //if (searchStrn.length === 0) {
-    //if("e_Note"===searchInFileName ){
-
-
-    //return alert("search empty input: " + searchInFileName)
-    //}
-
-    //MyStorage.MostRecentSearchStrn.addonTop(s)
-    //this.gen_search_strn_history()
     document.g_NextIndex = -1
 
 
@@ -261,26 +249,6 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     $("#searchNextresult").text("Serach str in server site..")
 
-    ////var fnamesArr = MyStorage.LastSelectedDocsList();
-
-    //var inpobj = { fnames: fnamesArr, bibOj: {}, Search: { File: searchInFileName, Strn: searchStrn } };
-    //var res = showup.get_selected_bcv_parm();
-    //if (res) {
-    //    inp.bibOj = res.oj_search
-    //}
-    //return inp;
-
-    ///var volar = Object.keys(inpobj.bibOj)
-    //var SearchedVolumn = $("#bk_name").text()
-    //if ("UserDef" === SearchedVolumn) {
-    //    SearchedVolumn += ": " + volar.join(" ")
-    //}
-    //if (SearchedVolumn.indexOf("Select") >= 0) {
-    //    SearchedVolumn = "all"
-    //}
-    //if (SearchedVolumn.length === 0) {
-    //    SearchedVolumn = "all"
-    //}
 
     try {
         var trymat = ("test").match(inpobj.Search.Strn)
@@ -289,13 +257,6 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
         return alert(err)
     }
 
-
-
-    ///if (volar.length === 0) {
-    ///    if (!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)) {
-    ///        return;
-    ///    }
-    ///}
 
     var msg = ` found in '${inpobj.Search.File}' '.`
     var api = new BsnpRestApi()
@@ -317,15 +278,6 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
 
     return
-    //test
-    var unicds = "";
-    for (var i = 0; i < s.length; i++) {
-        var ch = s.charCodeAt(i);
-        if (ch > 512) {
-            unicds += "\\u" + ch.toString(16);
-        }
-    }
-    Uti.Msg(s, "unicode:", unicds);
 }
 
 

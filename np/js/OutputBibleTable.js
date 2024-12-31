@@ -187,7 +187,7 @@ OutputBibleTable.prototype.create_htm_table_str = function () {
     ret.htm = s
     return ret
 }
-OutputBibleTable.prototype.create_trs = function (odat) {
+OutputBibleTable.prototype.create_trs___ = function (odat) {
     //ret = this.convert_rbcv_2_bcvRobj(ret)
     var _THIS = this
     if (!odat) {
@@ -245,7 +245,7 @@ OutputBibleTable.prototype.create_trs = function (odat) {
     return { trs: trs, size: idx };
 }
 
-OutputBibleTable.prototype.create_trs_for_e_NOTE = function (odat) {
+OutputBibleTable.prototype.create_trs = function (odat) {
     //ret = this.convert_rbcv_2_bcvRobj(ret)
     var _THIS = this
     if (!odat) {
@@ -270,6 +270,12 @@ OutputBibleTable.prototype.create_trs_for_e_NOTE = function (odat) {
 
         }
     }
+    function htmlToText(html) {
+        var temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.textContent; // Or return temp.innerText if you need to return only visible text. It's slower.
+    }
+
     var idx = 0, trs = "", uuid = "";
     $.each(odat, function (vol, chpObj) {
         $.each(chpObj, function (chp, vrsObj) {
@@ -277,38 +283,40 @@ OutputBibleTable.prototype.create_trs_for_e_NOTE = function (odat) {
                 //console.log("typeof val=", typeof val);
                 idx++;
                 var sbcv = `${vol}${chp}:${vrs}`;
-                var MemoVersClass = ""
-                if (MemoryVersary.indexOf(sbcv) >= 0) {
-                    MemoVersClass = "divPopupMenu_CaptionBCV_MemoVerse"
-                }
-                var BcvTag = `<a class='popupclicklabel bcvTag ${MemoVersClass}' title='${sbcv}'>${sbcv}</a>`
-                trs += `<tr><td>${BcvTag}`;
-                switch (typeof val) {
-                    case "object"://trn
-                        $.each(val, function (revId, txt) {
-                            txt = _THIS.get_search_matched_txt(txt)
+                //   var MemoVersClass = ""
+                //   if (MemoryVersary.indexOf(sbcv) >= 0) {
+                //       MemoVersClass = "divPopupMenu_CaptionBCV_MemoVerse"
+                //   }
+                //   var BcvTag = `<a class='popupclicklabel bcvTag ${MemoVersClass}' title='${sbcv}'>${sbcv}</a>`
+                var txt = val["e_Note"].trim()
+                var dat = htmlToText(txt).substring(0, 13)
+                trs += `<tr><td>${idx}</td><td class='e_Note_Bcv'>${sbcv}</td><td class='e_Note_datime'>${dat}</td><td>${txt}</td></tr>`;
+                //  switch (typeof val) {
+                //      case "object"://trn
+                //          $.each(val, function (revId, txt) {
+                //              txt = _THIS.get_search_matched_txt(txt)
 
-                            var vrsTxtTag = 'a' //a is ued for scripture txt. 
-                            if (revId.match(/^e_[a-zA-Z]/)) {//E.g. "NIV",  "e_Note"
-                                vrsTxtTag = 'div'
-                                txt = Uti.convert_std_bcv_in_text_To_linked(txt)
-                            }
+                //              var vrsTxtTag = 'a' //a is ued for scripture txt. 
+                //              if (revId.match(/^e_[a-zA-Z]/)) {//E.g. "NIV",  "e_Note"
+                //                  vrsTxtTag = 'div'
+                //                  txt = Uti.convert_std_bcv_in_text_To_linked(txt)
+                //              }
 
-                            var clsname = `class='tx tx${revId}'`
-                            if (CNST.OT_Bkc_Ary.indexOf(vol) >= 0 && revId === 'H_G') {
-                                clsname = `dir='rtl' class='tx tx${revId} tx_OT'` //
-                            }
-                            uuid = `${revId}_${vol}_${chp}_${vrs}`;
-                            var revTag = `<sup txuid='${uuid}' class='popupclicklabel revTag' title='${sbcv}'>${revId}</sup>`
-                            var vrsTxt = `<${vrsTxtTag} id='${uuid}' ${clsname}>${txt}</${vrsTxtTag}>`
-                            trs += `<div>${revTag}${vrsTxt}</div>`;
-                        });
-                        break;
-                    case "string":
-                        trs += "<div>" + val + "</div>";
-                        break;
-                }
-                trs += "</td></tr>";
+                //              var clsname = `class='tx tx${revId}'`
+                //              if (CNST.OT_Bkc_Ary.indexOf(vol) >= 0 && revId === 'H_G') {
+                //                  clsname = `dir='rtl' class='tx tx${revId} tx_OT'` //
+                //              }
+                //              uuid = `${revId}_${vol}_${chp}_${vrs}`;
+                //              var revTag = `<sup txuid='${uuid}' class='popupclicklabel revTag' title='${sbcv}'>${revId}</sup>`
+                //              var vrsTxt = `<${vrsTxtTag} id='${uuid}' ${clsname}>${txt}</${vrsTxtTag}>`
+                //              trs += `<div>${revTag}${vrsTxt}</div>`;
+                //          });
+                //          break;
+                //      case "string":
+                //          trs += "<div>" + val + "</div>";
+                //          break;
+                //  }
+                //  trs += "</td></tr>";
             });
         });
     });
