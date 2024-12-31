@@ -127,6 +127,51 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         $("#sinput").val(s)
     })
 
+    $("#e_Note_Viewer").on("click", function () {
+        //var _This = this;
+
+        document.g_NextIndex = -1
+
+
+        var inpobj = g_aim.get_search_inp()
+        if (inpobj.Search.Strn.trim().length === 0) {
+            return alert("empty input SEARCH STRING: ")
+        }
+
+
+
+        $("#searchNextresult").text("Serach str in server site..")
+
+
+        try {
+            var trymat = ("test").match(inpobj.Search.Strn)
+        } catch (err) {
+            alert("Regex Err:\n" + inpobj.Search.Strn)
+            return alert(err)
+        }
+
+
+        var msg = ` found in '${inpobj.Search.File}' '.`
+        var api = new BsnpRestApi()
+        api.ajaxion(RestApi.ApiBibleObj_search_txt,
+            inpobj,
+            function (ret) {
+                var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
+                ret.Gen_Output_Table_Form = "e_Note_Viewer"
+                _THIS.m_gAppInstancesManager.apiCallback_Gen_output_table(ret, function (size) {
+                    var txt = size + msg
+                    $("#searchNextresult").text("0/" + txt)
+                    var keyary = [inpobj.Search.Strn, size, inpobj.Search.File, '']
+                    shob.add_key_val(JSON.stringify(keyary), "yymmdd")
+                    _THIS.gen_search_strn_history()
+                    $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")
+                });
+                Uti.Msg(ret.out.result);
+            })
+
+
+    })
+
     /////////
     $("#save_SearchHistory2Repo").on("click", function () {
         var This = this

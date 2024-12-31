@@ -134,7 +134,18 @@ OutputBibleTable.prototype.Gen_output_table = function (cbf) {
 
     this.incFontSize(0)
 }
+OutputBibleTable.prototype.Gen_output_table_for_e_Note_Viewer = function (cbf) {
 
+    var _THIS = this;
+    var tb = this.create_htm_table_str_for_e_Note_Viewer();
+    Uti.Msg("tot_rows:", tb.size);
+    if (cbf) cbf(tb.size)
+    $(this.m_tbid).html(tb.htm);
+
+    this.Set_Event_output_table(this.m_tbid)
+
+    this.incFontSize(0)
+}
 OutputBibleTable.prototype.update_table_tr = function (ret, par) {
     var ret = this.create_trs(ret.out.data)
     var trID = "#" + par.BCVtagClusterInfo.trID
@@ -187,7 +198,35 @@ OutputBibleTable.prototype.create_htm_table_str = function () {
     ret.htm = s
     return ret
 }
-OutputBibleTable.prototype.create_trs___ = function (odat) {
+OutputBibleTable.prototype.create_htm_table_str_for_e_Note_Viewer = function () {
+    //ret = this.convert_rbcv_2_bcvRobj(ret)
+    var _THIS = this
+    if (!this.m_data || !this.m_data.out || !this.m_data.out.data) {
+        return { htm: "", size: 0 };
+    }
+
+    console.log("result:", this.m_data.out.result)
+    var ret = this.create_trs_for_e_Note_Viewer(this.m_data.out.data)
+    var bibOj = this.m_data.par.bibOj;
+    var str = JSON.stringify(bibOj)
+    var sbcvlst = Uti.parse_bcvOj2strlst(bibOj)
+    //Object.keys(bibOj).forEach(function (bkc) {
+    //    var oj = {}
+    //    oj[bkc] = bibOj[bkc]
+    //    sbcvlst += Uti.parse_bcv(oj) + ", "
+    //})
+
+    var s = "<table id='BibOut' border='1'>";
+    s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
+    s += "<thead><th>#</th></thead>";
+    s += "<tbody>";
+    s += ret.trs;
+
+    s += "</tbody></table>";
+    ret.htm = s
+    return ret
+}
+OutputBibleTable.prototype.create_trs = function (odat) {
     //ret = this.convert_rbcv_2_bcvRobj(ret)
     var _THIS = this
     if (!odat) {
@@ -245,7 +284,7 @@ OutputBibleTable.prototype.create_trs___ = function (odat) {
     return { trs: trs, size: idx };
 }
 
-OutputBibleTable.prototype.create_trs = function (odat) {
+OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
     //ret = this.convert_rbcv_2_bcvRobj(ret)
     var _THIS = this
     if (!odat) {
@@ -283,40 +322,11 @@ OutputBibleTable.prototype.create_trs = function (odat) {
                 //console.log("typeof val=", typeof val);
                 idx++;
                 var sbcv = `${vol}${chp}:${vrs}`;
-                //   var MemoVersClass = ""
-                //   if (MemoryVersary.indexOf(sbcv) >= 0) {
-                //       MemoVersClass = "divPopupMenu_CaptionBCV_MemoVerse"
-                //   }
-                //   var BcvTag = `<a class='popupclicklabel bcvTag ${MemoVersClass}' title='${sbcv}'>${sbcv}</a>`
+      
                 var txt = val["e_Note"].trim()
                 var dat = htmlToText(txt).substring(0, 13)
                 trs += `<tr><td>${idx}</td><td class='e_Note_Bcv'>${sbcv}</td><td class='e_Note_datime'>${dat}</td><td>${txt}</td></tr>`;
-                //  switch (typeof val) {
-                //      case "object"://trn
-                //          $.each(val, function (revId, txt) {
-                //              txt = _THIS.get_search_matched_txt(txt)
-
-                //              var vrsTxtTag = 'a' //a is ued for scripture txt. 
-                //              if (revId.match(/^e_[a-zA-Z]/)) {//E.g. "NIV",  "e_Note"
-                //                  vrsTxtTag = 'div'
-                //                  txt = Uti.convert_std_bcv_in_text_To_linked(txt)
-                //              }
-
-                //              var clsname = `class='tx tx${revId}'`
-                //              if (CNST.OT_Bkc_Ary.indexOf(vol) >= 0 && revId === 'H_G') {
-                //                  clsname = `dir='rtl' class='tx tx${revId} tx_OT'` //
-                //              }
-                //              uuid = `${revId}_${vol}_${chp}_${vrs}`;
-                //              var revTag = `<sup txuid='${uuid}' class='popupclicklabel revTag' title='${sbcv}'>${revId}</sup>`
-                //              var vrsTxt = `<${vrsTxtTag} id='${uuid}' ${clsname}>${txt}</${vrsTxtTag}>`
-                //              trs += `<div>${revTag}${vrsTxt}</div>`;
-                //          });
-                //          break;
-                //      case "string":
-                //          trs += "<div>" + val + "</div>";
-                //          break;
-                //  }
-                //  trs += "</td></tr>";
+                
             });
         });
     });

@@ -387,7 +387,11 @@ AppInstancesManager.prototype.apiCallback_Gen_output_table = function (ret, cbf)
     //popupMenu_BcvTag.hide()
     popupMenu.hide()
     g_obt.set_data(ret)
-    g_obt.Gen_output_table(cbf)
+    if (ret.Gen_Output_Table_Form === "e_Note_Viewer") {
+        g_obt.Gen_output_table_for_e_Note_Viewer(cbf)
+    }else{
+        g_obt.Gen_output_table(cbf)
+    }
 }
 AppInstancesManager.prototype.loadBible_chapter_by_bibOj = function (oj) {
     var _THIS = this
