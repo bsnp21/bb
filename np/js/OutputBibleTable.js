@@ -245,6 +245,76 @@ OutputBibleTable.prototype.create_trs = function (odat) {
     return { trs: trs, size: idx };
 }
 
+OutputBibleTable.prototype.create_trs_for_e_NOTE = function (odat) {
+    //ret = this.convert_rbcv_2_bcvRobj(ret)
+    var _THIS = this
+    if (!odat) {
+        return { trs: "", size: 0 };
+    }
+
+    var stores = MyStorage.CreateMrObj("MemoryRequired")
+    var obj = stores.get_obj()
+    var MemoryVersary = Object.keys(obj)
+
+
+    //console.log("result:", this.m_data.out.result)
+    var samp_out = {
+        Gen: {
+            1: {
+                2: {
+                    "NIV": "ss",
+                    "e_Note": "aa"
+                }
+
+            }
+
+        }
+    }
+    var idx = 0, trs = "", uuid = "";
+    $.each(odat, function (vol, chpObj) {
+        $.each(chpObj, function (chp, vrsObj) {
+            $.each(vrsObj, function (vrs, val) {
+                //console.log("typeof val=", typeof val);
+                idx++;
+                var sbcv = `${vol}${chp}:${vrs}`;
+                var MemoVersClass = ""
+                if (MemoryVersary.indexOf(sbcv) >= 0) {
+                    MemoVersClass = "divPopupMenu_CaptionBCV_MemoVerse"
+                }
+                var BcvTag = `<a class='popupclicklabel bcvTag ${MemoVersClass}' title='${sbcv}'>${sbcv}</a>`
+                trs += `<tr><td>${BcvTag}`;
+                switch (typeof val) {
+                    case "object"://trn
+                        $.each(val, function (revId, txt) {
+                            txt = _THIS.get_search_matched_txt(txt)
+
+                            var vrsTxtTag = 'a' //a is ued for scripture txt. 
+                            if (revId.match(/^e_[a-zA-Z]/)) {//E.g. "NIV",  "e_Note"
+                                vrsTxtTag = 'div'
+                                txt = Uti.convert_std_bcv_in_text_To_linked(txt)
+                            }
+
+                            var clsname = `class='tx tx${revId}'`
+                            if (CNST.OT_Bkc_Ary.indexOf(vol) >= 0 && revId === 'H_G') {
+                                clsname = `dir='rtl' class='tx tx${revId} tx_OT'` //
+                            }
+                            uuid = `${revId}_${vol}_${chp}_${vrs}`;
+                            var revTag = `<sup txuid='${uuid}' class='popupclicklabel revTag' title='${sbcv}'>${revId}</sup>`
+                            var vrsTxt = `<${vrsTxtTag} id='${uuid}' ${clsname}>${txt}</${vrsTxtTag}>`
+                            trs += `<div>${revTag}${vrsTxt}</div>`;
+                        });
+                        break;
+                    case "string":
+                        trs += "<div>" + val + "</div>";
+                        break;
+                }
+                trs += "</td></tr>";
+            });
+        });
+    });
+    return { trs: trs, size: idx };
+}
+
 
 
 

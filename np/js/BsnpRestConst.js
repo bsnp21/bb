@@ -456,7 +456,8 @@ CNST.Cat2VolArr = {
     "Gospel": ["Mat", "Mak", "Luk", "Jhn"],
     "Paulines": ["Rom", "1Co", "2Co", "Gal", "Eph", "Phl", "Col", "1Ts", "2Ts", "1Ti", "2Ti", "Tit", "Phm"],
     "Epistles": ["Heb", "Jas", "1Pe", "2Pe", "1Jn", "2Jn", "3Jn", "Jud"],
-    "UserDef": []
+    "UserDef": [],
+    "WholisticBible" : CNST.OT_Bkc_Ary.concat(CNST.NT_Bkc_Ary) 
 };
 var BookJsFlavor = {
     OTNT: ['#510000', 'wholistic Bible', '圣经全书'],

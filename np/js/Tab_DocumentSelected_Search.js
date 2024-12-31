@@ -237,18 +237,31 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     var _This = this;
 
-    var searchStrn = $("#sinput").val().trim();
-    if (searchStrn.length === 0) return alert("empty input")
+    //var searchStrn = $("#sinput").val().trim();
+
+
+    //if (searchStrn.length === 0) {
+    //if("e_Note"===searchInFileName ){
+
+
+    //return alert("search empty input: " + searchInFileName)
+    //}
 
     //MyStorage.MostRecentSearchStrn.addonTop(s)
     //this.gen_search_strn_history()
     document.g_NextIndex = -1
 
 
-    $("#searchNextresult").text("Serach str in server site..")
     var inpobj = g_aim.get_search_inp()
+    if (inpobj.Search.Strn.trim().length === 0) {
+        return alert("empty input SEARCH STRING: ")
+    }
 
-    var fnamesArr = MyStorage.LastSelectedDocsList();
+
+
+    $("#searchNextresult").text("Serach str in server site..")
+
+    ////var fnamesArr = MyStorage.LastSelectedDocsList();
 
     //var inpobj = { fnames: fnamesArr, bibOj: {}, Search: { File: searchInFileName, Strn: searchStrn } };
     //var res = showup.get_selected_bcv_parm();
@@ -257,14 +270,17 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     //}
     //return inp;
 
-    var volar = Object.keys(inpobj.bibOj)
-    var SearchedVolumn = $("#bk_name").text()
-    if ("UserDef" === SearchedVolumn) {
-        SearchedVolumn += ": " + volar.join(" ")
-    }
-    if (SearchedVolumn.indexOf("Select") >= 0) {
-        SearchedVolumn = "all"
-    }
+    ///var volar = Object.keys(inpobj.bibOj)
+    //var SearchedVolumn = $("#bk_name").text()
+    //if ("UserDef" === SearchedVolumn) {
+    //    SearchedVolumn += ": " + volar.join(" ")
+    //}
+    //if (SearchedVolumn.indexOf("Select") >= 0) {
+    //    SearchedVolumn = "all"
+    //}
+    //if (SearchedVolumn.length === 0) {
+    //    SearchedVolumn = "all"
+    //}
 
     try {
         var trymat = ("test").match(inpobj.Search.Strn)
@@ -275,13 +291,13 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
 
 
-    if (volar.length === 0) {
-        if (!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)) {
-            return;
-        }
-    }
+    ///if (volar.length === 0) {
+    ///    if (!confirm(`Volumn not selected. \nSearch '${inpobj.Search.Strn}' in all volumns in '${inpobj.Search.File}'.\nSure?`)) {
+    ///        return;
+    ///    }
+    ///}
 
-    var msg = ` found in '${inpobj.Search.File}' in '${SearchedVolumn}'.`
+    var msg = ` found in '${inpobj.Search.File}' '.`
     var api = new BsnpRestApi()
     api.ajaxion(RestApi.ApiBibleObj_search_txt,
         inpobj,
@@ -290,7 +306,7 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
             _This.m_gAppInstancesManager.apiCallback_Gen_output_table(ret, function (size) {
                 var txt = size + msg
                 $("#searchNextresult").text("0/" + txt)
-                var keyary = [searchStrn, size, inpobj.Search.File, SearchedVolumn]
+                var keyary = [inpobj.Search.Strn, size, inpobj.Search.File, '']
                 shob.add_key_val(JSON.stringify(keyary), "yymmdd")
                 _This.gen_search_strn_history()
                 $(".hili_SearchStrInBibleStart").addClass("hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStart")

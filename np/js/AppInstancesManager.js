@@ -424,7 +424,11 @@ AppInstancesManager.prototype.get_search_inp = function () {
     var searchInFileName = MyStorage.LastSearchInDocument();// nambib.get_search_fname();
     var searchStrn = $("#sinput").val();
     if (searchStrn.length === 0) {
-        return alert("no search str.")
+        if ("e_Note" === searchInFileName) {
+            searchStrn = "" + prompt("No Serach Str: Set to defalut", "^\\d{6}")
+            $("#sinput").val(searchStrn)
+        }
+        else alert("no search str.")
     }
 
     var inp = { fnames: fnamesArr, bibOj: null, Search: { File: searchInFileName, Strn: searchStrn } };

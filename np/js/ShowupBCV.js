@@ -102,7 +102,8 @@ ShowupBCV.prototype.get_selected_bcv_parm = function () {
     var ret = { oj_search: {} }
 
     if (!vol || vol.length === 0) {
-        return ret
+        vol = "WholisticBible" 
+        //return ret
     }
 
     if (CNST.Cat2VolArr[vol]) { //for category: OT
