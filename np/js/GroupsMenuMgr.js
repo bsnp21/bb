@@ -160,7 +160,7 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
 
 
     $(".StorageRepo_Signout").on("click", function () {
-        if (!confirm("Are you sure to sign out?")) return;
+        if (!confirm("Data will be pushed into git and then removed.\n\n Are you sure to sign out?")) return;
 
         var api = new BsnpRestApi()
         var url = `./mySignIn.htm${window.location.search}`
