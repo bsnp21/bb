@@ -130,17 +130,18 @@ Tab_DocumentSelected_Search.prototype.init = function () {
     $("#e_Note_Viewer").on("click", function () {
         //var _This = this;
 
-        document.g_NextIndex = -1
-
-
         var inpobj = g_aim.get_search_inp()
-        if (inpobj.Search.Strn.trim().length === 0) {
-            return alert("empty input SEARCH STRING: ")
-        }
+        
+        //Force to set value for e_Note_Viewer
+        inpobj.Search.Strn = "^\\d{6}_\\d{6}"
+        CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {
+            inpobj.bibOj[bkc] = {}
+            //ret.oj_search[bkc] = {}
+        })
+        /////////////////
 
 
-
-        $("#searchNextresult").text("Serach str in server site..")
+        $("#searchNextresult").text("show e_Notes in server site..")
 
 
         try {

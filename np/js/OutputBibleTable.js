@@ -63,7 +63,7 @@ OutputBibleTable.prototype.Set_Event_output_table_for_E_Note_Viewer = function (
     var _THIS = this;
     $(tbid).find(".e_Note_Viewer_BCV").bind("click", function (evt) {
         var bcv = $(this).text().trim();
-        alert(bcv)
+        //alert(bcv)
         if(_THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer) _THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer([bcv])
     })
 }
