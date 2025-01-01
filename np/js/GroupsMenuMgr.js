@@ -111,6 +111,9 @@ GroupsMenuMgr.prototype.gen_grp_bar = function (popupBookList, hist) {
     })
 
     $("#CloneNewPage").on("click", function () {
+
+        Utilib.CloneNewWindow_By_TitleBVC();
+        return
         // use #bcv. 
         var surl = '' + window.location.href   ////url-ankor #bcv. #Gen1:1
         var punIndx = surl.indexOf("#")

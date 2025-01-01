@@ -61,7 +61,20 @@ var Utilib = {
 
     },
 }
-
+Utilib.CloneNewWindow_By_TitleBVC = function () {
+    // use #bcv. 
+    var surl = '' + window.location.href   ////url-ankor #bcv. #Gen1:1
+    var punIndx = surl.indexOf("#")
+    if (punIndx > 0) {
+        surl = surl.substring(0, punIndx)
+    }
+    var bcv = $("title").text();
+    var ret = Uti.parse_bcv(bcv)
+    if (ret) {
+        surl = surl + "#" + bcv
+    }
+    window.open(surl, "_blank")
+}
 
 
 var Uti = {
