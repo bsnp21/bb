@@ -56,9 +56,9 @@ OutputBibleTable.prototype.set_inpage_findstrn = function (str) {
     }
     return ret
 }
-OutputBibleTable.prototype.onclick_Load_Bcv_by_e_Note_Viewer = function (cbf) {
-    this.mcbf_onclick_Load_Bcv_by_e_Note_Viewer = cbf
-}
+//OutputBibleTable.prototype.onclick_Load_Bcv_by_e_Note_Viewer = function (cbf) {
+//    this.mcbf_onclick_Load_Bcv_by_e_Note_Viewer = cbf
+//}
 OutputBibleTable.prototype.Set_Event_output_table_for_E_Note_Viewer = function (tbid) {
     var _THIS = this;
     $(tbid).find("td").bind("click", function (evt) {

@@ -229,14 +229,14 @@ AppInstancesManager.prototype.init = function (cbf) {
         digi.init_Vrs_digiKeys_by_vol()
         //_This.scrollToView_Vrs()
     })
-    g_obt.onclick_Load_Bcv_by_e_Note_Viewer(function (bcvAry) {
-       
-        showup.update_showup(bcvAry[0])
-        //showup.m_Vrs.set_showupVal("")
-        digi.init_Chp_digiKeys_by_vol()
-        digi.init_Vrs_digiKeys_by_vol()
-        _This.loadBible_chapter_by_bibOj()
-    })
+    //g_obt.onclick_Load_Bcv_by_e_Note_Viewer(function (bcvAry) {
+    //   
+    //    showup.update_showup(bcvAry[0])
+    //    //showup.m_Vrs.set_showupVal("")
+    //    digi.init_Chp_digiKeys_by_vol()
+    //    digi.init_Vrs_digiKeys_by_vol()
+    //    _This.loadBible_chapter_by_bibOj()
+    //})
 
     this.init_load_storage() //load first.
     //this.onclicks_btns_in_grpMenu_search()

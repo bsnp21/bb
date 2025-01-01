@@ -70,7 +70,7 @@ Utilib.CloneNewWindow_By_TitleBVC = function (sBcv) {
     }
     var bcv = sBcv;
     if (!bcv) {
-        $("title").text();
+        bcv = $("title").text();
     }
     var ret = Uti.parse_bcv(bcv)
     if (ret) {
