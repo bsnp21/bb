@@ -56,6 +56,17 @@ OutputBibleTable.prototype.set_inpage_findstrn = function (str) {
     }
     return ret
 }
+OutputBibleTable.prototype.onclick_Load_Bcv_by_e_Note_Viewer = function (cbf) {
+    this.mcbf_onclick_Load_Bcv_by_e_Note_Viewer = cbf
+}
+OutputBibleTable.prototype.Set_Event_output_table_for_E_Note_Viewer = function (tbid) {
+    var _THIS = this;
+    $(tbid).find(".e_Note_Viewer_BCV").bind("click", function (evt) {
+        var bcv = $(this).text().trim();
+        alert(bcv)
+        if(_THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer) _THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer([bcv])
+    })
+}
 OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
     var _THIS = this;
 
@@ -121,6 +132,8 @@ OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {
         var bcv = $(this).find(".popupclicklabel").attr("title")
         tab_MostRecent_BCV.m_tbodies.RecentAccessed.addnew2table(bcv)
     });
+
+
 }
 OutputBibleTable.prototype.Gen_output_table = function (cbf) {
 
@@ -142,7 +155,7 @@ OutputBibleTable.prototype.Gen_output_table_for_e_Note_Viewer = function (cbf) {
     if (cbf) cbf(tb.size)
     $(this.m_tbid).html(tb.htm);
 
-    this.Set_Event_output_table(this.m_tbid)
+    this.Set_Event_output_table_for_E_Note_Viewer(this.m_tbid);
 
     this.incFontSize(0)
 
@@ -329,7 +342,7 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
 
                 var txt = val["e_Note"].trim()
                 var dat = htmlToText(txt).substring(0, 13)
-                trs += `<tr><td>${idx}</td><td class='e_Note_Bcv'>${sbcv}</td><td>${txt}</td></tr>`;
+                trs += `<tr><td>${idx}</td><td class='e_Note_Viewer_BCV'>${sbcv}</td><td>${txt}</td></tr>`;
 
             });
         });

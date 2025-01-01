@@ -229,6 +229,15 @@ AppInstancesManager.prototype.init = function (cbf) {
         digi.init_Vrs_digiKeys_by_vol()
         //_This.scrollToView_Vrs()
     })
+    g_obt.onclick_Load_Bcv_by_e_Note_Viewer(function (bcvAry) {
+        var str = bcvAry.join(", ")
+        Uti.Msg(str)
+        var oj = {}
+        bcvAry.forEach(function (bcv) {
+            var ret = Uti.parse_bcv(bcv, "", oj)
+        })
+        _This.loadBible_chapter_by_bibOj(oj)
+    })
 
     this.init_load_storage() //load first.
     //this.onclicks_btns_in_grpMenu_search()
@@ -388,9 +397,9 @@ AppInstancesManager.prototype.apiCallback_Gen_output_table = function (ret, cbf)
     popupMenu.hide()
     g_obt.set_data(ret)
     if (ret.Gen_Output_Table_Form === "e_Note_Viewer") {
-        ret.Gen_Output_Table_Form === null
+        ret.Gen_Output_Table_Form = null;
         g_obt.Gen_output_table_for_e_Note_Viewer(cbf)
-    }else{
+    } else {
         g_obt.Gen_output_table(cbf)
     }
 }
