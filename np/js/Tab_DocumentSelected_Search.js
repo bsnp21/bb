@@ -129,6 +129,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
 
     $("#e_Note_Viewer").on("click", function () {
         //var _This = this;
+        $("title").text("eNote");
 
         var inpobj = g_aim.get_search_inp()
         
