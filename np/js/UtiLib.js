@@ -61,14 +61,17 @@ var Utilib = {
 
     },
 }
-Utilib.CloneNewWindow_By_TitleBVC = function () {
+Utilib.CloneNewWindow_By_TitleBVC = function (sBcv) {
     // use #bcv. 
     var surl = '' + window.location.href   ////url-ankor #bcv. #Gen1:1
     var punIndx = surl.indexOf("#")
     if (punIndx > 0) {
         surl = surl.substring(0, punIndx)
     }
-    var bcv = $("title").text();
+    var bcv = sBcv;
+    if (!bcv) {
+        $("title").text();
+    }
     var ret = Uti.parse_bcv(bcv)
     if (ret) {
         surl = surl + "#" + bcv

@@ -61,10 +61,14 @@ OutputBibleTable.prototype.onclick_Load_Bcv_by_e_Note_Viewer = function (cbf) {
 }
 OutputBibleTable.prototype.Set_Event_output_table_for_E_Note_Viewer = function (tbid) {
     var _THIS = this;
+    $(tbid).find("td").bind("click", function (evt) {
+        $(this).toggleClass("hili");
+    })
     $(tbid).find(".e_Note_Viewer_BCV").bind("click", function (evt) {
         var bcv = $(this).text().trim();
+        Utilib.CloneNewWindow_By_TitleBVC(bcv);
         //alert(bcv)
-        if(_THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer) _THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer([bcv])
+        //if(_THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer) _THIS.mcbf_onclick_Load_Bcv_by_e_Note_Viewer([bcv])
     })
 }
 OutputBibleTable.prototype.Set_Event_output_table = function (tbid) {

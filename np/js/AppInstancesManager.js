@@ -230,14 +230,7 @@ AppInstancesManager.prototype.init = function (cbf) {
         //_This.scrollToView_Vrs()
     })
     g_obt.onclick_Load_Bcv_by_e_Note_Viewer(function (bcvAry) {
-        //  var str = bcvAry.join(", ")
-        //  Uti.Msg(str)
-        //  var oj = {}
-        //  bcvAry.forEach(function (bcv) {
-        //      var ret = Uti.parse_bcv(bcv, "", oj)
-        //  })
-        //  _This.loadBible_chapter_by_bibOj(oj)
-
+       
         showup.update_showup(bcvAry[0])
         //showup.m_Vrs.set_showupVal("")
         digi.init_Chp_digiKeys_by_vol()
