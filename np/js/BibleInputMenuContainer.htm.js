@@ -232,7 +232,7 @@ var BibleInputMenuContainer = `
 
             <div class="GrpMenu" id="grp_Search" style="float:left;display:none;">
                 
-                <input id="sinput" cols='50' onkeyup="" ></input><br>
+                <input id="sinput" cols='40' onkeyup="" ></input><br>
                 <a id="searchNextresult" >...</a>
                 <div style='float:right;' >
                 <button id="Btn_Prev"  title="hili prev in page">Prev</button>
@@ -244,7 +244,6 @@ var BibleInputMenuContainer = `
                 <a id="REGEXP__OR">OR</a> | 
                 <a id="REGEXP_IgnoreCase">IgnoreCase</a> | 
                 <a id="toggle_Case">toggleCase</a>  | 
-                <button id="e_Note_Viewer">e_Note</button>  | 
                 
                 </div>  <br>
                
