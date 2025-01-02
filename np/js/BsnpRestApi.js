@@ -21,7 +21,7 @@ var BsnpRestUti = {
             })
             .done(function (ret) {
                 var ret = JSON.parse(ret)
-                BsnpRestUti.Dbugar_store(ret)
+                //BsnpRestUti.Dbugar_store(ret)
                 cbf(ret)
             })
             .fail(function (xhr, textStatus, errorThrown) {
@@ -40,7 +40,7 @@ var BsnpRestUti = {
             success: function (dat, err) {
                 console.log(dat)
                 console.log(err)
-                BsnpRestUti.Dbugar_store({ dat: dat, err, err })
+                BsnpRestUti.Dbugar_store({ err, err })
                 cbf(dat)
             },
             dataType: "json", //exe script.

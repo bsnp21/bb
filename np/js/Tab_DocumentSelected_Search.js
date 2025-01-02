@@ -135,6 +135,7 @@ Tab_DocumentSelected_Search.prototype.init = function () {
         
         //Force to set value for e_Note_Viewer
         inpobj.Search.Strn = "^\\d{6}_\\d{6}"
+        inpobj.Search.File = "e_Note"
         CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {
             inpobj.bibOj[bkc] = {}
             //ret.oj_search[bkc] = {}
@@ -288,8 +289,9 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
 
     var inpobj = g_aim.get_search_inp()
+    inpobj.Search.File = searchInFileName;
     if (inpobj.Search.Strn.trim().length === 0) {
-        return alert("empty input SEARCH STRING: ")
+        return alert("search string input is empty.")
     }
 
 
