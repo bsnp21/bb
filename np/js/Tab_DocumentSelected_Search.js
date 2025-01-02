@@ -254,7 +254,7 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     var Gen_Output_Table_Formate = "e_Note_Viewer";
 
 
-    if ("e_Note" === searchInFileName && confirm("Only for e_Note?\n\n[Cancel] : Regular Bible Display.\n\n[OK] : Search/Display whole history.\n")) {
+    if ("e_Note" === searchInFileName && !confirm("Regular e_Note?\n\n[Cancel] : Search/Display whole history.\n\n[OK] : Regular Bible Display.\n")) {
         //e_Note_Viewer: Override search string input and bibOj.
         inpobj.Search.Strn = "^\\d{6}_\\d{6}"
         CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {
