@@ -254,12 +254,13 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     var Gen_Output_Table_Formate = "e_Note_Viewer";
 
 
-    if ("e_Note" === searchInFileName && !confirm("Regular e_Note?\n\n[Cancel] : Search/Display whole history.\n\n[OK] : Regular Bible Display.\n")) {
+    if ("e_Note" === searchInFileName && !confirm("Regular or History e_Note?\n\n[Cancel] : Show History e_Note.\n\n[OK] : Regular Search/Display.\n")) {
         //e_Note_Viewer: Override search string input and bibOj.
         inpobj.Search.Strn = "^\\d{6}_\\d{6}"
         CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {
             inpobj.bibOj[bkc] = {}
         })
+        inpobj.fnames=["e_Note"];
     } else {
         //regular bible formates
         Gen_Output_Table_Formate = null
@@ -288,6 +289,7 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
         function (ret) {
             var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
             ret.Gen_Output_Table_Form = Gen_Output_Table_Formate
+            if(Gen_Output_Table_Formate) $("title").text("e_Note")
             _This.m_gAppInstancesManager.apiCallback_Gen_output_table(ret, function (size) {
                 var txt = size + msg
                 $("#searchNextresult").text("0/" + txt)
