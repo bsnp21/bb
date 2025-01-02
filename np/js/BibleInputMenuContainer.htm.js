@@ -244,7 +244,7 @@ var BibleInputMenuContainer = `
                 <a id="REGEXP__OR">OR</a> | 
                 <a id="REGEXP_IgnoreCase">IgnoreCase</a> | 
                 <a id="toggle_Case">toggleCase</a>  | 
-                <a id="e_Note_Viewer">e_Note</a>  | 
+                <button id="e_Note_Viewer">e_Note</button>  | 
                 
                 </div>  <br>
                
