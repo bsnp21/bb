@@ -228,7 +228,7 @@ Tab_DocumentSelected_Search.prototype.Update_DocSel_Table = function (tbodyID) {
         $(tbodyID).find(".hili_SearchStrInBibleStopd").removeClass("hili_SearchStrInBibleStopd")
         $(this).addClass("hili_SearchStrInBibleStart")
         var txt = $(this).text()
-        //MyStorage.LastSearchInDocument(txt)
+        //
         _THIS.onclick_inSvr_BibleObj_search_str(txt)
     })
 }
@@ -242,7 +242,6 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     //
     var fnamesArr = tab_documentsClusterList.get_selected_seq_fnamesArr();
-    //var searchInFileName = MyStorage.LastSearchInDocument();// nambib.get_search_fname();
     var searchStrn = $("#sinput").val();
 
     var inpobj = { fnames: fnamesArr, bibOj: null, Search: { File: searchInFileName, Strn: searchStrn } };
@@ -256,13 +255,13 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
 
     if ("e_Note" === searchInFileName && confirm("Only for e_Note?\n\n[Cancel] : Regular Bible Display.\n\n[OK] : Search/Display whole history.\n")) {
-        //e_Note_Viewer
+        //e_Note_Viewer: Override search string input and bibOj.
         inpobj.Search.Strn = "^\\d{6}_\\d{6}"
         CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {
             inpobj.bibOj[bkc] = {}
         })
     } else {
-        //regular forms
+        //regular bible formates
         Gen_Output_Table_Formate = null
         if (inpobj.Search.Strn.trim().length === 0) {
             return alert("search string input is empty.")
