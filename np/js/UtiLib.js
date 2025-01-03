@@ -536,13 +536,13 @@ Uti.Get_e_Note_Date = function (ssuffix) {
     let currentMinute = String(today.getMinutes()).padStart(2, '0');
     let currentSecond = String(today.getSeconds()).padStart(2, '0');
 
-    var sday = `${year}${monthFormatted}${dayFormatted}_${currentHour}${currentMinute}${currentSecond}` //remark:e_note: yymmdd_hhmmss(ed).
+    var sday = `${year}${monthFormatted}${dayFormatted}.${currentHour}${currentMinute}${currentSecond}` //remark:e_note: yymmdd_hhmmss(ed).
     if (ssuffix) sday += ssuffix
     return sday
 }
 Uti.Update_e_Note_Date = function (seNote) {
-    if (seNote.match(/^\d{6}_\d{6}/)) {
-        seNote = seNote.replace(/^\d{6}_\d{6}/, Uti.Get_e_Note_Date())  //remark:e_note: yymmdd_hhmmss(ed).
+    if (seNote.match(/^\d{6}[_|\.]\d{6}/)) {
+        seNote = seNote.replace(/^\d{6}[_|\.]\d{6}/, Uti.Get_e_Note_Date())  //remark:e_note: yymmdd_hhmmss(ed).
     } else {
         seNote = Uti.Get_e_Note_Date("(ed).") + seNote
     }

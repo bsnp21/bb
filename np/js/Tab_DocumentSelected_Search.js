@@ -256,7 +256,7 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     if ("e_Note" === searchInFileName && !confirm("Regular or History e_Note?\n\n[Cancel] : Show History e_Note.\n\n[OK] : Regular Search/Display.\n")) {
         //e_Note_Viewer: Override search string input, bibOj, and fnames[].
-        inpobj.Search.Strn = "^\\d{6}_\\d{6}"
+        inpobj.Search.Strn = "^\\d{6}[_\.]\\d{6}" // yymmdd_hhmmss(ed).
         CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {//for all books.
             inpobj.bibOj[bkc] = {}
         })

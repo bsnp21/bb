@@ -163,7 +163,7 @@ OutputBibleTable.prototype.Gen_output_table_for_e_Note_Viewer = function (cbf) {
 
     this.incFontSize(0)
 
-    var sortab = new Rapid_Sort_Table("#"+tb.ID)
+    var sortab = new Rapid_Sort_Table("#" + tb.ID)
     sortab.sort_col({ colIdx: 2, asend: 1 })
 }
 OutputBibleTable.prototype.update_table_tr = function (ret, par) {
@@ -227,24 +227,20 @@ OutputBibleTable.prototype.create_htm_table_str_for_e_Note_Viewer = function () 
 
     console.log("result:", this.m_data.out.result)
     var ret = this.create_trs_for_e_Note_Viewer(this.m_data.out.data)
-    var bibOj = this.m_data.par.bibOj;
-    var str = JSON.stringify(bibOj)
-    var sbcvlst = Uti.parse_bcvOj2strlst(bibOj)
-    //Object.keys(bibOj).forEach(function (bkc) {
-    //    var oj = {}
-    //    oj[bkc] = bibOj[bkc]
-    //    sbcvlst += Uti.parse_bcv(oj) + ", "
-    //})
+    //var bibOj = this.m_data.par.bibOj;
+    //var str = JSON.stringify(bibOj)
+    //var sbcvlst = Uti.parse_bcvOj2strlst(bibOj)
 
-    var s = "<table id='BibOut' border='1'><caption>e_Note_Viewer</caption>";
-    s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
-    s += "<thead><th>#</th><th>V</th><th>Verse</th></thead>";
-    s += "<tbody>";
-    s += ret.trs;
 
-    s += "</tbody></table>";
-    ret.htm = s
-    ret.ID = "BibOut"
+    //var s = "<table id='BibOut' border='1'><caption>e_Note_Viewer</caption>";
+    //s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
+    //s += "<thead><th>#</th><th>V</th><th>Text</th></thead>";
+    //s += "<tbody>";
+    //s += ret.trs;
+
+    //s += "</tbody></table>";
+    //ret.htm = ret.stable;
+    //ret.ID = ret.tabID;//"BibOut"
     return ret
 }
 OutputBibleTable.prototype.create_trs = function (odat) {
@@ -351,7 +347,14 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
             });
         });
     });
-    return { trs: trs, size: idx };
+
+    //////////////////////////////////////////
+    var s = "<table id='BibOut' border='1'>";
+    s += `<caption><p>TotRows=${idx}</p></caption>`;
+    s += "<thead><th>#</th><th>V</th><th>Text</th></thead>";
+    s += `<tbody>${trs}</tbody></table>`;
+
+    return { trs: trs, size: idx, htm: s, ID: "BibOut" };
 }
 
 

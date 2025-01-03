@@ -70,8 +70,8 @@ Rapid_Sort_Table.prototype.sort_col = function (par, colIdx) {
         if (tx.length === 0) {
             bHasEmpty = true
         } else {
-            var ft = parseFloat(tx)
-            if (isNaN(ft)) {
+            var ft = parseFloat(tx) //: float number. E.g. 12.34 or 12.34abc
+            if (isNaN(ft)) { //E.g. xyx12.34 or xyz12.34XYZ
                 bHasNaN = true
             } else {
                 if (ft < fmin) fmin = ft
