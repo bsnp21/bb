@@ -255,12 +255,12 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
 
     if ("e_Note" === searchInFileName && !confirm("Regular or History e_Note?\n\n[Cancel] : Show History e_Note.\n\n[OK] : Regular Search/Display.\n")) {
-        //e_Note_Viewer: Override search string input and bibOj.
+        //e_Note_Viewer: Override search string input, bibOj, and fnames[].
         inpobj.Search.Strn = "^\\d{6}_\\d{6}"
-        CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {
+        CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {//for all books.
             inpobj.bibOj[bkc] = {}
         })
-        inpobj.fnames=["e_Note"];
+        inpobj.fnames=["e_Note"];//Ignore other files. Saving time and space.
     } else {
         //regular bible formates
         Gen_Output_Table_Formate = null

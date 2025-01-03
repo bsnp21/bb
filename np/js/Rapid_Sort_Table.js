@@ -1,5 +1,5 @@
 // rapid table sort; rapid sort table;
-// rapid_table_sort 
+// rapid_table_sort @2025.1.2. add comments. -wd.
 var Rapid_Sort_Table = function(tbID) {
     
     this.m_tbID = tbID;
@@ -9,7 +9,7 @@ var Rapid_Sort_Table = function(tbID) {
     } else {
         tbID = '#' + tbID.replace(/^\#/, '')
     }
-    $(tbID).find("> caption").on("click", function (evt) {
+    $(tbID).find("> caption").on("click", function (evt) {//[Shift+click] index col-0.
         var ibase = 0
         if (evt.shiftKey) ibase = 1
         $(tbID).find("tbody tr").each(function (i) {
@@ -44,7 +44,7 @@ var Rapid_Sort_Table = function(tbID) {
         })
     })
 }
-Rapid_Sort_Table.prototype.sort_col = function (par, colIdx, asend) {
+Rapid_Sort_Table.prototype.sort_col = function (par, colIdx) {
     var tbID = this.m_tbID;
     ////////////
     if (!tbID) tbID = "table:eq(0)";
@@ -63,7 +63,7 @@ Rapid_Sort_Table.prototype.sort_col = function (par, colIdx, asend) {
     ///////////////////////////////////////////
     var etrary = $(tbID).find("> tbody > tr");
 
-    ////:pre-check data type property.
+    ////:pre-check if data contains blank or NaN.
     var bHasEmpty = false, bHasNaN = false, fmin = -999999999, tmpAry = []
     etrary.each(function (i) {
         var tx = $(this).find(`> td:eq(${header_colidx})`).text().trim()
@@ -100,10 +100,10 @@ Rapid_Sort_Table.prototype.sort_col = function (par, colIdx, asend) {
         }
     }
 
-    ///////: sort by compare using correct data type by cmpIdx
+    ///////: sort by compare using correct data type by cmpIdx(0: txt compare, 1: number compare).
     if (cmpIdx >= 0) {
         tmpAry.sort(function (ar1, ar2) {
-            if (ar1[cmpIdx] === ar2[cmpIdx]) return 0
+            if (ar1[cmpIdx] == ar2[cmpIdx]) return 0
             if (ar1[cmpIdx] > ar2[cmpIdx]) {
                 return asend
             } else {
@@ -115,7 +115,7 @@ Rapid_Sort_Table.prototype.sort_col = function (par, colIdx, asend) {
         /////: update table
         var tbod = $(tbID).find("> tbody:eq(0)")
         for (var i = 0; i < tmpAry.length; i++) {
-            tbod.prepend(tmpAry[i][2])
+            tbod.prepend(tmpAry[i][2]) //[2] element tr.
         }
         $(tbID).find("> tbody:eq(1)").remove()  //remove the prev tbody.
     }

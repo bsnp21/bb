@@ -236,9 +236,9 @@ OutputBibleTable.prototype.create_htm_table_str_for_e_Note_Viewer = function () 
     //    sbcvlst += Uti.parse_bcv(oj) + ", "
     //})
 
-    var s = "<table id='BibOut' border='1'>";
+    var s = "<table id='BibOut' border='1'><caption>e_Note_Viewer</caption>";
     s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
-    s += "<thead><th>#</th><th>BVC</th><th>Verse</th></thead>";
+    s += "<thead><th>#</th><th>V</th><th>Verse</th></thead>";
     s += "<tbody>";
     s += ret.trs;
 
@@ -346,7 +346,7 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
 
                 var txt = val["e_Note"].trim()
                 var dat = htmlToText(txt).substring(0, 13)
-                trs += `<tr><td>${idx}</td><td class='e_Note_Viewer_BCV'>${sbcv}</td><td>${txt}</td></tr>`;
+                trs += `<tr><td><div class='e_Note_Rotate'>${idx}</div></td><td><div class='e_Note_Viewer_BCV e_Note_Rotate'>${sbcv}</div></td><td>${txt}</td></tr>`;
 
             });
         });
