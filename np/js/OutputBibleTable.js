@@ -342,7 +342,7 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
 
                 var txt = val["e_Note"].trim()
                 var dat = htmlToText(txt).substring(0, 13)
-                trs += `<tr><td><div class='e_Note_Rotate'>${idx}</div></td><td><div class='e_Note_Viewer_BCV e_Note_Rotate'>${sbcv}</div></td><td>${txt}</td></tr>`;
+                trs += `<tr><td><div class='e_Note_Viewer_Idx'>${idx}</div></td><td><div class='e_Note_Viewer_BCV'>${sbcv}</div></td><td>${txt}</td></tr>`;
 
             });
         });
@@ -351,7 +351,7 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
     //////
     var s = "<table id='BibOut' border='1'>";
     s += `<caption><p>TotRows=${idx}</p></caption>`;
-    s += "<thead><th>#.</th><th>V</th><th>Text</th></thead>";
+    s += "<thead><th>#&nbsp;</th><th>V</th><th>Text</th></thead>";
     s += `<tbody>${trs}</tbody></table>`;
 
     return { trs: trs, size: idx, htm: s, ID: "BibOut" };

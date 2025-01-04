@@ -849,7 +849,7 @@ textarea[readonly] {
 }
 
 
-.e_Note_Rotate {
+.e_Note_Viewer_BCV {
     -ms-writing-mode: tb-rl;
     -webkit-writing-mode: vertical-rl;
     writing-mode: vertical-rl;
@@ -857,8 +857,15 @@ textarea[readonly] {
     white-space: nowrap;
     text-align: center;
 
-   
+    font-size: small;
+}
+.e_Note_Viewer_Idx{
+    -ms-writing-mode: tb-rl;
+    -webkit-writing-mode: vertical-rl;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    text-align: center;
+    
     font-size: xx-small;
-
-    xbackground-color: #2f74f5;
 }
