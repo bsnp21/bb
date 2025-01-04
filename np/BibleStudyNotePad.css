@@ -857,7 +857,7 @@ textarea[readonly] {
     white-space: nowrap;
     text-align: center;
 
-    font-size: small;
+    
 }
 .e_Note_Viewer_Idx{
     -ms-writing-mode: tb-rl;
@@ -866,6 +866,6 @@ textarea[readonly] {
     transform: rotate(180deg);
     white-space: nowrap;
     text-align: center;
-    
+
     font-size: xx-small;
 }
