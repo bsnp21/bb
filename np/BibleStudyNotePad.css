@@ -856,7 +856,7 @@ textarea[readonly] {
     border-width: 2px;
     border-color: red;
     margin-top: 0px;
-    margin-bottom: 2px;
+    margin-bottom: 20px;
     font-size:xx-small;
 
     background-color: #2f74f5;
