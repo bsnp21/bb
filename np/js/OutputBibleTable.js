@@ -351,7 +351,7 @@ OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
     //////
     var s = "<table id='BibOut' border='1'>";
     s += `<caption><p>TotRows=${idx}</p></caption>`;
-    s += "<thead><th> # </th><th>V</th><th>Text</th></thead>";
+    s += "<thead><th>No.</th><th>V</th><th>Text</th></thead>";
     s += `<tbody>${trs}</tbody></table>`;
 
     return { trs: trs, size: idx, htm: s, ID: "BibOut" };
