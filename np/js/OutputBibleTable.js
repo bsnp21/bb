@@ -226,22 +226,64 @@ OutputBibleTable.prototype.create_htm_table_str_for_e_Note_Viewer = function () 
     }
 
     console.log("result:", this.m_data.out.result)
-    var ret = this.create_trs_for_e_Note_Viewer(this.m_data.out.data)
-    //var bibOj = this.m_data.par.bibOj;
-    //var str = JSON.stringify(bibOj)
-    //var sbcvlst = Uti.parse_bcvOj2strlst(bibOj)
+  
+    ///
+    var odat = this.m_data.out.data; 
+    //ret = this.convert_rbcv_2_bcvRobj(ret)
+    var _THIS = this
+    if (!odat) {
+        return { trs: "", size: 0 };
+    }
+
+    var stores = MyStorage.CreateMrObj("MemoryRequired")
+    var obj = stores.get_obj()
+    var MemoryVersary = Object.keys(obj)
 
 
-    //var s = "<table id='BibOut' border='1'><caption>e_Note_Viewer</caption>";
-    //s += `<caption><p>TotRows=${ret.size}</p><p>${sbcvlst.join(", ")}</p></caption>`;
-    //s += "<thead><th>#</th><th>V</th><th>Text</th></thead>";
-    //s += "<tbody>";
-    //s += ret.trs;
+    //console.log("result:", this.m_data.out.result)
+    var samp_out = {
+        Gen: {
+            1: {
+                2: {
+                    "NIV": "ss",
+                    "e_Note": "aa"
+                }
 
-    //s += "</tbody></table>";
-    //ret.htm = ret.stable;
-    //ret.ID = ret.tabID;//"BibOut"
-    return ret
+            }
+
+        }
+    }
+    function htmlToText(html) {
+        var temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.textContent; // Or return temp.innerText if you need to return only visible text. It's slower.
+    }
+
+    var e_Name = this.m_data.par.fnames[0]; //like e_Note, e_Subtitle, etc
+    var idx = 0, trs = "", uuid = "";
+    $.each(odat, function (vol, chpObj) {
+        $.each(chpObj, function (chp, vrsObj) {
+            $.each(vrsObj, function (vrs, val) {
+                //console.log("typeof val=", typeof val);
+                idx++;
+                var sbcv = `${vol}${chp}:${vrs}`;
+
+                var txt = val[e_Name].trim()
+                var dat = htmlToText(txt).substring(0, 13)
+                trs += `<tr><td><div class='e_Note_Viewer_Idx'>${idx}</div></td><td><div class='e_Note_Viewer_BCV'>${sbcv}</div></td><td>${txt}</td></tr>`;
+
+            });
+        });
+    });
+
+    //////
+    var s = "<table id='BibOut' border='1'>";
+    s += `<caption><p>TotRows=${idx}</p></caption>`;
+    s += "<thead><th>#&nbsp;</th><th>VS</th><th>Text</th></thead>";
+    s += `<tbody>${trs}</tbody></table>`;
+
+    return { trs: trs, size: idx, htm: s, ID: "BibOut" };
+    //return ret
 }
 OutputBibleTable.prototype.create_trs = function (odat) {
     //ret = this.convert_rbcv_2_bcvRobj(ret)
@@ -300,64 +342,6 @@ OutputBibleTable.prototype.create_trs = function (odat) {
     });
     return { trs: trs, size: idx };
 }
-
-OutputBibleTable.prototype.create_trs_for_e_Note_Viewer = function (odat) {
-    //ret = this.convert_rbcv_2_bcvRobj(ret)
-    var _THIS = this
-    if (!odat) {
-        return { trs: "", size: 0 };
-    }
-
-    var stores = MyStorage.CreateMrObj("MemoryRequired")
-    var obj = stores.get_obj()
-    var MemoryVersary = Object.keys(obj)
-
-
-    //console.log("result:", this.m_data.out.result)
-    var samp_out = {
-        Gen: {
-            1: {
-                2: {
-                    "NIV": "ss",
-                    "e_Note": "aa"
-                }
-
-            }
-
-        }
-    }
-    function htmlToText(html) {
-        var temp = document.createElement('div');
-        temp.innerHTML = html;
-        return temp.textContent; // Or return temp.innerText if you need to return only visible text. It's slower.
-    }
-
-    var idx = 0, trs = "", uuid = "";
-    $.each(odat, function (vol, chpObj) {
-        $.each(chpObj, function (chp, vrsObj) {
-            $.each(vrsObj, function (vrs, val) {
-                //console.log("typeof val=", typeof val);
-                idx++;
-                var sbcv = `${vol}${chp}:${vrs}`;
-
-                var txt = val["e_Note"].trim()
-                var dat = htmlToText(txt).substring(0, 13)
-                trs += `<tr><td><div class='e_Note_Viewer_Idx'>${idx}</div></td><td><div class='e_Note_Viewer_BCV'>${sbcv}</div></td><td>${txt}</td></tr>`;
-
-            });
-        });
-    });
-
-    //////
-    var s = "<table id='BibOut' border='1'>";
-    s += `<caption><p>TotRows=${idx}</p></caption>`;
-    s += "<thead><th>#&nbsp;</th><th>VS</th><th>Text</th></thead>";
-    s += `<tbody>${trs}</tbody></table>`;
-
-    return { trs: trs, size: idx, htm: s, ID: "BibOut" };
-}
-
-
 
 
 
