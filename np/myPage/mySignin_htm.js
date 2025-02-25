@@ -49,7 +49,7 @@ function MySignBasePage() {
     <label>Visibility:</label>
     <input type="radio" name="a" checked="true" value="public" id="public" note="Username is visible in public."></input><label
         for="public">public</label>
-    <input type="radio" name="a" id="private" value="private" note="Username is invisible in public."></input><label
+    <input type="radio" name="a" id="private" value="private" note="Username is invisible." disabled></input><label
         for="private">private</label>
 </td>
 
