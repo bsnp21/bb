@@ -1020,7 +1020,7 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
         }
         var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
         var obj = {}
-        obj["shell_cmd_results"] = arr
+        obj[cmd] = arr
         inp.out.olog.push(obj)
         return
     }

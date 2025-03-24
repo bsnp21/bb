@@ -268,6 +268,9 @@ BsnpRestApi.prototype.ApiUsrAccount_update = function (par, cbf) {
 BsnpRestApi.prototype.ApiUsrRepos_toolkids = function (par, cbf) {
     return this.ajaxion("ApiUsrRepos_toolkids", par, cbf)
 }
+BsnpRestApi.prototype.ApiUsr_Cmdline_Exec = function (par, cbf) {
+    return this.ajaxion("ApiUsr_Cmdline_Exec", par, cbf)
+}
 
 BsnpRestApi.prototype.ApiBibleObj_load_by_bibOj = function (par, cbf) {
     return this.ajaxion("ApiBibleObj_load_by_bibOj", par, cbf)
