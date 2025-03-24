@@ -10,9 +10,9 @@ function gen_test_ip_availability() {
         var protocal = $("#host_cap .protocal.hili").text()
         var port = config_websvr_data.http_port
         var Hostary = ["./api_demo_local.htm", "../np/mySignIn.htm", "https://bsnp21.github.io/bb/np/mySignIn.htm"];
-        Object.keys([config_websvr_data.ip]).forEach(function (ip) {
-            Hostary.push(`${protocal}://${ip}:${port[protocal]}/wdaws/bb/np/mySignIn.htm`)
-        })
+        //Object.keys([config_websvr_data.ip]).forEach(function (ip) {
+        Hostary.push(`${protocal}://${config_websvr_data.ip}:${port}/`)
+        //})
         console.log(Hostary)
         var str = ""
         Hostary.forEach(function (key, i) {
@@ -33,17 +33,21 @@ function gen_test_ip_availability() {
     function gen_svc() {
         var protocal = $("#svr_cap .protocal.hili").text().trim()
         var str = "<tr><td>-</td></tr><tr><td>-</td></tr><tr><td>-</td></tr>"
-        Object.keys([config_websvr_data.ip]).forEach(function (ip, i) {
-            var url = `${protocal}://${ip}:${'http'}`
-            var portc = "https"
-            var url_c = `${protocal}://${ip}:${portc}`
-            var par = `?sip=${url}`
-            var svc_storeIdx = localStorage.getItem("svc_storeIdx")
-            if (!svc_storeIdx) svc_storeIdx = 0
-            else { svc_storeIdx = parseInt(svc_storeIdx) }
-            var default_hili = (svc_storeIdx === i) ? " hili" : ""
-            str += `<tr><td svc_storeIdx='${i}' class='svc${default_hili}' ip='${ip}'>${par}</td><td><a href='${url}'>/</a></td><td><a href='${url}/get_OTK'>get_OTK</a></td><td><a href='${url_c}'>${portc}</a></td></tr>`
-        })
+        //Object.keys([config_websvr_data.ip]).forEach(function (ip, i) {
+        var i = 0;
+        var ip = config_websvr_data.ip;
+        var port = config_websvr_data.http_port
+
+        var url = `${protocal}://${ip}:${port}`
+        var portc = "https"
+        var url_c = `${protocal}://${ip}:${portc}`
+        var par = `?sip=${url}`
+        var svc_storeIdx = localStorage.getItem("svc_storeIdx")
+        if (!svc_storeIdx) svc_storeIdx = 0
+        else { svc_storeIdx = parseInt(svc_storeIdx) }
+        var default_hili = (svc_storeIdx === i) ? " hili" : ""
+        str += `<tr><td svc_storeIdx='${i}' class='svc${default_hili}' ip='${ip}'>${par}</td><td><a href='${url}'>/</a></td><td><a href='${url}/get_OTK'>get_OTK</a></td><td><a href='${url_c}'>${portc}</a></td></tr>`
+        //})
         $("#svcaddr").html(str)
         $(".svc").on("click", function () {
             $(".svc.hili").removeClass("hili")
