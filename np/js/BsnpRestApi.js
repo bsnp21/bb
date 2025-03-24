@@ -128,9 +128,9 @@ var RestApi_uPar_Validate = {
     "________ApiUsrReposData_create___test_only": "________ApiUsrReposData_create___test_only",
     "ApiUsrReposData_status": "ApiUsrReposData_status",
     "ApiUsrReposData_git_push": "ApiUsrReposData_git_push",
-    "ApiUsrReposData_git_pull": "ApiUsrReposData_git_pull",
-    "ApiUsr_Cmdline_Exec": "ApiUsr_Cmdline_Exec",
-    "test_https_work": "test_https_work"
+    "ApiUsrReposData_git_pull": function () { },
+    "ApiUsr_Cmdline_Exec": function () { },
+    "test_https_work": function () { },
 }
 
 
