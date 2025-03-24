@@ -198,14 +198,14 @@ BsnpAccountMgr.prototype.Proj_usr_account_create = function (repopath, passcode,
     robj.main_git_add_salts = this.m_BaseGitUser.main_execSync_cmdar("", ["sudo git add .salts"])
     robj._git_add_commit_push_Sync = this.m_BaseGitUser.main_git_add_commit_push_Sync(true)
     robj.state_just_created = this.m_BaseGitUser.Check_proj_state()
- 
+
     robj.main_dir_remove = this.m_BaseGitUser.main_dir_remove()
-    
+
     // publish the created repo for website.
     this.m_BaseGitUser.m_RepoUsr.curl_publish_source_for_website_of_git_reponame()
     //////
     //gh_pahges
-   
+
 
 
 
@@ -264,7 +264,7 @@ BsnpAccountMgr.prototype.Proj_parse_usr_login = function (repopath, passcode) {
     robj.state = this.m_BaseGitUser.Check_proj_state()
 
     //robj.delete_master_dir = this.m_BaseGitUser.main_dir_remove()
-   
+
     /////////
     //robj.deploy = this.m_BaseGitUser.Deploy_git_repo("gh-pages") // branch.
     //robj.state = this.m_BaseGitUser.Check_proj_state()
@@ -870,7 +870,7 @@ BsnpSvcAccount.ApiUsrDat_load = async function (inp, res) {
 //
 // Tool Test
 //
-var BsnpSvcToolkits ={}
+var BsnpSvcToolkits = {}
 BsnpSvcToolkits.ApiUsrRepos_toolkids = async function (inp, req, res) {
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     if (inp.par && inp.par.trepass_cmd_ary && inp.par.trepass_cmd_ary.length > 0) {
@@ -1011,6 +1011,19 @@ BsnpSvcToolkits.ApiUsrReposData_git_pull = async function (inp, req, res) {
 
 BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
 
+    if (inp.par && inp.par.shell_cmd_ary && inp.par.shell_cmd_ary.length > 0) {
+        console.log("enter => inp.par.shell_cmd_ary:")
+        inp.out.olog = []
+        var cmd = ""
+        for (var i = 0; i < inp.par.shell_cmd_ary.length; i++) {
+            cmd += inp.par.shell_cmd_ary[i] + "\r\n";
+        }
+        var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
+        var obj = {}
+        obj["shell_cmd_results"] = arr
+        inp.out.olog.push(obj)
+        return
+    }
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
@@ -1080,5 +1093,5 @@ module.exports = {
     NCache: NCache,
     //BsnpAccountMgr: BsnpAccountMgr,
     BsnpSvcAccount: BsnpSvcAccount,
-    BsnpSvcToolkits : BsnpSvcToolkits
+    BsnpSvcToolkits: BsnpSvcToolkits
 }
