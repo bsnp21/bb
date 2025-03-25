@@ -1011,36 +1011,62 @@ BsnpSvcToolkits.ApiUsrReposData_git_pull = async function (inp, req, res) {
 
 BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
 
-    if (inp.par && inp.par.shell_cmd_ary && inp.par.shell_cmd_ary.length > 0) {
-        console.log("enter => inp.par.shell_cmd_ary:")
-        inp.out.olog = []
+
+    function run_shell_cmd_ary(cmd_ary) {
+        if (!cmd_ary || cmd_ary.length === 0) return { "cmd_ary": ["empty input."] }
         var cmd = "#!/bin/sh   \n"
-        for (var i = 0; i < inp.par.shell_cmd_ary.length; i++) {
-            cmd += inp.par.shell_cmd_ary[i] + "  \n";
+        for (var i = 0; i < cmd_ary.length; i++) {
+            cmd += cmd_ary[i] + "  \n";
         }
         var arr = BaseGUti.execSync_Cmd(cmd).replace(/[\t]/g, " ").split(/\r|\n/)
         var obj = {}
         obj[cmd] = arr
-        inp.out.olog.push(obj)
+        return obj;
+    }
+    /////////////////////////////////////
+    function run_update_obj(jsonfilename, update_obj) {
+        if(!jsonfilename || !update_obj){
+            return { run_update: ["noop"] }
+        }
+        var ret = BaseGUti.loadObj_by_fname(jsonfilename)
+        for ([key, obj] of Object.entries(update_obj)) {
+            ret.obj[key] = obj
+        }
+        ret.writeback();
+        return { dlt_size: [ret.dlt_size] }
+    }
+
+    console.log("enter => inp.par.shell_cmd_ary:")
+    inp.out.olog = []
+    if (inp.par) {
+        var res = run_shell_cmd_ary(inp.par.shell_cmd_ary)
+        inp.out.olog.push(res)
+
+        res = run_shell_cmd_ary(inp.par.shell_cmd_ary_before_update)
+        inp.out.olog.push(res)
+
+        res = run_update_obj(inp.par.shell_jspathfilename, inp.par.shell_update_obj)
+        inp.out.olog.push(res)
+
+        res = run_shell_cmd_ary(inp.par.shell_cmd_ary_post_update)
+        inp.out.olog.push(res)
         return
     }
+
+
+
+
+    //If need security garud, run this first.
     //ApiWrap.Parse_POST_req_to_inp(req, res, async function (inp) {
     var gituserMgr = new BsnpAccountMgr()
     var ret = gituserMgr.Proj_prepare_after_signed(inp.SSID)
     if (!BaseGUti.Output_append(inp.out, ret)) return console.log("Proj_prepare_after_signed failed.")
 
+    //debug only in case input par is not met.
     var ret = gituserMgr.m_BaseGitUser.Check_proj_state()
     var rso = gituserMgr.m_BaseGitUser.main_execSync_cmd()
     console.log("\n\n*cmd-res", rso)
     gituserMgr.m_BaseGitUser.Check_proj_state()
-    //})
-
-    // var sret = JSON.stringify(inp, null, 4)
-    // var sid = ""
-    // console.log("oup is ", inp.out)
-    // res.writeHead(200, { 'Content-Type': 'text/javascript' });
-
-    // res.end();
 }
 
 BsnpSvcToolkits.test_https_work = async function (inp, req, res) {
