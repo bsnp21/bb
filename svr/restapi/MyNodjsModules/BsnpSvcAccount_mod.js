@@ -1014,7 +1014,7 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
     if (inp.par && inp.par.shell_cmd_ary && inp.par.shell_cmd_ary.length > 0) {
         console.log("enter => inp.par.shell_cmd_ary:")
         inp.out.olog = []
-        var cmd = "sh   \r\n"
+        var cmd = "#!/bin/sh   \r\n"
         for (var i = 0; i < inp.par.shell_cmd_ary.length; i++) {
             cmd += inp.par.shell_cmd_ary[i] + "  \r\n";
         }

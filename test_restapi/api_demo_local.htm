@@ -18,7 +18,7 @@
     <!----------------------------------------------------------------------------->
     <!------ api ---->
     <script src="https://bsnp21.github.io/home/js/config_websvr_data.js"></script>
-   
+
     <script xxxxxxxxxxxxxxxxxxxxxxxxxsrc="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
     <script xxxxxxxxxxxxxxxxxxxxxxxxxsrc="https://bsnp21.github.io/home/js/test_bsnp_ip_availability.js"></script>
     <script src="./test_bsnp_ip_availability.js"></script>
@@ -62,7 +62,8 @@
 
             background-color: antiquewhite;
         }
-        textarea{
+
+        textarea {
             height: 500px;
         }
     </style>
@@ -85,9 +86,9 @@
             var sample_apiPar = {
                 ApiUsrAccount_login: [{ repopath: "guest", passcode: "guest" }],
                 ApiUsrAccount_logout: [{}],
-                ApiUsrAccount_update : [
-                    { repopath: "guest", passcode: "guest", passcodeNew: "guestNew", accesstr: "private"},
-                    { repopath: "guest", passcode: "guest", passcodeNew: "guestNew", accesstr: "public"}],
+                ApiUsrAccount_update: [
+                    { repopath: "guest", passcode: "guest", passcodeNew: "guestNew", accesstr: "private" },
+                    { repopath: "guest", passcode: "guest", passcodeNew: "guestNew", accesstr: "public" }],
                 ApiUsrAccount_create: [{ repopath: "xy01", passcode: "a", hintword: "aas", accesstr: "public" }],
                 ApiBibleObj_load_by_bibOj: [{ fnames: ['NIV', 'CUVS', "e_Note", 'e_v_CUVS_enn2'], bibOj: { Gen: { 1: { 1: '' }, }, Mat: { 1: { 1: '' }, } } },
                 {
@@ -213,8 +214,22 @@
                     { git_cmd_ary: ["rm -rf  ../xyz"] },
                 ],
                 ApiUsr_Cmdline_Exec: [
-                    { git_cmd_ary: ["ls -al ../"] },
-                    { git_cmd_ary: ["rm -rf  ../xyz"] },
+                    { shell_cmd_ary: ["ls -al ../", "pwd"] },
+                    { shell_cmd_ary: ["cd /tmp", "git clone https://github.com/bsnp21/tools.git", "git status"] },
+                    {
+                        shell_cmd_ary: [
+                            "cd /tmp", 
+                            "pwd",
+                            "sudo git clone https://github.com/bsnp21/tools.git",
+                            "sudo ls -lR"]
+                    },
+                    {
+                        shell_cmd_ary: [
+                            "cd /tmp", 
+                            "pwd",
+                            "sudo rm -rf tools ",
+                            "sudo ls -lR"]
+                    },
                 ],
             }
 
@@ -378,8 +393,10 @@
 
             <a id="addur_ssid">add SSID on url param for page after login</a>
             <p>or copy bsnp logged in para ?sip= to this url and return.</p>
-            <p>e.g.: file:///Users/weiding/Sites/weidroot/weidroot_2017-01-06/app/github/bsnp21/bb/test_restapi/api_demo_local.htm?sip=http://34.224.88.91:7778&SSID=1742852858494wdingpba&vision=public</p>
-            
+            <p>e.g.:
+                file:///Users/weiding/Sites/weidroot/weidroot_2017-01-06/app/github/bsnp21/bb/test_restapi/api_demo_local.htm?sip=http://34.224.88.91:7778&SSID=1742852858494wdingpba&vision=public
+            </p>
+
 
             <p>Once success, u should see api list.</p>
         </li>
@@ -413,7 +430,7 @@
                         var cmdary = []
                         ary.forEach(function (str) {
                             var repostr = str.split(" ")[0].trim()
-                            if(repostr.length===0) return
+                            if (repostr.length === 0) return
                             cmdary.push(`gh repo delete ${repostr} --confirm`)
                         })
                         $("#outext").val(JSON.stringify(cmdary, null, 4))
