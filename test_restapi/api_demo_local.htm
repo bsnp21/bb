@@ -21,13 +21,17 @@
 
     <script xxxxxxxxxxxxxxxxxxxxxxxxxsrc="https://bsnp21.github.io/home/js/BsnpSvc_IP_Info.js"></script>
     <script xxxxxxxxxxxxxxxxxxxxxxxxxsrc="https://bsnp21.github.io/home/js/test_bsnp_ip_availability.js"></script>
-    <script src="./test_bsnp_ip_availability.js"></script>
+    <script xxxxxxxxxxxxxxxxxxxxxxxxxsrc="./test_bsnp_ip_availability.js"></script>
     <script src="../np/js/BsnpRestApi.js"></script>
     <script src="../np/js/BsnpRestConst.js"></script>
     <!----------------------------------------------------------------------------->
 
 
     <style>
+        body{
+            margin-bottom: 100px;
+
+        }
         .url_parm_ip {
             background-color: aqua;
         }
@@ -235,7 +239,7 @@
 
 
             if (window.location.href.indexOf("SSID") > 0) $("body").removeClass("url_parm_ip").addClass("url_parm_ssid")
-            //$(".api_test_sect").hide()
+            $(".api_test_sect").hide()
 
 
             var lis = ""
@@ -355,46 +359,13 @@
 
             <a href="https://bsnp21.github.io/home/js/config_websvr_data.js">&lt;script
                 src='https://bsnp21.github.io/home/js/config_websvr_data.js'&gt;</a>
+ 
 
-            <table id="test_ip_availability" note="frame for gen_avai_sel">
-                <tr>
-                    <td>
-                        <table border="1">
-                            <caption id="host_cap">Host Signin<br>
-                                <button class="protocal hili">http</button>
-                                <button class="protocal">https</button>
-                            </caption>
-                            <tbody id="hostaddr"></tbody>
-                        </table>
-                    </td>
-
-                    <td>
-                        <table border="1">
-                            <caption id="svr_cap"> <a>Svc IP param</a><br>
-                                <button class="protocal hili">http</button>
-                                <button class="protocal">https</button>
-                            </caption>
-                            <tbody id="svcaddr"></tbody>
-                        </table>
-
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3">
-                        <a id="linkstr"></a>
-
-                    </td>
-                </tr>
-            </table>
-
+                <br>
             <a id="addur_ssid">add SSID on url param for page after login</a>
-            <p>or copy bsnp logged in para ?sip= to this url and return.</p>
+            <p>or copy bsnp logged in para ?sip=... to this url and return.</p>
             <p>e.g.:
-                file:///Users/weiding/Sites/weidroot/weidroot_2017-01-06/app/github/bsnp21/bb/test_restapi/api_demo_local.htm?sip=http://34.224.88.91:7778&SSID=1742852858494wdingpba&vision=public
+                file:///Users/weiding/Sites/weidroot/weidroot_2017-01-06/app/github/bsnp21/bb/test_restapi/api_demo_local.htm<b>?sip=http://34.224.88.91:7778&SSID=1742852858494wdingpba&vision=public</b>
             </p>
 
 
