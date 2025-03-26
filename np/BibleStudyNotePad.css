@@ -404,12 +404,14 @@ button.docSwitch {
 }
 
 #Tab_OutputVolumnNamesList {
-    position: fixed;
+    position:absolute;
     left: 2px;
-    background-color: aqua;
+    xxtop:60px;
+   
+    xxbackground-color: aqua;
     z-index: 9999;
     padding: 0px 10px 10px 1px;
-    margin: 0px 1px 1px 78px;
+    xxmargin: 0px 1px 1px 78px;
     min-width: 321px;
 }
 
@@ -458,6 +460,20 @@ display: block;
     height: 340px;
     overflow-y: scroll;
     display: block;
+    
+}
+.Tab_OutputVolumnNamesList_ShowForCluster{
+    top:35px;
+    margin-left: 100px;
+    background-color: red;
+    border: 10px solid red;
+
+    scrollbar-face-color: green;
+}
+.Tab_OutputVolumnNamesList_ShowForKeypad {
+    top:92px;
+    margin-left: 10px;
+    background-color: red;
 }
 
 #Tab_MostRecent_BCV {

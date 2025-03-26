@@ -112,11 +112,14 @@ AppInstancesManager.prototype.init = function (cbf) {
         }
     })
 
-
+/*
+    $(this.m_id).addClass("Tab_OutputVolumnNamesList_ShowForCluster")
+    $(this.m_id).addClass("Tab_OutputVolumnNamesList_ShowForKeypad")
+*/
 
     skinp.gen_panel({
         onClickItm: function (ch, volary, alreadyhili) {
-            popoutputVolumnNamesList.Popup_VolumnNamesList_Table(ch, volary, alreadyhili, 90)
+            popoutputVolumnNamesList.Popup_VolumnNamesList_Table(ch, volary, alreadyhili, "Tab_OutputVolumnNamesList_ShowForKeypad")
 
             tab_category.rm_hili()
         }
@@ -124,7 +127,7 @@ AppInstancesManager.prototype.init = function (cbf) {
 
     tab_category.Gen_Cat_Table({
         onClickItm: function (scat, volary, alreadyHili) {
-            popoutputVolumnNamesList.Popup_VolumnNamesList_Table(scat, volary, alreadyHili, 2);
+            popoutputVolumnNamesList.Popup_VolumnNamesList_Table(scat, volary, alreadyHili, "Tab_OutputVolumnNamesList_ShowForCluster");
             skinp.rm_hili()
 
             //showup.m_Bki.set_showupBkc(scat);

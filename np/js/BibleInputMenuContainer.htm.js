@@ -137,7 +137,16 @@ var BibleInputMenuContainer = `
     <div id="BibInputMenuHolder">
     
         <div id="GroupsContainer" style="display:visual">
-
+<!----------------------------->
+<!----------------------------->
+<table id="Tab_OutputVolumnNamesList" border="1">
+    <caption></caption>
+    <thead id="">
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<!----------------------------->
             <div id="HorizMenuBar">
             <a sid='grp_Keyboard'>Keyboard</a> |
             <a sid='grp_Cluster'>Cluster</a> |
@@ -386,16 +395,7 @@ var BibleInputMenuContainer = `
 
 
 
-<!----------------------------->
-<!----------------------------->
-<table id="Tab_OutputVolumnNamesList" border="1">
-    <caption></caption>
-    <thead id="">
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-<!----------------------------->
+
 
 
 <div id='oBible'>----</div>

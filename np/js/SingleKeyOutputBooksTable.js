@@ -51,7 +51,7 @@ SingleKeyOutputBooksTable.prototype.show = function (bShow) {
     }
 }
 
-SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat, vol_arr, alreadyhili, Yoffset) {
+SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat, vol_arr, alreadyhili, Tab_OutputVolumnNamesList_ShowClass) {
 
     this.m_sCatName = scat
     if (!scat || vol_arr.length === 0) {
@@ -59,13 +59,13 @@ SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat
         return
     }
     var _THIS = this
-    var tid = this.m_id + " tbody"
-    var bcr = $("#menuContainer")[0].getBoundingClientRect();
-    var h2 = parseInt(Yoffset);
+    var tbodyid = this.m_id + " tbody"
+    //var bcr = $("#menuContainer")[0].getBoundingClientRect();
+    //var h2 = parseInt(Yoffset);
 
     var trs = this.ary_To_trs(vol_arr);
 
-    $(tid).html(trs).find(".v3").bind("click", function () {
+    $(tbodyid).html(trs).find(".v3").bind("click", function () {
 
         if ("UserDef" === scat) {
             //$(".v3.hili").removeClass("hili");
@@ -84,15 +84,21 @@ SingleKeyOutputBooksTable.prototype.Popup_VolumnNamesList_Table = function (scat
         }
     });
 
+    $(this.m_id).removeClass("Tab_OutputVolumnNamesList_ShowForCluster")
+    $(this.m_id).removeClass("Tab_OutputVolumnNamesList_ShowForKeypad")
+    $(this.m_id).addClass(Tab_OutputVolumnNamesList_ShowClass)
+
     if (alreadyhili) {
-        $(this.m_id).css('top', bcr.y + h2).css('left', bcr.x).toggle();//.slideToggle()
+        //$(this.m_id).css('top', bcr.y + h2).css('left', bcr.x).toggle();//.slideToggle()
+        $(this.m_id).toggle();//.slideToggle()
     } else {
-        $(this.m_id).css('top', bcr.y + h2).css('left', bcr.x).show()
+        //$(this.m_id).css('top', bcr.y + h2).css('left', bcr.x).show()
+        $(this.m_id).show()
     }
 
     if (vol_arr.length === -1) {//auto setup problematic
         setTimeout(() => {
-            $(tid).find(".v3").each(function () {
+            $(tbodyid).find(".v3").each(function () {
                 $(this).find("td").addClass("hili");
                 $(this).trigger("click")
             })
