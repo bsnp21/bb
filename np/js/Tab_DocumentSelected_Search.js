@@ -251,12 +251,13 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
     }
 
 
-    var Gen_Output_Table_Formate = "e_Note_Viewer";
+    var Gen_Output_Table_Formate = "";
 
     if (inpobj.Search.Strn.trim().length === 0) {
         //searchInFileName: "e_Note", "e_Subtitle", "e_Pray", and so on. 
         if ("e_" === searchInFileName.substring(0, 2)) {
             if (confirm("Search String is Empty. \nContinue Show All History?\n")) {
+                Gen_Output_Table_Formate = "e_Note_Viewer";
                 //e_Note_Viewer: Override search string input, bibOj, and fnames[].
                 inpobj.Search.Strn = "^\\d{6}[_\.]\\d{6}" // yymmdd_hhmmss(ed).
                 CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {//for all books.
