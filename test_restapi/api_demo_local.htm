@@ -28,10 +28,11 @@
 
 
     <style>
-        body{
+        body {
             margin-bottom: 100px;
 
         }
+
         .url_parm_ip {
             background-color: aqua;
         }
@@ -222,17 +223,73 @@
                     { shell_cmd_ary: ["cd /tmp", "git clone https://github.com/bsnp21/tools.git", "git status"] },
                     {
                         shell_cmd_ary: [
-                            "cd /tmp", 
+                            "cd /tmp",
                             "pwd",
                             "sudo git clone https://github.com/bsnp21/tools.git",
                             "sudo ls -lR"]
                     },
                     {
                         shell_cmd_ary: [
-                            "cd /tmp", 
+                            "cd /tmp",
                             "pwd",
                             "sudo rm -rf tools ",
                             "sudo ls -lR"]
+                    },
+                    {
+                        shell_cmd_ary: [
+                            "sudo chmod 777 -R /var/www/html/wdaws/tools/BibleStudy",
+                            "cd /var/www/html/wdaws/tools/BibleStudy",
+                            "pwd",
+                            "sudo ls -lR"],
+                        shell_cmd_ary_before_update: [
+                            "cd /var/www/html/wdaws/tools/BibleStudy",
+                            "sudo git status",
+                            "sudo git pull",
+                            "sudo ls -lR"],
+                        shell_jspathfilename: "/var/www/html/wdaws/tools/BibleStudy/KingsList.json.js",
+                        shell_update_obj: {},
+                        shell_cmd_ary_post_update: [
+                            "cd /var/www/html/wdaws/tools/BibleStudy",
+                            "sudo git status",
+                            "#sudo git add *",
+                            "#sudo git commit -m 'updatedata'",
+                            "#sudo git push"
+                        ],
+
+                    },
+                    {
+                        shell_cmd_ary: [
+                            "sudo chmod 777 -R /var/www/html/wdaws/tools/BibleStudy",
+                            "cd /var/www/html/wdaws/tools/BibleStudy",
+                            "pwd",
+                            "sudo ls -lR"],
+                        shell_cmd_ary_before_update: [
+                            "cd /var/www/html/wdaws/tools/BibleStudy",
+                            "sudo git status",
+                            "sudo git pull",
+                            "sudo ls -lR"],
+                        xshell_update_jspathfilename: "/var/www/html/wdaws/tools/BibleStudy/KingsList.json.js",
+                        xshell_update_newobj: {
+                            "Zedekiah": {
+                                "Names(CUV)": "",
+                                "Nation": "South",
+                                "Span": "11",
+                                "Date": "-597",
+                                "Kinship": "",
+                                "Prophet": "",
+                                "Verses": "2Ki24:18",
+                                "RelatedKing": "Hoshea",
+                                "Notes": "test.wd"
+                            }
+                        },
+                        xshell_cmd_ary_post_update: [
+                            "cd /var/www/html/wdaws/tools/BibleStudy",
+                            "sudo git status",
+                            "#sudo git add *",
+                            "#sudo git commit -m 'updatedata'",
+                            "#sudo git push"
+                        ],
+
                     },
                 ],
             }
@@ -359,9 +416,9 @@
 
             <a href="https://bsnp21.github.io/home/js/config_websvr_data.js">&lt;script
                 src='https://bsnp21.github.io/home/js/config_websvr_data.js'&gt;</a>
- 
 
-                <br>
+
+            <br>
             <a id="addur_ssid">add SSID on url param for page after login</a>
             <p>or copy bsnp logged in para ?sip=... to this url and return.</p>
             <p>e.g.:

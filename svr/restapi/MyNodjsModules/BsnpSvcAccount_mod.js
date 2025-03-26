@@ -1013,7 +1013,7 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
 
 
     function run_shell_cmd_ary(cmd_ary) {
-        if (!cmd_ary || cmd_ary.length === 0) return { "cmd_ary": ["empty input."] }
+        if (!cmd_ary || cmd_ary.length === 0) return { "cmd_ary empy": ["noop"] }
         var cmd = "#!/bin/sh   \n"
         for (var i = 0; i < cmd_ary.length; i++) {
             cmd += cmd_ary[i] + "  \n";
@@ -1025,8 +1025,8 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
     }
     /////////////////////////////////////
     function run_update_obj(jsonfilename, update_obj) {
-        if(!jsonfilename || !update_obj){
-            return { run_update: ["noop"] }
+        if (!jsonfilename || !update_obj) {
+            return { "update data empty": ["noop"] }
         }
         var ret = BaseGUti.loadObj_by_fname(jsonfilename)
         for ([key, obj] of Object.entries(update_obj)) {
@@ -1045,7 +1045,7 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
         res = run_shell_cmd_ary(inp.par.shell_cmd_ary_before_update)
         inp.out.olog.push(res)
 
-        res = run_update_obj(inp.par.shell_jspathfilename, inp.par.shell_update_obj)
+        res = run_update_obj(inp.par.shell_update_jspathfilename, inp.par.shell_update_newobj)
         inp.out.olog.push(res)
 
         res = run_shell_cmd_ary(inp.par.shell_cmd_ary_post_update)
