@@ -253,22 +253,27 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
 
     var Gen_Output_Table_Formate = "e_Note_Viewer";
 
-
-    //searchInFileName: "e_Note", "e_Subtitle", "e_Pray", and so on. 
-    if ("e_" === searchInFileName.substring(0,2) && !confirm("Regular search?\n\n[Cancel] : but Show All History.\n\n[OK] : Regular Search String and Display.\n")) {
-        //e_Note_Viewer: Override search string input, bibOj, and fnames[].
-        inpobj.Search.Strn = "^\\d{6}[_\.]\\d{6}" // yymmdd_hhmmss(ed).
-        CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {//for all books.
-            inpobj.bibOj[bkc] = {}
-        })
-        inpobj.fnames=[searchInFileName];//Ignore other files. Saving time and space.
-    } else {
-        //regular bible formates
-        Gen_Output_Table_Formate = null
-        if (inpobj.Search.Strn.trim().length === 0) {
-            return alert("search string input is empty.")
+    if (inpobj.Search.Strn.trim().length === 0) {
+        //searchInFileName: "e_Note", "e_Subtitle", "e_Pray", and so on. 
+        if ("e_" === searchInFileName.substring(0, 2)) {
+            if (confirm("Search String is Empty. \nContinue Show All History?\n")) {
+                //e_Note_Viewer: Override search string input, bibOj, and fnames[].
+                inpobj.Search.Strn = "^\\d{6}[_\.]\\d{6}" // yymmdd_hhmmss(ed).
+                CNST.Cat2VolArr["WholisticBible"].forEach(function (bkc) {//for all books.
+                    inpobj.bibOj[bkc] = {}
+                })
+                inpobj.fnames = [searchInFileName];//Ignore other files. Saving time and space.
+            } else {
+                return ;;//alert("search string input is empty.");
+            }
+        } else {
+            return alert("search string input is empty.");
         }
     }
+
+
+
+
 
 
 
@@ -290,7 +295,7 @@ Tab_DocumentSelected_Search.prototype.onclick_inSvr_BibleObj_search_str = functi
         function (ret) {
             var shob = MyStorage.CreateMrObj("HistoryOfSearchResult")
             ret.Gen_Output_Table_Form = Gen_Output_Table_Formate
-            if(Gen_Output_Table_Formate) $("title").text(searchInFileName);  //  "e_Note")
+            if (Gen_Output_Table_Formate) $("title").text(searchInFileName);  //  "e_Note")
             _This.m_gAppInstancesManager.apiCallback_Gen_output_table(ret, function (size) {
                 var txt = size + msg
                 $("#searchNextresult").text("0/" + txt)
