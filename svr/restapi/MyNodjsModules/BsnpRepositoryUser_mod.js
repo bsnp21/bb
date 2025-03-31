@@ -520,6 +520,8 @@ var BaseGUti = {
                     ret.err = e;
                 }
 
+            }else{
+                ret.err = "unable find left-curve-bracket."
             }
         }
         return ret;
