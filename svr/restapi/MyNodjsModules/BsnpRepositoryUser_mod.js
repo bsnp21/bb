@@ -517,7 +517,9 @@ var BaseGUti = {
                 try {
                     ret.obj = JSON.parse(s);
                 } catch (e) {
-                    ret.err = e;
+                    ret.err.catch = e;
+                    ret.err.msg = "JSON.parse err."
+
                 }
 
             }else{
