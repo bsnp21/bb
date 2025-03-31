@@ -197,7 +197,7 @@ CNST.StdBkID = function (sAnyBookName) {
 };
 CNST.StdBcvAry_FromAnyStr = function (str) {
     function get_StdBCV_frm_anyBCV(sBvc) {
-        const regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
+        const regexp2 = new RegExp(/([1-3a-zA-Z][a-zA-Z]{2})\s*(\d+)\:(\d+)/i)
         var mat2 = sBvc.match(regexp2)
         if (mat2) {
             console.log("mat2:", mat2)
@@ -481,4 +481,3 @@ var BookJsFlavor = {
     Pauls: ['#003399', 'Pauls', '保罗书信'],
     Other_Epistles: ['#003399', 'OtherEpistles', '其他书信'],
 };
-
