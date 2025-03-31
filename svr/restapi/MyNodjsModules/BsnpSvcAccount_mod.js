@@ -1029,11 +1029,12 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
             return { "update data empty": ["noop"] }
         }
         var ret = BaseGUti.loadObj_by_fname(jsonfilename)
-        if(!ret.obj) return ret;
+        if (!ret.obj) return ret;
         for ([key, obj] of Object.entries(update_obj)) {
             ret.obj[key] = obj
         }
         ret.writeback();
+        delete ret.obj;
         return ret
     }
 
