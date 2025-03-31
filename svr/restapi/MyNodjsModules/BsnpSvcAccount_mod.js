@@ -1033,7 +1033,7 @@ BsnpSvcToolkits.ApiUsr_Cmdline_Exec = async function (inp, req, res) {
             ret.obj[key] = obj
         }
         ret.writeback();
-        return { dlt_size: [ret.dlt_size] }
+        return ret
     }
 
     console.log("enter => inp.par.shell_cmd_ary:")
