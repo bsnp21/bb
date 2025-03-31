@@ -181,34 +181,42 @@ CNST.StdBkID = function (sAnyBookName) {
     if (!sAnyBookName) return ""
     if (sAnyBookName.length < 3) return ""
 
-    var reg = new RegExp(sAnyBookName, "gi")
-    var retary = ''
-    for (const stdBkId in CNST.StdBkID_variantNames) {
-        for (let sname of CNST.StdBkID_variantNames[stdBkId]) {
+    for (const stdBkId in CNST.BiBookName) {
+        if (stdBkId == sAnyBookName) return stdBkId;
+        for (let sname of CNST.BiBookName[stdBkId]) {
             if (sname == sAnyBookName) {
-                retary = stdBkId
+                return stdBkId;
             }
         }
     }
-    if (retary.length === 0) return ""
-    //if (retary.length > 1) alert("wrong sAnyBookName:" + sAnyBookName)
-    return retary
+
+    var stdBcv = CNST.BlueLetterBibleCode[sAnyBookName]
+    if(stdBcv && stdBcv.length===3) return stdBcv;
+
+    return ""
 };
 CNST.StdBcvAry_FromAnyStr = function (str) {
-    var regexp = new RegExp(/(\w+\s*\d+\:\d+)/gi)
-    var regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
-    var ret3 = []
-    var mat = str.match(regexp)
-    if (mat) {
-        for (const name of mat) {
-            console.log("name", name)
-            var mat2 = name.match(regexp2)
-            if (mat2) {
-                console.log("mat2:", mat2)
-                var stdbkid = CNST.StdBkID(mat2[1])
-                console.log("stdbkid", stdbkid)
-                ret3.push(stdbkid + mat2[2] + ":" + mat2[3])
+    function get_StdBCV_frm_anyBCV(sBvc) {
+        const regexp2 = new RegExp(/(\w+)\s*(\d+)\:(\d+)/i)
+        var mat2 = sBvc.match(regexp2)
+        if (mat2) {
+            console.log("mat2:", mat2)
+            var stdbkid = CNST.StdBkID(mat2[1])
+            console.log("stdbkid", stdbkid)
+            if (stdbkid.length == 3) {
+                return (stdbkid + mat2[2] + ":" + mat2[3])
             }
+        }
+        return ""
+    }
+    var regexp = new RegExp(/(\w+\s*\d+\:\d+)/gi)
+    var ret3 = []
+    var mat = str.match(regexp) //all types of BVC collected in ary.
+    if (mat) {
+        for (const anyBCV of mat) {
+            console.log("name", anyBCV)
+            var stdbkid = get_StdBCV_frm_anyBCV(anyBCV)
+            if (stdbkid) ret3.push(stdbkid)
         }
     }
     return ret3
@@ -457,7 +465,7 @@ CNST.Cat2VolArr = {
     "Paulines": ["Rom", "1Co", "2Co", "Gal", "Eph", "Phl", "Col", "1Ts", "2Ts", "1Ti", "2Ti", "Tit", "Phm"],
     "Epistles": ["Heb", "Jas", "1Pe", "2Pe", "1Jn", "2Jn", "3Jn", "Jud"],
     "UserDef": [],
-    "WholisticBible" : CNST.OT_Bkc_Ary.concat(CNST.NT_Bkc_Ary) 
+    "WholisticBible": CNST.OT_Bkc_Ary.concat(CNST.NT_Bkc_Ary)
 };
 var BookJsFlavor = {
     OTNT: ['#510000', 'wholistic Bible', '圣经全书'],
