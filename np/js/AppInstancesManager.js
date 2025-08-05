@@ -207,9 +207,9 @@ AppInstancesManager.prototype.init = function (cbf) {
 
 
 
-        showup.update_showup(par.m_bcv)
-        digi.init_Chp_digiKeys_by_vol()
-        digi.init_Vrs_digiKeys_by_vol()
+        //showup.update_showup(par.m_bcv)
+        //digi.init_Chp_digiKeys_by_vol()
+        //digi.init_Vrs_digiKeys_by_vol()
         //_This.scrollToView_Vrs()
     })
     //g_obt.onclick_Load_Bcv_by_e_Note_Viewer(function (bcvAry) {
